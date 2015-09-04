@@ -11,23 +11,12 @@ var signupServices = require('./services/signupserver.js');
 var log = require('./modules/logging')('main');
 var requestLog = require('./modules/logging')('requests');
 var bodyParser = require('body-parser');
-var kleiDust = require('klei-dust');
 var view = require('./modules/view');
 
 log.info('initializing');
 
 // set up our web app
 var app = express();
-
-// =============
-// DUSTJS VIEW ENGINE SETUP
-
-log.info('setting up view engine: klei-dust');
-
-app.set('views', __dirname + '/views');
-app.engine('dust', kleiDust.dust);
-app.set('view engine', 'dust');
-app.set('view options', { layout: false, cache: false });
 
 // =============
 // MIDDLEWARE

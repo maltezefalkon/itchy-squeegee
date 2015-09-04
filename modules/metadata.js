@@ -4,9 +4,11 @@
 var log = require('./logging.js')('metadata');
 var sqlLog = require('./logging.js')('sql');
 
+var sequelizeOptions = { host: 'localhost', port: 5432, dialect: 'postgres', define: { timestamps: false, underscored: true }, logging: function (msg) { sqlLog.info(msg); } };
+
 // sequelize ORM
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('safedb', 'readwrite', 'readwrite', { define: { timestamps: false, underscored: true  }, logging: function (msg) { sqlLog.info(msg); } });
+var sequelize = new Sequelize('safedb', 'readwrite', 'readwrite', sequelizeOptions);
 
 // file system access
 var fs = require('fs');
@@ -17,7 +19,7 @@ var fs = require('fs');
 module.exports = function (metadataFolder) {
     log.info('setting up database');
     var ret = 
-    {
+ {
         Sequelize: sequelize,
         db: {},
         Metadata: {},
@@ -29,7 +31,7 @@ module.exports = function (metadataFolder) {
         log.debug('processing metadata file ' + metadataFiles[i]);
         DbDefine(sequelize, ret.db, ret.Metadata, fs, metadataPath + '/' + metadataFiles[i]);
     }
-    log.debug('setting up relationsips');
+    log.debug('setting up relationships');
     SetupRelationships(ret.db, ret.Metadata);
     SetupClasses(ret.Metadata, ret.bo);
     return ret;
@@ -49,7 +51,7 @@ function DbDefine(sequelize, dbDictionary, metadataDictionary, fs, filePath) {
     for (var f in metadata.FieldDefinitions) {
         metadata.FieldDefinitions[f].type = Sequelize[metadata.FieldDefinitions[f].type]();
         if (metadata.FieldDefinitions[f].defaultValue === "NOW") {
-            metadata.FieldDefinitions[f].defaultValue = sequelize.fn('CURRENT_TIMESTAMP');
+            metadata.FieldDefinitions[f].defaultValue = sequelize.fn(sequelizeOptions.dialect === 'postgres' ? 'NOW' : 'CURRENT_TIMESTAMP');
         }
         if (metadata.FieldDefinitions[f].primaryKey) {
             metadata.PrimaryKeyFields.push(f);

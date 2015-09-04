@@ -1,11 +1,11 @@
 {
-  "name": "NodejsWebApp1",
+  "name": "SafeStudents",
   "version": "0.0.0",
-  "description": "NodejsWebApp1",
+  "description": "SafeStudents",
   "main": "main.js",
   "author": {
-    "name": "Dan",
-    "email": ""
+    "name": "E3",
+    "email": "dan@cassar.org"
   },
   "dependencies": {
     "bcryptjs": "^2.2.1",
@@ -22,6 +22,8 @@
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "pdffiller": "0.0.0",
+    "pg": "^4.4.1",
+    "pg-hstore": "^2.3.2",
     "restling": "^0.9.1",
     "sequelize": "^3.6.0",
     "uuid": "^2.0.1"
