@@ -4,11 +4,22 @@
 var log = require('./logging.js')('metadata');
 var sqlLog = require('./logging.js')('sql');
 
-var sequelizeOptions = { host: 'localhost', port: 5432, dialect: 'postgres', define: { timestamps: false, underscored: true }, logging: function (msg) { sqlLog.info(msg); } };
+
+// parse connection info from the DATABASE_URL environment variable 
+// postgres://user:pass@host:port/database
+if (!process.env.DATABASE_URL) {
+    throw new Error('No DATABASE_URL environment variable defined');
+}
+var parsed = process.env.DATABASE_URL.match(/^postgres:\/\/(\w+?):(\w+?)@(.+?):(\d+?)\/(\w+?)$/);
+if (parsed.length < 6) {
+    throw new Error('Failed to parse DATABASE_URL environment variable');
+}
+var sequelizeOptions = { host: parsed[3], port: parsed[4], dialect: 'postgres', define: { timestamps: false, underscored: true }, logging: function (msg) { sqlLog.info(msg); } };
+
 
 // sequelize ORM
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize('safedb', 'readwrite', 'readwrite', sequelizeOptions);
+var Sequelize = require('sequelize')
+var sequelize = new Sequelize(parsed[5], parsed[1], parsed[2], sequelizeOptions);
 
 // file system access
 var fs = require('fs');

@@ -235,7 +235,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group" ng-class="{ required: !tenure.PresentEmployer }">
                                     <label class="control-label col-md-4" for="startDate" ng-class="{ 'text-muted': tenure.PresentEmployer }">End Date</label>
                                     <div class="col-md-8">
                                         <input type="date" name="startDate" class="form-control" ng-model="tenure.EndDate" ng-disabled="tenure.PresentEmployer" />
@@ -244,61 +244,70 @@
                             </div>
                             <div class="col-sm-6 col-lg-4">
                                 <div class="form-group">
-                                    <div class="col-md-8">
-                                        <label class="control-label" for="present">This is my current employer</label>
-                                        <input type="checkbox" name="present" ng-model="tenure.PresentEmployer" />
+                                    <div class="col-md-10">
+                                        <label class="control-label"><input type="checkbox" name="present" ng-model="tenure.PresentEmployer" />&nbsp;This is my current employer</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4" for="selectOrganization">Select Organization Type</label>
-                                    <div class="radio btn-group" style="padding-left: 25px">
-                                        <label class="control-label col-md-4" class="radio-inline"><input type="radio" value="School" ng-model="tenure.OrganizationType" />School</label>
-                                        <label class="control-label col-md-4" class="radio-inline"><input type="radio" value="Other" ng-model="tenure.OrganizationType" />Other</label>
-                                    </div>
+                            <!--<div class="col-sm-12">
+                                <label class="control-label" for="selectOrganization">Select Organization Type</label>
+                                <div class="radio btn-group" style="padding-left: 25px">
+                                    <label class="radio-inline"><input type="radio" value="School" ng-model="tenure.OrganizationType" />School</label>
+                                    <label class="radio-inline"><input type="radio" value="Other" ng-model="tenure.OrganizationType" />Other</label>
                                 </div>
                             </div>
-                            <div ng-show="tenure.OrganizationType == 'School'">
+                            <div class="col-sm-12" ng-show="tenure.OrganizationType == 'School'">
                                 <select>
                                     <option ng-repeat="school in Schools">{{school.Name}}</option>
                                 </select>
-                            </div>
-                            <div ng-show="tenure.OrganizationType == 'Other'">
+                            </div>-->
+                            <div class="col-sm-12">
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label col-md-4" for="tenureOrganizationName">Name of the Organization</label>
-                                        <input type="text" name="tenureOrganizationName" class="form-control" ng-model="tenure.Organization.Name" />
+                                        <label class="control-label col-md-4" for="tenureOrganizationName">Name</label>
+                                        <div class="col-md-8">
+                                            <input type="text" name="tenureOrganizationName" class="form-control" ng-model="tenure.Organization.Name" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-lg-4">
+                                <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationType == 'Other'">
                                     <div class="form-group">
                                         <label class="control-label col-md-4" for="tenureOrganizationAddress1">Address 1</label>
-                                        <input type="text" name="tenureOrganizationAddress1" class="form-control" ng-model="tenure.Organization.Address1" />
+                                        <div class="col-md-8">
+                                            <input type="text" name="tenureOrganizationAddress1" class="form-control" ng-model="tenure.Organization.Address1" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-lg-4">
+                                <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationType == 'Other'">
                                     <div class="form-group">
                                         <label class="control-label col-md-4" for="tenureOrganizationAddress2">Address 2</label>
-                                        <input type="text" name="tenureOrganizationAddress2" class="form-control" ng-model="tenure.Organization.Address2" />
+                                        <div class="col-md-8">
+                                            <input type="text" name="tenureOrganizationAddress2" class="form-control" ng-model="tenure.Organization.Address2" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-lg-4">
+                                <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationType == 'Other'">
                                     <div class="form-group">
                                         <label class="control-label col-md-4" for="tenureOrganizationCity">City</label>
-                                        <input type="text" name="tenureOrganizationCity" class="form-control" ng-model="tenure.Organization.City" />
+                                        <div class="col-md-8">
+                                            <input type="text" name="tenureOrganizationCity" class="form-control" ng-model="tenure.Organization.City" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-lg-4">
+                                <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationType == 'Other'">
                                     <div class="form-group">
                                         <label class="control-label col-md-4" for="tenureOrganizationState">State</label>
-                                        <input type="text" name="tenureOrganizationState" class="form-control" ng-model="tenure.Organization.State" />
+                                        <div class="col-md-8">
+                                            <input type="text" name="tenureOrganizationState" class="form-control" ng-model="tenure.Organization.State" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-lg-4">
+                                <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationType == 'Other'">
                                     <div class="form-group">
                                         <label class="control-label col-md-4" for="tenureOrganizationState">Zip Code</label>
-                                        <input type="text" name="tenureOrganizationZipCode" class="form-control" ng-model="tenure.Organization.ZipCode" />
+                                        <div class="col-md-8">
+                                            <input type="text" name="tenureOrganizationZipCode" class="form-control" ng-model="tenure.Organization.ZipCode" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
