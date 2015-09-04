@@ -1,0 +1,74 @@
+{
+    "TypeKey": "DocumentDefinitionField",
+    "TableName": "document_definition_field",
+    "FieldDefinitions": {
+        "DocumentDefinitionFieldID": {
+            "type": "UUID",
+            "field": "document_definition_field_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "DocumentDefinitionID": {
+            "type": "UUID",
+            "field": "document_definition_id",
+            "allowNull": false
+        },
+        "FieldName": {
+            "type": "STRING",
+            "field": "name",
+            "allowNull": false
+        },
+        "PDFFieldType": {
+            "type": "STRING",
+            "field": "pdf_field_type",
+            "allowNull": false
+        },
+        "FieldNameAlt": {
+            "type": "STRING",
+            "field": "field_alt"
+        },
+        "FieldFlags": {
+            "type": "INTEGER",
+            "field": "field_flags"
+        },
+        "FieldJustification": {
+            "type": "STRING",
+            "field": "field_justification"
+        },
+        "FieldOrdinal": {
+            "type": "INTEGER",
+            "field": "field_ordinal"
+        },
+        "FormFieldType": {
+            "type": "STRING",
+            "field": "form_field_type"
+        },
+        "FieldExpression": {
+            "type": "STRING",
+            "field": "field_expression"
+        },
+        "FieldSection": {
+            "type": "STRING",
+            "field": "field_section"
+        },
+        "FieldDescription": {
+            "type": "STRING",
+            "field": "field_description"
+        },
+        "LogicalFieldType": {
+            "type": "STRING",
+            "field": "logical_field_type"
+        },
+        "FieldRegex": {
+            "type": "STRING",
+            "field": "field_regex"
+        }
+    },
+    "Relationships": {
+        "DocumentDefinition": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "document_definition_id",
+            "RelatedTypeKey": "DocumentDefinition"
+        }
+    }
+}

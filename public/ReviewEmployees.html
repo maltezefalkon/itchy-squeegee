@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>Educator Signup</title>
+    <style type="text/css">
+        .form-group.required label:after {
+            content: '*';
+            color: red;
+            font-weight: bold;
+            font-size: large;
+        }
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <script type="text/javascript" src="util/util.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="controllers/HeaderController.js"></script>
+    <script type="text/javascript" src="controllers/ReviewEmployeesController.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var ctl = app.controller('controller', ReviewEmployeesController);
+        ctl.$inject = ['$scope', '$http', '$location'];
+        var headerController = app.controller('headerController', HeaderController);
+        headerController.$inject = ['$scope', '$http', '$location'];
+    </script>
+    <div class="container">
+        <div ng-include="'common/header.html'"></div>
+        <div class="page-header">
+            Documentation Summary
+            <div class="dropdown pull-right">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    Generate Links
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Employee</a></li>
+                    <li><a href="#">Applicant</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="main">
+            <div class="area">
+                <table width="100%">
+                    <tr class="main-header">
+                        <th colspan="10">{{Organization.Name}}</th>
+                    </tr>
+                    <tr>
+                        <td colspan="10">{{Organization.Address1}} {{Organization.Address2}} {{Organization.City}}, {{Organization.State}} {{Organization.ZipCode}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="area">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Position</th>
+                            <th>Hire Date</th>
+                            <th ng-repeat="def in DocumentDefinitions">
+                                {{def.Name}}
+                            </th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="tenure in Organization.Tenures" class="selectable">
+                            <td>{{tenure.Educator.Title}} {{tenure.Educator.FirstName}} {{tenure.Educator.LastName}}</td>
+                            <td>{{tenure.PositionsHeld}}</td>
+                            <td>{{tenure.StartDate | date}}</td>
+                            <td ng-repeat="def in DocumentDefinitions">
+                                <a href="http://google.com" ng-show="HasDocument(tenure, def)">
+                                    <img src="images/PDF-icon.gif" border="0" />
+                                </a>
+                            </td>
+                            <td>
+                                <img ng-show="ValidateDocuments(tenure, def)" src="images/greencheck.png" />
+                                <img ng-show="!ValidateDocuments(tenure, def)" src="images/redx.png" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>Login</title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <script type="text/javascript" src="util/util.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="controllers/HeaderController.js"></script>
+    <script type="text/javascript" src="controllers/LoginController.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', []);
+        var ctl = app.controller('controller', LoginController);
+        ctl.$inject = ['$scope', '$http', '$location'];
+        var headerController = app.controller('headerController', HeaderController);
+        headerController.$inject = ['$scope', '$http', '$location'];
+    </script>
+    <div class="container">
+        <div ng-include="'common/header.html'"></div>
+        <div class="page-header">
+            Log In
+        </div>
+        <form action="/user/login" method="post">
+            <div ng-show="Message" class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{Message}}
+            </div>
+            <div id="login-area">
+                <div class="form-group">
+                    <label for="username" autofocus>Email Address</label>
+                    <input type="text" name="username" class="form-control" ng-attr-value="{{UserName}}" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" />
+                </div>
+                <div class="btn-toolbar form-group">
+                    <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block btn-default" />
+                    <input type="submit" value="Create Account" class="btn btn-lg btn-info btn-block" onclick="document.location = '/user/signup/Educator'; return false;" />
+                </div>
+            </div>
+        </form>
+        <div ng-include="'common/footer.html'"></div>
+    </div>
+</body>
+</html>

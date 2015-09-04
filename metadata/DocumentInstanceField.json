@@ -1,0 +1,34 @@
+﻿{
+    "TypeKey": "DocumentInstanceField",
+    "TableName": "document_instance_field",
+    "FieldDefinitions": {
+        "DocumentDefinitionFieldID": {
+            "type": "UUID",
+            "field": "document_definition_field_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "DocumentInstanceID": {
+            "type": "UUID",
+            "field": "document_instance_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "FieldValue": {
+            "type": "STRING",
+            "field": "field_value"
+        }
+    },
+    "Relationships": {
+        "DocumentInstance": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "document_instance_id",
+            "RelatedTypeKey": "DocumentInstance"
+        },
+        "DocumentDefinitionField": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "document_definition_field_id",
+            "RelatedTypeKey": "DocumentDefinitionField"
+        }
+    }
+}

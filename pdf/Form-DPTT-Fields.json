@@ -1,0 +1,254 @@
+[
+
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Name of Current or Former Employer",
+        "FieldNameAlt": "Name of Current or Former Employer:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Button",
+        "FieldName": "undefined",
+        "FieldNameAlt": "undefined",
+        "FieldFlags": 0,
+        "FieldJustification": "Left",
+        "FieldStateOptions": [ "Off", "On" ]
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Street Address",
+        "FieldNameAlt": "Street Address:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "City State Zip",
+        "FieldNameAlt": "City, State, Zip:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Telephone Number",
+        "FieldNameAlt": "Telephone Number:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "No applicable employment",
+        "FieldNameAlt": "No applicable employment",
+        "FieldFlags": 4096,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Applicants Name First Middle Last",
+        "FieldNameAlt": "Applicant&#8217;s Name (First, Middle, Last):",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Any former names by which the Applicant has been identified",
+        "FieldNameAlt": "Any former names by which the Applicant has been identified:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "DOB",
+        "FieldNameAlt": "DOB:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Last 4 digits of Applicants Social Security Number",
+        "FieldNameAlt": "Last 4 digits of Applicant&#8217;s Social Security Number:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "PPID if applicable",
+        "FieldNameAlt": "PPID (if applicable):",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Approximate dates of employment with the entity listed above",
+        "FieldNameAlt": "Approximate dates of employment with the entity listed above:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Positions",
+        "FieldNameAlt": "Position(s):",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Signature",
+        "FieldName": "Signature of Applicant",
+        "FieldNameAlt": "Signature of Applicant",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Date",
+        "FieldNameAlt": "Date",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Employing Entity receipt date",
+        "FieldNameAlt": "Employing Entity receipt date",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Received by",
+        "FieldNameAlt": "Received by",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Contact telephone",
+        "FieldNameAlt": "Contact telephone",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Dates of employment of Applicant",
+        "FieldNameAlt": "Dates of employment of Applicant",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Signature",
+        "FieldName": "Former Employer Representative Signature and Title",
+        "FieldNameAlt": "Former Employer Representative Signature and Title",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Date_2",
+        "FieldNameAlt": "Date",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "School Entity",
+        "FieldNameAlt": "School Entity:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Address",
+        "FieldNameAlt": "Address:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Phone",
+        "FieldNameAlt": "Phone:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "State Zip",
+        "FieldNameAlt": "State: Zip:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Text",
+        "FieldName": "Fax",
+        "FieldNameAlt": "Fax:",
+        "FieldFlags": 0,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Button",
+        "FieldName": "Group2",
+        "FieldFlags": 49152,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Button",
+        "FieldName": "Group3",
+        "FieldFlags": 49152,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Button",
+        "FieldName": "Group4",
+        "FieldFlags": 49152,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Button",
+        "FieldName": "Group5",
+        "FieldFlags": 49152,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Button",
+        "FieldName": "Group6",
+        "FieldFlags": 49152,
+        "FieldJustification": "Left"
+    },
+    {
+        "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
+        "FieldType": "Button",
+        "FieldName": "Group7",
+        "FieldFlags": 49152,
+        "FieldJustification": "Left"
+    }
+]

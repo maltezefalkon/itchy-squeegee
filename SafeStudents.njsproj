@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>SafeStudents</Name>
+    <RootNamespace>NodejsWebApp1</RootNamespace>
+    <LaunchUrl>http://localhost:1337/public/Login.html</LaunchUrl>
+    <ScriptArguments>
+    </ScriptArguments>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>8d12e557-526f-4251-a0c9-c84a4d3f7fe4</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>main.js</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ProjectFiles</ProjectView>
+    <NodejsPort>1337</NodejsPort>
+    <StartWebBrowser>True</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Procfile" />
+    <Content Include="public\common\footer.html" />
+    <Content Include="public\common\header.html" />
+    <Content Include="public\controllers\LoginController.js" />
+    <Content Include="public\controllers\EducatorSignupController.js" />
+    <Content Include="public\images\logo_placeholder.png" />
+    <Content Include="public\images\menu-icon.png" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.css.map" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.min.css" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap.css" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap.css.map" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap.min.css" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="public\util\util.js" />
+    <Compile Include="modules\view.js" />
+    <Content Include="public\lib\angular-1.4.4\angular.min.js" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\js\bootstrap.js" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\js\bootstrap.min.js" />
+    <Content Include="public\lib\bootstrap-3.3.5-dist\js\npm.js" />
+    <Content Include="public\lib\angular-1.4.4\angular-messages.min.js" />
+    <Content Include="public\controllers\HeaderController.js" />
+    <Compile Include="metadata\DocumentDefinitionField.json" />
+    <Compile Include="metadata\DocumentInstanceField.json" />
+    <Compile Include="modules\api.js" />
+    <Compile Include="modules\authentication.js" />
+    <Compile Include="modules\form168.js" />
+    <Compile Include="modules\logging.js" />
+    <Compile Include="services\signupserver.js" />
+    <Compile Include="utils\AddJSONField.js" />
+    <Compile Include="utils\Hash.js" />
+    <Compile Include="utils\PDFFieldsToJSON.js" />
+    <Compile Include="utils\Salt.js" />
+    <Compile Include="utils\RebuildDatabase.js" />
+    <Compile Include="utils\SyncTable.js" />
+    <Content Include="public\controllers\ReviewEmployeesController.js" />
+    <Compile Include="main.js" />
+    <Compile Include="modules\metadata.js" />
+    <Compile Include="utils\DataDownloader.js" />
+    <Compile Include="utils\DataUploader.js" />
+    <Compile Include="metadata\DocumentInstance.json" />
+    <Compile Include="metadata\Organization.json" />
+    <Compile Include="metadata\OrganizationType.json" />
+    <Compile Include="services\dataserver.js" />
+    <Compile Include="services\webserver.js" />
+    <Content Include="public\css\main.css" />
+    <Content Include="public\images\greencheck.png" />
+    <Content Include="public\images\PDF-icon.gif" />
+    <Content Include="public\images\redx.png" />
+    <Content Include="public\EducatorSignup.html" />
+    <Content Include="data\Address.json" />
+    <Content Include="data\AddressType.json" />
+    <Content Include="referenceData\01_DocumentDefinition.json" />
+    <Content Include="data\DocumentInstance.json" />
+    <Content Include="data\Educator.json" />
+    <Content Include="data\EducatorAddress.json" />
+    <Content Include="data\Organization.json" />
+    <Content Include="data\OrganizationAddress.json" />
+    <Content Include="referenceData\02_DocumentDefinitionField.json" />
+    <Content Include="referenceData\04_Organization.json" />
+    <Content Include="referenceData\03_OrganizationType.json" />
+    <Content Include="data\Tenure.json" />
+    <Content Include="data\Types.json" />
+    <Content Include="data\User.json" />
+    <Content Include="data\UserEducatorAuthorization.json" />
+    <Content Include="data\UserOrganizationAuthorization.json" />
+    <Content Include="public\Login.html" />
+    <Content Include="metadata\DocumentDefinition.json" />
+    <Content Include="metadata\Educator.json" />
+    <Content Include="metadata\Tenure.json" />
+    <Content Include="package.json" />
+    <Content Include="pdf\Form-DPTT-Fields.json" />
+    <Content Include="pdf\Form-DPTT.pdf" />
+    <Content Include="README.md" />
+    <Content Include="metadata\User.json" />
+    <Content Include="public\ReviewEmployees.html" />
+    <Content Include="utils\sql\CleanDatabase.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="public\css\" />
+    <Folder Include="public\js\" />
+    <Folder Include="public\lib\" />
+    <Folder Include="public\lib\angular-1.4.4\" />
+    <Folder Include="public\lib\bootstrap-3.3.5-dist\" />
+    <Folder Include="public\lib\bootstrap-3.3.5-dist\css\" />
+    <Folder Include="public\lib\bootstrap-3.3.5-dist\fonts\" />
+    <Folder Include="public\lib\bootstrap-3.3.5-dist\js\" />
+    <Folder Include="public\common\" />
+    <Folder Include="public\util\" />
+    <Folder Include="modules\" />
+    <Folder Include="public\images\" />
+    <Folder Include="referenceData\" />
+    <Folder Include="pdf\" />
+    <Folder Include="utils\log\" />
+    <Folder Include="utils\" />
+    <Folder Include="metadata\" />
+    <Folder Include="public\controllers\" />
+    <Folder Include="public\" />
+    <Folder Include="data\" />
+    <Folder Include="services\" />
+    <Folder Include="utils\sql\" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

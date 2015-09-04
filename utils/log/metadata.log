@@ -1,0 +1,310 @@
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":30,"msg":"setting up database","time":"2015-09-04T12:55:03.037Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T12:55:03.040Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T12:55:03.047Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T12:55:03.051Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T12:55:03.054Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T12:55:03.055Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T12:55:03.058Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T12:55:03.059Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T12:55:03.060Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T12:55:03.062Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"setting up relationsips","time":"2015-09-04T12:55:03.063Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T12:55:03.063Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T12:55:03.067Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T12:55:03.069Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T12:55:03.070Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T12:55:03.071Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T12:55:03.071Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T12:55:03.071Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T12:55:03.073Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T12:55:03.073Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T12:55:03.074Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T12:55:03.075Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T12:55:03.077Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T12:55:03.078Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T12:55:03.078Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T12:55:03.079Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T12:55:03.079Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T12:55:03.080Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T12:55:03.081Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T12:55:03.082Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11972,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T12:55:03.082Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":30,"msg":"setting up database","time":"2015-09-04T13:02:21.351Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:02:21.353Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:02:21.360Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:02:21.364Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:02:21.367Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:02:21.368Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:02:21.370Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:02:21.371Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:02:21.372Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:02:21.373Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:02:21.375Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:02:21.375Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:02:21.379Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:02:21.381Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:02:21.382Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:02:21.382Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:02:21.383Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:02:21.383Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:02:21.385Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:02:21.386Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:02:21.386Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:02:21.388Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:02:21.390Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:02:21.391Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:02:21.392Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:02:21.392Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:02:21.393Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:02:21.393Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:02:21.394Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:02:21.395Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":12568,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:02:21.396Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":30,"msg":"setting up database","time":"2015-09-04T13:03:53.841Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:03:53.843Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:03:53.850Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:03:53.854Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:03:53.857Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:03:53.858Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:03:53.860Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:03:53.861Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:03:53.862Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:03:53.863Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:03:53.864Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:03:53.865Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:03:53.869Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:03:53.871Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:03:53.872Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:03:53.872Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:03:53.873Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:03:53.873Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:03:53.874Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:03:53.875Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:03:53.875Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:03:53.876Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:03:53.878Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:03:53.879Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:03:53.879Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:03:53.880Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:03:53.881Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:03:53.881Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:03:53.882Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:03:53.883Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14952,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:03:53.883Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":30,"msg":"setting up database","time":"2015-09-04T13:05:02.548Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:05:02.550Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:05:02.555Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:05:02.558Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:05:02.561Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:05:02.562Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:05:02.564Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:05:02.567Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:05:02.568Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:05:02.569Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:05:02.570Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:05:02.570Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:05:02.574Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:05:02.575Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:05:02.576Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:05:02.577Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:05:02.577Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:05:02.578Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:05:02.579Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:05:02.580Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:05:02.581Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:05:02.582Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:05:02.583Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:05:02.584Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:05:02.585Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:05:02.586Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:05:02.586Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:05:02.587Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:05:02.588Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:05:02.589Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10980,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:05:02.590Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":30,"msg":"setting up database","time":"2015-09-04T13:06:59.803Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:06:59.805Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:06:59.809Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:06:59.813Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:06:59.816Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:06:59.817Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:06:59.819Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:06:59.822Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:06:59.823Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:06:59.824Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:06:59.825Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:06:59.825Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:06:59.828Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:06:59.830Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:06:59.831Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:06:59.831Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:06:59.832Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:06:59.833Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:06:59.834Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:06:59.835Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:06:59.835Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:06:59.836Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:06:59.838Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:06:59.839Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:06:59.839Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:06:59.840Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:06:59.841Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:06:59.841Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:06:59.843Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:06:59.844Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":4996,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:06:59.844Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":30,"msg":"setting up database","time":"2015-09-04T13:11:57.211Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:11:57.213Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:11:57.217Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:11:57.221Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:11:57.223Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:11:57.224Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:11:57.226Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:11:57.229Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:11:57.230Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:11:57.231Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:11:57.232Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:11:57.232Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:11:57.235Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:11:57.237Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:11:57.238Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:11:57.238Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:11:57.239Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:11:57.240Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:11:57.242Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:11:57.243Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:11:57.243Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:11:57.244Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:11:57.246Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:11:57.246Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:11:57.247Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:11:57.248Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:11:57.248Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:11:57.249Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:11:57.250Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:11:57.251Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":5276,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:11:57.251Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":30,"msg":"setting up database","time":"2015-09-04T13:14:39.704Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:14:39.706Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:14:39.710Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:14:39.714Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:14:39.716Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:14:39.717Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:14:39.719Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:14:39.722Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:14:39.723Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:14:39.724Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:14:39.725Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:14:39.726Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:14:39.729Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:14:39.730Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:14:39.731Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:14:39.732Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:14:39.733Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:14:39.733Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:14:39.735Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:14:39.735Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:14:39.736Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:14:39.737Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:14:39.739Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:14:39.740Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:14:39.740Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:14:39.741Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:14:39.742Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:14:39.742Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:14:39.743Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:14:39.745Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":15116,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:14:39.745Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":30,"msg":"setting up database","time":"2015-09-04T13:15:16.404Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:15:16.407Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:15:16.411Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:15:16.415Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:15:16.417Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:15:16.418Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:15:16.420Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:15:16.423Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:15:16.424Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:15:16.425Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:15:16.426Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:15:16.426Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:15:16.430Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:15:16.431Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:15:16.432Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:15:16.433Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:15:16.433Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:15:16.434Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:15:16.436Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:15:16.436Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:15:16.437Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:15:16.438Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:15:16.440Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:15:16.440Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:15:16.441Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:15:16.442Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:15:16.442Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:15:16.443Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:15:16.444Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:15:16.445Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":10888,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:15:16.446Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":30,"msg":"setting up database","time":"2015-09-04T13:16:27.753Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:16:27.755Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:16:27.760Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:16:27.764Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:16:27.767Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:16:27.768Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:16:27.769Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:16:27.773Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:16:27.774Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:16:27.775Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:16:27.776Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:16:27.776Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:16:27.780Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:16:27.781Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:16:27.782Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:16:27.783Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:16:27.784Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:16:27.784Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:16:27.786Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:16:27.787Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:16:27.787Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:16:27.788Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:16:27.790Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:16:27.791Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:16:27.791Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:16:27.792Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:16:27.793Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:16:27.794Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:16:27.795Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:16:27.796Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":14532,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:16:27.797Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":30,"msg":"setting up database","time":"2015-09-04T13:24:14.301Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file DocumentDefinition.json","time":"2015-09-04T13:24:14.303Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file DocumentDefinitionField.json","time":"2015-09-04T13:24:14.310Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file DocumentInstance.json","time":"2015-09-04T13:24:14.313Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file DocumentInstanceField.json","time":"2015-09-04T13:24:14.316Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file Educator.json","time":"2015-09-04T13:24:14.318Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file Organization.json","time":"2015-09-04T13:24:14.319Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file OrganizationType.json","time":"2015-09-04T13:24:14.321Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file Tenure.json","time":"2015-09-04T13:24:14.321Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"processing metadata file User.json","time":"2015-09-04T13:24:14.323Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"setting up relationships","time":"2015-09-04T13:24:14.325Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentDefinition hasMany DocumentDefinitionField","time":"2015-09-04T13:24:14.325Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentDefinitionField belongsTo DocumentDefinition","time":"2015-09-04T13:24:14.329Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentInstance belongsTo DocumentDefinition","time":"2015-09-04T13:24:14.330Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentInstance belongsTo Educator","time":"2015-09-04T13:24:14.331Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:24:14.332Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentInstance belongsTo Tenure","time":"2015-09-04T13:24:14.333Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentInstance hasMany DocumentInstanceField","time":"2015-09-04T13:24:14.333Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentInstanceField belongsTo DocumentInstance","time":"2015-09-04T13:24:14.334Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"DocumentInstanceField belongsTo DocumentDefinitionField","time":"2015-09-04T13:24:14.335Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Educator hasMany Tenure","time":"2015-09-04T13:24:14.335Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Educator hasMany DocumentInstance","time":"2015-09-04T13:24:14.336Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Educator hasOne User","time":"2015-09-04T13:24:14.337Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Organization belongsTo OrganizationType","time":"2015-09-04T13:24:14.338Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Organization hasMany Tenure","time":"2015-09-04T13:24:14.339Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Tenure belongsTo Organization","time":"2015-09-04T13:24:14.340Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Tenure belongsTo Educator","time":"2015-09-04T13:24:14.340Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:24:14.341Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"Tenure hasMany DocumentInstance","time":"2015-09-04T13:24:14.342Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"User belongsTo Organization","time":"2015-09-04T13:24:14.343Z","v":0}
+{"name":"metadata","hostname":"CATHY","pid":11960,"level":20,"msg":"User belongsTo Educator","time":"2015-09-04T13:24:14.343Z","v":0}

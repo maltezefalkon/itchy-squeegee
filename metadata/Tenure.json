@@ -1,0 +1,70 @@
+﻿{
+    "TypeKey": "Tenure",
+    "TableName": "tenure",
+    "FieldDefinitions": {
+        "TenureID": {
+            "type": "UUID",
+            "field": "tenure_id",
+            "allowNull": false,
+            "primaryKey": true
+        },
+        "EducatorID": {
+            "type": "UUID",
+            "field": "educator_id",
+            "allowNull": false
+        },
+        "OrganizationID": {
+            "type": "UUID",
+            "field": "organization_id",
+            "allowNull": false
+        },
+        "ApplicationDate": {
+            "type": "DATEONLY",
+            "field": "application_date",
+            "allowNull": true
+        },
+        "StartDate": {
+            "type": "DATEONLY",
+            "field": "start_date",
+            "allowNull": true
+        },
+        "EndDate": {
+            "type": "DATEONLY",
+            "field": "end_date",
+            "allowNull": true
+        },
+        "PositionsHeld": {
+            "type": "STRING",
+            "field": "positions_held",
+            "allowNull": false
+        },
+        "Form168Eligible": {
+            "type": "BOOLEAN",
+            "field": "form_168_eligible",
+            "allowNull": false,
+            "defaultValue": true
+        }
+    },
+    "Relationships": {
+        "Organization": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "organization_id",
+            "RelatedTypeKey": "Organization"
+        },
+        "Educator": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "educator_id",
+            "RelatedTypeKey": "Educator"
+        },
+        "ApplicationDocuments": {
+            "RelationshipType": "hasMany",
+            "ForeignKey": "application_tenure_id",
+            "RelatedTypeKey": "DocumentInstance"
+        },
+        "ReferenceDocuments": {
+            "RelationshipType": "hasMany",
+            "ForeignKey": "reference_tenure_id",
+            "RelatedTypeKey": "DocumentInstance"
+        }
+    }
+}

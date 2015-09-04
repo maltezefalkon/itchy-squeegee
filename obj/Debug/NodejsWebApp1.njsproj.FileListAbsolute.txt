@@ -1,0 +1,1 @@
+Q:\NodejsWebApp1\bin\Microsoft.NodejsTools.WebRole.dll

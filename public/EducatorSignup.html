@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>Educator Signup</title>
+    <style type="text/css">
+        .form-group.required label:after {
+            content: '*';
+            color: red;
+            font-size: large;
+        }
+
+        .panel-heading span {
+            font-size: large;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <script type="text/javascript" src="util/util.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="controllers/HeaderController.js"></script>
+    <script type="text/javascript" src="controllers/EducatorSignupController.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var ctl = app.controller('controller', EducatorSignupController);
+        ctl.$inject = ['$scope', '$http', '$location'];
+        var headerController = app.controller('headerController', HeaderController);
+        headerController.$inject = ['$scope', '$http', '$location'];
+    </script>
+    <div class="container">
+        <div ng-include="'common/header.html'"></div>
+        <div class="page-header">
+            Create Educator Account
+        </div>
+        <form action="/user/signup/Educator" name="SignupForm" ng-submit="controller.submit(SignupForm.$valid)" method="post">
+            <!-- educator -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Personal Information</span>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="Title">Title</label>
+                        <select name="Title" required ng-model="Title" class="form-control">
+                            <option></option>
+                            <option>Dr.</option>
+                            <option>Mr.</option>
+                            <option>Ms.</option>
+                            <option>Mrs.</option>
+                        </select>
+                    </div>
+                    <div class="form-group required">
+                        <label for="FirstName">First Name</label>
+                        <input type="text" class="form-control" name="FirstName" ng-model="FirstName" required="required" />
+                    </div>
+                    <div class="form-group">
+                        <label for="MiddleName">Middle Name</label>
+                        <input type="text" class="form-control" name="MiddleName" ng-model="MiddleName" />
+                    </div>
+                    <div class="form-group required">
+                        <label for="LastName">Last Name</label>
+                        <input type="text" class="form-control" name="LastName" ng-model="LastName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Suffix">Suffix</label>
+                        <input type="text" class="form-control" name="Suffix" ng-model="Suffix" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Suffix">Former Name</label>
+                        <input type="text" class="form-control" name="FormerName" ng-model="FormerName" />
+                    </div>
+                    <div class="form-group required">
+                        <label for="TelephoneNumber">Telephone Number</label>
+                        <input type="text" class="form-control" name="TelephoneNumber" ng-model="TelephoneNumber" required />
+                    </div>
+                    <div class="form-group required">
+                        <label for="DateOfBirth">Date of Birth</label>
+                        <input type="date" class="form-control" name="DateOfBirth" ng-model="DateOfBirth" required />
+                    </div>
+                    <div class="form-group required">
+                        <label for="Last4">Last 4 Digits of Social Security</label>
+                        <input type="text" class="form-control" name="Last4" ng-model="Last4" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Last4">PPID</label>
+                        <input type="text" class="form-control" name="PPID" ng-model="PPID" />
+                    </div>
+                    <div class="form-group required">
+                        <label for="Address1">Address 1</label>
+                        <input type="text" class="form-control" name="Address1" ng-model="Address1" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Address2">Address 2</label>
+                        <input type="text" class="form-control" name="Address2" ng-model="Address2" />
+                    </div>
+                    <div class="form-group required">
+                        <label for="City">City</label>
+                        <input type="text" class="form-control" name="City" ng-model="City" required />
+                    </div>
+                    <div class="form-group required">
+                        <label for="State">State</label>
+                        <input type="text" class="form-control" name="State" ng-model="State" required />
+                    </div>
+                    <div class="form-group required">
+                        <label for="State">Zip Code</label>
+                        <input type="text" class="form-control" name="ZipCode" ng-model="ZipCode" required />
+                    </div>
+                </div>
+            </div>
+
+            <!-- user -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Login Information</span>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group required">
+                        <label for="username">Email Address</label>
+                        <input type="email" class="form-control" name="EmailAddress" ng-model="emailAddress" required />
+                    </div>
+                    <div class="form-group required">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="Password" ng-model="password" required />
+                    </div>
+                    <div class="form-group required">
+                        <label for="password">Re-enter Password</label>
+                        <input type="password" class="form-control" name="Password2" ng-model="password2" required compare-to="controller.password" />
+                        <div ng-messages="SignupForm.Password2.$error" class="error-message" role="alert">
+                            <div ng-message="compare-to">Passwords don't match</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- tenure -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>
+                        Work History
+                    </span>
+                    <span class="pull-right">
+                        <input type="button" class="btn btn-sm btn-success" value="Add Work History" ng-click="addNewTenure()" />
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div ng-hide="Tenures.length > 0">
+                        You have no work history defined.  Click <strong>"Add Work History"</strong> to add employment history.
+                    </div>
+                    <div ng-show="Tenures">
+                        <div ng-repeat="tenure in Tenures">
+                            <div class="form-group required">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" name="startDate" class="form-control" ng-model="tenure.StartDate" />
+                            </div>
+                            <div class="form-group">
+                                <label for="startDate">End Date</label>
+                                <input type="date" name="startDate" class="form-control" ng-model="tenure.StartDate" />
+                                <label class="pull-right"><input type="checkbox" value="Present" />Present</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="selectOrganization">Select Organization Type</label>
+                                <div class="radio btn-group" style="padding-left: 25px">
+                                    <label class="radio-inline"><input type="radio" value="School" ng-model="tenure.OrganizationType" />School</label>
+                                    <label class="radio-inline"><input type="radio" value="Other" ng-model="tenure.OrganizationType" />Other</label>
+                                </div>
+                                <div ng-show="tenure.OrganizationType == 'School'">
+                                    <select>
+                                        <option ng-repeat="school in Schools">{{school.Name}}</option>
+                                    </select>
+                                </div>
+                                <div ng-show="tenure.OrganizationType == 'Other'">
+                                    <div class="form-group">
+                                        <label for="tenureOrganizationName">Name of the Organization</label>
+                                        <input type="text" name="tenureOrganizationName" class="form-control" ng-model="tenure.Organization.Name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tenureOrganizationAddress1">Address 1</label>
+                                        <input type="text" name="tenureOrganizationAddress1" class="form-control" ng-model="tenure.Organization.Address1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tenureOrganizationAddress2">Address 2</label>
+                                        <input type="text" name="tenureOrganizationAddress2" class="form-control" ng-model="tenure.Organization.Address2" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tenureOrganizationCity">City</label>
+                                        <input type="text" name="tenureOrganizationCity" class="form-control" ng-model="tenure.Organization.City" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tenureOrganizationState">State</label>
+                                        <input type="text" name="tenureOrganizationState" class="form-control" ng-model="tenure.Organization.State" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tenureOrganizationState">Zip Code</label>
+                                        <input type="text" name="tenureOrganizationZipCode" class="form-control" ng-model="tenure.Organization.ZipCode" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="Sign Up" class="btn btn-lg btn-primary btn-block btn-default" />
+            </div>
+        </form>
+        <div ng-include="'common/footer.html'"></div>
+    </div>
+</body>
+</html>

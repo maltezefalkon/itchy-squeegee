@@ -1,0 +1,441 @@
+{"name":"main","hostname":"CATHY","pid":15308,"level":30,"msg":"initializing","time":"2015-08-23T19:36:50.532Z","v":0}
+{"name":"main","hostname":"CATHY","pid":15308,"level":20,"msg":"listening on port 1337","time":"2015-08-23T19:36:51.492Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13776,"level":30,"msg":"initializing","time":"2015-08-23T19:43:57.116Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13776,"level":20,"msg":"listening on port 1337","time":"2015-08-23T19:43:58.107Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7920,"level":30,"msg":"initializing","time":"2015-08-23T19:46:10.551Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7920,"level":20,"msg":"listening on port 1337","time":"2015-08-23T19:46:11.596Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14812,"level":30,"msg":"initializing","time":"2015-08-23T19:48:59.017Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14812,"level":20,"msg":"listening on port 1337","time":"2015-08-23T19:48:59.988Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12864,"level":30,"msg":"initializing","time":"2015-08-23T19:57:29.344Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12864,"level":20,"msg":"listening on port 1337","time":"2015-08-23T19:57:30.288Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14868,"level":30,"msg":"initializing","time":"2015-08-23T20:00:51.682Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14868,"level":20,"msg":"listening on port 1337","time":"2015-08-23T20:00:52.653Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14368,"level":30,"msg":"initializing","time":"2015-08-25T02:08:44.372Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14368,"level":20,"msg":"listening on port 1337","time":"2015-08-25T02:08:45.883Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8976,"level":30,"msg":"initializing","time":"2015-08-25T04:15:10.484Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8976,"level":20,"msg":"listening on port 1337","time":"2015-08-25T04:15:11.472Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10496,"level":30,"msg":"initializing","time":"2015-08-29T15:07:00.131Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10496,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T15:07:00.132Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10496,"level":30,"msg":"setting up middleware","time":"2015-08-29T15:07:00.133Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10496,"level":30,"msg":"setting up routes","time":"2015-08-29T15:07:00.616Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10496,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T15:07:00.644Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12768,"level":30,"msg":"initializing","time":"2015-08-29T15:12:30.226Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12768,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T15:12:30.227Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12768,"level":30,"msg":"setting up middleware","time":"2015-08-29T15:12:30.227Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12768,"level":30,"msg":"setting up routes","time":"2015-08-29T15:12:30.413Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12768,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T15:12:30.437Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12412,"level":30,"msg":"initializing","time":"2015-08-29T15:56:32.608Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12412,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T15:56:32.609Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12412,"level":30,"msg":"setting up middleware","time":"2015-08-29T15:56:32.609Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12412,"level":30,"msg":"setting up routes","time":"2015-08-29T15:56:32.798Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12412,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T15:56:32.822Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14328,"level":30,"msg":"initializing","time":"2015-08-29T15:58:34.991Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14328,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T15:58:34.993Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14328,"level":30,"msg":"setting up middleware","time":"2015-08-29T15:58:34.993Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14328,"level":30,"msg":"setting up routes","time":"2015-08-29T15:58:35.176Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14328,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T15:58:35.200Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11240,"level":30,"msg":"initializing","time":"2015-08-29T15:59:04.398Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11240,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T15:59:04.400Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11240,"level":30,"msg":"setting up middleware","time":"2015-08-29T15:59:04.400Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11240,"level":30,"msg":"setting up routes","time":"2015-08-29T15:59:04.585Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11240,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T15:59:04.609Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6052,"level":30,"msg":"initializing","time":"2015-08-29T16:07:33.623Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6052,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:07:33.625Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6052,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:07:33.625Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6052,"level":30,"msg":"setting up routes","time":"2015-08-29T16:07:33.804Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6052,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:07:33.829Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6772,"level":30,"msg":"initializing","time":"2015-08-29T16:07:53.840Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6772,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:07:53.841Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6772,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:07:53.841Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6772,"level":30,"msg":"setting up routes","time":"2015-08-29T16:07:54.026Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6772,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:07:54.050Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14664,"level":30,"msg":"initializing","time":"2015-08-29T16:08:06.902Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14664,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:08:06.903Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14664,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:08:06.903Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14664,"level":30,"msg":"setting up routes","time":"2015-08-29T16:08:07.082Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14664,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:08:07.106Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12124,"level":30,"msg":"initializing","time":"2015-08-29T16:10:39.492Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12124,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:10:39.494Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12124,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:10:39.494Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12124,"level":30,"msg":"setting up routes","time":"2015-08-29T16:10:39.681Z","v":0}
+{"name":"main","hostname":"CATHY","pid":12124,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:10:39.706Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7776,"level":30,"msg":"initializing","time":"2015-08-29T16:10:50.568Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7776,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:10:50.569Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7776,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:10:50.569Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7776,"level":30,"msg":"setting up routes","time":"2015-08-29T16:10:50.754Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7776,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:10:50.778Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13704,"level":30,"msg":"initializing","time":"2015-08-29T16:11:20.557Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13704,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:11:20.559Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13704,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:11:20.559Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13704,"level":30,"msg":"setting up routes","time":"2015-08-29T16:11:20.743Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13704,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:11:20.767Z","v":0}
+{"name":"main","hostname":"CATHY","pid":1048,"level":30,"msg":"initializing","time":"2015-08-29T16:11:53.615Z","v":0}
+{"name":"main","hostname":"CATHY","pid":1048,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:11:53.617Z","v":0}
+{"name":"main","hostname":"CATHY","pid":1048,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:11:53.617Z","v":0}
+{"name":"main","hostname":"CATHY","pid":1048,"level":30,"msg":"setting up routes","time":"2015-08-29T16:11:53.798Z","v":0}
+{"name":"main","hostname":"CATHY","pid":1048,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:11:53.823Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13724,"level":30,"msg":"initializing","time":"2015-08-29T16:12:33.606Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13724,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:12:33.607Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13724,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:12:33.607Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13724,"level":30,"msg":"setting up routes","time":"2015-08-29T16:12:33.793Z","v":0}
+{"name":"main","hostname":"CATHY","pid":13724,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:12:33.817Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14552,"level":30,"msg":"initializing","time":"2015-08-29T16:21:45.966Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14552,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T16:21:45.967Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14552,"level":30,"msg":"setting up middleware","time":"2015-08-29T16:21:45.967Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14552,"level":30,"msg":"setting up routes","time":"2015-08-29T16:21:46.149Z","v":0}
+{"name":"main","hostname":"CATHY","pid":14552,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T16:21:46.174Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6296,"level":30,"msg":"initializing","time":"2015-08-29T19:15:37.001Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6296,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T19:15:37.002Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6296,"level":30,"msg":"setting up middleware","time":"2015-08-29T19:15:37.002Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6296,"level":30,"msg":"setting up routes","time":"2015-08-29T19:15:37.209Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6296,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T19:15:37.234Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6400,"level":30,"msg":"initializing","time":"2015-08-29T19:21:43.789Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6400,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T19:21:43.789Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6400,"level":30,"msg":"setting up middleware","time":"2015-08-29T19:21:43.789Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6400,"level":30,"msg":"setting up routes","time":"2015-08-29T19:21:43.976Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6400,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T19:21:44.007Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6588,"level":30,"msg":"initializing","time":"2015-08-29T19:24:31.376Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6588,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T19:24:31.376Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6588,"level":30,"msg":"setting up middleware","time":"2015-08-29T19:24:31.376Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6588,"level":30,"msg":"setting up routes","time":"2015-08-29T19:24:31.579Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6588,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T19:24:31.595Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8620,"level":30,"msg":"initializing","time":"2015-08-29T19:28:37.496Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8620,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T19:28:37.496Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8620,"level":30,"msg":"setting up middleware","time":"2015-08-29T19:28:37.496Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8620,"level":30,"msg":"setting up routes","time":"2015-08-29T19:28:37.698Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8620,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T19:28:37.714Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6876,"level":30,"msg":"initializing","time":"2015-08-29T19:30:30.809Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6876,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T19:30:30.809Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6876,"level":30,"msg":"setting up middleware","time":"2015-08-29T19:30:30.809Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6876,"level":30,"msg":"setting up routes","time":"2015-08-29T19:30:30.997Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6876,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T19:30:31.033Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5648,"level":30,"msg":"initializing","time":"2015-08-29T19:33:33.682Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5648,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T19:33:33.682Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5648,"level":30,"msg":"setting up middleware","time":"2015-08-29T19:33:33.682Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5648,"level":30,"msg":"setting up routes","time":"2015-08-29T19:33:33.870Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5648,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T19:33:33.901Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5696,"level":30,"msg":"initializing","time":"2015-08-29T19:35:28.109Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5696,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-29T19:35:28.109Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5696,"level":30,"msg":"setting up middleware","time":"2015-08-29T19:35:28.109Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5696,"level":30,"msg":"setting up routes","time":"2015-08-29T19:35:28.312Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5696,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-29T19:35:28.327Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9652,"level":30,"msg":"initializing","time":"2015-08-30T01:14:38.513Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9652,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T01:14:38.513Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9652,"level":30,"msg":"setting up middleware","time":"2015-08-30T01:14:38.513Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9652,"level":30,"msg":"setting up routes","time":"2015-08-30T01:14:38.762Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9652,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T01:14:38.778Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4276,"level":30,"msg":"initializing","time":"2015-08-30T01:16:00.663Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4276,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T01:16:00.663Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4276,"level":30,"msg":"setting up middleware","time":"2015-08-30T01:16:00.663Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4276,"level":30,"msg":"setting up routes","time":"2015-08-30T01:16:00.865Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4276,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T01:16:00.881Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7192,"level":30,"msg":"initializing","time":"2015-08-30T01:17:01.266Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7192,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T01:17:01.266Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7192,"level":30,"msg":"setting up middleware","time":"2015-08-30T01:17:01.266Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7192,"level":30,"msg":"setting up routes","time":"2015-08-30T01:17:01.453Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7192,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T01:17:01.484Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9692,"level":30,"msg":"initializing","time":"2015-08-30T01:18:57.703Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9692,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T01:18:57.719Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9692,"level":30,"msg":"setting up middleware","time":"2015-08-30T01:18:57.719Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9692,"level":30,"msg":"setting up routes","time":"2015-08-30T01:18:57.906Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9692,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T01:18:57.937Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7240,"level":30,"msg":"initializing","time":"2015-08-30T03:19:48.194Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7240,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:19:48.196Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7240,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:19:48.196Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7240,"level":30,"msg":"setting up routes","time":"2015-08-30T03:19:48.449Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7240,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:19:48.473Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10040,"level":30,"msg":"initializing","time":"2015-08-30T03:24:13.187Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10040,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:24:13.187Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10040,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:24:13.187Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10040,"level":30,"msg":"setting up routes","time":"2015-08-30T03:24:13.390Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10040,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:24:13.406Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8164,"level":30,"msg":"initializing","time":"2015-08-30T03:24:49.671Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8164,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:24:49.671Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8164,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:24:49.671Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8164,"level":30,"msg":"setting up routes","time":"2015-08-30T03:24:49.881Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8164,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:24:49.896Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9416,"level":30,"msg":"initializing","time":"2015-08-30T03:30:58.359Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9416,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:30:58.359Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9416,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:30:58.359Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9416,"level":30,"msg":"setting up routes","time":"2015-08-30T03:30:58.562Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9416,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:30:58.578Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7988,"level":30,"msg":"initializing","time":"2015-08-30T03:32:27.769Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7988,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:32:27.770Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7988,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:32:27.770Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7988,"level":30,"msg":"setting up routes","time":"2015-08-30T03:32:27.972Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7988,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:32:28.004Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9616,"level":30,"msg":"initializing","time":"2015-08-30T03:33:46.807Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9616,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:33:46.807Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9616,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:33:46.807Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9616,"level":30,"msg":"setting up routes","time":"2015-08-30T03:33:46.994Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9616,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:33:47.026Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8604,"level":30,"msg":"initializing","time":"2015-08-30T03:36:40.888Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8604,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:36:40.888Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8604,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:36:40.888Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8604,"level":30,"msg":"setting up routes","time":"2015-08-30T03:36:41.083Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8604,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:36:41.098Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9928,"level":30,"msg":"initializing","time":"2015-08-30T03:39:47.267Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9928,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:39:47.267Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9928,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:39:47.267Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9928,"level":30,"msg":"setting up routes","time":"2015-08-30T03:39:47.469Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9928,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:39:47.485Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9324,"level":30,"msg":"initializing","time":"2015-08-30T03:45:26.515Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9324,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:45:26.515Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9324,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:45:26.515Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9324,"level":30,"msg":"setting up routes","time":"2015-08-30T03:45:26.717Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9324,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:45:26.733Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8608,"level":30,"msg":"initializing","time":"2015-08-30T03:47:11.815Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8608,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:47:11.815Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8608,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:47:11.815Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8608,"level":30,"msg":"setting up routes","time":"2015-08-30T03:47:12.017Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8608,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:47:12.033Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9884,"level":30,"msg":"initializing","time":"2015-08-30T03:47:41.352Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9884,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:47:41.352Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9884,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:47:41.352Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9884,"level":30,"msg":"setting up routes","time":"2015-08-30T03:47:41.557Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9884,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:47:41.572Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6700,"level":30,"msg":"initializing","time":"2015-08-30T03:48:42.166Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6700,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:48:42.166Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6700,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:48:42.166Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6700,"level":30,"msg":"setting up routes","time":"2015-08-30T03:48:42.353Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6700,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:48:42.384Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8152,"level":30,"msg":"initializing","time":"2015-08-30T03:50:37.774Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8152,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T03:50:37.774Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8152,"level":30,"msg":"setting up middleware","time":"2015-08-30T03:50:37.774Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8152,"level":30,"msg":"setting up routes","time":"2015-08-30T03:50:37.978Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8152,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T03:50:37.994Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7292,"level":30,"msg":"initializing","time":"2015-08-30T04:36:59.887Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7292,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T04:36:59.887Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7292,"level":30,"msg":"setting up middleware","time":"2015-08-30T04:36:59.887Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7292,"level":30,"msg":"setting up routes","time":"2015-08-30T04:37:00.090Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7292,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T04:37:00.105Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7036,"level":30,"msg":"initializing","time":"2015-08-30T04:38:17.401Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7036,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T04:38:17.401Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7036,"level":30,"msg":"setting up middleware","time":"2015-08-30T04:38:17.401Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7036,"level":30,"msg":"setting up routes","time":"2015-08-30T04:38:17.588Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7036,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T04:38:17.619Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6824,"level":30,"msg":"initializing","time":"2015-08-30T05:25:58.139Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6824,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T05:25:58.140Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6824,"level":30,"msg":"setting up middleware","time":"2015-08-30T05:25:58.141Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6824,"level":30,"msg":"setting up routes","time":"2015-08-30T05:25:58.351Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6824,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T05:25:58.374Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8964,"level":30,"msg":"initializing","time":"2015-08-30T05:36:46.668Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8964,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T05:36:46.669Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8964,"level":30,"msg":"setting up middleware","time":"2015-08-30T05:36:46.669Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8964,"level":30,"msg":"setting up routes","time":"2015-08-30T05:36:46.886Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8964,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T05:36:46.911Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5288,"level":30,"msg":"initializing","time":"2015-08-30T05:37:11.089Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5288,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T05:37:11.090Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5288,"level":30,"msg":"setting up middleware","time":"2015-08-30T05:37:11.090Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5288,"level":30,"msg":"setting up routes","time":"2015-08-30T05:37:11.297Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5288,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T05:37:11.322Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8276,"level":30,"msg":"initializing","time":"2015-08-30T06:13:33.798Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8276,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T06:13:33.800Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8276,"level":30,"msg":"setting up middleware","time":"2015-08-30T06:13:33.800Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8276,"level":30,"msg":"setting up routes","time":"2015-08-30T06:13:34.007Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8276,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T06:13:34.032Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8924,"level":30,"msg":"initializing","time":"2015-08-30T06:15:45.185Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8924,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T06:15:45.187Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8924,"level":30,"msg":"setting up middleware","time":"2015-08-30T06:15:45.187Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8924,"level":30,"msg":"setting up routes","time":"2015-08-30T06:15:45.405Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8924,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T06:15:45.428Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4364,"level":30,"msg":"initializing","time":"2015-08-30T06:27:25.473Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4364,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T06:27:25.474Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4364,"level":30,"msg":"setting up middleware","time":"2015-08-30T06:27:25.474Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4364,"level":30,"msg":"setting up routes","time":"2015-08-30T06:27:25.688Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4364,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T06:27:25.710Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9944,"level":30,"msg":"initializing","time":"2015-08-30T06:41:51.876Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9944,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-08-30T06:41:51.877Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9944,"level":30,"msg":"setting up middleware","time":"2015-08-30T06:41:51.877Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9944,"level":30,"msg":"setting up routes","time":"2015-08-30T06:41:52.095Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9944,"level":30,"msg":"setup done; listening on port 1337","time":"2015-08-30T06:41:52.120Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9064,"level":30,"msg":"initializing","time":"2015-09-01T03:15:02.548Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9064,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:15:02.549Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9064,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:15:02.549Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9064,"level":30,"msg":"setting up routes","time":"2015-09-01T03:15:02.811Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9064,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:15:02.835Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5352,"level":30,"msg":"initializing","time":"2015-09-01T03:26:50.136Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5352,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:26:50.138Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5352,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:26:50.138Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5352,"level":30,"msg":"setting up routes","time":"2015-09-01T03:26:50.343Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5352,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:26:50.367Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9696,"level":30,"msg":"initializing","time":"2015-09-01T03:27:14.591Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9696,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:27:14.592Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9696,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:27:14.592Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9696,"level":30,"msg":"setting up routes","time":"2015-09-01T03:27:14.804Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9696,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:27:14.828Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10800,"level":30,"msg":"initializing","time":"2015-09-01T03:27:33.849Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10800,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:27:33.850Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10800,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:27:33.850Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10800,"level":30,"msg":"setting up routes","time":"2015-09-01T03:27:34.062Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10800,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:27:34.086Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2424,"level":30,"msg":"initializing","time":"2015-09-01T03:29:32.279Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2424,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:29:32.280Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2424,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:29:32.280Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2424,"level":30,"msg":"setting up routes","time":"2015-09-01T03:29:32.497Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2424,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:29:32.522Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7256,"level":30,"msg":"initializing","time":"2015-09-01T03:29:53.641Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7256,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:29:53.643Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7256,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:29:53.643Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7256,"level":30,"msg":"setting up routes","time":"2015-09-01T03:29:53.850Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7256,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:29:53.873Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2628,"level":30,"msg":"initializing","time":"2015-09-01T03:33:58.451Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2628,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:33:58.452Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2628,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:33:58.452Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2628,"level":30,"msg":"setting up routes","time":"2015-09-01T03:33:58.655Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2628,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:33:58.678Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9124,"level":30,"msg":"initializing","time":"2015-09-01T03:40:25.073Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9124,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:40:25.075Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9124,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:40:25.075Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9124,"level":30,"msg":"setting up routes","time":"2015-09-01T03:40:25.281Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9124,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:40:25.304Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5504,"level":30,"msg":"initializing","time":"2015-09-01T03:58:09.777Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5504,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:58:09.778Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5504,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:58:09.778Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5504,"level":30,"msg":"setting up routes","time":"2015-09-01T03:58:09.993Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5504,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:58:10.016Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10872,"level":30,"msg":"initializing","time":"2015-09-01T03:59:34.304Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10872,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T03:59:34.306Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10872,"level":30,"msg":"setting up middleware","time":"2015-09-01T03:59:34.306Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10872,"level":30,"msg":"setting up routes","time":"2015-09-01T03:59:34.513Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10872,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T03:59:34.537Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9332,"level":30,"msg":"initializing","time":"2015-09-01T04:01:19.834Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9332,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T04:01:19.835Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9332,"level":30,"msg":"setting up middleware","time":"2015-09-01T04:01:19.835Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9332,"level":30,"msg":"setting up routes","time":"2015-09-01T04:01:20.051Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9332,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T04:01:20.076Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10892,"level":30,"msg":"initializing","time":"2015-09-01T04:03:30.186Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10892,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T04:03:30.187Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10892,"level":30,"msg":"setting up middleware","time":"2015-09-01T04:03:30.188Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10892,"level":30,"msg":"setting up routes","time":"2015-09-01T04:03:30.395Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10892,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T04:03:30.418Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8580,"level":30,"msg":"initializing","time":"2015-09-01T04:04:57.291Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8580,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T04:04:57.292Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8580,"level":30,"msg":"setting up middleware","time":"2015-09-01T04:04:57.292Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8580,"level":30,"msg":"setting up routes","time":"2015-09-01T04:04:57.494Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8580,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T04:04:57.516Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8092,"level":30,"msg":"initializing","time":"2015-09-01T04:05:25.199Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8092,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T04:05:25.200Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8092,"level":30,"msg":"setting up middleware","time":"2015-09-01T04:05:25.200Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8092,"level":30,"msg":"setting up routes","time":"2015-09-01T04:05:25.413Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8092,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T04:05:25.437Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10568,"level":30,"msg":"initializing","time":"2015-09-01T04:05:51.128Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10568,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T04:05:51.129Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10568,"level":30,"msg":"setting up middleware","time":"2015-09-01T04:05:51.129Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10568,"level":30,"msg":"setting up routes","time":"2015-09-01T04:05:51.339Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10568,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T04:05:51.361Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9380,"level":30,"msg":"initializing","time":"2015-09-01T04:08:16.153Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9380,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T04:08:16.154Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9380,"level":30,"msg":"setting up middleware","time":"2015-09-01T04:08:16.154Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9380,"level":30,"msg":"setting up routes","time":"2015-09-01T04:08:16.355Z","v":0}
+{"name":"main","hostname":"CATHY","pid":9380,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T04:08:16.377Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8896,"level":30,"msg":"initializing","time":"2015-09-01T04:11:51.717Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8896,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-01T04:11:51.718Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8896,"level":30,"msg":"setting up middleware","time":"2015-09-01T04:11:51.718Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8896,"level":30,"msg":"setting up routes","time":"2015-09-01T04:11:51.918Z","v":0}
+{"name":"main","hostname":"CATHY","pid":8896,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-01T04:11:51.940Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11416,"level":30,"msg":"initializing","time":"2015-09-02T04:03:37.908Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11416,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:03:37.909Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11416,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:03:37.910Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11416,"level":30,"msg":"setting up routes","time":"2015-09-02T04:03:38.161Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11416,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:03:38.184Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11284,"level":30,"msg":"initializing","time":"2015-09-02T04:04:12.108Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11284,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:04:12.109Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11284,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:04:12.109Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11284,"level":30,"msg":"setting up routes","time":"2015-09-02T04:04:12.313Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11284,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:04:12.337Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11956,"level":30,"msg":"initializing","time":"2015-09-02T04:34:23.742Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11956,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:34:23.743Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11956,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:34:23.744Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11956,"level":30,"msg":"setting up routes","time":"2015-09-02T04:34:23.959Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11956,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:34:23.983Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11892,"level":30,"msg":"initializing","time":"2015-09-02T04:34:49.768Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11892,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:34:49.769Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11892,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:34:49.770Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11892,"level":30,"msg":"setting up routes","time":"2015-09-02T04:34:49.975Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11892,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:34:49.997Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7736,"level":30,"msg":"initializing","time":"2015-09-02T04:35:11.337Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7736,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:35:11.339Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7736,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:35:11.339Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7736,"level":30,"msg":"setting up routes","time":"2015-09-02T04:35:11.548Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7736,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:35:11.573Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10764,"level":30,"msg":"initializing","time":"2015-09-02T04:35:35.227Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10764,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:35:35.229Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10764,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:35:35.229Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10764,"level":30,"msg":"setting up routes","time":"2015-09-02T04:35:35.447Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10764,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:35:35.471Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11352,"level":30,"msg":"initializing","time":"2015-09-02T04:37:28.552Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11352,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:37:28.553Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11352,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:37:28.554Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11352,"level":30,"msg":"setting up routes","time":"2015-09-02T04:37:28.765Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11352,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:37:28.789Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7664,"level":30,"msg":"initializing","time":"2015-09-02T04:48:36.497Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7664,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:48:36.498Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7664,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:48:36.498Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7664,"level":30,"msg":"setting up routes","time":"2015-09-02T04:48:36.703Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7664,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:48:36.725Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5908,"level":30,"msg":"initializing","time":"2015-09-02T04:49:14.469Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5908,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:49:14.470Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5908,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:49:14.470Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5908,"level":30,"msg":"setting up routes","time":"2015-09-02T04:49:14.683Z","v":0}
+{"name":"main","hostname":"CATHY","pid":5908,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:49:14.707Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11788,"level":30,"msg":"initializing","time":"2015-09-02T04:49:42.058Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11788,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:49:42.059Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11788,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:49:42.059Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11788,"level":30,"msg":"setting up routes","time":"2015-09-02T04:49:42.268Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11788,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:49:42.293Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7864,"level":30,"msg":"initializing","time":"2015-09-02T04:50:40.235Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7864,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:50:40.236Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7864,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:50:40.236Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7864,"level":30,"msg":"setting up routes","time":"2015-09-02T04:50:40.440Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7864,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:50:40.463Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7908,"level":30,"msg":"initializing","time":"2015-09-02T04:51:08.814Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7908,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:51:08.815Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7908,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:51:08.815Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7908,"level":30,"msg":"setting up routes","time":"2015-09-02T04:51:09.019Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7908,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:51:09.043Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11124,"level":30,"msg":"initializing","time":"2015-09-02T04:57:33.683Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11124,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:57:33.684Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11124,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:57:33.685Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11124,"level":30,"msg":"setting up routes","time":"2015-09-02T04:57:33.891Z","v":0}
+{"name":"main","hostname":"CATHY","pid":11124,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:57:33.914Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7652,"level":30,"msg":"initializing","time":"2015-09-02T04:58:43.892Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7652,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-02T04:58:43.893Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7652,"level":30,"msg":"setting up middleware","time":"2015-09-02T04:58:43.893Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7652,"level":30,"msg":"setting up routes","time":"2015-09-02T04:58:44.094Z","v":0}
+{"name":"main","hostname":"CATHY","pid":7652,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-02T04:58:44.117Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6796,"level":30,"msg":"initializing","time":"2015-09-03T03:30:36.064Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6796,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-03T03:30:36.066Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6796,"level":30,"msg":"setting up middleware","time":"2015-09-03T03:30:36.066Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6796,"level":30,"msg":"setting up routes","time":"2015-09-03T03:30:36.338Z","v":0}
+{"name":"main","hostname":"CATHY","pid":6796,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-03T03:30:36.362Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2356,"level":30,"msg":"initializing","time":"2015-09-03T03:57:46.068Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2356,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-03T03:57:46.069Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2356,"level":30,"msg":"setting up middleware","time":"2015-09-03T03:57:46.069Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2356,"level":30,"msg":"setting up routes","time":"2015-09-03T03:57:46.286Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2356,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-03T03:57:46.309Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4540,"level":30,"msg":"initializing","time":"2015-09-03T06:27:59.634Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4540,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-03T06:27:59.635Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4540,"level":30,"msg":"setting up middleware","time":"2015-09-03T06:27:59.635Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4540,"level":30,"msg":"setting up routes","time":"2015-09-03T06:27:59.841Z","v":0}
+{"name":"main","hostname":"CATHY","pid":4540,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-03T06:27:59.865Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2908,"level":30,"msg":"initializing","time":"2015-09-03T06:37:49.784Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2908,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-03T06:37:49.785Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2908,"level":30,"msg":"setting up middleware","time":"2015-09-03T06:37:49.785Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2908,"level":30,"msg":"setting up routes","time":"2015-09-03T06:37:50.026Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2908,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-03T06:37:50.052Z","v":0}
+{"name":"main","hostname":"CATHY","pid":3716,"level":30,"msg":"initializing","time":"2015-09-03T19:19:56.771Z","v":0}
+{"name":"main","hostname":"CATHY","pid":3716,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-03T19:19:56.773Z","v":0}
+{"name":"main","hostname":"CATHY","pid":3716,"level":30,"msg":"setting up middleware","time":"2015-09-03T19:19:56.773Z","v":0}
+{"name":"main","hostname":"CATHY","pid":3716,"level":30,"msg":"setting up routes","time":"2015-09-03T19:19:56.982Z","v":0}
+{"name":"main","hostname":"CATHY","pid":3716,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-03T19:19:57.005Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10648,"level":30,"msg":"initializing","time":"2015-09-03T23:57:16.394Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10648,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-03T23:57:16.396Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10648,"level":30,"msg":"setting up middleware","time":"2015-09-03T23:57:16.396Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10648,"level":30,"msg":"setting up routes","time":"2015-09-03T23:57:16.641Z","v":0}
+{"name":"main","hostname":"CATHY","pid":10648,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-03T23:57:16.665Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2108,"level":30,"msg":"initializing","time":"2015-09-04T13:24:47.982Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2108,"level":30,"msg":"setting up view engine: klei-dust","time":"2015-09-04T13:24:47.983Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2108,"level":30,"msg":"setting up middleware","time":"2015-09-04T13:24:47.983Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2108,"level":30,"msg":"setting up routes","time":"2015-09-04T13:24:48.227Z","v":0}
+{"name":"main","hostname":"CATHY","pid":2108,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-04T13:24:48.252Z","v":0}

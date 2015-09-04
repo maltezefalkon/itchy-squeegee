@@ -1,0 +1,24 @@
+﻿{
+    "TypeKey":  "DocumentDefinition",
+    "TableName": "document_definition",
+    "FieldDefinitions": {
+        "DocumentDefinitionID": {
+            "type": "UUID",
+            "field": "document_definition_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "Name": {
+            "type": "STRING",
+            "field": "name",
+            "allowNull": false
+        }
+    },
+    "Relationships": {
+        "Fields": {
+            "RelationshipType": "hasMany",
+            "RelatedTypeKey": "DocumentDefinitionField",
+            "ForeignKey": "document_definition_id"
+        }
+    }
+}

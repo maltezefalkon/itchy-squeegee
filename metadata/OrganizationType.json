@@ -1,0 +1,16 @@
+﻿{
+    "TypeKey":  "OrganizationType",
+    "TableName": "organization_type",
+    "FieldDefinitions": {
+        "OrganizationTypeID": {
+            "type": "UUID",
+            "field": "organization_type_id",
+            "primaryKey": true
+        },
+        "Name": {
+            "type": "STRING",
+            "field": "name",
+            "allowNull": false
+        }
+    }
+}

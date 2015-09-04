@@ -1,0 +1,28 @@
+﻿[
+  {
+    "OrganizationID": "9e1d80d1-00b3-48cd-8172-f0855b648126",
+    "Name": "Rabbit Charter School",
+    "OrganizationTypeID": "248306cf-f840-462c-851d-76048e907a1a",
+    "EmailAddress": "rabbit@myschool.edu",
+    "TelephoneNumber": "2155552121",
+    "FaxNumber": "2156661616",
+    "Address1": "55 Elm Street",
+    "Address2": null,
+    "City": "Jenkintown",
+    "State": "PA",
+    "ZipCode": "54321"
+  },
+  {
+    "OrganizationID": "f28d1d18-f264-4914-b9f8-a17f0aed7436",
+    "Name": "Owl Charter School",
+    "OrganizationTypeID": "248306cf-f840-462c-851d-76048e907a1a",
+    "EmailAddress": "owl@school.edu",
+    "TelephoneNumber": "2155551212",
+    "FaxNumber": "2155551313",
+    "Address1": "123 Main Street",
+    "Address2": null,
+    "City": "Doylestown",
+    "State": "PA",
+    "ZipCode": "12345"
+  }
+]

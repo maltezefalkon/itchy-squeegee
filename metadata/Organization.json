@@ -1,0 +1,64 @@
+﻿{
+    "TypeKey": "Organization",
+    "TableName": "organization",
+    "FieldDefinitions": {
+        "OrganizationID": {
+            "type": "UUID",
+            "field": "organization_id",
+            "primaryKey": true
+        },
+        "Name": {
+            "type": "STRING",
+            "field": "name"
+        },
+        "OrganizationTypeID": {
+            "type": "UUID",
+            "field": "organization_type_id"
+        },
+        "EmailAddress": {
+            "type": "STRING",
+            "field": "email_address"
+        },
+        "TelephoneNumber": {
+            "type": "STRING",
+            "field": "telephone_number"
+        },
+        "FaxNumber": {
+            "type": "STRING",
+            "field": "fax_number"
+        },
+        "Address1": {
+            "type": "STRING",
+            "field": "address1"
+        },
+        "Address2": {
+            "type": "STRING",
+            "field": "address2"
+        },
+        "City": {
+            "type": "STRING",
+            "field": "city"
+        },
+        "State": {
+            "type": "STRING",
+            "field": "state"
+        },
+        "ZipCode": {
+            "type": "STRING",
+            "field": "zip_code"
+        }
+    },
+    "Relationships": {
+        "Type": {
+            "RelationshipType": "belongsTo",
+            "RelatedTypeKey": "OrganizationType",
+            "ForeignKey": "organization_type_id",
+            "TargetKey": "OrganizationTypeID"
+        },
+        "Tenures": {
+            "RelationshipType": "hasMany",
+            "RelatedTypeKey": "Tenure",
+            "ForeignKey": "organization_id"
+        }
+    }
+}

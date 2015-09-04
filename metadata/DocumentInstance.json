@@ -1,0 +1,70 @@
+﻿{
+    "TypeKey": "DocumentInstance",
+    "TableName": "document_instance",
+    "FieldDefinitions": {
+        "DocumentInstanceID": {
+            "type": "UUID",
+            "field": "document_instance_id",
+            "primaryKey": true
+        },
+        "DocumentDefinitionID": {
+            "type": "UUID",
+            "field": "document_definition_id",
+            "allowNull": false
+        },
+        "EducatorID": {
+            "type": "UUID",
+            "field": "educator_id",
+            "allowNull": false
+        },
+        "DocumentDate": {
+            "type": "DATE",
+            "field": "document_date",
+            "allowNull": false,
+            "defaultValue": "NOW"
+        },
+        "UploadDateTime": {
+            "type": "DATE",
+            "field": "upload_datetime",
+            "allowNull": false,
+            "defaultValue": "NOW"
+        },
+        "ApplicableTenureID": {
+            "type": "UUID",
+            "field": "applicable_tenure_id",
+            "allowNull": false
+        },
+        "ReferenceTenureID": {
+            "type": "UUID",
+            "field": "reference_tenure_id",
+            "allowNull": false
+        }
+    },
+    "Relationships": {
+        "Definition": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "document_definition_id",
+            "RelatedTypeKey": "DocumentDefinition"
+        },
+        "Educator": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "educator_id",
+            "RelatedTypeKey": "Educator"
+        },
+        "ApplicableTenure": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "applicable_tenure_id",
+            "RelatedTypeKey": "Tenure"
+        },
+        "ReferenceTenure": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "reference_tenure_id",
+            "RelatedTypeKey": "Tenure"
+        },
+        "Fields": {
+            "RelationshipType": "hasMany",
+            "ForeignKey": "document_instance_id",
+            "RelatedTypeKey": "DocumentInstanceField"
+        }
+    }
+}

@@ -1,0 +1,96 @@
+﻿{
+    "TypeKey": "Educator",
+    "TableName": "educator",
+    "FieldDefinitions": {
+        "EducatorID": {
+            "type": "UUID",
+            "field": "educator_id",
+            "primaryKey": true
+        },
+        "Title": {
+            "type": "STRING",
+            "field": "title"
+        },
+        "FirstName": {
+            "type": "STRING",
+            "field": "first_name"
+        },
+        "MiddleName": {
+            "type": "STRING",
+            "field": "middle_name"
+        },
+        "LastName": {
+            "type": "STRING",
+            "field": "last_name"
+        },
+        "Suffix": {
+            "type": "STRING",
+            "field": "suffix"
+        },
+        "FormerName": {
+            "type": "STRING",
+            "field": "former_name"
+        },
+        "DateOfBirth": {
+            "type": "DATEONLY",
+            "field": "date_of_birth"
+        },
+        "Last4": {
+            "type": "STRING",
+            "field": "last_4_ssn"
+        },
+        "PPID": {
+            "type": "INTEGER",
+            "field": "ppid"
+        },
+        "EmailAddress": {
+            "type": "STRING",
+            "field": "email_address"
+        },
+        "TelephoneNumber": {
+            "type": "STRING",
+            "field": "telephone_number"
+        },
+        "FaxNumber": {
+            "type": "STRING",
+            "field": "fax_number"
+        },
+        "Address1": {
+            "type": "STRING",
+            "field": "address1"
+        },
+        "Address2": {
+            "type": "STRING",
+            "field": "address2"
+        },
+        "City": {
+            "type": "STRING",
+            "field": "city"
+        },
+        "State": {
+            "type": "STRING",
+            "field": "state"
+        },
+        "ZipCode": {
+            "type": "STRING",
+            "field": "zip_code"
+        }
+    },
+    "Relationships": {
+        "Tenures": {
+            "RelationshipType": "hasMany",
+            "RelatedTypeKey": "Tenure",
+            "ForeignKey": "educator_id"
+        },
+        "Documents": {
+            "RelationshipType": "hasMany",
+            "RelatedTypeKey": "DocumentInstance",
+            "ForeignKey": "educator_id"
+        },
+        "LinkedUser": {
+            "RelationshipType": "hasOne",
+            "RelatedTypeKey": "User",
+            "ForeignKey": "linked_educator_id"
+        }
+    }
+}

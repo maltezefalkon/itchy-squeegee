@@ -1,0 +1,48 @@
+﻿{
+    "TypeKey": "User",
+    "TableName": "user",
+    "FieldDefinitions": {
+        "UserID": {
+            "type": "UUID",
+            "field": "user_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "UserName": {
+            "type": "STRING",
+            "field": "user_name",
+            "unique": true,
+            "allowNull": false
+        },
+        "EmailAddress": {
+            "type": "STRING",
+            "field": "email_address",
+            "allowNull": false
+        },
+        "Hash": {
+            "type": "STRING",
+            "field": "hash",
+            "allowNull": false
+        },
+        "LinkedOrganizationID": {
+            "type": "UUID",
+            "field": "linked_organization_id"
+        },
+        "LinkedEducatorID": {
+            "type": "UUID",
+            "field": "linked_educator_id"
+        }
+    },
+    "Relationships": {
+        "LinkedOrganization": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "linked_organization_id",
+            "RelatedTypeKey": "Organization"
+        },
+        "LinkedEducator": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "linked_educator_id",
+            "RelatedTypeKey": "Educator"
+        }
+    }
+}
