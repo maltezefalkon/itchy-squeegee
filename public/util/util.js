@@ -1,4 +1,4 @@
-﻿var baseDataUrl = 'http://localhost:1337/api/';
+﻿var baseDataUrl = '/api/';
 
 function parseQueryString() {
     var args = document.location.search.substring(1).split('&');
