@@ -37,5 +37,10 @@ function CreateFieldName(f) {
 }
 
 function AddNewTenure() {
-    this.Tenures.push({ organizationType: 'School' });
+    var newTenure = { organizationType: 'School' };
+    if (this.Tenures.length == 0)
+    {
+        newTenure.PresentEmployer = true;
+    }
+    this.Tenures.push(newTenure);
 }
