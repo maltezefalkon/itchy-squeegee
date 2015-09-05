@@ -5,19 +5,33 @@ var log = require('./logging.js')('authentication');
 var uuid = require('uuid');
 var session = require('express-session');
 var passportLocal = require('passport-local');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var LocalStrategy = passportLocal.Strategy;
 
-module.exports = function (app, loginHandlerPath, loginPagePath, defaultPagePath) {
+module.exports = function (app, publicPaths, loginHandlerPath, loginPagePath, defaultPageHandler) {
     app.use(session({ genid: function (req) { return uuid(); }, secret: 'doralia-x-e3', saveUninitialized: false, resave: false }));
-    app.use(loginHandlerPath, bodyParser.urlencoded({ extended: false }));
-    app.use(loginHandlerPath, cookieParser());
-    setupStrategy(app, loginHandlerPath);
     app.use(passport.initialize());
     app.use(passport.session());
-    // authentication
+    setupStrategy(app, loginHandlerPath);
+    
+    // redirect if requesting a protected page and the user is not authenticated
+    app.use(function (req, res, next) {
+        var publicPath = false;
+        for (var i = 0; i < publicPaths.length; i++) {
+            if (req.path.indexOf(publicPaths[i]) == 0) {
+                publicPath = true;
+                break;
+            }
+        }
+        if (!publicPath && !req.isAuthenticated()) {
+            res.redirect(loginPagePath);
+            res.end();
+        } else {
+            next();
+        }
+    });
+
+    // login handling function
     app.post(loginHandlerPath, function (req, res, next) {
         passport.authenticate('local', function (err, user, info, status) {
             log.info({ err: err, user: user, info: info, status: status }, 'authentication callback called');
@@ -31,7 +45,7 @@ module.exports = function (app, loginHandlerPath, loginPagePath, defaultPagePath
                     if (err) {
                         return next(err);
                     } else {
-                        return res.redirect(defaultPagePath);
+                        return defaultPageHandler(req, res, next);
                     }
                 });
             }

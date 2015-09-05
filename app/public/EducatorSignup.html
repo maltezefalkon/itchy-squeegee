@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <title>Educator Signup</title>
+    <title>Educator Signup: Login and Personal Info</title>
 </head>
 <body ng-app="safeApp" ng-controller="controller">
     <script type="text/javascript" src="util/util.js"></script>
@@ -36,10 +36,10 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-sm-6 col-lg-4">
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label class="control-label col-md-4" for="Title">Title</label>
                             <div class="col-md-8">
-                                <select name="Title" required ng-model="Title" class="form-control">
+                                <select name="Title" required ng-model="Title" class="form-control" ng-required="true">
                                     <option></option>
                                     <option>Dr.</option>
                                     <option>Mr.</option>
@@ -53,7 +53,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="FirstName">First Name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="FirstName" ng-model="FirstName" required="required" />
+                                <input type="text" class="form-control" name="FirstName" ng-model="FirstName" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="LastName">Last Name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="LastName" ng-model="LastName" required />
+                                <input type="text" class="form-control" name="LastName" ng-model="LastName" ng-required="true" />
                             </div>
                         </div>
                     </div><div class="col-sm-6 col-lg-4">
@@ -91,7 +91,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="TelephoneNumber">Phone Number</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="TelephoneNumber" ng-model="TelephoneNumber" required />
+                                <input type="text" class="form-control" name="TelephoneNumber" ng-model="TelephoneNumber" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="DateOfBirth">Date of Birth</label>
                             <div class="col-md-8">
-                                <input type="date" class="form-control" name="DateOfBirth" ng-model="DateOfBirth" required />
+                                <input type="date" class="form-control" name="DateOfBirth" ng-model="DateOfBirth" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="Last4">Last 4 Digits of SSN</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="Last4" ng-model="Last4" required />
+                                <input type="text" class="form-control" name="Last4" ng-model="Last4" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="Address1">Address 1</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="Address1" ng-model="Address1" required />
+                                <input type="text" class="form-control" name="Address1" ng-model="Address1" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="City">City</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="City" ng-model="City" required />
+                                <input type="text" class="form-control" name="City" ng-model="City" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="State">State</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="State" ng-model="State" required />
+                                <input type="text" class="form-control" name="State" ng-model="State" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="State">Zip Code</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="ZipCode" ng-model="ZipCode" required />
+                                <input type="text" class="form-control" name="ZipCode" ng-model="ZipCode" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="username">Email Address</label>
                             <div class="col-md-8">
-                                <input type="email" class="form-control" name="EmailAddress" ng-model="emailAddress" required />
+                                <input type="email" class="form-control" name="EmailAddress" ng-model="emailAddress" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="password">Password</label>
                             <div class="col-md-8">
-                                <input type="password" class="form-control" name="Password" ng-model="password" required />
+                                <input type="password" class="form-control" name="Password" ng-model="password" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="password">Re-enter Password</label>
                             <div class="col-md-8">
-                                <input type="password" class="form-control" name="Password2" ng-model="password2" required compare-to="controller.password" />
+                                <input type="password" class="form-control" name="Password2" ng-model="password2" ng-required="true" compare-to="controller.password" />
                             </div>
                             <div ng-messages="SignupForm.Password2.$error" class="error-message" role="alert">
                                 <div ng-message="compare-to">Passwords don't match</div>
@@ -199,11 +199,22 @@
                 </div>
             </div>
 
-            <div class="text-center">
-                <button class="btn btn-primary btn-lg shrink-sm" type="submit">
-                    Submit and Proceed to the Next Step <span class="glyphicon glyphicon-arrow-right"></span>
-                </button>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-click="setSkipHistory(true)">
+                        Save and Enter Prior Work History <span class="glyphicon glyphicon-step-forward"></span>
+                    </button>
+                </div>
             </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <button class="btn btn-warning btn-block btn-lg shrink-sm" type="submit" ng-click="setSkipHistory(true)">
+                        Save.  I have no Prior Work History. <span class="glyphicon glyphicon-forward"></span>
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="SkipHistory" ng-model="SkipHistory" value="false" />
         </form>
         <div ng-include="'common/footer.html'"></div>
     </div>

@@ -40,7 +40,7 @@
             "field": "last_4_ssn"
         },
         "PPID": {
-            "type": "INTEGER",
+            "type": "STRING",
             "field": "ppid"
         },
         "EmailAddress": {

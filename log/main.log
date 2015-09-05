@@ -1,4 +1,0 @@
-{"name":"main","hostname":"CATHY","pid":11560,"level":30,"msg":"initializing","time":"2015-09-04T14:29:46.015Z","v":0}
-{"name":"main","hostname":"CATHY","pid":11560,"level":30,"msg":"setting up middleware","time":"2015-09-04T14:29:46.016Z","v":0}
-{"name":"main","hostname":"CATHY","pid":11560,"level":30,"msg":"setting up routes","time":"2015-09-04T14:29:46.168Z","v":0}
-{"name":"main","hostname":"CATHY","pid":11560,"level":30,"msg":"setup done; listening on port 1337","time":"2015-09-04T14:29:46.196Z","v":0}

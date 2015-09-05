@@ -1,18 +1,32 @@
 ﻿"use strict"
 
 function EducatorSignupController($scope, $http, $location) {
+
     var dict = parseQueryString();
     $scope.OrganizationID = dict['OrganizationID'];
     $scope.OrganizationSupplied = Boolean(dict['OrganizationID']);
-    $scope.tenure = { OrganizationSearchFound: false, OrganizationSearchBegun: false, OrganizationSearchComplete: false };
+    var educatorID = dict['EducatorID'];
+    $scope.tenure = { OrganizationSearchFound: false, OrganizationSearchBegun: false, OrganizationSearchComplete: false, EducatorID: educatorID };
     $scope.DoneEnteringHistory = undefined;
+    $scope.SkipHistory = false;
+
+    FetchData($scope, $http, $location);
+
+    // expose public functions
+
     $scope.CreateFieldName = CreateFieldName;
+    $scope.setSkipHistory = SetSkipHistory = function (skip) {
+        SetSkipHistory($scope, $http, skip);
+    };
     $scope.searchForOrganization = function (tenureObject) {
         SearchForSchool($scope, $http, tenureObject);
     };
     $scope.setOrganization = function (tenureObject) {
         SetSchool($scope, $http, tenureObject);
     };
+    $scope.clearOrganization = function (tenureObject) {
+        ClearOrganization($scope, $http, tenureObject);
+    }
     $scope.createOrganization = function (tenureObject) {
         CreateOrganization($scope, $http, tenureObject);
     };
@@ -22,7 +36,6 @@ function EducatorSignupController($scope, $http, $location) {
     $scope.setDoneEnteringHistory = function (done) {
         SetDoneEnteringHistory($scope, $http, done);
     }
-    FetchData($scope, $http, $location);
 }
 
 function CompareTo() {
@@ -45,8 +58,8 @@ function CompareTo() {
 }
 
 function FetchData($scope, $http, $location) {
-    queryList('OrganizationList', 'Organization', $scope, $http);
-    querySingle('FormDefinition', 'DocumentDefinition/Fields?DocumentDefinitionID=093076b1-3348-11e5-9a89-180373ea70a8', $scope, $http);
+    //queryList('OrganizationList', 'Organization', $scope, $http);
+    //querySingle('FormDefinition', 'DocumentDefinition/Fields?DocumentDefinitionID=093076b1-3348-11e5-9a89-180373ea70a8', $scope, $http);
 }
 
 function CreateFieldName(f) {
@@ -55,7 +68,7 @@ function CreateFieldName(f) {
 
 function SearchForSchool($scope, $http, tenureObject) {
     var text = tenureObject.OrganizationSearchName;
-    tenureObject.OrganizationSearchBegun = text.length > 2;
+    tenureObject.OrganizationSearchBegun = text && text.length > 2;
     if (tenureObject.OrganizationSearchBegun) {
         queryList('OrganizationSearchList', 'Organization/query/SchoolSearch/?term=' + encodeURIComponent(text), tenureObject, $http)
             .then(function () {
@@ -77,6 +90,15 @@ function SetSchool($scope, $http, tenureObject) {
 function CreateOrganization($scope, $http, tenureObject) {
     tenureObject.Organization = { Name: tenureObject.OrganizationSearchName };
     tenureObject.OrganizationSearchComplete = true;
+}
+
+function ClearOrganization($scope, $http, tenureObject) {
+    tenureObject.OrganizationSearchList = [];
+    tenureObject.Organization = null;
+    tenureObject.OrganizationSearchBegun = false;
+    tenureObject.OrganizationSearchComplete = false;
+    tenureObject.OrganizationSearchFound = false;
+    tenureObject.OrganizationSearchName = '';
 }
 
 function updateSearch(tenureObject) {
@@ -108,4 +130,8 @@ function SubmitForm($scope, $http, $event) {
 
 function SetDoneEnteringHistory($scope, $http, done) {
     $scope.DoneEnteringHistory = done;
+}
+
+function SetSkipHistory($scope, $http, skip) {
+    $scope.SkipHistory = skip;
 }

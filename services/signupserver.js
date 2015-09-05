@@ -9,23 +9,84 @@
 var log = require('../modules/logging')('signupserver');
 var api = require('../modules/api');
 var bcrypt = require('bcryptjs');
+var meta = require('../modules/metadata')();
+var uuid = require('uuid');
 
-// expose the getData method
+// expose public methods
 module.exports.getSignupData = getEducatorSignupData;
-
-// expose the postData method
 module.exports.postSignupData = postEducatorSignupData;
+module.exports.postTenureData = postTenureData;
+
 
 // --------------------------------------------------------------------------------------------------------------------
 
 // public functions
 
 function getEducatorSignupData(req, res) {
-    var redirPath = '/public/EducatorSignup.html';
+    var redirPath = '/app/public/EducatorSignup.html';
     if (req.params.OrganizationID) {
         redirPath += '?OrganizationID=' + req.params.OrganizationID;
     }
     res.redirect(redirPath);
+}
+
+function postTenureData(req, res) {
+    var data = req.body;
+
+    if (req.method != "POST") {
+        throw new Error("Invalid verb routed to postTenureData");
+    }
+    
+    var newOrganization = undefined;
+
+    var tenure = {
+        _TypeKey: 'Tenure',
+        EducatorID: data.EducatorID,
+        StartDate: data.StartDate,
+        EndDate: data.EndDate,
+        PositionsHeld: data.PositionsHeld,
+        Form168Eligible: true
+    };
+    
+    if (!data.ExistingOrganizationID || data.ExistingOrganizationID.length != 36) {
+        newOrganization = {
+            _TypeKey: 'Organization',
+            Name: data.OrganizationName,
+            Address1: data.OrganizationAddress1,
+            Address2: data.OrganizationAddress2,
+            City: data.OrganizationCity,
+            State: data.OrganizationState,
+            ZipCode: data.OrganizationZipCode,
+            EmailAddress: data.OrganizationEmail,
+            TelephoneNumber: data.OrganizationTelephoneNumber,
+            FaxNumber: data.OrganizationFaxNumber
+        };
+    } else {
+        tenure.OrganizationID = data.ExistingOrganizationID;
+    }
+
+    var toBeSaved = null;
+
+    if (newOrganization) {
+        newOrganization.Tenures = [
+            tenure
+        ];
+        toBeSaved = newOrganization;
+    } else {
+        toBeSaved = tenure;
+    }
+    
+    log.debug({ tenure: tenure, newOrganization: newOrganization }, 'Creating tenure objects');
+    
+    api
+        .save(toBeSaved)
+        .then(function (returned) {
+            var nextUrl = data.DoneEnteringHistory === 'true' ?
+                    '/app/protected/EducatorDashboard.html?EducatorID=' + encodeURIComponent(data.EducatorID)
+                    : '/app/protected/EducatorTenure.html?EducatorID=' + encodeURIComponent(data.EducatorID);
+            res.redirect(nextUrl);
+            res.end();
+        });
 }
 
 function postEducatorSignupData(req, res) {
@@ -68,15 +129,29 @@ function postEducatorSignupData(req, res) {
         
         log.debug({ educator: educator }, 'Creating signup objects');
         
-        api.save([educator])
-            .then(function () {
-            res.redirect('/public/Login.html?UserName=' + encodeURIComponent(user.UserName));
-            res.end();
-        }, function (err) {
-            res.send(err);
-            res.end();
+        // we can't go through the public API because we're not authenticated yet
+        
+        // generate new IDs and assign
+        educator.EducatorID = uuid();
+        educator.LinkedUser.UserID = uuid();
+        user.LinkedEducatorID = educator.EducatorID;
+        
+        var promise = meta.db['Educator'].create(educator);
+        promise = promise.then(function () {
+            return meta.db['User'].create(user);
         });
-    
+        promise.then(function () {
+            var nextUrl = data.SkipHistory === 'true' ?
+                '/app/protected/EducatorDashboard.html'
+                : '/app/protected/EducatorTenure.html?EducatorID=' + encodeURIComponent(educator.EducatorID);
+            req.login(user, function (err) {
+                if (err) {
+                    return next(err);
+                } else {
+                    return res.redirect(nextUrl);
+                }
+            });
+        });
     } else {
         throw "Invalid verb routed to postSignupData method";
     }

@@ -5,7 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>SafeStudents</Name>
     <RootNamespace>NodejsWebApp1</RootNamespace>
-    <LaunchUrl>http://localhost:1337/public/Login.html</LaunchUrl>
+    <LaunchUrl>http://localhost:1337/app/public/Login.html</LaunchUrl>
     <ScriptArguments>
     </ScriptArguments>
   </PropertyGroup>
@@ -34,33 +34,36 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="app\protected\EducatorDashboard.html" />
     <Content Include="Procfile" />
-    <Content Include="public\common\footer.html" />
-    <Content Include="public\common\header.html" />
-    <Content Include="public\controllers\LoginController.js" />
-    <Content Include="public\controllers\EducatorSignupController.js" />
-    <Content Include="public\EducatorTenure.html" />
-    <Content Include="public\images\logo_placeholder.png" />
-    <Content Include="public\images\menu-icon.png" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.css.map" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.min.css" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap.css" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap.css.map" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap.min.css" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="public\util\util.js" />
+    <Content Include="app\common\footer.html" />
+    <Content Include="app\common\header.html" />
+    <Content Include="app\controllers\LoginController.js" />
+    <Content Include="app\controllers\EducatorSignupController.js" />
+    <Content Include="app\protected\EducatorTenure.html" />
+    <Content Include="app\images\logo_placeholder.png" />
+    <Content Include="app\images\menu-icon.png" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.css.map" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.min.css" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\css\bootstrap.css" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\css\bootstrap.css.map" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\css\bootstrap.min.css" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="app\util\util.js" />
+    <Compile Include="modules\myurl.js" />
+    <Compile Include="modules\port.js" />
     <Compile Include="modules\view.js" />
-    <Content Include="public\lib\angular-1.4.4\angular.min.js" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\js\bootstrap.js" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\js\bootstrap.min.js" />
-    <Content Include="public\lib\bootstrap-3.3.5-dist\js\npm.js" />
-    <Content Include="public\lib\angular-1.4.4\angular-messages.min.js" />
-    <Content Include="public\controllers\HeaderController.js" />
+    <Content Include="app\lib\angular-1.4.4\angular.min.js" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\js\bootstrap.js" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\js\bootstrap.min.js" />
+    <Content Include="app\lib\bootstrap-3.3.5-dist\js\npm.js" />
+    <Content Include="app\lib\angular-1.4.4\angular-messages.min.js" />
+    <Content Include="app\controllers\HeaderController.js" />
     <Compile Include="metadata\DocumentDefinitionField.json" />
     <Compile Include="metadata\DocumentInstanceField.json" />
     <Compile Include="modules\api.js" />
@@ -74,7 +77,7 @@
     <Compile Include="utils\Salt.js" />
     <Compile Include="utils\RebuildDatabase.js" />
     <Compile Include="utils\SyncTable.js" />
-    <Content Include="public\controllers\ReviewEmployeesController.js" />
+    <Content Include="app\controllers\ReviewEmployeesController.js" />
     <Compile Include="main.js" />
     <Compile Include="modules\metadata.js" />
     <Compile Include="utils\DataDownloader.js" />
@@ -84,11 +87,11 @@
     <Compile Include="metadata\OrganizationType.json" />
     <Compile Include="services\dataserver.js" />
     <Compile Include="services\webserver.js" />
-    <Content Include="public\css\main.css" />
-    <Content Include="public\images\greencheck.png" />
-    <Content Include="public\images\PDF-icon.gif" />
-    <Content Include="public\images\redx.png" />
-    <Content Include="public\EducatorSignup.html" />
+    <Content Include="app\css\main.css" />
+    <Content Include="app\images\greencheck.png" />
+    <Content Include="app\images\PDF-icon.gif" />
+    <Content Include="app\images\redx.png" />
+    <Content Include="app\public\EducatorSignup.html" />
     <Content Include="data\Address.json" />
     <Content Include="data\AddressType.json" />
     <Content Include="referenceData\01_DocumentDefinition.json" />
@@ -105,7 +108,7 @@
     <Content Include="data\User.json" />
     <Content Include="data\UserEducatorAuthorization.json" />
     <Content Include="data\UserOrganizationAuthorization.json" />
-    <Content Include="public\Login.html" />
+    <Content Include="app\public\Login.html" />
     <Content Include="metadata\DocumentDefinition.json" />
     <Content Include="metadata\Educator.json" />
     <Content Include="metadata\Tenure.json" />
@@ -114,29 +117,31 @@
     <Content Include="pdf\Form-DPTT.pdf" />
     <Content Include="README.md" />
     <Content Include="metadata\User.json" />
-    <Content Include="public\ReviewEmployees.html" />
+    <Content Include="app\protected\ReviewEmployees.html" />
     <Content Include="utils\sql\CleanDatabase.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="public\css\" />
-    <Folder Include="public\js\" />
-    <Folder Include="public\lib\" />
-    <Folder Include="public\lib\angular-1.4.4\" />
-    <Folder Include="public\lib\bootstrap-3.3.5-dist\" />
-    <Folder Include="public\lib\bootstrap-3.3.5-dist\css\" />
-    <Folder Include="public\lib\bootstrap-3.3.5-dist\fonts\" />
-    <Folder Include="public\lib\bootstrap-3.3.5-dist\js\" />
-    <Folder Include="public\common\" />
-    <Folder Include="public\util\" />
+    <Folder Include="app\css\" />
+    <Folder Include="app\js\" />
+    <Folder Include="app\lib\" />
+    <Folder Include="app\lib\angular-1.4.4\" />
+    <Folder Include="app\lib\bootstrap-3.3.5-dist\" />
+    <Folder Include="app\lib\bootstrap-3.3.5-dist\css\" />
+    <Folder Include="app\lib\bootstrap-3.3.5-dist\fonts\" />
+    <Folder Include="app\lib\bootstrap-3.3.5-dist\js\" />
+    <Folder Include="app\common\" />
+    <Folder Include="app\protected\" />
+    <Folder Include="app\public\" />
+    <Folder Include="app\util\" />
     <Folder Include="modules\" />
-    <Folder Include="public\images\" />
+    <Folder Include="app\images\" />
     <Folder Include="referenceData\" />
     <Folder Include="pdf\" />
     <Folder Include="utils\log\" />
     <Folder Include="utils\" />
     <Folder Include="metadata\" />
-    <Folder Include="public\controllers\" />
-    <Folder Include="public\" />
+    <Folder Include="app\controllers\" />
+    <Folder Include="app\" />
     <Folder Include="data\" />
     <Folder Include="services\" />
     <Folder Include="utils\sql\" />

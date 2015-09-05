@@ -1,12 +1,12 @@
 ﻿var Logger = require('bunyan');
 
-module.exports = function (logName) {
+module.exports = function (logSubject, logFileName) {
     return new Logger({
-        name: logName || 'app',
+        name: logSubject || 'app',
         streams: [
             {
                 level: 'debug',
-                path: './log/' + (logName || 'app' ) + '.log'
+                path: './log/' + (logFileName || 'app' ) + '.log'
             }
         ]
     });

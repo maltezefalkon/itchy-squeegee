@@ -2,7 +2,7 @@
 var meta = require('./metadata.js')();
 
 var documentDefinitionID = '093076b1-3348-11e5-9a89-180373ea70a8';
-var documentDefinition = api.query('DocumentDefinition', 'Fields', { DocumentDefinitionID: documentDefinitionID });
+var documentDefinition = api.query('DocumentDefinition', 'Fields', null, { DocumentDefinitionID: documentDefinitionID });
 
 module.exports.DocumentDefinitionID = documentDefinitionID;
 module.exports.DocumentDefinition = documentDefinition;

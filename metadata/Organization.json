@@ -64,7 +64,10 @@
     "Queries": {
         "SchoolSearch": {
             "Name": {
-                "$iLike": "%[term]%"
+                "$iLike": "[term]%"
+            },
+            "OrganizationTypeID": {
+                "$ne": null
             }
         }
     }

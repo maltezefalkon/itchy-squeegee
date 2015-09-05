@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <title>Educator Signup</title>
+    <title>Educator Signup: Work History</title>
     <style type="text/css">
     </style>
 </head>
@@ -30,7 +30,7 @@
         <div class="page-header">
             Enter Work History
         </div>
-        <form action="/user/signup/Educator" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+        <form action="/user/signup/Educator/Tenure" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
             <!-- tenure -->
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -45,96 +45,115 @@
                             <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{msg}}
                         </div>
                         <div class="form-group required">
-                            <label class="control-label col-sm-2" for="tenureOrganizationName">Name of Employer</label>
+                            <label class="control-label col-sm-2" for="OrganizationSearchName">Name of Employer</label>
                             <div class="col-sm-6">
-                                <input type="text" name="tenureOrganizationName" class="form-control" ng-model="tenure.OrganizationSearchName" ng-change="searchForOrganization(tenure)" required ng-model-options="{ debounce: 1000 }" />
+                                <input type="text" name="OrganizationSearchName" class="form-control" ng-model="tenure.OrganizationSearchName" ng-change="searchForOrganization(tenure)" required ng-model-options="{ debounce: 1000 }" ng-disabled="tenure.Organization" />
                             </div>
                             <div class="col-sm-4">
-                                <button type="button" class="btn btn-success btn-sm" ng-show="tenure.OrganizationSearchBegun && tenure.OrganizationSearchFound" ng-click="setOrganization(tenure)" ng-disabled="tenure.Organization">
+                                <button type="button" class="btn btn-success btn-sm" ng-show="!tenure.Organization && tenure.OrganizationSearchBegun && tenure.OrganizationSearchFound" ng-click="setOrganization(tenure)">
                                     <span class="glyphicon glyphicon-check"></span> Recognized! Click to confirm.
                                 </button>
-                                <button type="button" class="btn btn-info btn-sm" ng-show="tenure.OrganizationSearchBegun && !tenure.OrganizationSearchFound" ng-click="createOrganization(tenure)" ng-disabled="tenure.Organization">
-                                    <span class="glyphicon glyphicon-question-sign"></span> Click to Provide Details.
+                                <button type="button" class="btn btn-info btn-sm" ng-show="!tenure.Organization && tenure.OrganizationSearchBegun && !tenure.OrganizationSearchFound" ng-click="createOrganization(tenure)">
+                                    <span class="glyphicon glyphicon-question-sign"></span> Click to provide details.
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm" ng-show="tenure.Organization" ng-click="clearOrganization(tenure)">
+                                    <span class="glyphicon glyphicon-erase"></span> Click to change name.
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationSearchComplete">
                         <div class="form-group required">
-                            <label class="control-label col-md-4" for="tenureOrganizationAddress1">Address 1</label>
+                            <label class="control-label col-md-4" for="OrganizationAddress1">Address 1</label>
                             <div class="col-md-8">
-                                <input type="text" name="tenureOrganizationAddress1" class="form-control" ng-model="tenure.Organization.Address1" ng-disabled="tenure.OrganizationSearchFound" required />
+                                <input type="text" name="OrganizationAddress1" class="form-control" ng-model="tenure.Organization.Address1" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationSearchComplete">
                         <div class="form-group">
-                            <label class="control-label col-md-4" for="tenureOrganizationAddress2">Address 2</label>
+                            <label class="control-label col-md-4" for="OrganizationAddress2">Address 2</label>
                             <div class="col-md-8">
-                                <input type="text" name="tenureOrganizationAddress2" class="form-control" ng-model="tenure.Organization.Address2" ng-disabled="tenure.OrganizationSearchFound" />
+                                <input type="text" name="OrganizationAddress2" class="form-control" ng-model="tenure.Organization.Address2" ng-disabled="tenure.OrganizationSearchFound" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationSearchComplete">
                         <div class="form-group required">
-                            <label class="control-label col-md-4" for="tenureOrganizationCity">City</label>
+                            <label class="control-label col-md-4" for="OrganizationCity">City</label>
                             <div class="col-md-8">
-                                <input type="text" name="tenureOrganizationCity" class="form-control" ng-model="tenure.Organization.City" ng-disabled="tenure.OrganizationSearchFound" required />
+                                <input type="text" name="OrganizationCity" class="form-control" ng-model="tenure.Organization.City" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationSearchComplete">
                         <div class="form-group required">
-                            <label class="control-label col-md-4" for="tenureOrganizationState">State</label>
+                            <label class="control-label col-md-4" for="OrganizationState">State</label>
                             <div class="col-md-8">
-                                <input type="text" name="tenureOrganizationState" class="form-control" ng-model="tenure.Organization.State" ng-disabled="tenure.OrganizationSearchFound" required />
+                                <input type="text" name="OrganizationState" class="form-control" ng-model="tenure.Organization.State" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationSearchComplete">
                         <div class="form-group required">
-                            <label class="control-label col-md-4" for="tenureOrganizationState">Zip Code</label>
+                            <label class="control-label col-md-4" for="OrganizationZipCode">Zip Code</label>
                             <div class="col-md-8">
-                                <input type="text" name="tenureOrganizationZipCode" class="form-control" ng-model="tenure.Organization.ZipCode" ng-disabled="tenure.OrganizationSearchFound" required />
+                                <input type="text" name="OrganizationZipCode" class="form-control" ng-model="tenure.Organization.ZipCode" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationSearchComplete">
                         <div class="form-group required">
-                            <label class="control-label col-md-4" for="tenureOrganizationState">Contact Email</label>
+                            <label class="control-label col-md-4" for="OrganizationEmail">Contact Email</label>
                             <div class="col-md-8">
-                                <input type="text" name="tenureOrganizationEmail" class="form-control" ng-model="tenure.Organization.Email" ng-disabled="tenure.OrganizationSearchFound" required />
+                                <input type="email" name="OrganizationEmail" class="form-control" ng-model="tenure.Organization.Email" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationSearchComplete">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="OrganizationTelephoneNumber">Phone Number</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationTelephoneNumber" class="form-control" ng-model="tenure.Organization.TelephoneNumber" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4" ng-show="tenure.OrganizationSearchComplete">
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="OrganizationFaxNumber">Fax Number</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationFaxNumber" class="form-control" ng-model="tenure.Organization.FaxNumber" ng-disabled="tenure.OrganizationSearchFound" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="form-group required">
-                            <label class="control-label col-md-4" for="positionsHeld">Position(s) Held</label>
+                            <label class="control-label col-md-4" for="PositionsHeld">Position(s) Held</label>
                             <div class="col-md-8">
-                                <input type="text" name="positionsHeld" class="form-control" ng-model="tenure.PositionsHeld" required />
+                                <input type="text" name="PositionsHeld" class="form-control" ng-model="tenure.PositionsHeld" ng-required="true" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="form-group required">
-                            <label class="control-label col-md-4" for="startDate">Start Date</label>
+                            <label class="control-label col-md-4" for="StartDate">Start Date</label>
                             <div class="col-md-8">
-                                <input type="date" name="startDate" class="form-control" ng-model="tenure.StartDate" required />
+                                <input type="date" name="StartDate" class="form-control" ng-model="tenure.StartDate" ng-required="true" />
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="form-group" ng-class="{ required: !tenure.PresentEmployer }">
-                            <label class="control-label col-md-4" for="startDate" ng-class="{ 'text-muted': tenure.PresentEmployer }">End Date</label>
+                            <label class="control-label col-md-4" for="EndDate" ng-class="{ 'text-muted': tenure.PresentEmployer }">End Date</label>
                             <div class="col-md-8">
-                                <input type="date" name="startDate" class="form-control" ng-model="tenure.EndDate" ng-disabled="tenure.PresentEmployer" />
+                                <input type="date" name="EndDate" class="form-control" ng-model="tenure.EndDate" ng-disabled="tenure.PresentEmployer" ng-required="!tenure.PresentEmployer" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
                     <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-click="setDoneEnteringHistory(false)">
                         Save and Add Another Employer <span class="glyphicon glyphicon-plus"></span>
                     </button>
@@ -142,12 +161,16 @@
             </div>
             <br />
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
                     <button class="btn btn-success btn-block btn-lg shrink-sm" type="submit" ng-click="setDoneEnteringHistory(true)">
                         Save and I am Done Adding Work History <span class="glyphicon glyphicon-ok"></span>
                     </button>
                 </div>
             </div>
+            <input type="hidden" name="DoneEnteringHistory" ng-value="DoneEnteringHistory" />
+            <input type="hidden" name="ExistingOrganizationID" ng-value="tenure.Organization.OrganizationID" />
+            <input type="hidden" name="EducatorID" ng-value="tenure.EducatorID" />
+            <input type="hidden" name="OrganizationName" ng-value="tenure.OrganizationSearchName" />
         </form>
         <div ng-include="'common/footer.html'"></div>
     </div>
