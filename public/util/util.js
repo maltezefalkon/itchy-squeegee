@@ -18,11 +18,11 @@ function parseQueryString() {
     return ret;
 }
 
-function queryList(scopePropertyName, path, $scope, $http) {
+function queryList(scopePropertyName, path, localScope, $http) {
     var requestUrl = baseDataUrl + path;
     return $http.get(requestUrl)
         .success(function (data, status, headers, config) {
-            $scope[scopePropertyName] = data;
+            localScope[scopePropertyName] = data;
         })
         .error(function (data, status, headers, config) {
             alert('Error retrieving ' + scopePropertyName + ': ' + status);

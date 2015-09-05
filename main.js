@@ -11,7 +11,6 @@ var signupServices = require('./services/signupserver.js');
 var log = require('./modules/logging')('main');
 var requestLog = require('./modules/logging')('requests');
 var bodyParser = require('body-parser');
-var view = require('./modules/view');
 
 log.info('initializing');
 
@@ -49,9 +48,8 @@ log.info('setting up routes');
 // API routes
 app.get('/api/:type/:joins?', dataServices.getData);
 app.post('/api/:type?', dataServices.postData);
+app.get('/api/:type/query/:query/:joins?', dataServices.getData);
 
-// app view route
-app.get('/app/:view', view);
 
 // signup routes
 app.use('/user/signup', bodyParser.urlencoded({ extended: false }));

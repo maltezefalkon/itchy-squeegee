@@ -3,5 +3,27 @@
     font-weight: bold;
     color: #337ab7;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    margin-top: 30px;
+    margin-top: 20px;
+}
+
+.form-group.required label:after {
+    content: '*';
+    color: red;
+}
+
+.panel-heading span {
+    font-size: large;
+    font-weight: bold;
+}
+
+@media (max-width: 640px) {
+    .shrink-sm {
+        font-size: 11pt;
+    }
+}
+
+@media (max-width: 400px) {
+    .shrink-xs, .shrink-sm {
+        font-size: 9pt;
+    }
 }

@@ -39,6 +39,7 @@
     <Content Include="public\common\header.html" />
     <Content Include="public\controllers\LoginController.js" />
     <Content Include="public\controllers\EducatorSignupController.js" />
+    <Content Include="public\EducatorTenure.html" />
     <Content Include="public\images\logo_placeholder.png" />
     <Content Include="public\images\menu-icon.png" />
     <Content Include="public\lib\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />

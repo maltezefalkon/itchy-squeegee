@@ -60,5 +60,12 @@
             "RelatedTypeKey": "Tenure",
             "ForeignKey": "organization_id"
         }
+    },
+    "Queries": {
+        "SchoolSearch": {
+            "Name": {
+                "$iLike": "%[term]%"
+            }
+        }
     }
 }

@@ -1,10 +1,27 @@
-﻿function EducatorSignupController($scope, $http, $location) {
+﻿"use strict"
+
+function EducatorSignupController($scope, $http, $location) {
     var dict = parseQueryString();
     $scope.OrganizationID = dict['OrganizationID'];
     $scope.OrganizationSupplied = Boolean(dict['OrganizationID']);
-    $scope.Tenures = [];
+    $scope.tenure = { OrganizationSearchFound: false, OrganizationSearchBegun: false, OrganizationSearchComplete: false };
+    $scope.DoneEnteringHistory = undefined;
     $scope.CreateFieldName = CreateFieldName;
-    $scope.addNewTenure = AddNewTenure;
+    $scope.searchForOrganization = function (tenureObject) {
+        SearchForSchool($scope, $http, tenureObject);
+    };
+    $scope.setOrganization = function (tenureObject) {
+        SetSchool($scope, $http, tenureObject);
+    };
+    $scope.createOrganization = function (tenureObject) {
+        CreateOrganization($scope, $http, tenureObject);
+    };
+    $scope.submitForm = function ($event) {
+        SubmitForm($scope, $http, $event);
+    }
+    $scope.setDoneEnteringHistory = function (done) {
+        SetDoneEnteringHistory($scope, $http, done);
+    }
     FetchData($scope, $http, $location);
 }
 
@@ -36,11 +53,59 @@ function CreateFieldName(f) {
     return f.DocumentDefinitionFieldID;
 }
 
-function AddNewTenure() {
-    var newTenure = { organizationType: 'School' };
-    if (this.Tenures.length == 0)
-    {
-        newTenure.PresentEmployer = true;
+function SearchForSchool($scope, $http, tenureObject) {
+    var text = tenureObject.OrganizationSearchName;
+    tenureObject.OrganizationSearchBegun = text.length > 2;
+    if (tenureObject.OrganizationSearchBegun) {
+        queryList('OrganizationSearchList', 'Organization/query/SchoolSearch/?term=' + encodeURIComponent(text), tenureObject, $http)
+            .then(function () {
+                updateSearch(tenureObject);
+            });
+    } else {
+        tenureObject.OrganizationSearchList = [];
+        tenureObject.Organization = null;
+        tenureObject.OrganizationSearchComplete = false;
+        tenureObject.OrganizationSearchFound = false;
     }
-    this.Tenures.push(newTenure);
+}
+
+function SetSchool($scope, $http, tenureObject) {
+    tenureObject.Organization = tenureObject.OrganizationSearchList[0];
+    tenureObject.OrganizationSearchComplete = true;
+}
+
+function CreateOrganization($scope, $http, tenureObject) {
+    tenureObject.Organization = { Name: tenureObject.OrganizationSearchName };
+    tenureObject.OrganizationSearchComplete = true;
+}
+
+function updateSearch(tenureObject) {
+    tenureObject.Organization = null;
+    tenureObject.OrganizationSearchComplete = false;
+    if (tenureObject.OrganizationSearchList.length == 1) {
+        tenureObject.OrganizationSearchName = tenureObject.OrganizationSearchList[0].Name;
+        tenureObject.OrganizationSearchFound = true;
+    } else {
+        tenureObject.OrganizationSearchFound = false;
+    }
+}
+
+function SubmitForm($scope, $http, $event) {
+    $scope.CustomValidationMessages = [];
+    if (!$scope.tenure.Organization) {
+        if ($scope.tenure.OrganizationSearchBegun) {
+            if ($scope.tenure.OrganizationSearchFound) {
+                $scope.CustomValidationMessages.push('Please click the button to confirm that the employer name is correct.');
+            } else {
+                $scope.CustomValidationMessages.push('Please click the button to enter the details for this employer.');
+            }
+        }
+    }
+    if ($scope.CustomValidationMessages.length > 0) {
+        $event.preventDefault();
+    }
+}
+
+function SetDoneEnteringHistory($scope, $http, done) {
+    $scope.DoneEnteringHistory = done;
 }

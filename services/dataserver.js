@@ -27,10 +27,11 @@ function getData(req, res) {
     // express routing parameters for root type and joins
     var typeKey = req.params.type;
     var joins = req.params.joins;
+    var queryName = req.params.query;
     
     // query string (filter)
     var thisUrl = url.parse(req.url, true);
-    var condition = thisUrl.query;
+    var condition = getQueryCondition(typeKey, queryName, thisUrl.query);
     
     // TODO: check permissions on data!
 
@@ -237,3 +238,31 @@ function supplyKeyIfNecessary(typeKey, o) {
     return ret;
 }
 
+function getQueryCondition(typeKey, queryName, parameters) {
+    if (!queryName) {
+        return parameters;
+    } else {
+        var prototypeQueryConditions = meta.Metadata[typeKey].Queries[queryName];
+        var queryObject = {};
+        if (!prototypeQueryConditions) {
+            throw new Error('No query named "' + queryName + '" found for type key "' + typeKey + '"');
+        } else {
+            var ret = replaceParameterExpressions(prototypeQueryConditions, parameters);
+            return ret;
+        }
+    }
+}
+
+function replaceParameterExpressions(proto, parameters) {
+    var ret = {};
+    for (var f in proto) {
+        if (typeof proto[f] === 'string') {
+            ret[f] = proto[f].replace(/\[(\w+)\]/, function (a, b) {
+                return parameters[b];
+            });
+        } else {
+            ret[f] = replaceParameterExpressions(proto[f], parameters);
+        }
+    }
+    return ret;
+}
