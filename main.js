@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // set up passport authentication
-var publicPaths = ['/app/common/', '/app/css/', '/app/images/', '/app/js', '/app/lib/', '/app/public/', '/app/util', '/user/login', '/user/signup' ];
+var publicPaths = ['/$', '/app/common/', '/app/css/', '/app/images/', '/app/js/', '/app/lib/', '/app/public/', '/app/public/*/', '/app/util/', '/user/login/', '/user/signup/*/', '/user/signup/*/*/' ];
 var passport = require('./modules/authentication.js')(app, publicPaths, '/api/', '/user/login', '/app/public/Login.html', redirectToDefaultPage);
 
 // "app" routes for our website 
@@ -82,6 +82,10 @@ app.use('/api', bodyParser.json({ strict: true }));
 
 log.info('setting up routes');
 
+app.get('/', function (req, res, next) {
+    res.redirect('/app/public/index.html');
+});
+
 // API routes
 app.get('/api/:type/:joins?', dataServices.getData);
 app.post('/api/:type?', dataServices.postData);
@@ -108,8 +112,12 @@ log.info('setup done; listening on port ' + port);
 
 function redirectToDefaultPage(req, res, next) {
     if (req.user.LinkedOrganizationID) {
-        return res.redirect('/app/protected/ReviewEmployees.html');
+        return res.redirect('/app/protected/ReviewEmployees.html?OrganizationID=' + encodeURIComponent(req.user.LinkedOrganizationID));
+    } else if (req.user.LinkedEducatorID) {
+        return res.redirect('/app/protected/EducatorDashboard.html?EducatorID=' + encodeURIComponent(req.user.LinkedEducatorID));
     } else {
-        return res.redirect('/app/protected/EducatorDashboard.html');
+        var message = 'This user account is not associated with an Educator or Organization. ' +
+            'Please send an email to our technical support team to resolve this issue.';
+        return res.redirect('/app/public/FatalError.html?message=' + encodeURIComponent(message));
     }
 }

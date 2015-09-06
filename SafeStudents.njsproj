@@ -34,8 +34,13 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="app\lib\zeroclipboard-2.2.0\dist\.jshintrc" />
+    <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.Core.min.map" />
+    <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.min.map" />
+    <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.swf" />
     <Content Include="app\protected\EducatorDashboard.html" />
     <Content Include="app\public\FatalError.html" />
+    <Content Include="app\public\index.html" />
     <Content Include="app\public\OrganizationSignup.html" />
     <Content Include="app\public\UserSignup.html" />
     <Content Include="docs\signup use cases.txt" />
@@ -63,6 +68,11 @@
     <Content Include="app\controllers\UserSignupController.js" />
     <Content Include="app\util\angular-directives.js" />
     <Content Include="app\controllers\FatalErrorController.js" />
+    <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.Core.js" />
+    <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.Core.min.js" />
+    <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.js" />
+    <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.min.js" />
+    <Content Include="app\controllers\EducatorDashboardController.js" />
     <Compile Include="modules\myurl.js" />
     <Compile Include="modules\port.js" />
     <Compile Include="modules\view.js" />
@@ -138,6 +148,8 @@
     <Folder Include="app\lib\bootstrap-3.3.5-dist\fonts\" />
     <Folder Include="app\lib\bootstrap-3.3.5-dist\js\" />
     <Folder Include="app\common\" />
+    <Folder Include="app\lib\zeroclipboard-2.2.0\" />
+    <Folder Include="app\lib\zeroclipboard-2.2.0\dist\" />
     <Folder Include="app\protected\" />
     <Folder Include="app\public\" />
     <Folder Include="app\util\" />

@@ -1,5 +1,5 @@
 ﻿{
-    "TypeKey":  "DocumentDefinition",
+    "TypeKey": "DocumentDefinition",
     "TableName": "document_definition",
     "FieldDefinitions": {
         "DocumentDefinitionID": {
@@ -12,6 +12,17 @@
             "type": "STRING",
             "field": "name",
             "allowNull": false
+        },
+        "RenewDuringEmployment": {
+            "type": "BOOLEAN",
+            "field": "renew_during_employment",
+            "allowNull": false,
+            "defaultValue": true
+        },
+        "RenewalPeriod": {
+            "type": "STRING",
+            "field": "renewal_period",
+            "allowNull": true
         }
     },
     "Relationships": {

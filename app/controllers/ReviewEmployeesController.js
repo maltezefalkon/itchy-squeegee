@@ -1,29 +1,27 @@
 ﻿function ReviewEmployeesController($scope, $http, $location)
 {
+    var query = parseQueryString();
+
+    $scope.OrganizationID = query.OrganizationID;
+
     FetchData($scope, $http, $location);
+    this.DocumentDefinitions = $scope.DocumentDefinitions;
+
+    $scope.applicantLink = createApplicantLink($location.host(), $location.port(), $scope.OrganizationID);
+    $scope.employeeLink = createEmployeeLink($location.host(), $location.port(), $scope.OrganizationID);
+
+    // public functions 
     $scope.HasDocument = HasDocument;
     $scope.ValidateDocuments = ValidateDocuments;
-    this.DocumentDefinitions = $scope.DocumentDefinitions;
+    
 }
 
 function FetchData($scope, $http, $location)
 {
-    var url1 = '/api/Organization/Tenures.Educator.Documents.Definition?OrganizationID=07489674-98D7-48F2-B357-08AE033E181A';
-    $http.get(url1)
-        .success(function (data, status, headers, config) {
-        $scope.Organization = data[0];
-    })
-        .error(function (data, status, headers, config) {
-        alert('Error ' + status);
-    });
-    var url2 = '/api/DocumentDefinition';
-    $http.get(url2)
-        .success(function (data, status, headers, config) {
-        $scope.DocumentDefinitions = data;
-    })
-        .error(function (data, status, headers, config) {
-        alert('Error ' + status);
-    });
+    if ($scope.OrganizationID) {
+        querySingle($http, 'Organization/Tenures.Educator.Documents.Definition?OrganizationID=' + $scope.OrganizationID, $scope, 'organization');
+    }
+    queryList($http, 'DocumentDefinition', $scope, 'DocumentDefinitions');
 }
 
 function GetDocument(tenure, definition) {
@@ -57,3 +55,12 @@ function ValidateDocuments(tenure) {
     }
     return true;
 }
+
+function createEmployeeLink(host, port, organizationID) {
+    return "http://" + host + ":" + port + "/user/signup/Educator/?OrganizationID=" + encodeURIComponent(organizationID);
+}
+
+function createApplicantLink(host, port, organizationID) {
+    return "http://" + host + ":" + port + "/user/signup/Applicant/?OrganizationID=" + encodeURIComponent(organizationID);
+}
+

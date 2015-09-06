@@ -6,14 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <title>Educator Signup</title>
+    <title>Organization Dashboard</title>
     <style type="text/css">
-        .form-group.required label:after {
-            content: '*';
-            color: red;
-            font-weight: bold;
-            font-size: large;
-        }
     </style>
 </head>
 <body ng-app="safeApp" ng-controller="controller">
@@ -22,6 +16,7 @@
     <script type="text/javascript" src="lib/angular-1.4.4/angular-messages.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/zeroclipboard-2.2.0/dist/ZeroClipboard.js"></script>
     <script type="text/javascript" src="controllers/HeaderController.js"></script>
     <script type="text/javascript" src="controllers/ReviewEmployeesController.js"></script>
     <script type="text/javascript">
@@ -32,63 +27,109 @@
         headerController.$inject = ['$scope', '$http', '$location'];
     </script>
     <div class="container">
+        <div id="employeeSuccessDialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg vertical-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Employee Sign-Up Link Copied</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>The following link has been copied to your clipboard:</p>
+                        <p><a href="{{employeeLink}}" target="_blank" class="small">{{employeeLink}}</a></p>
+                        <p>
+                            You can now paste this link into an email to send to your employee(s)
+                            so that they can sign up to use this website.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="applicantSuccessDialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg vertical-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Applicant Sign-Up Link Copied</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>The following link has been copied to your clipboard:</p>
+                        <p><a href="{{applicantLink}}" target="_blank" class="small">{{applicantLink}}</a></p>
+                        <p>
+                            You can now paste this link into an email to send to your applicant
+                            so that they can use this website.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div ng-include="'common/header.html'"></div>
-        <div class="page-header">
-            Documentation Summary
-            <div class="dropdown pull-right">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                    Generate Links
+        <div class="page-header" style="margin-bottom: 5px">
+            <span class="h2">
+                Documentation Summary
+            </span>
+            <div class="dropdown pull-right" id="LinksDropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" role="menu">
+                    Generate Email Link
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Employee</a></li>
-                    <li><a href="#">Applicant</a></li>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a role="menuitem" id="EmployeeLinkButton" href="#" data-toggle="modal" data-target="#employeeSuccessDialog" ng-attr-data-clipboard-text="{{employeeLink}}">Employee</a></li>
+                    <li><a role="menuitem" id="ApplicantLinkButton" href="#" data-toggle="modal" data-target="#applicantSuccessDialog" ng-attr-data-clipboard-text="{{applicantLink}}">Applicant</a></li>
                 </ul>
             </div>
         </div>
-        <div id="main">
-            <div class="area">
-                <table width="100%">
-                    <tr class="main-header">
-                        <th colspan="10">{{Organization.Name}}</th>
-                    </tr>
+        <div class="small" style="margin-bottom: 15px">
+            <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+            <span class="text-muted">
+                {{organization.Name}} &bull; {{organization.Address1}} {{organization.Address2}}, {{organization.City}}, {{organization.State}} {{organization.ZipCode}} &bull; Phone: {{organization.TelephoneNumber}} &bull; Fax: {{organization.FaxNumber}} &bull; Email: {{organization.EmailAddress}}
+            </span>
+        </div>
+        <div class="area">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td colspan="10">{{Organization.Address1}} {{Organization.Address2}} {{Organization.City}}, {{Organization.State}} {{Organization.ZipCode}}</td>
+                        <th>Employee</th>
+                        <th>Position</th>
+                        <th>Hire Date</th>
+                        <th ng-repeat="def in DocumentDefinitions">
+                            {{def.Name}}
+                        </th>
+                        <th>Status</th>
                     </tr>
-                </table>
-            </div>
-            <div class="area">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Employee</th>
-                            <th>Position</th>
-                            <th>Hire Date</th>
-                            <th ng-repeat="def in DocumentDefinitions">
-                                {{def.Name}}
-                            </th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="tenure in Organization.Tenures" class="selectable">
-                            <td>{{tenure.Educator.Title}} {{tenure.Educator.FirstName}} {{tenure.Educator.LastName}}</td>
-                            <td>{{tenure.PositionsHeld}}</td>
-                            <td>{{tenure.StartDate | date}}</td>
-                            <td ng-repeat="def in DocumentDefinitions">
-                                <a href="http://google.com" ng-show="HasDocument(tenure, def)">
-                                    <img src="images/PDF-icon.gif" border="0" />
-                                </a>
-                            </td>
-                            <td>
-                                <img ng-show="ValidateDocuments(tenure, def)" src="images/greencheck.png" />
-                                <img ng-show="!ValidateDocuments(tenure, def)" src="images/redx.png" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="tenure in organization.Tenures">
+                        <td>{{tenure.Educator.Title}} {{tenure.Educator.FirstName}} {{tenure.Educator.LastName}}</td>
+                        <td>{{tenure.PositionsHeld}}</td>
+                        <td>{{tenure.StartDate | date}}</td>
+                        <td ng-repeat="def in DocumentDefinitions">
+                            <a href="http://google.com" ng-show="HasDocument(tenure, def)">
+                                <img src="images/PDF-icon.gif" border="0" />
+                            </a>
+                        </td>
+                        <td>
+                            <img ng-show="ValidateDocuments(tenure, def)" src="images/greencheck.png" />
+                            <img ng-show="!ValidateDocuments(tenure, def)" src="images/redx.png" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    <div ng-include="'common/footer.html'"></div>
+    <script type="text/javascript">
+        var linkButtons = [document.getElementById('EmployeeLinkButton'), document.getElementById('ApplicantLinkButton')];
+        var client = new ZeroClipboard(linkButtons);
+        client.on('ready', function (event) { console.log('Movie is loaded'); });
+        client.on('aftercopy', function (event) { console.log('Copied text to clipboard: ' + event.data['text/plain']); });
+        client.on('error', function (event) { console.log('ZeroClipboard error of type "' + event.name + '": ' + event.message); });
+    </script>
 </body>
 </html>

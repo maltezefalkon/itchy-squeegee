@@ -13,18 +13,26 @@ module.exports = function (app, publicPaths, apiPath, loginHandlerPath, loginPag
     app.use(passport.initialize());
     app.use(passport.session());
     setupStrategy(app, loginHandlerPath);
-    
+    var ppRegex = [];
+    publicPaths.forEach(function (x) {
+        var replaced = x.replace(/\//g, '\\/').replace(/\*/g, '([^\\/]+?)');
+        ppRegex.push(new RegExp('^' + replaced));
+    });
     // redirect if requesting a protected page and the user is not authenticated
     app.use(function (req, res, next) {
         var publicPath = false;
-        for (var i = 0; i < publicPaths.length; i++) {
-            if (req.path.indexOf(publicPaths[i]) == 0) {
+        var compare = req.path;
+        if (compare.substr(-1) != '/') {
+            compare += '/';
+        }
+        for (var i = 0; i < ppRegex.length; i++) {
+            if (ppRegex[i].test(compare)) {
                 publicPath = true;
                 break;
             }
         }
         if (!publicPath && !req.isAuthenticated()) {
-            if (req.path.indexOf(apiPath) == 0) {
+            if (compare.indexOf(apiPath) == 0) {
                 return res.send([]);
             } else {
                 return res.redirect(loginPagePath);

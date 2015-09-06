@@ -1,11 +1,87 @@
 ﻿<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>Educator Dashboard</title>
+    <style type="text/css">
+    </style>
 </head>
-<body>
-    Educator Dashboard
+<body ng-app="safeApp" ng-controller="controller">
+    <script type="text/javascript" src="util/util.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="controllers/HeaderController.js"></script>
+    <script type="text/javascript" src="controllers/EducatorDashboardController.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var ctl = app.controller('controller', EducatorDashboardController);
+        ctl.$inject = ['$scope', '$http', '$location'];
+        var headerController = app.controller('headerController', HeaderController);
+        headerController.$inject = ['$scope', '$http', '$location'];
+    </script>
+    <div class="container">
+        <div ng-include="'common/header.html'"></div>
+        <div class="page-header">
+            Educator Dashboard
+        </div>
+        <div class="row" ng-show="outstandingApplications.length &gt; 0">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Outstanding Applications</span>
+                </div>
+                <div class="panel-body">
+                    <table width="100%" class="table">
+                        <thead>
+                            <tr>
+                                <th>Organization Applied To</th>
+                                <th>Certifications Expected</th>
+                                <th>Certifications Received</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="tenure in outstandingApplications">
+                                <td>{{tenure.Organization.Name}}</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-repeat="tenure in currentTenures">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Clearance Documents for {{tenure.Organization.Name}}</span>
+                </div>
+                <div class="panel-body">
+                    <table width="100%" class="table">
+                        <thead>
+                            <tr>
+                                <th>Document Type</th>
+                                <th>Date Started</th>
+                                <th>Date Completed</th>
+                                <th>Next Renewal Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="documentDefinition in documentDefinitions">
+                                <td>{{documentDefinition.Name}}</td>
+                                <td>{{}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div ng-include="'common/footer.html'"></div>
+    </div>
 </body>
 </html>
