@@ -1,0 +1,25 @@
+6 cases:
+
+To sign up a new school:
+/user/signup/Organization/
+
+
+To sign up a new educator:
+/user/signup/Educator/
+
+
+To sign up a school we already know about:
+/user/signup/Organization/?OrganizationID=xxx
+
+
+To sign up an educator we already know about at a school we already know about
+/user/signup/Educator/?OrganizationID=xxx&EducatorID=xxx(&EmailAddress=xxx)
+
+
+To sign up a new educator at a school we already know about
+/user/signup/Educator/?OrganizationID=xxx(&EmailAddress=xxx)
+
+
+To sign up an applicant for a school we already know about
+/user/signup/Applicant/?OrganizationID=xxx(&EducatorID=xxx)(&EmailAddress=xxx)
+

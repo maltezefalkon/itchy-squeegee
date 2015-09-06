@@ -18,25 +18,33 @@ function parseQueryString() {
     return ret;
 }
 
-function queryList(scopePropertyName, path, localScope, $http) {
+function queryList($http, path, localScope, scopePropertyName) {
     var requestUrl = baseDataUrl + path;
-    return $http.get(requestUrl)
+    var ret = $http.get(requestUrl)
         .success(function (data, status, headers, config) {
-            localScope[scopePropertyName] = data;
+            if (localScope && scopePropertyName) {
+                localScope[scopePropertyName] = data;
+            }
+            return data;
         })
         .error(function (data, status, headers, config) {
             alert('Error retrieving ' + scopePropertyName + ': ' + status);
         });
+    return ret;
 }
 
-function querySingle(scopePropertyName, path, $scope, $http) {
+function querySingle($http, path, localScope, scopePropertyName) {
     var requestUrl = baseDataUrl + path;
-    return $http.get(requestUrl)
+    var ret = $http.get(requestUrl)
         .success(function (data, status, headers, config) {
-            $scope[scopePropertyName] = data[0];
+            if (localScope && scopePropertyName) {
+                localScope[scopePropertyName] = data[0];
+            }
+            return data[0];
         })
         .error(function (data, status, headers, config) {
             alert('Error retrieving ' + scopePropertyName + ': ' + status);
         });
+    return ret;
 }
 

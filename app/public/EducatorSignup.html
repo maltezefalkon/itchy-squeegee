@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <title>Educator Signup: Login and Personal Info</title>
+    <title>Educator Signup</title>
 </head>
 <body ng-app="safeApp" ng-controller="controller">
     <script type="text/javascript" src="util/util.js"></script>
@@ -23,12 +23,13 @@
         var headerController = app.controller('headerController', HeaderController);
         headerController.$inject = ['$scope', '$http', '$location'];
     </script>
+    <script type="text/javascript" src="util/angular-directives.js"></script>
     <div class="container">
         <div ng-include="'common/header.html'"></div>
         <div class="page-header">
             Create Educator Account
         </div>
-        <form action="/user/signup/Educator" name="SignupForm" ng-submit="controller.submit(SignupForm.$valid)" method="post" class="form-horizontal" role="form">
+        <form action="/user/signup/Educator/" name="SignupForm" ng-submit="controller.submit(SignupForm.$valid)" method="post" class="form-horizontal" role="form">
             <!-- educator -->
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -39,7 +40,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="Title">Title</label>
                             <div class="col-md-8">
-                                <select name="Title" required ng-model="Title" class="form-control" ng-required="true">
+                                <select name="Title" ng-model="educator.Title" class="form-control" ng-required="true">
                                     <option></option>
                                     <option>Dr.</option>
                                     <option>Mr.</option>
@@ -53,7 +54,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="FirstName">First Name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="FirstName" ng-model="FirstName" ng-required="true" />
+                                <input type="text" class="form-control" name="FirstName" ng-model="educator.FirstName" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -61,21 +62,21 @@
                         <div class="form-group">
                             <label class="control-label col-md-4" for="MiddleName">Middle Name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="MiddleName" ng-model="MiddleName" />
+                                <input type="text" class="form-control" name="MiddleName" ng-model="educator.MiddleName" />
                             </div>
                         </div>
                     </div><div class="col-sm-6 col-lg-4">
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="LastName">Last Name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="LastName" ng-model="LastName" ng-required="true" />
+                                <input type="text" class="form-control" name="LastName" ng-model="educator.LastName" ng-required="true" />
                             </div>
                         </div>
                     </div><div class="col-sm-6 col-lg-4">
                         <div class="form-group">
                             <label class="control-label col-md-4" for="Suffix">Suffix</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="Suffix" ng-model="Suffix" />
+                                <input type="text" class="form-control" name="Suffix" ng-model="educator.Suffix" />
                             </div>
                         </div>
                     </div>
@@ -83,7 +84,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4" for="Suffix">Former Name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="FormerName" ng-model="FormerName" />
+                                <input type="text" class="form-control" name="FormerName" ng-model="educator.FormerName" />
                             </div>
                         </div>
                     </div>
@@ -91,7 +92,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="TelephoneNumber">Phone Number</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="TelephoneNumber" ng-model="TelephoneNumber" ng-required="true" />
+                                <input type="text" class="form-control" name="TelephoneNumber" ng-model="educator.TelephoneNumber" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -99,7 +100,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="DateOfBirth">Date of Birth</label>
                             <div class="col-md-8">
-                                <input type="date" class="form-control" name="DateOfBirth" ng-model="DateOfBirth" ng-required="true" />
+                                <input type="date" class="form-control" name="DateOfBirth" ng-model="educator.DateOfBirth" ng-required="true" parse-date />
                             </div>
                         </div>
                     </div>
@@ -107,7 +108,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="Last4">Last 4 Digits of SSN</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="Last4" ng-model="Last4" ng-required="true" />
+                                <input type="text" class="form-control" name="Last4" ng-model="educator.Last4" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -115,7 +116,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4" for="Last4">PPID</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="PPID" ng-model="PPID" />
+                                <input type="text" class="form-control" name="PPID" ng-model="educator.PPID" />
                             </div>
                         </div>
                     </div>
@@ -123,7 +124,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="Address1">Address 1</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="Address1" ng-model="Address1" ng-required="true" />
+                                <input type="text" class="form-control" name="Address1" ng-model="educator.Address1" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -131,7 +132,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4" for="Address2">Address 2</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="Address2" ng-model="Address2" />
+                                <input type="text" class="form-control" name="Address2" ng-model="educator.Address2" />
                             </div>
                         </div>
                     </div>
@@ -139,7 +140,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="City">City</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="City" ng-model="City" ng-required="true" />
+                                <input type="text" class="form-control" name="City" ng-model="educator.City" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -147,7 +148,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="State">State</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="State" ng-model="State" ng-required="true" />
+                                <input type="text" class="form-control" name="State" ng-model="educator.State" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -155,7 +156,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="State">Zip Code</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="ZipCode" ng-model="ZipCode" ng-required="true" />
+                                <input type="text" class="form-control" name="ZipCode" ng-model="educator.ZipCode" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -163,8 +164,46 @@
                 </div>
             </div>
 
+            <!-- tenure -->
+            <div class="panel panel-default" ng-show="organization">
+                <div class="panel-heading">
+                    <span ng-show="IsApplicant">
+                        Application to {{organization.Name}}
+                    </span>
+                    <span ng-hide="IsApplicant">
+                        Tenure at {{organization.Name}}
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="PositionsHeld">{{IsApplicant ? 'Position Applied For' : 'Position(s) Held'}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="PositionsHeld" class="form-control" ng-model="tenure.PositionsHeld" ng-required="organization" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4" ng-hide="IsApplicant">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="StartDate">Start Date</label>
+                            <div class="col-md-8">
+                                <input type="date" name="StartDate" class="form-control" ng-model="tenure.StartDate" ng-required="organization && !IsApplicant" parse-date />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4" ng-show="IsApplicant">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="ApplicationDate">Application Date</label>
+                            <div class="col-md-8">
+                                <input type="date" name="ApplicationDate" class="form-control" ng-model="tenure.ApplicationDate" ng-required="organization && IsApplicant" parse-date />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- user -->
-            <div class="panel panel-default">
+            <div class="panel panel-default" ng-hide="user">
                 <div class="panel-heading">
                     <span>Login Information</span>
                 </div>
@@ -173,7 +212,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="username">Email Address</label>
                             <div class="col-md-8">
-                                <input type="email" class="form-control" name="EmailAddress" ng-model="emailAddress" ng-required="true" />
+                                <input type="email" class="form-control" name="EmailAddress" ng-model="user.EmailAddress" ng-required="!user" />
                             </div>
                         </div>
                     </div>
@@ -181,7 +220,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="password">Password</label>
                             <div class="col-md-8">
-                                <input type="password" class="form-control" name="Password" ng-model="password" ng-required="true" />
+                                <input type="password" class="form-control" name="Password" ng-model="password" ng-required="!user" />
                             </div>
                         </div>
                     </div>
@@ -189,7 +228,7 @@
                         <div class="form-group required">
                             <label class="control-label col-md-4" for="password">Re-enter Password</label>
                             <div class="col-md-8">
-                                <input type="password" class="form-control" name="Password2" ng-model="password2" ng-required="true" compare-to="controller.password" />
+                                <input type="password" class="form-control" name="Password2" ng-model="password2" ng-required="!user" compare-to="controller.password" />
                             </div>
                             <div ng-messages="SignupForm.Password2.$error" class="error-message" role="alert">
                                 <div ng-message="compare-to">Passwords don't match</div>
@@ -199,22 +238,30 @@
                 </div>
             </div>
 
+            <!-- submit buttons -->
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-8 col-xs-12">
-                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-click="setSkipHistory(true)">
-                        Save and Enter Prior Work History <span class="glyphicon glyphicon-step-forward"></span>
-                    </button>
+                    <div class="btn-toolbar form-group">
+                        <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-hide="IsApplicant">
+                            Save
+                        </button>
+                        <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-click="setSkipHistory(false)" ng-show="IsApplicant">
+                            Save and Enter Prior Work History <span class="glyphicon glyphicon-step-forward"></span>
+                        </button>
+                        <button class="btn btn-warning btn-block btn-lg shrink-sm" type="submit" ng-click="setSkipHistory(true)" ng-show="IsApplicant">
+                            Save.  I have no Prior Work History. <span class="glyphicon glyphicon-forward"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
-                    <button class="btn btn-warning btn-block btn-lg shrink-sm" type="submit" ng-click="setSkipHistory(true)">
-                        Save.  I have no Prior Work History. <span class="glyphicon glyphicon-forward"></span>
-                    </button>
-                </div>
-            </div>
-            <input type="hidden" name="SkipHistory" ng-model="SkipHistory" value="false" />
+
+            <input type="hidden" name="SkipHistory" ng-value="SkipHistory" />
+            <input type="hidden" name="UserID" ng-value="user.UserID" />
+            <input type="hidden" name="EducatorID" ng-value="educator.EducatorID" />
+            <input type="hidden" name="OrganizationID" ng-value="organization.OrganizationID" />
+            <input type="hidden" name="QueryStringEducatorID" ng-value="EducatorID" />
+            <input type="hidden" name="QueryStringOrganizationID" ng-value="OrganizationID" />
+            <input type="hidden" name="IsApplicant" ng-value="IsApplicant" />
         </form>
         <div ng-include="'common/footer.html'"></div>
     </div>

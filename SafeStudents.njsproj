@@ -5,7 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>SafeStudents</Name>
     <RootNamespace>NodejsWebApp1</RootNamespace>
-    <LaunchUrl>http://localhost:1337/app/public/Login.html</LaunchUrl>
+    <LaunchUrl>http://localhost:1337/user/signup/Educator</LaunchUrl>
     <ScriptArguments>
     </ScriptArguments>
   </PropertyGroup>
@@ -35,6 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app\protected\EducatorDashboard.html" />
+    <Content Include="app\public\FatalError.html" />
+    <Content Include="app\public\OrganizationSignup.html" />
+    <Content Include="app\public\UserSignup.html" />
+    <Content Include="docs\signup use cases.txt" />
     <Content Include="Procfile" />
     <Content Include="app\common\footer.html" />
     <Content Include="app\common\header.html" />
@@ -55,6 +59,10 @@
     <Content Include="app\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="app\lib\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="app\util\util.js" />
+    <Content Include="app\controllers\OrganizationSignupController.js" />
+    <Content Include="app\controllers\UserSignupController.js" />
+    <Content Include="app\util\angular-directives.js" />
+    <Content Include="app\controllers\FatalErrorController.js" />
     <Compile Include="modules\myurl.js" />
     <Compile Include="modules\port.js" />
     <Compile Include="modules\view.js" />
@@ -133,6 +141,7 @@
     <Folder Include="app\protected\" />
     <Folder Include="app\public\" />
     <Folder Include="app\util\" />
+    <Folder Include="docs\" />
     <Folder Include="modules\" />
     <Folder Include="app\images\" />
     <Folder Include="referenceData\" />

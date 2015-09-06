@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>New User Signup</title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <script type="text/javascript" src="util/util.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="controllers/HeaderController.js"></script>
+    <script type="text/javascript" src="controllers/UserSignupController.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var ctl = app.controller('controller', UserSignupController);
+        ctl.$inject = ['$scope', '$http', '$location'];
+        var headerController = app.controller('headerController', HeaderController);
+        headerController.$inject = ['$scope', '$http', '$location'];
+    </script>
+    <div class="container">
+        <div ng-include="'common/header.html'"></div>
+        <div class="page-header">
+            Create New User Account
+        </div>
+        <!-- no action = post back to the URL that served this page -->
+        <form name="SignupForm" action="." method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+            <!-- user -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Login Information</span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="username">Email Address</label>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" name="EmailAddress" ng-model="user.EmailAddress" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="password">Password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" name="Password" ng-model="user.Password" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="password">Re-enter Password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" name="Password2" ng-model="password2" ng-required="true" compare-to="controller.user.Password" />
+                            </div>
+                            <div ng-messages="SignupForm.Password2.$error" class="error-message" role="alert">
+                                <div ng-message="compare-to">Passwords don't match</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+                        Create User Account
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="QueryStringOrganizationID" ng-value="OrganizationID" />
+            <input type="hidden" name="QueryStringEducatorID" ng-value="EducatorID" />
+            <input type="hidden" name="QueryStringEmailAddress" ng-value="EmailAddress" />
+        </form>
+        <div ng-include="'common/footer.html'"></div>
+    </div>
+</body>
+</html>

@@ -37,7 +37,7 @@ function saveData(o, typeKey) {
                 }
             });
         } else {
-            log.debug({ object: o, typeKey: typeKey }, 'Saving a single ' + (typeKey || o._TypeKey));
+            log.debug({ obj: o, typeKey: typeKey }, 'Saving a single ' + (typeKey || o._TypeKey));
             promise = saveObject(typeKey, o, txn);
         }
         return promise;
@@ -101,20 +101,36 @@ function buildIncludes(meta, contextTypeKey, paths) {
 }
 
 function saveObject(typeKeyParamValue, o, txn) {
+    
+    // figure out the correct type key
     var typeKey = typeKeyParamValue || o._TypeKey;
     if (!typeKey) {
         throw new Error('Could not infer type key for object');
     }
+    
+    // supply key if necessary
     var insert = supplyKeyIfNecessary(typeKey, o);
-    var msg = { operation: insert ? 'insert' : 'update', typeKey: typeKey, obj: o };
+    
+    // log what we're doing
+    var operation = insert ? 'insert' : 'update';
+    var msg = { operation: operation, typeKey: typeKey, obj: o };
     if (insert) {
         log.info(msg, 'Inserting ' + typeKey);
     } else {
         log.info(msg, 'Updating ' + typeKey);
     }
-    // call the upsert
-    var ret = meta.db[typeKey].upsert(o, { transaction: txn }).then(function (result) {
-        log.info('Saved ' + typeKey + ' successfully');
+    
+    // create the promise for the insert or update
+    var promise = null;
+    var options = { transaction: txn };
+    if (!insert) {
+        options.where = findPrimaryKeyValues(typeKey, o);
+        promise = meta.db[typeKey].update(createCloneForUpdate(typeKey, o), options);
+    } else {
+        promise = meta.db[typeKey].create(o, options);
+    }
+    var ret = promise.then(function (result) {
+        log.info(typeKey + ' ' + operation + ': success');
     });
     
     // save subobjects
@@ -124,6 +140,8 @@ function saveObject(typeKeyParamValue, o, txn) {
             ret = chainSubobjectSave(o[r], r, typeKey, txn, ret, o)
         }
     }
+    
+    // return the promise
     return ret;
 }
 
@@ -160,33 +178,45 @@ function supplyKeyIfNecessary(typeKey, o) {
     
     if (meta.Metadata[typeKey].PrimaryKeyFields.length == 1) {
         var f = meta.Metadata[typeKey].PrimaryKeyFields[0];
-        ret = uuid();
-        log.debug({ newid: ret, field: f, typeKey: typeKey }, 'Supplied key value "' + ret + '" for field "' + f + '" for insert of type "' + typeKey + '"');
-        o[f] = ret;
-        
-        // propagate key to subobjects
-        for (var r in meta.Metadata[typeKey].Relationships) {
-            var relationship = meta.Metadata[typeKey].Relationships[r];
-            if (o[r]) {
-                var fkeyProperty = null;
-                for (var fdef in meta.Metadata[relationship.RelatedTypeKey].FieldDefinitions) {
-                    if (meta.Metadata[relationship.RelatedTypeKey].FieldDefinitions[fdef].field == relationship.ForeignKey) {
-                        fkeyProperty = fdef;
-                        break;
+        if (!o[f]) {
+            ret = uuid();
+            log.debug({ newid: ret, field: f, typeKey: typeKey }, 'Supplied key value "' + ret + '" for field "' + f + '" for insert of type "' + typeKey + '"');
+            o[f] = ret;
+            
+            // propagate key to subobjects
+            for (var r in meta.Metadata[typeKey].Relationships) {
+                var relationship = meta.Metadata[typeKey].Relationships[r];
+                if (o[r]) {
+                    var fkeyProperty = null;
+                    for (var fdef in meta.Metadata[relationship.RelatedTypeKey].FieldDefinitions) {
+                        if (meta.Metadata[relationship.RelatedTypeKey].FieldDefinitions[fdef].field == relationship.ForeignKey) {
+                            fkeyProperty = fdef;
+                            break;
+                        }
                     }
-                }
-                if (!fkeyProperty) {
-                    throw new Error('Failed to find a corresponding property on type ' + r.RelatedTypeKey + ' for field ' + r.ForeignKey);
-                }
-                if (o[r] instanceof Array) {
-                    o[r].forEach(function (subobject) {
-                        subobject[fkeyProperty] = ret;
-                    });
-                } else {
-                    o[r][fkeyProperty] = ret;
+                    if (!fkeyProperty) {
+                        throw new Error('Failed to find a corresponding property on type ' + r.RelatedTypeKey + ' for field ' + r.ForeignKey);
+                    }
+                    if (o[r] instanceof Array) {
+                        o[r].forEach(function (subobject) {
+                            subobject[fkeyProperty] = ret;
+                        });
+                    } else {
+                        o[r][fkeyProperty] = ret;
+                    }
                 }
             }
         }
+    }
+    return ret;
+}
+
+function findPrimaryKeyValues(typeKey, o) {
+    var ret = {};
+    var f = null;
+    for (var i = 0; i < meta.Metadata[typeKey].PrimaryKeyFields.length; i++) {
+        f = meta.Metadata[typeKey].PrimaryKeyFields[i];
+        ret[f] = o[f];
     }
     return ret;
 }
@@ -230,4 +260,14 @@ function replaceParameterExpressions(proto, parameters) {
 
 function isObject(obj) {
     return obj === Object(obj);
+}
+
+function createCloneForUpdate(typeKey, o) {
+    var ret = {};
+    for (var f in o) {
+        if (meta.Metadata[typeKey].PrimaryKeyFields.indexOf(f) == -1) {
+            ret[f] = o[f];
+        }
+    }
+    return ret;
 }

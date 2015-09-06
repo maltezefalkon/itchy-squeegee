@@ -8,7 +8,7 @@ var passportLocal = require('passport-local');
 var bcrypt = require('bcryptjs');
 var LocalStrategy = passportLocal.Strategy;
 
-module.exports = function (app, publicPaths, loginHandlerPath, loginPagePath, defaultPageHandler) {
+module.exports = function (app, publicPaths, apiPath, loginHandlerPath, loginPagePath, defaultPageHandler) {
     app.use(session({ genid: function (req) { return uuid(); }, secret: 'doralia-x-e3', saveUninitialized: false, resave: false }));
     app.use(passport.initialize());
     app.use(passport.session());
@@ -24,8 +24,11 @@ module.exports = function (app, publicPaths, loginHandlerPath, loginPagePath, de
             }
         }
         if (!publicPath && !req.isAuthenticated()) {
-            res.redirect(loginPagePath);
-            res.end();
+            if (req.path.indexOf(apiPath) == 0) {
+                return res.send([]);
+            } else {
+                return res.redirect(loginPagePath);
+            }
         } else {
             next();
         }

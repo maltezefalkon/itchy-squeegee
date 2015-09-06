@@ -42,7 +42,7 @@ function getData(req, res) {
     if (req.method == "GET") {
         api.query(typeKey, joins, queryName, thisUrl.query).then(
             function (results) {
-                return res.send(results);
+                return res.json(results);
             }
         );
     } else {

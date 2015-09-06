@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>Organization Signup</title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <script type="text/javascript" src="util/util.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="controllers/HeaderController.js"></script>
+    <script type="text/javascript" src="controllers/OrganizationSignupController.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var ctl = app.controller('controller', OrganizationSignupController);
+        ctl.$inject = ['$scope', '$http', '$location'];
+        var headerController = app.controller('headerController', HeaderController);
+        headerController.$inject = ['$scope', '$http', '$location'];
+    </script>
+    <div class="container">
+        <div ng-include="'common/header.html'"></div>
+        <div class="page-header">
+             Create Organization Account
+        </div>
+        <form action="/user/signup/Organization/" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+            <!-- tenure -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>
+                        Organization Contact Information
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div ng-repeat="msg in CustomValidationMessages" class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{msg}}
+                        </div>
+                        <div class="form-group required">
+                            <label class="control-label col-sm-3" for="OrganizationName">Name of Organization</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="OrganizationName" class="form-control" ng-model="organization.Name" ng-change="searchForOrganization(tenure)" required ng-model-options="{ debounce: 1000 }" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="OrganizationAddress1">Address 1</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationAddress1" class="form-control" ng-model="organization.Address1" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="OrganizationAddress2">Address 2</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationAddress2" class="form-control" ng-model="organization.Address2" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="OrganizationCity">City</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationCity" class="form-control" ng-model="organization.City" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="OrganizationState">State</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationState" class="form-control" ng-model="organization.State" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="OrganizationZipCode">Zip Code</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationZipCode" class="form-control" ng-model="organization.ZipCode" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="OrganizationEmail">Contact Email</label>
+                            <div class="col-md-8">
+                                <input type="email" name="OrganizationEmail" class="form-control" ng-model="organization.Email" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="OrganizationTelephoneNumber">Phone Number</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationTelephoneNumber" class="form-control" ng-model="organization.TelephoneNumber" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="OrganizationFaxNumber">Fax Number</label>
+                            <div class="col-md-8">
+                                <input type="text" name="OrganizationFaxNumber" class="form-control" ng-model="organization.FaxNumber" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- user -->
+            <div class="panel panel-default" ng-hide="user">
+                <div class="panel-heading">
+                    <span>Login Information</span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="username">Email Address</label>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" name="EmailAddress" ng-model="user.EmailAddress" ng-required="!user" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="password">Password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" name="Password" ng-model="user.Password" ng-required="!user" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group required">
+                            <label class="control-label col-md-4" for="password">Re-enter Password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" name="Password2" ng-model="password2" ng-required="!user" compare-to="controller.user.Password" />
+                            </div>
+                            <div ng-messages="SignupForm.Password2.$error" class="error-message" role="alert">
+                                <div ng-message="compare-to">Passwords don't match</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+                        Save Organization Information
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="UserID" ng-value="user.UserID" />
+            <input type="hidden" name="OrganizationID" ng-value="organization.OrganizationID" />
+            <input type="hidden" name="QueryStringOrganizationID" ng-value="OrganizationID" />
+        </form>
+        <div ng-include="'common/footer.html'"></div>
+    </div>
+</body>
+</html>

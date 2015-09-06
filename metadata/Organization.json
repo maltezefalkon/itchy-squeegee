@@ -59,6 +59,11 @@
             "RelationshipType": "hasMany",
             "RelatedTypeKey": "Tenure",
             "ForeignKey": "organization_id"
+        },
+        "LinkedUser": {
+            "RelationshipType": "hasOne",
+            "RelatedTypeKey": "User",
+            "ForeignKey": "linked_organization_id"
         }
     },
     "Queries": {

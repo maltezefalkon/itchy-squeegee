@@ -3,19 +3,23 @@
 function EducatorSignupController($scope, $http, $location) {
 
     var dict = parseQueryString();
+
     $scope.OrganizationID = dict['OrganizationID'];
-    $scope.OrganizationSupplied = Boolean(dict['OrganizationID']);
-    var educatorID = dict['EducatorID'];
-    $scope.tenure = { OrganizationSearchFound: false, OrganizationSearchBegun: false, OrganizationSearchComplete: false, EducatorID: educatorID };
+    $scope.EducatorID = dict['EducatorID'];
+    $scope.UserID = dict['UserID'];
+    $scope.IsApplicant = (dict['IsApplicant'] == 'true');
+
+    $scope.tenure = { OrganizationSearchFound: false, OrganizationSearchBegun: false, OrganizationSearchComplete: false, EducatorID: $scope.EducatorID };
     $scope.DoneEnteringHistory = undefined;
-    $scope.SkipHistory = false;
+    $scope.SkipHistory = !$scope.IsApplicant;
 
     FetchData($scope, $http, $location);
 
     // expose public functions
 
     $scope.CreateFieldName = CreateFieldName;
-    $scope.setSkipHistory = SetSkipHistory = function (skip) {
+
+    $scope.setSkipHistory = function (skip) {
         SetSkipHistory($scope, $http, skip);
     };
     $scope.searchForOrganization = function (tenureObject) {
@@ -58,8 +62,15 @@ function CompareTo() {
 }
 
 function FetchData($scope, $http, $location) {
-    //queryList('OrganizationList', 'Organization', $scope, $http);
-    //querySingle('FormDefinition', 'DocumentDefinition/Fields?DocumentDefinitionID=093076b1-3348-11e5-9a89-180373ea70a8', $scope, $http);
+    if ($scope.EducatorID) {
+        querySingle($http, 'Educator?EducatorID=' + $scope.EducatorID, $scope, 'educator');
+    }
+    if ($scope.OrganizationID) {
+        querySingle($http, 'Organization?OrganizationID=' + $scope.OrganizationID, $scope, 'organization');
+    }
+    if ($scope.UserID) {
+        querySingle($http, 'User?UserID=' + $scope.UserID, $scope, 'user');
+    }
 }
 
 function CreateFieldName(f) {
@@ -70,7 +81,7 @@ function SearchForSchool($scope, $http, tenureObject) {
     var text = tenureObject.OrganizationSearchName;
     tenureObject.OrganizationSearchBegun = text && text.length > 2;
     if (tenureObject.OrganizationSearchBegun) {
-        queryList('OrganizationSearchList', 'Organization/query/SchoolSearch/?term=' + encodeURIComponent(text), tenureObject, $http)
+        queryList($http, 'Organization/query/SchoolSearch/?term=' + encodeURIComponent(text), tenureObject, 'OrganizationSearchList')
             .then(function () {
                 updateSearch(tenureObject);
             });
@@ -135,3 +146,4 @@ function SetDoneEnteringHistory($scope, $http, done) {
 function SetSkipHistory($scope, $http, skip) {
     $scope.SkipHistory = skip;
 }
+
