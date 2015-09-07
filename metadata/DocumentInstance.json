@@ -29,6 +29,15 @@
             "allowNull": false,
             "defaultValue": "NOW"
         },
+        "CompletedDateTime": {
+            "type": "DATE",
+            "field": "completed_datetime"
+        },
+        "Status": {
+            "type": "STRING",
+            "field": "status",
+            "maximumStringLength": 64
+        },
         "ApplicableTenureID": {
             "type": "UUID",
             "field": "applicable_tenure_id",

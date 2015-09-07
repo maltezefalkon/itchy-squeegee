@@ -214,41 +214,47 @@
         "FieldType": "Button",
         "FieldName": "Group2",
         "FieldFlags": 49152,
-        "FieldJustification": "Left"
+        "FieldJustification": "Left",
+        "FieldStateOptions": [ "Choice1", "Choice2", "Off" ]
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
         "FieldType": "Button",
         "FieldName": "Group3",
         "FieldFlags": 49152,
-        "FieldJustification": "Left"
+        "FieldJustification": "Left",
+        "FieldStateOptions": [ "Choice1", "Choice2", "Off" ]
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
         "FieldType": "Button",
         "FieldName": "Group4",
         "FieldFlags": 49152,
-        "FieldJustification": "Left"
+        "FieldJustification": "Left",
+        "FieldStateOptions": [ "Choice1", "Choice2", "Off" ]
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
         "FieldType": "Button",
         "FieldName": "Group5",
         "FieldFlags": 49152,
-        "FieldJustification": "Left"
+        "FieldJustification": "Left",
+        "FieldStateOptions": [ "Choice1", "Choice2", "Off" ]
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
         "FieldType": "Button",
         "FieldName": "Group6",
         "FieldFlags": 49152,
-        "FieldJustification": "Left"
+        "FieldJustification": "Left",
+        "FieldStateOptions": [ "Choice1", "Choice2", "Off" ]
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
         "FieldType": "Button",
         "FieldName": "Group7",
         "FieldFlags": 49152,
-        "FieldJustification": "Left"
+        "FieldJustification": "Left",
+        "FieldStateOptions": [ "Choice1", "Choice2", "Off" ]
     }
 ]

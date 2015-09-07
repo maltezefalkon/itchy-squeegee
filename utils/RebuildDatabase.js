@@ -33,6 +33,9 @@ meta.Sequelize.sync({ force: true })
     process.stdout.write('Completed successfully.');
     process.exit(0);
 }, function (err) {
+    if (err.message && err.sql) {
+        process.stderr.write('================================\n\nERROR EXECUTING SQL:\n\n' + err.sql + '\n\nERROR MESSAGE:\n\n' + err.message + '\n\n=====================================\n\n');
+    }
     process.stderr.write(err);
     process.exit(1);
 });

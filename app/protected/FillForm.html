@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>Fill Form</title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <script type="text/javascript" src="util/util.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.4.4/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="controllers/HeaderController.js"></script>
+    <script type="text/javascript" src="controllers/FillFormController.js"></script>
+    <script type="text/javascript" src="controllers/FormField.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var ctl = app.controller('controller', FillFormController);
+        ctl.$inject = ['$scope', '$http', '$location'];
+        var headerController = app.controller('headerController', HeaderController);
+        headerController.$inject = ['$scope', '$http', '$location'];
+        angular.module('safeApp')
+            .directive("formField", function () {
+                return {
+                    restrict: 'E',
+                    require: 'ngModel',
+                    scope: {
+                        field: '=field'
+                    },
+                    link: RenderFormField
+                }
+            });
+    </script>
+    <div class="container">
+        <div ng-include="'common/header.html'"></div>
+        <div class="page-header">
+            Complete {{documentDefinition.Name}}
+        </div>
+        <form action="/app/protected/FillForm" name="DocumentForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+            <!-- tenure -->
+            <div class="row">
+                <div ng-repeat="msg in CustomValidationMessages" class="alert alert-danger alert-dismissible col-sm-12">
+                    <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{msg}}
+                </div>
+            </div>
+            <div class="row" ng-repeat="field in documentDefinition.Fields | filter: fieldFilter | orderBy: 'FieldOrdinal'">
+                <div class="col-sm-12">
+                    <form-field field="field" ng-model="documentInstance[field.FieldName]" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-click="setDoneEnteringHistory(false)">
+                        Submit This Information <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="DocumentInstanceID" ng-value="documentInstance.DocumentInstanceID" />
+        </form>
+        <div ng-include="'common/footer.html'"></div>
+    </div>
+</body>
+</html>

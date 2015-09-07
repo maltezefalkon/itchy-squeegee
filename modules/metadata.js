@@ -60,7 +60,11 @@ function DbDefine(sequelize, dbDictionary, metadataDictionary, fs, filePath) {
     }
     metadata.PrimaryKeyFields = [];
     for (var f in metadata.FieldDefinitions) {
-        metadata.FieldDefinitions[f].type = Sequelize[metadata.FieldDefinitions[f].type]();
+        if (metadata.FieldDefinitions[f].type == 'STRING' && metadata.FieldDefinitions[f].maximumStringLength) {
+            metadata.FieldDefinitions[f].type = Sequelize.STRING(metadata.FieldDefinitions[f].maximumStringLength);
+        } else {
+            metadata.FieldDefinitions[f].type = Sequelize[metadata.FieldDefinitions[f].type]();
+        }
         if (metadata.FieldDefinitions[f].defaultValue === "NOW") {
             metadata.FieldDefinitions[f].defaultValue = sequelize.fn(sequelizeOptions.dialect === 'postgres' ? 'NOW' : 'CURRENT_TIMESTAMP');
         }

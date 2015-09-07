@@ -13,7 +13,11 @@
         "FieldType": "String",
         "FieldDescription": "Name of Current or Former Employer",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -30,7 +34,11 @@
         "DocumentDefinitionFieldID": "2b980c90-acef-4c0c-984b-52c54ab6e744",
         "FieldDescription": "No applicable employment",
         "LogicalFieldType": "Boolean",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Checkbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -45,7 +53,11 @@
         "FieldExpression": "tenure.Organization.Address1 + (tenure.Organization.Address2 ? ' ' + tenure.Organization.Address2 : '')",
         "FieldDescription": "Street Address",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -60,7 +72,11 @@
         "FieldExpression": "tenure.Organization.City + ', ' + tenure.Organization.State + ' ' + tenure.Organization.ZipCode",
         "FieldDescription": "City State Zip",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -75,7 +91,11 @@
         "FieldExpression": "tenure.Organization.TelephoneNumber",
         "FieldDescription": "Telephone Number",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": "\\d{3}-\\d{3}\\d{4}",
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -90,7 +110,11 @@
         "FieldExpression": "null",
         "FieldDescription": "(Empty area)",
         "LogicalFieldType": "undefined",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "undefined"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -105,7 +129,11 @@
         "FieldExpression": "educator.FirstName + ' ' + educator.LastName",
         "FieldDescription": "Applicants Name First Middle Last",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -120,7 +148,11 @@
         "FieldExpression": "educator.FormerName",
         "FieldDescription": "Any former names by which the Applicant has been identified",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -134,8 +166,12 @@
         "FieldSection": "Educator",
         "FieldExpression": "educator.DateOfBirth",
         "FieldDescription": "DOB",
-        "LogicalFieldType": "String",
-        "FieldRegex": "\\d{2}-\\d{2}-\\d{4}"
+        "LogicalFieldType": "Date",
+        "FieldRegex": "\\d{2}-\\d{2}-\\d{4}",
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Date"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -150,7 +186,11 @@
         "FieldExpression": "educator.Last4",
         "FieldDescription": "Last 4 digits of Applicants Social Security Number",
         "LogicalFieldType": "String",
-        "FieldRegex": "\\d{4}"
+        "FieldRegex": "\\d{4}",
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -165,7 +205,11 @@
         "FieldExpression": "educator.PPID",
         "FieldDescription": "PPID if applicable",
         "LogicalFieldType": "String",
-        "FieldRegex": "\\d{7}"
+        "FieldRegex": "\\d{7}",
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -180,7 +224,11 @@
         "FieldExpression": "null",
         "FieldDescription": "Approximate dates of employment with the entity listed above",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -195,7 +243,11 @@
         "FieldExpression": "tenure.PositionsHeld",
         "FieldDescription": "Positions",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -209,7 +261,11 @@
         "FieldSection": "Educator",
         "FieldDescription": "Signature of Applicant",
         "LogicalFieldType": "Signature",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Signature"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -224,7 +280,11 @@
         "FieldExpression": "tenure.ApplicationDate",
         "FieldDescription": "Applicant Signature Date",
         "LogicalFieldType": "Date",
-        "FieldRegex": "\\d{2}-\\d{2}-\\d{4}"
+        "FieldRegex": "\\d{2}-\\d{2}-\\d{4}",
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Date"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -239,7 +299,11 @@
         "FieldExpression": null,
         "FieldDescription": "Employing Entity receipt date",
         "LogicalFieldType": "Date",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Date"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -254,7 +318,11 @@
         "FieldExpression": null,
         "FieldDescription": "Received by",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -268,8 +336,12 @@
         "FieldSection": "FormerOrganization",
         "FieldExpression": "tenure.Organization.TelephoneNumber",
         "FieldDescription": "Contact telephone",
-        "LogicalFieldType": "TelephoneNumber",
-        "FieldRegex": null
+        "LogicalFieldType": "String",
+        "FieldRegex": "\\d{3}-\\d{3}\\d{4}",
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -284,7 +356,11 @@
         "FieldExpression": "tenure.StartDate.toString() + ' to ' + tenure.EndDate.toString()",
         "FieldDescription": "Dates of employment of Applicant",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -298,7 +374,11 @@
         "FieldSection": "FormerOrganization",
         "FieldDescription": "Former Employer Representative Signature and Title",
         "LogicalFieldType": "Signature",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Signature"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -311,8 +391,12 @@
         "DocumentDefinitionFieldID": "cffad9fb-41b9-4037-89c6-b1e303c51b9a",
         "FieldSection": "FormerOrganization",
         "FieldDescription": "Former Organization Signature Date",
-        "LogicalFieldType": "String",
-        "FieldRegex": null
+        "LogicalFieldType": "Date",
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Date"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -327,7 +411,11 @@
         "FieldExpression": "organization.Name",
         "FieldDescription": "School Entity",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -342,7 +430,11 @@
         "FieldExpression": "organization.Address1 + (organization.Address2 ? ' ' + organization.Address2 : '')",
         "FieldDescription": "Address",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -357,7 +449,11 @@
         "FieldExpression": "organization.TelephoneNumber",
         "FieldDescription": "Phone",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": "\\d{3}-\\d{3}-\\d{4}",
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -372,7 +468,11 @@
         "FieldExpression": "organization.City + ', ' + organization.State + ' ' + organization.ZipCode",
         "FieldDescription": "State Zip",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -387,7 +487,11 @@
         "FieldExpression": "organization.FaxNumber",
         "FieldDescription": "Fax",
         "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldRegex": "\\d{3}-\\d{3}-\\d{4}",
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -397,9 +501,14 @@
         "FieldJustification": "Left",
         "FieldOrdinal": 26,
         "DocumentDefinitionFieldID": "62377323-19a2-42d0-9ea3-bb77efa9e908",
-        "FieldDescription": "Group2",
-        "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldSection": "Educator",
+        "FieldDescription": "Have you ever been the subject of an abuse or sexual misconduct investigation by any employer, state licensing agency, law enforcement agency or child protective services agency (unless the investigation resulted in a finding that the allegations were false)?",
+        "LogicalFieldType": "Boolean",
+        "FieldRegex": null,
+        "PDFTrueValue": "Choice1",
+        "PDFFalseValue": "Choice2",
+        "PDFNullValue": "Off",
+        "FormFieldType": "YesNoRadio"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -409,9 +518,14 @@
         "FieldJustification": "Left",
         "FieldOrdinal": 27,
         "DocumentDefinitionFieldID": "9daa2134-a3c4-4705-8887-42bc49198204",
-        "FieldDescription": "Group3",
-        "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldSection": "Educator",
+        "FieldDescription": "Have you ever been disciplined, discharged, non-renewed, asked to resign from employment, resigned from or otherwise separated from employment while allegations of abuse or sexual misconduct were pending or under investigation or due to adjudication or findings of abuse or sexual misconduct?",
+        "LogicalFieldType": "Boolean",
+        "FieldRegex": null,
+        "PDFTrueValue": "Choice1",
+        "PDFFalseValue": "Choice2",
+        "PDFNullValue": "Off",
+        "FormFieldType": "YesNoRadio"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -421,9 +535,14 @@
         "FieldJustification": "Left",
         "FieldOrdinal": 28,
         "DocumentDefinitionFieldID": "f5913628-b712-4ffa-b2f1-c6d04e0fee12",
-        "FieldDescription": "Group4",
-        "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldSection": "Educator",
+        "FieldDescription": "Have you ever had a license, professional license or certificate suspended, surrendered or revoked while allegations of abuse or sexual misconduct were pending or under investigation or due to an adjudication or findings of abuse or sexual misconduct?",
+        "LogicalFieldType": "Boolean",
+        "FieldRegex": null,
+        "PDFTrueValue": "Choice1",
+        "PDFFalseValue": "Choice2",
+        "PDFNullValue": "Off",
+        "FormFieldType": "YesNoRadio"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -433,9 +552,14 @@
         "FieldJustification": "Left",
         "FieldOrdinal": 29,
         "DocumentDefinitionFieldID": "9809ea15-2b72-4f61-9956-18449eb8a7be",
-        "FieldDescription": "Group5",
-        "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldSection": "FormerOrganization",
+        "FieldDescription": "To the best of your knowledge, has Applicant ever been the subject of an abuse or sexual misconduct investigation by any employer, state licensing agency, law enforcement agency or child protective services agency (unless the investigation resulted in a finding that the allegations were false)?",
+        "LogicalFieldType": "Boolean",
+        "FieldRegex": null,
+        "PDFTrueValue": "Choice1",
+        "PDFFalseValue": "Choice2",
+        "PDFNullValue": "Off",
+        "FormFieldType": "YesNoRadio"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -445,9 +569,14 @@
         "FieldJustification": "Left",
         "FieldOrdinal": 30,
         "DocumentDefinitionFieldID": "3e36df41-caac-4f71-b087-7d4d3afe4b48",
-        "FieldDescription": "Group6",
-        "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldSection": "FormerOrganization",
+        "FieldDescription": "To the best of your knowledge, has Applicant ever been disciplined, discharged, non-renewed, asked to resign from employment, resigned from or otherwise separated from employment while allegations of abuse or sexual misconduct were pending or under investigation or due to adjudication or findings of abuse or sexual misconduct?",
+        "LogicalFieldType": "Boolean",
+        "FieldRegex": null,
+        "PDFTrueValue": "Choice1",
+        "PDFFalseValue": "Choice2",
+        "PDFNullValue": "Off",
+        "FormFieldType": "YesNoRadio"
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -457,8 +586,13 @@
         "FieldJustification": "Left",
         "FieldOrdinal": 31,
         "DocumentDefinitionFieldID": "164f1d94-adf5-4285-a287-44f87448c6e4",
-        "FieldDescription": "Group7",
-        "LogicalFieldType": "String",
-        "FieldRegex": null
+        "FieldSection": "FormerOrganization",
+        "FieldDescription": "To the best of your knowledge, has Applicant ever had a license, professional license or certificate suspended, surrendered or revoked while allegations of abuse or sexual misconduct were pending or under investigation or due to an adjudication or findings of abuse or sexual misconduct?",
+        "LogicalFieldType": "Boolean",
+        "FieldRegex": null,
+        "PDFTrueValue": "Choice1",
+        "PDFFalseValue": "Choice2",
+        "PDFNullValue": "Off",
+        "FormFieldType": "YesNoRadio"
     }
 ]

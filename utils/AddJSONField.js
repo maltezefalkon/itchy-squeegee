@@ -26,7 +26,7 @@ stdin.on('data', function (chunk) {
 });
 
 stdin.on('end', function () {
-    var inputJSON = inputChunks.join(null);
+    var inputJSON = inputChunks.join('');
     var inputObject = JSON.parse(inputJSON.trim());
     if (inputObject.constructor === Array) {
         for (var i = 0; i < inputObject.length; i++) {

@@ -56,9 +56,9 @@
             "ForeignKey": "educator_id",
             "RelatedTypeKey": "Educator"
         },
-        "ApplicationDocuments": {
+        "ApplicableDocuments": {
             "RelationshipType": "hasMany",
-            "ForeignKey": "application_tenure_id",
+            "ForeignKey": "applicable_tenure_id",
             "RelatedTypeKey": "DocumentInstance"
         },
         "ReferenceDocuments": {

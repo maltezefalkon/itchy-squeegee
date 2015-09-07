@@ -30,51 +30,38 @@
         <div class="page-header">
             Educator Dashboard
         </div>
-        <div class="row" ng-show="outstandingApplications.length &gt; 0">
+        <div ng-repeat="tenure in educator.Tenures | filter: TenureFilter | orderBy: getSortPriority">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span>Outstanding Applications</span>
+                    <span ng-show="isApplication(tenure)">
+                        Application Clearances for {{tenure.Organization.Name}}
+                    </span>
+                    <span ng-show="isCurrentTenure(tenure)">
+                        Current Clearances for {{tenure.Organization.Name}}
+                    </span>
                 </div>
                 <div class="panel-body">
                     <table width="100%" class="table">
                         <thead>
                             <tr>
-                                <th>Organization Applied To</th>
-                                <th>Certifications Expected</th>
-                                <th>Certifications Received</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="tenure in outstandingApplications">
-                                <td>{{tenure.Organization.Name}}</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="row" ng-repeat="tenure in currentTenures">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span>Clearance Documents for {{tenure.Organization.Name}}</span>
-                </div>
-                <div class="panel-body">
-                    <table width="100%" class="table">
-                        <thead>
-                            <tr>
-                                <th>Document Type</th>
-                                <th>Date Started</th>
-                                <th>Date Completed</th>
-                                <th>Next Renewal Date</th>
+                                <th>Document</th>
                                 <th>Status</th>
+                                <th>Date Created</th>
+                                <th>Date Completed</th>
+                                <th ng-show="isCurrentTenure(tenure)">
+                                    Next Renewal
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="documentDefinition in documentDefinitions">
-                                <td>{{documentDefinition.Name}}</td>
-                                <td>{{}}</td>
+                            <tr ng-repeat="document in tenure.ApplicableDocuments">
+                                <td>{{document.Definition.Name}}</td>
+                                <td>{{document.Definition.Status}}</td>
+                                <td>{{document.DocumentDate}}</td>
+                                <td>{{document.CompletedDateTime}}</td>
+                                <td ng-show="isCurrentTenure(tenure)">
+                                    next
+                                </td>
                             </tr>
                         </tbody>
                     </table>

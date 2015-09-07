@@ -5,7 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>SafeStudents</Name>
     <RootNamespace>NodejsWebApp1</RootNamespace>
-    <LaunchUrl>http://localhost:1337/user/signup/Educator</LaunchUrl>
+    <LaunchUrl>http://localhost:1337/user/signup/Applicant/?OrganizationID=9e1d80d1-00b3-48cd-8172-f0855b648126</LaunchUrl>
     <ScriptArguments>
     </ScriptArguments>
   </PropertyGroup>
@@ -39,6 +39,7 @@
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.min.map" />
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.swf" />
     <Content Include="app\protected\EducatorDashboard.html" />
+    <Content Include="app\protected\FillForm.html" />
     <Content Include="app\public\FatalError.html" />
     <Content Include="app\public\index.html" />
     <Content Include="app\public\OrganizationSignup.html" />
@@ -73,6 +74,8 @@
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.js" />
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.min.js" />
     <Content Include="app\controllers\EducatorDashboardController.js" />
+    <Content Include="app\controllers\FillFormController.js" />
+    <Content Include="app\controllers\FormField.js" />
     <Compile Include="modules\myurl.js" />
     <Compile Include="modules\port.js" />
     <Compile Include="modules\view.js" />
@@ -88,8 +91,10 @@
     <Compile Include="modules\authentication.js" />
     <Compile Include="modules\form168.js" />
     <Compile Include="modules\logging.js" />
+    <Compile Include="services\formserver.js" />
     <Compile Include="services\signupserver.js" />
     <Compile Include="utils\AddJSONField.js" />
+    <Compile Include="utils\GenerateFDF.js" />
     <Compile Include="utils\Hash.js" />
     <Compile Include="utils\PDFFieldsToJSON.js" />
     <Compile Include="utils\Salt.js" />

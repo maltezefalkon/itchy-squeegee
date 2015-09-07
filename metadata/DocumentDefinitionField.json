@@ -33,7 +33,8 @@
         },
         "FieldJustification": {
             "type": "STRING",
-            "field": "field_justification"
+            "field": "field_justification",
+            "maximumStringLength": 16
         },
         "FieldOrdinal": {
             "type": "INTEGER",
@@ -41,19 +42,23 @@
         },
         "FormFieldType": {
             "type": "STRING",
-            "field": "form_field_type"
+            "field": "form_field_type",
+            "maximumStringLength": 64
         },
         "FieldExpression": {
             "type": "STRING",
-            "field": "field_expression"
+            "field": "field_expression",
+            "maximumStringLength": 512
         },
         "FieldSection": {
             "type": "STRING",
-            "field": "field_section"
+            "field": "field_section",
+            "maximumStringLength": 64
         },
         "FieldDescription": {
             "type": "STRING",
-            "field": "field_description"
+            "field": "field_description",
+            "maximumStringLength": 512
         },
         "LogicalFieldType": {
             "type": "STRING",
@@ -62,6 +67,21 @@
         "FieldRegex": {
             "type": "STRING",
             "field": "field_regex"
+        },
+        "PDFTrueValue": {
+            "type": "STRING",
+            "field": "pdf_true_value",
+            "maximumStringLength": 64
+        },
+        "PDFFalseValue": {
+            "type": "STRING",
+            "field": "pdf_false_value",
+            "maximumStringLength": 64
+        },
+        "PDFNullValue": {
+            "type": "STRING",
+            "field": "pdf_null_value",
+            "maximumStringLength": 64
         }
     },
     "Relationships": {
