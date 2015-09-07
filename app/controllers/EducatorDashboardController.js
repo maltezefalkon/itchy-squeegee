@@ -15,12 +15,12 @@ function EducatorDashboardController($scope, $http, $location) {
     $scope.getSortPriority = GetSortPriority;
     $scope.isApplication = IsApplication;
     $scope.isCurrentTenure = IsCurrentTenure;
-
+    $scope.formatDate = FormatDate;
 }
 
 function FetchData($scope, $http) {
     queryList($http, 'DocumentDefinition/Fields', $scope, 'documentDefinitions');
-    querySingle($http, 'Educator/LinkedUser,Tenures.Organization,Tenures.ApplicableDocuments,Tenures.ReferenceDocuments?EducatorID=' + $scope.EducatorID, $scope, 'educator')
+    querySingle($http, 'Educator/Tenures.Organization,Tenures.ApplicableDocuments.Definition,Tenures.ReferenceDocuments.Definition?EducatorID=' + $scope.EducatorID, $scope, 'educator')
         .success(function () {
             $scope.outstandingApplications = GetOutstandingApplications($scope.educator);
             $scope.currentTenures = GetCurrentTenures($scope.educator);
@@ -82,4 +82,13 @@ function GetDocuments(tenure, documentDefinitionID) {
         }
     }
     return ret;
+}
+
+function FormatDate(d) {
+    if (!d) {
+        return null;
+    } else {
+        var date = (d instanceof Date) ? d : new Date(d);
+        return (date.getMonth() + 1).toString() + '/' + date.getDate() + '/' + date.getFullYear();
+    }
 }

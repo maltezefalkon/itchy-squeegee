@@ -89,7 +89,7 @@
     <Compile Include="metadata\DocumentInstanceField.json" />
     <Compile Include="modules\api.js" />
     <Compile Include="modules\authentication.js" />
-    <Compile Include="modules\form168.js" />
+    <Compile Include="modules\forms.js" />
     <Compile Include="modules\logging.js" />
     <Compile Include="services\formserver.js" />
     <Compile Include="services\signupserver.js" />

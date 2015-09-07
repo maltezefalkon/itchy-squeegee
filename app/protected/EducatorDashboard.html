@@ -55,10 +55,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="document in tenure.ApplicableDocuments">
-                                <td>{{document.Definition.Name}}</td>
-                                <td>{{document.Definition.Status}}</td>
-                                <td>{{document.DocumentDate}}</td>
-                                <td>{{document.CompletedDateTime}}</td>
+                                <td>{{document.Name}}</td>
+                                <td>{{document.Status}}</td>
+                                <td>{{formatDate(document.DocumentDate)}}</td>
+                                <td>{{formatDate(document.CompletedDateTime)}}</td>
                                 <td ng-show="isCurrentTenure(tenure)">
                                     next
                                 </td>

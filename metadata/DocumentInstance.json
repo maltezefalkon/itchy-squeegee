@@ -25,9 +25,7 @@
         },
         "UploadDateTime": {
             "type": "DATE",
-            "field": "upload_datetime",
-            "allowNull": false,
-            "defaultValue": "NOW"
+            "field": "upload_datetime"
         },
         "CompletedDateTime": {
             "type": "DATE",
@@ -45,8 +43,11 @@
         },
         "ReferenceTenureID": {
             "type": "UUID",
-            "field": "reference_tenure_id",
-            "allowNull": false
+            "field": "reference_tenure_id"
+        },
+        "Name": {
+            "type": "STRING",
+            "field": "name"
         }
     },
     "Relationships": {

@@ -7,6 +7,7 @@ var meta = require('./metadata.js')();
 
 module.exports.save = saveData;
 module.exports.query = queryData;
+module.exports.querySingle = querySingle;
 
 function saveData(o, typeKey) {
     if (o.constructor !== Array) {
@@ -48,16 +49,26 @@ function queryData(typeKey, joins, queryName, parameters) {
     if (!typeKey) {
         throw new Error('No typeKey specified');
     }
-    if (joins.constructor !== Array) {
+    if (joins && joins.constructor !== Array) {
         throw new Error('Joins must be an Array');
     }
-    var includes = buildIncludes(meta, typeKey, joins);
+    var includes = buildIncludes(meta, typeKey, joins || []);
     var condition = getQueryCondition(typeKey, queryName, parameters);
     if (meta.db[typeKey]) {
         return meta.db[typeKey].findAll({ where: condition, include: includes });
     } else {
         throw "Undefined type key: " + typeKey;
     }
+}
+
+function querySingle(typeKey, joins, queryName, parameters) {
+    return queryData(typeKey, joins, queryName, parameters).then(function (data) {
+        if (data && data.length == 1) {
+            return data[0];
+        } else {
+            return null;
+        }
+    });
 }
 
 function buildIncludes(meta, contextTypeKey, paths) {
@@ -109,28 +120,27 @@ function saveObject(typeKeyParamValue, o, txn) {
     }
     
     // supply key if necessary
-    var insert = supplyKeyIfNecessary(typeKey, o);
+    var operationData = supplyKeyIfNecessary(typeKey, o);
     
     // log what we're doing
-    var operation = insert ? 'insert' : 'update';
-    var msg = { operation: operation, typeKey: typeKey, obj: o };
-    if (insert) {
-        log.info(msg, 'Inserting ' + typeKey);
-    } else {
-        log.info(msg, 'Updating ' + typeKey);
-    }
+    var msg = { operation: operationData, typeKey: typeKey, obj: o };
+    log.info(msg, operationData.operation + 'ing ' + typeKey);
     
     // create the promise for the insert or update
     var promise = null;
     var options = { transaction: txn };
-    if (!insert) {
+    if (operationData.operation === 'update') {
         options.where = findPrimaryKeyValues(typeKey, o);
         promise = meta.db[typeKey].update(createCloneForUpdate(typeKey, o), options);
-    } else {
+    } else if (operationData.operation === 'insert') {
         promise = meta.db[typeKey].create(o, options);
+    } else if (operationData.operation === 'upsert') {
+        promise = meta.db[typeKey].upsert(o, options);
+    } else {
+        throw new Error('Unrecognized database opertaion: ' + operationData.operation);
     }
     var ret = promise.then(function (result) {
-        log.info(typeKey + ' ' + operation + ': success');
+        log.info(typeKey + ' ' + operationData.operation + ': success');
     });
     
     // save subobjects
@@ -174,14 +184,17 @@ function saveSubobjectsForRelationship(related, r, typeKey, txn, outerPromise) {
 }
 
 function supplyKeyIfNecessary(typeKey, o) {
-    var ret = undefined;
-    
+    var ret = {
+        operation: 'upsert',
+        newID: undefined
+    };
     if (meta.Metadata[typeKey].PrimaryKeyFields.length == 1) {
         var f = meta.Metadata[typeKey].PrimaryKeyFields[0];
         if (!o[f]) {
-            ret = uuid();
-            log.debug({ newid: ret, field: f, typeKey: typeKey }, 'Supplied key value "' + ret + '" for field "' + f + '" for insert of type "' + typeKey + '"');
-            o[f] = ret;
+            ret.newID = uuid();
+            ret.operation = 'insert';
+            log.debug({ newid: ret.newID, field: f, typeKey: typeKey }, 'Supplied key value "' + ret + '" for field "' + f + '" for insert of type "' + typeKey + '"');
+            o[f] = ret.newID;
             
             // propagate key to subobjects
             for (var r in meta.Metadata[typeKey].Relationships) {
@@ -199,13 +212,15 @@ function supplyKeyIfNecessary(typeKey, o) {
                     }
                     if (o[r] instanceof Array) {
                         o[r].forEach(function (subobject) {
-                            subobject[fkeyProperty] = ret;
+                            subobject[fkeyProperty] = ret.newID;
                         });
                     } else {
-                        o[r][fkeyProperty] = ret;
+                        o[r][fkeyProperty] = ret.newID;
                     }
                 }
             }
+        } else {
+            ret.operation = 'update';
         }
     }
     return ret;

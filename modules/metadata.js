@@ -112,8 +112,12 @@ function SetupRelationships(dbDictionary, metadataDictionary) {
 
 function SetupClasses(metadataDictionary, boFunctionDictionary) {
     for (var typeKey in metadataDictionary) {
-        boFunctionDictionary[typeKey] = function () {
-            this._TypeKey = typeKey;
-        };
+        boFunctionDictionary[typeKey] = createClassConstructor(typeKey);
     }
+}
+
+function createClassConstructor(typeKey) {
+    return function () {
+        this._TypeKey = typeKey;
+    };
 }

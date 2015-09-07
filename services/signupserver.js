@@ -13,6 +13,7 @@ var meta = require('../modules/metadata')();
 var uuid = require('uuid');
 var url = require('url');
 var path = require('path');
+var forms = require('../modules/forms');
 
 // expose public methods
 module.exports.getUserSignupData = getUserSignupData;
@@ -82,15 +83,21 @@ function postEducatorTenureData(req, res, next) {
     
     log.debug({ tenure: tenure, newOrganization: newOrganization }, 'Creating tenure objects');
     
-    api
-        .save(toBeSaved)
-        .then(function (returned) {
-            var nextUrl = data.DoneEnteringHistory === 'true' ?
-                    '/app/protected/EducatorDashboard.html?EducatorID=' + encodeURIComponent(data.EducatorID)
-                    : '/app/protected/EducatorTenure.html?EducatorID=' + encodeURIComponent(data.EducatorID);
-            res.redirect(nextUrl);
-            res.end();
+    var nextUrl = '/app/protected/EducatorTenure.html?EducatorID=' + encodeURIComponent(data.EducatorID);
+    var promise = api.save(toBeSaved);
+    
+    if (data.DoneEnteringHistory === 'true') {
+        promise = promise.then(function () {
+            return createDocumentStubs(data.EducatorID);
         });
+        
+        nextUrl = '/app/protected/EducatorDashboard.html?EducatorID=' + encodeURIComponent(data.EducatorID);
+    }
+
+    promise.then(function (returned) {
+        res.redirect(nextUrl);
+        res.end();
+    });
 }
 
 function postEducatorSignupData(req, res, next) {
@@ -110,7 +117,8 @@ function postEducatorSignupData(req, res, next) {
     
     var educator = undefined;
     var tenure = undefined;
-    
+    var skipHistory = (data.SkipHistory === 'true');
+
     if (data.UserID) {
         
         educator = {
@@ -163,7 +171,13 @@ function postEducatorSignupData(req, res, next) {
     
     var promise = educator ? api.save(educator) : api.save(user);
     
-    promise
+    if (educator && tenure && skipHistory) {
+        promise = promise.then(function () {
+            return createDocumentStubs(educator.EducatorID);
+        });
+    }
+
+    promise = promise
         .then(function () {
             var nextUrl = '/app/public/EducatorSignup.html?UserID=' + encodeURIComponent(user.UserID);
             if (data.QueryStringOrganizationID) {
@@ -179,7 +193,7 @@ function postEducatorSignupData(req, res, next) {
                 nextUrl += '&IsApplicant=true';
             }
             if (educator) {
-                nextUrl = (data.SkipHistory === 'true') ?
+                nextUrl = skipHistory ?
                     '/app/protected/EducatorDashboard.html'
                     : '/app/protected/EducatorTenure.html?EducatorID=' + encodeURIComponent(educator.EducatorID);
             }
@@ -256,6 +270,39 @@ function postOrganizationSignupData(req, res, next) {
             }
         });
     });
+}
+
+function createDocumentStubs(educatorID) {
+    log.debug('Creating document stubs');
+    var ret = api.query('Educator', ['Tenures.Organization'], null, { EducatorID: educatorID });
+    ret = ret.then(function (educatorList) {
+        var applicationTenure = null;
+        var educator = educatorList[0];
+        for (var i = 0; i < educator.Tenures.length; i++) {
+            if (!educator.Tenures[i].StartDate) {
+                applicationTenure = educator.Tenures[i];
+                break;
+            }
+        }
+        if (null == applicationTenure) {
+            throw new Error('Failed to find applicationTenure');
+        }
+        var docs = null;
+        docs = forms.CreateDocumentStubs(applicationTenure, educator.Tenures, educator);
+        log.debug({ docs: docs}, 'Created ' + docs.length.toString() + ' document stubs');
+        var innerPromise = null;
+        docs.forEach(function (doc) {
+            if (innerPromise == null) {
+                innerPromise = api.save(doc);
+            } else {
+                innerPromise = innerPromise.then(function () {
+                    return api.save(doc);
+                });
+            }
+        });
+        return innerPromise;
+    });
+    return ret;
 }
 
 /*
