@@ -44,6 +44,7 @@
                     <table width="100%" class="table">
                         <thead>
                             <tr>
+                                <th>Action</th>
                                 <th>Document</th>
                                 <th>Status</th>
                                 <th>Date Created</th>
@@ -54,9 +55,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="document in tenure.ApplicableDocuments">
+                            <tr ng-repeat="document in tenure.ApplicableDocuments | orderBy: 'Name'">
+                                <td>
+                                    <button type="button" class="btn btn-block btn-success" ng-show="document.Status == 'MISSING' && !document.Definition.IsUpload">
+                                        <span class="glyphicon glyphicon-star"></span> Create
+                                    </button>
+                                    <button type="button" class="btn btn-block btn-success" ng-show="document.Status == 'MISSING' && document.Definition.IsUpload">
+                                        <span class="glyphicon glyphicon-paperclip"></span> Upload
+                                    </button>
+                                    <button type="button" class="btn btn-block btn-primary" ng-show="document.Status != 'MISSING'">
+                                        <span class="glyphicon glyphicon-save"></span> Download
+                                    </button>
+                                </td>
                                 <td>{{document.Name}}</td>
-                                <td>{{document.Status}}</td>
+                                <td>
+                                    <span class="glyphicon glyphicon-ban-circle text-danger" ng-show="document.Status == 'MISSING'"></span>
+                                    <span class="glyphicon glyphicon-envelope text-info" ng-show="document.Status == 'QUEUED'"></span>
+                                    <span class="glyphicon glyphicon-hourglass text-primary" ng-show="document.Status == 'AWAITING RESPONSE'"></span>
+                                    <span class="glyphicon glyphicon-ok text-success" ng-show="document.Status == 'COMPLETE'"></span>
+                                    <span class="glyphicon glyphicon-warning-sign text-warning" ng-show="document.Status == 'EXPIRED'"></span>
+                                    {{document.Status}}
+                                </td>
                                 <td>{{formatDate(document.DocumentDate)}}</td>
                                 <td>{{formatDate(document.CompletedDateTime)}}</td>
                                 <td ng-show="isCurrentTenure(tenure)">

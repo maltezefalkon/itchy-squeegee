@@ -23,6 +23,12 @@
             "type": "STRING",
             "field": "renewal_period",
             "allowNull": true
+        },
+        "IsUpload": {
+            "type": "BOOLEAN",
+            "field": "is_upload",
+            "allowNull": false,
+            "defaultValue": true
         }
     },
     "Relationships": {

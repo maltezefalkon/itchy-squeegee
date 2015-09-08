@@ -1,8 +1,9 @@
 ﻿var api = require('./api.js');
 var meta = require('./metadata.js')();
 var status = {
-    Pending: 'PENDING',
-    InProgress: 'INPROGRESS',
+    Missing: 'MISSING',
+    Queued: 'QUEUED',
+    AwaitingResponse: 'AWAITING RESPONSE',
     Complete: 'COMPLETE',
     Expired: 'EXPIRED'
 };
@@ -48,16 +49,27 @@ function createDocumentInstance(documentDefinitionID, educator, applicableTenure
 }
 
 function buildDocumentInstanceFields(documentDefinition, documentInstance, educator, applicableTenure, referenceTenure, documentData) {
-    documentInstance.Fields = [];
+    var search = true;
+    var documentInstanceField = null;
+
+    if (!documentInstance.Fields) {
+        documentInstance.Fields = [];
+        search = false;
+    }
     for (var i = 0; i < documentDefinition.Fields.length; i++) {
         var documentDefinitionField = documentDefinition.Fields[i];
-        // if data isn't supplied, it won't provide values
-        var documentInstanceField = {
-            DocumentInstanceID: documentInstance.DocumentInstanceID,
-            DocumentDefinitionFieldID: documentDefinitionField.DocumentDefinitionFieldID,
-            FieldValue: getDocumentFieldValue(documentDefinitionField, educator, applicableTenure, referenceTenure, documentData)
-        };
-        documentInstance.Fields.push(documentInstanceField);
+        if (search) {
+            documentInstanceField = findSingle(documentInstance.Fields, { DocumentDefinitionFieldID: documentDefinition.Fields[i].DocumentDefinitionFieldID });
+        }
+        if (!documentInstanceField) {
+            documentInstanceField = {
+                DocumentInstanceID: documentInstance.DocumentInstanceID,
+                DocumentDefinitionFieldID: documentDefinitionField.DocumentDefinitionFieldID,
+            };
+            documentInstance.Fields.push(documentInstanceField);
+        }
+        documentInstanceField.FieldValue = getDocumentFieldValue(documentDefinitionField, educator, applicableTenure, referenceTenure, documentData);
+        documentInstanceField = null;
     }
 }
 
@@ -96,6 +108,32 @@ function createDocumentStubs(documentTenure, allTenures, educator) {
 function formatDate(d) {
     var date = (d instanceof Date) ? d : new Date(d);
     return (date.getMonth() + 1).toString() + '/' + date.getDate() + '/' + date.getFullYear();
+}
+
+function findSingle(array, propertiesToMatch) {
+    var ret = undefined;
+    var broken = undefined;
+    for (var i = 0; i < array.length; i++) {
+        broken = false;
+        for (var f in propertiesToMatch) {
+            if (propertiesToMatch[f]) {
+                if (!array[i][f] || array[i][f] != propertiesToMatch[f]) {
+                    broken = true;
+                    break;
+                }
+            } else {
+                if (array[i][f]) {
+                    broken = true;
+                    break;
+                }
+            }
+        }
+        if (!broken) {
+            ret = array[i];
+            break;
+        }
+    }
+    return ret;
 }
 
 module.exports.Form168 = form168;
