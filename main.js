@@ -8,6 +8,7 @@
 var express = require('express');
 var dataServices = require('./services/dataserver.js');
 var signupServices = require('./services/signupserver.js');
+var formServices = require('./services/formserver.js');
 var log = require('./modules/logging')('main');
 var requestLog = require('./modules/logging')('requests');
 var bodyParser = require('body-parser');
@@ -39,7 +40,12 @@ var publicPaths = ['/$', '/app/common/', '/app/css/', '/app/images/', '/app/js/'
 var passport = require('./modules/authentication.js')(app, publicPaths, '/api/', '/user/login', '/app/public/Login.html', redirectToDefaultPage);
 
 // "app" routes for our website 
-app.use('/app', express.static('app'));
+app.use('/app/public', express.static('app/public'));
+app.use('/app/protected', express.static('app/protected'));
+
+// form routes
+app.post('/app/post/FillForm', formServices.postFormData);
+
 app.use('/app/:privacy(public|protected)/common', express.static('app/common'));
 app.use('/app/:privacy(public|protected)/controllers', express.static('app/controllers'));
 app.use('/app/:privacy(public|protected)/css', express.static('app/css'));
@@ -98,7 +104,6 @@ app.get('/user/signup/:entity(Applicant|Educator|Organization)', signupServices.
 app.post('/user/signup/:entity(Applicant|Educator)', signupServices.postEducatorSignupData);
 app.post('/user/signup/Educator/Tenure', signupServices.postEducatorTenureData);
 app.post('/user/signup/:entity(Organization)', signupServices.postOrganizationSignupData);
-
 
 
 // =============

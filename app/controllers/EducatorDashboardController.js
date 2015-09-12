@@ -16,6 +16,10 @@ function EducatorDashboardController($scope, $http, $location) {
     $scope.isApplication = IsApplication;
     $scope.isCurrentTenure = IsCurrentTenure;
     $scope.formatDate = FormatDate;
+    $scope.$location = $location;
+    $scope.navigateToFormFill = function (document) {
+        NavigateToFormFill($scope, $location, document);
+    }
 }
 
 function FetchData($scope, $http) {
@@ -91,4 +95,10 @@ function FormatDate(d) {
         var date = (d instanceof Date) ? d : new Date(d);
         return (date.getMonth() + 1).toString() + '/' + date.getDate() + '/' + date.getFullYear();
     }
+}
+
+function NavigateToFormFill($scope, $location, document) {
+    var newPath = '/app/protected/FillForm.html?DocumentInstanceID=' + document.DocumentInstanceID + '&Section=Educator'
+    console.log(newPath);
+    location.href = newPath;
 }

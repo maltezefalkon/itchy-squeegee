@@ -6,7 +6,7 @@
         "FieldNameAlt": "Name of Current or Former Employer: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 0,
+        "PDFFieldOrdinal": 0,
         "DocumentDefinitionFieldID": "ac0e98eb-a7b3-4478-8232-51c135aa4c29",
         "FieldSection": "Educator",
         "FieldExpression": "referenceTenure.Organization.Name",
@@ -17,7 +17,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 0
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -30,7 +31,7 @@
             "Off",
             "On"
         ],
-        "FieldOrdinal": 1,
+        "PDFFieldOrdinal": 1,
         "DocumentDefinitionFieldID": "2b980c90-acef-4c0c-984b-52c54ab6e744",
         "FieldDescription": "No applicable employment",
         "LogicalFieldType": "Boolean",
@@ -38,7 +39,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Checkbox"
+        "FormFieldType": "Checkbox",
+        "LogicalFieldOrdinal": 1
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -47,7 +49,7 @@
         "FieldNameAlt": "Street Address: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 2,
+        "PDFFieldOrdinal": 2,
         "DocumentDefinitionFieldID": "d5b97449-de85-4553-a45c-30f92e84c462",
         "FieldSection": "Educator",
         "FieldExpression": "referenceTenure.Organization.Address1 + (referenceTenure.Organization.Address2 ? ' ' + referenceTenure.Organization.Address2 : '')",
@@ -57,7 +59,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 2
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -66,7 +69,7 @@
         "FieldNameAlt": "City, State, Zip",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 3,
+        "PDFFieldOrdinal": 3,
         "DocumentDefinitionFieldID": "73f1f35f-6c6d-451f-bf49-99697198fe8a",
         "FieldSection": "Educator",
         "FieldExpression": "referenceTenure.Organization.City + ', ' + referenceTenure.Organization.State + ' ' + referenceTenure.Organization.ZipCode",
@@ -76,7 +79,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 3
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -85,7 +89,7 @@
         "FieldNameAlt": "Telephone Number: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 4,
+        "PDFFieldOrdinal": 4,
         "DocumentDefinitionFieldID": "8724a9c2-278f-40db-992f-f75f3da1d069",
         "FieldSection": "Educator",
         "FieldExpression": "referenceTenure.Organization.TelephoneNumber",
@@ -95,7 +99,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 4
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -104,7 +109,7 @@
         "FieldNameAlt": "No applicable employment",
         "FieldFlags": 4096,
         "FieldJustification": "Left",
-        "FieldOrdinal": 5,
+        "PDFFieldOrdinal": 5,
         "DocumentDefinitionFieldID": "4136418b-2ce2-46fe-8061-6a58554dfbeb",
         "FieldSection": "Educator",
         "FieldExpression": "null",
@@ -114,7 +119,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "undefined"
+        "FormFieldType": "undefined",
+        "LogicalFieldOrdinal": 5
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -123,7 +129,7 @@
         "FieldNameAlt": "Applicant's Name (First, Middle, Last)",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 6,
+        "PDFFieldOrdinal": 6,
         "DocumentDefinitionFieldID": "92c46e12-e42d-4d3b-b1f8-6b3d8f4b7e94",
         "FieldSection": "Educator",
         "FieldExpression": "educator.FirstName + ' ' + educator.LastName",
@@ -133,7 +139,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 6
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -142,7 +149,7 @@
         "FieldNameAlt": "Any former names by which the Applicant has been identified: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 7,
+        "PDFFieldOrdinal": 7,
         "DocumentDefinitionFieldID": "8042ce86-ca95-4a7f-82e8-d6780d8f7a52",
         "FieldSection": "Educator",
         "FieldExpression": "educator.FormerName",
@@ -152,7 +159,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 7
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -161,7 +169,7 @@
         "FieldNameAlt": "DOB: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 8,
+        "PDFFieldOrdinal": 8,
         "DocumentDefinitionFieldID": "50f767cf-afe1-4a15-8b49-6023390b9e97",
         "FieldSection": "Educator",
         "FieldExpression": "formatDate(educator.DateOfBirth)",
@@ -171,7 +179,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Date"
+        "FormFieldType": "Date",
+        "LogicalFieldOrdinal": 8
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -180,7 +189,7 @@
         "FieldNameAlt": "Last 4 digits of Applicant&#8217;s Social Security Number: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 9,
+        "PDFFieldOrdinal": 9,
         "DocumentDefinitionFieldID": "664494c6-9dc1-4020-889d-dbcb3f6a238f",
         "FieldSection": "Educator",
         "FieldExpression": "educator.Last4",
@@ -190,7 +199,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 9
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -199,7 +209,7 @@
         "FieldNameAlt": "PPID (if applicable): ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 10,
+        "PDFFieldOrdinal": 10,
         "DocumentDefinitionFieldID": "37c28ad8-4dcb-4b82-ad7e-b65463fe0a03",
         "FieldSection": "Educator",
         "FieldExpression": "educator.PPID",
@@ -209,7 +219,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 10
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -218,7 +229,7 @@
         "FieldNameAlt": "Approximate dates of employment with the entity listed above: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 11,
+        "PDFFieldOrdinal": 11,
         "DocumentDefinitionFieldID": "d14bf28f-4bd6-48d1-8b07-bd36295dfa5f",
         "FieldSection": "Educator",
         "FieldExpression": "formatDate(referenceTenure.StartDate) + ' to ' + (referenceTenure.EndDate ? formatDate(referenceTenure.EndDate) : 'present')",
@@ -228,7 +239,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 11
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -237,7 +249,7 @@
         "FieldNameAlt": "Position(s)",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 12,
+        "PDFFieldOrdinal": 12,
         "DocumentDefinitionFieldID": "0ffe53cb-bde0-436b-8cf1-9230e60f53b6",
         "FieldSection": "Educator",
         "FieldExpression": "referenceTenure.PositionsHeld",
@@ -247,7 +259,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 12
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -256,7 +269,7 @@
         "FieldNameAlt": "Signature of Applicant",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 13,
+        "PDFFieldOrdinal": 13,
         "DocumentDefinitionFieldID": "a754e412-1b0b-43fb-9a8b-8e8b1873816d",
         "FieldSection": "Educator",
         "FieldDescription": "Signature of Applicant",
@@ -265,7 +278,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Signature"
+        "FormFieldType": "Signature",
+        "LogicalFieldOrdinal": 16
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -274,7 +288,7 @@
         "FieldNameAlt": "Date",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 14,
+        "PDFFieldOrdinal": 14,
         "DocumentDefinitionFieldID": "f0084905-6c92-4475-acf1-b106a8ccbcd7",
         "FieldSection": "Educator",
         "FieldExpression": "formatDate(applicableTenure.ApplicationDate)",
@@ -284,7 +298,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Date"
+        "FormFieldType": "Date",
+        "LogicalFieldOrdinal": 17
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -293,7 +308,7 @@
         "FieldNameAlt": "Employing Entity receipt date",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 15,
+        "PDFFieldOrdinal": 15,
         "DocumentDefinitionFieldID": "492c301d-0b86-48cc-b297-5d61b17b54fd",
         "FieldSection": "FormerOrganization",
         "FieldExpression": null,
@@ -303,7 +318,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Date"
+        "FormFieldType": "Date",
+        "LogicalFieldOrdinal": 18
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -312,7 +328,7 @@
         "FieldNameAlt": "Received by",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 16,
+        "PDFFieldOrdinal": 16,
         "DocumentDefinitionFieldID": "06a8dd0e-7145-4f69-9334-ba29b07012e5",
         "FieldSection": "FormerOrganization",
         "FieldExpression": null,
@@ -322,7 +338,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 19
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -331,7 +348,7 @@
         "FieldNameAlt": "Contact telephone",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 17,
+        "PDFFieldOrdinal": 17,
         "DocumentDefinitionFieldID": "9ad7d1b3-9eef-4905-a062-eb57efc70f4e",
         "FieldSection": "FormerOrganization",
         "FieldExpression": "referenceTenure.Organization.TelephoneNumber",
@@ -341,7 +358,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 20
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -350,7 +368,7 @@
         "FieldNameAlt": "Dates of employment of Applicant",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 18,
+        "PDFFieldOrdinal": 18,
         "DocumentDefinitionFieldID": "7317c429-7190-4f50-bc13-653c13d9a590",
         "FieldSection": "FormerOrganization",
         "FieldExpression": "formatDate(referenceTenure.StartDate) + ' to ' + (referenceTenure.EndDate ? formatDate(referenceTenure.EndDate) : 'present')",
@@ -360,7 +378,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 21
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -369,7 +388,7 @@
         "FieldNameAlt": "Former Employer Representative Signature and Title",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 19,
+        "PDFFieldOrdinal": 19,
         "DocumentDefinitionFieldID": "b11a1a21-b069-4b66-b5ee-1695bacdbadd",
         "FieldSection": "FormerOrganization",
         "FieldDescription": "Former Employer Representative Signature and Title",
@@ -378,7 +397,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Signature"
+        "FormFieldType": "Signature",
+        "LogicalFieldOrdinal": 25
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -387,7 +407,7 @@
         "FieldNameAlt": "Date",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 20,
+        "PDFFieldOrdinal": 20,
         "DocumentDefinitionFieldID": "cffad9fb-41b9-4037-89c6-b1e303c51b9a",
         "FieldSection": "FormerOrganization",
         "FieldDescription": "Former Organization Signature Date",
@@ -396,7 +416,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Date"
+        "FormFieldType": "Date",
+        "LogicalFieldOrdinal": 26
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -405,7 +426,7 @@
         "FieldNameAlt": "School Entity: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 21,
+        "PDFFieldOrdinal": 21,
         "DocumentDefinitionFieldID": "d2ff119e-bdc3-43ae-973f-18882e2017a2",
         "FieldSection": "ApplicationOrganization",
         "FieldExpression": "applicableTenure.Organization.Name",
@@ -415,7 +436,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 27
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -424,7 +446,7 @@
         "FieldNameAlt": "Address: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 22,
+        "PDFFieldOrdinal": 22,
         "DocumentDefinitionFieldID": "a4827a29-5ee7-4365-aee2-7ec749d1e03d",
         "FieldSection": "ApplicationOrganization",
         "FieldExpression": "applicableTenure.Organization.Address1 + (applicableTenure.Organization.Address2 ? ' ' + applicableTenure.Organization.Address2 : '')",
@@ -434,7 +456,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 28
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -443,7 +466,7 @@
         "FieldNameAlt": "Phone: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 23,
+        "PDFFieldOrdinal": 23,
         "DocumentDefinitionFieldID": "7c3fc4e3-8654-48df-a7f8-f766cf3e73cb",
         "FieldSection": "ApplicationOrganization",
         "FieldExpression": "applicableTenure.Organization.TelephoneNumber",
@@ -453,7 +476,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 29
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -462,7 +486,7 @@
         "FieldNameAlt": "State:  Zip: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 24,
+        "PDFFieldOrdinal": 24,
         "DocumentDefinitionFieldID": "1a8d49ec-51f7-4b8f-bc01-12b43ef717b3",
         "FieldSection": "ApplicationOrganization",
         "FieldExpression": "applicableTenure.Organization.City + ', ' + applicableTenure.Organization.State + ' ' + applicableTenure.Organization.ZipCode",
@@ -472,7 +496,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 30
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -481,7 +506,7 @@
         "FieldNameAlt": "Fax: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
-        "FieldOrdinal": 25,
+        "PDFFieldOrdinal": 25,
         "DocumentDefinitionFieldID": "467159ac-18a5-4475-a2af-edb67fa8c74d",
         "FieldSection": "ApplicationOrganization",
         "FieldExpression": "applicableTenure.Organization.FaxNumber",
@@ -491,7 +516,8 @@
         "PDFTrueValue": null,
         "PDFFalseValue": null,
         "PDFNullValue": null,
-        "FormFieldType": "Textbox"
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 31
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -499,7 +525,7 @@
         "FieldName": "Group2",
         "FieldFlags": 49152,
         "FieldJustification": "Left",
-        "FieldOrdinal": 26,
+        "PDFFieldOrdinal": 26,
         "DocumentDefinitionFieldID": "62377323-19a2-42d0-9ea3-bb77efa9e908",
         "FieldSection": "Educator",
         "FieldDescription": "Have you ever been the subject of an abuse or sexual misconduct investigation by any employer, state licensing agency, law enforcement agency or child protective services agency (unless the investigation resulted in a finding that the allegations were false)?",
@@ -508,7 +534,8 @@
         "PDFTrueValue": "Choice1",
         "PDFFalseValue": "Choice2",
         "PDFNullValue": "Off",
-        "FormFieldType": "YesNoRadio"
+        "FormFieldType": "YesNoRadio",
+        "LogicalFieldOrdinal": 13
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -516,7 +543,7 @@
         "FieldName": "Group3",
         "FieldFlags": 49152,
         "FieldJustification": "Left",
-        "FieldOrdinal": 27,
+        "PDFFieldOrdinal": 27,
         "DocumentDefinitionFieldID": "9daa2134-a3c4-4705-8887-42bc49198204",
         "FieldSection": "Educator",
         "FieldDescription": "Have you ever been disciplined, discharged, non-renewed, asked to resign from employment, resigned from or otherwise separated from employment while allegations of abuse or sexual misconduct were pending or under investigation or due to adjudication or findings of abuse or sexual misconduct?",
@@ -525,7 +552,8 @@
         "PDFTrueValue": "Choice1",
         "PDFFalseValue": "Choice2",
         "PDFNullValue": "Off",
-        "FormFieldType": "YesNoRadio"
+        "FormFieldType": "YesNoRadio",
+        "LogicalFieldOrdinal": 14
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -533,7 +561,7 @@
         "FieldName": "Group4",
         "FieldFlags": 49152,
         "FieldJustification": "Left",
-        "FieldOrdinal": 28,
+        "PDFFieldOrdinal": 28,
         "DocumentDefinitionFieldID": "f5913628-b712-4ffa-b2f1-c6d04e0fee12",
         "FieldSection": "Educator",
         "FieldDescription": "Have you ever had a license, professional license or certificate suspended, surrendered or revoked while allegations of abuse or sexual misconduct were pending or under investigation or due to an adjudication or findings of abuse or sexual misconduct?",
@@ -542,7 +570,8 @@
         "PDFTrueValue": "Choice1",
         "PDFFalseValue": "Choice2",
         "PDFNullValue": "Off",
-        "FormFieldType": "YesNoRadio"
+        "FormFieldType": "YesNoRadio",
+        "LogicalFieldOrdinal": 15
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -550,7 +579,7 @@
         "FieldName": "Group5",
         "FieldFlags": 49152,
         "FieldJustification": "Left",
-        "FieldOrdinal": 29,
+        "PDFFieldOrdinal": 29,
         "DocumentDefinitionFieldID": "9809ea15-2b72-4f61-9956-18449eb8a7be",
         "FieldSection": "FormerOrganization",
         "FieldDescription": "To the best of your knowledge, has Applicant ever been the subject of an abuse or sexual misconduct investigation by any employer, state licensing agency, law enforcement agency or child protective services agency (unless the investigation resulted in a finding that the allegations were false)?",
@@ -559,7 +588,8 @@
         "PDFTrueValue": "Choice1",
         "PDFFalseValue": "Choice2",
         "PDFNullValue": "Off",
-        "FormFieldType": "YesNoRadio"
+        "FormFieldType": "YesNoRadio",
+        "LogicalFieldOrdinal": 22
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -567,7 +597,7 @@
         "FieldName": "Group6",
         "FieldFlags": 49152,
         "FieldJustification": "Left",
-        "FieldOrdinal": 30,
+        "PDFFieldOrdinal": 30,
         "DocumentDefinitionFieldID": "3e36df41-caac-4f71-b087-7d4d3afe4b48",
         "FieldSection": "FormerOrganization",
         "FieldDescription": "To the best of your knowledge, has Applicant ever been disciplined, discharged, non-renewed, asked to resign from employment, resigned from or otherwise separated from employment while allegations of abuse or sexual misconduct were pending or under investigation or due to adjudication or findings of abuse or sexual misconduct?",
@@ -576,7 +606,8 @@
         "PDFTrueValue": "Choice1",
         "PDFFalseValue": "Choice2",
         "PDFNullValue": "Off",
-        "FormFieldType": "YesNoRadio"
+        "FormFieldType": "YesNoRadio",
+        "LogicalFieldOrdinal": 23
     },
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
@@ -584,7 +615,7 @@
         "FieldName": "Group7",
         "FieldFlags": 49152,
         "FieldJustification": "Left",
-        "FieldOrdinal": 31,
+        "PDFFieldOrdinal": 31,
         "DocumentDefinitionFieldID": "164f1d94-adf5-4285-a287-44f87448c6e4",
         "FieldSection": "FormerOrganization",
         "FieldDescription": "To the best of your knowledge, has Applicant ever had a license, professional license or certificate suspended, surrendered or revoked while allegations of abuse or sexual misconduct were pending or under investigation or due to an adjudication or findings of abuse or sexual misconduct?",
@@ -593,6 +624,7 @@
         "PDFTrueValue": "Choice1",
         "PDFFalseValue": "Choice2",
         "PDFNullValue": "Off",
-        "FormFieldType": "YesNoRadio"
+        "FormFieldType": "YesNoRadio",
+        "LogicalFieldOrdinal": 24
     }
 ]

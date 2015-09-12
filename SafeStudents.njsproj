@@ -8,6 +8,7 @@
     <LaunchUrl>http://localhost:1337/user/signup/Applicant/?OrganizationID=9e1d80d1-00b3-48cd-8172-f0855b648126</LaunchUrl>
     <ScriptArguments>
     </ScriptArguments>
+    <Environment>DEBUG=express:*</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -44,6 +45,7 @@
     <Content Include="app\public\index.html" />
     <Content Include="app\public\OrganizationSignup.html" />
     <Content Include="app\public\UserSignup.html" />
+    <Content Include="docs\form168 workflow.txt" />
     <Content Include="docs\signup use cases.txt" />
     <Content Include="Procfile" />
     <Content Include="app\common\footer.html" />
@@ -76,6 +78,8 @@
     <Content Include="app\controllers\EducatorDashboardController.js" />
     <Content Include="app\controllers\FillFormController.js" />
     <Content Include="app\controllers\FormField.js" />
+    <Compile Include="modules\collections.js" />
+    <Compile Include="modules\email.js" />
     <Compile Include="modules\myurl.js" />
     <Compile Include="modules\port.js" />
     <Compile Include="modules\view.js" />
@@ -96,6 +100,7 @@
     <Compile Include="utils\AddJSONField.js" />
     <Compile Include="utils\GenerateFDF.js" />
     <Compile Include="utils\Hash.js" />
+    <Compile Include="utils\HTML2Jade.js" />
     <Compile Include="utils\PDFFieldsToJSON.js" />
     <Compile Include="utils\Salt.js" />
     <Compile Include="utils\RebuildDatabase.js" />

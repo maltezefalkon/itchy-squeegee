@@ -5,8 +5,8 @@
             '<div class="row">' +
                 '<div class="col-sm-3">' +
                     '<div class="controls-row">' +
-                        '<label class="radio-inline"><input type="radio" name="' + scope.field.FieldName + '" value="true" required="required" /> Yes</label> ' +
-                        '<label class="radio-inline"><input type="radio" name="' + scope.field.FieldName + '" value="false" required="required" /> No</label>' +
+                        '<label class="radio-inline"><input type="radio" ng-model="ngModel" name="' + scope.name + '" value="true" required="required" /> Yes</label> ' +
+                        '<label class="radio-inline"><input type="radio" ng-model="ngModel" name="' + scope.name + '" value="false" required="required" /> No</label>' +
                     '</div>' +
                 '</div>' +
                 '<div class="col-sm-9">' +
@@ -23,9 +23,9 @@
             '<div class="row">' +
                 '<div class="">' +
                     '<div class="form-group">' +
-                        '<label class="control-label col-sm-3" for="' + scope.field.FormFieldName + '">' + scope.field.FieldDescription + '</label>' +
+                        '<label class="control-label col-sm-3" for="' + scope.name + '">' + scope.field.FieldDescription + '</label>' +
                         '<div class="col-sm-9">' +
-                            '<input type="text" name="' + scope.field.FieldName + '" required="required" class="form-control" />' +
+                            '<input type="text" name="' + scope.name + '" ng-model="ngModel" required="required" class="form-control" />' +
                         '</div>' +
                     '</div>' +
                     '<div class="col-sm-offset-3 col-sm-9">' +

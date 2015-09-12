@@ -1,0 +1,29 @@
+﻿1.  User completes application and work history
+2.  System generates document stubs with status = MISSING
+3.  User clicks CREATE button on Educator Dashboard
+4.  User fills in information, signs and submits
+5.  System generates email message via mailgun to former employer
+6.  Once sent, updates document status to QUEUED
+7.  Once confirmed sent, document status updates to SENT TO FORMER EMPLOYER
+8.  If rejected, document status updates to ERROR SENDING TO FORMER EMPLOYER
+9.  Former employer clicks on email link
+10. Comes to website
+	a. If logged in, proceeds directly to form fill
+	b. Otherwise, shunted to login page, with query string arguments that indicate the OrganizationID
+11. Once logged in or signed up, will be forwarded to Organization Dashboard
+12. Click on CONFIRM button in Pending Documents section
+13. Organizational user fills in information, signs and submits
+14. System updates focument status to COMPLETED BY FORMER EMPLOYER
+15. System generates email message to prospective employer
+16. Prospective employer clicks on email link 
+17. Logs in to Organization Dashboard to see completed Form 168
+18. Can download the completed document
+
+
+
+
+Org Dashboard
+-------------
+Pending Documents
+Applicants
+Employees

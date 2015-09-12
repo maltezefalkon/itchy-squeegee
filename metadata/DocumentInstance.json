@@ -48,6 +48,10 @@
         "Name": {
             "type": "STRING",
             "field": "name"
+        },
+        "EmailID": {
+            "type": "STRING",
+            "field": "email_id"
         }
     },
     "Relationships": {

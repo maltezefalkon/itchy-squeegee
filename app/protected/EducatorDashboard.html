@@ -57,20 +57,21 @@
                         <tbody>
                             <tr ng-repeat="document in tenure.ApplicableDocuments | orderBy: 'Name'">
                                 <td>
-                                    <button type="button" class="btn btn-block btn-success" ng-show="document.Status == 'MISSING' && !document.Definition.IsUpload">
+                                    <button type="button" class="btn btn-block btn-success" ng-show="document.Status == 'MISSING' && !document.Definition.IsUpload" ng-click="navigateToFormFill(document)">
                                         <span class="glyphicon glyphicon-star"></span> Create
                                     </button>
-                                    <button type="button" class="btn btn-block btn-success" ng-show="document.Status == 'MISSING' && document.Definition.IsUpload">
+                                    <button type="button" class="btn btn-block btn-success" ng-show="document.Status == 'MISSING' && document.Definition.IsUpload" ng-click="$window.document.path = '/app/protected/UploadForm.html?DocumentInstanceID={{document.DocumentInstanceID}}'">
                                         <span class="glyphicon glyphicon-paperclip"></span> Upload
                                     </button>
-                                    <button type="button" class="btn btn-block btn-primary" ng-show="document.Status != 'MISSING'">
+                                    <button type="button" class="btn btn-block btn-primary" ng-show="document.Status != 'MISSING'" ng-click="$window.document.path = '/app/protected/DownloadForm.html?DocumentInstanceID={{document.DocumentInstanceID}}'">
                                         <span class="glyphicon glyphicon-save"></span> Download
                                     </button>
                                 </td>
                                 <td>{{document.Name}}</td>
                                 <td>
                                     <span class="glyphicon glyphicon-ban-circle text-danger" ng-show="document.Status == 'MISSING'"></span>
-                                    <span class="glyphicon glyphicon-envelope text-info" ng-show="document.Status == 'QUEUED'"></span>
+                                    <span class="glyphicon glyphicon-star text-info" ng-show="document.Status == 'COMPLETED BY APPLICANT'"></span>
+                                    <span class="glyphicon glyphicon-envelope text-success" ng-show="document.Status == 'EMAILED TO FORMER EMPLOYER'"></span>
                                     <span class="glyphicon glyphicon-hourglass text-primary" ng-show="document.Status == 'AWAITING RESPONSE'"></span>
                                     <span class="glyphicon glyphicon-ok text-success" ng-show="document.Status == 'COMPLETE'"></span>
                                     <span class="glyphicon glyphicon-warning-sign text-warning" ng-show="document.Status == 'EXPIRED'"></span>

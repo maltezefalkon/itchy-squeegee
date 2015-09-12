@@ -3,7 +3,7 @@
 // logger
 var log = require('./logging.js')('metadata');
 var sqlLog = require('./logging.js')('sql');
-
+var collections = require('./collections.js');
 
 // parse connection info from the DATABASE_URL environment variable 
 // postgres://user:pass@host:port/database
@@ -86,7 +86,20 @@ function SetupRelationships(dbDictionary, metadataDictionary) {
                 opts['through'] = relationship.Through;
             }
             if (relationship.ForeignKey) {
-                opts['foreignKey'] = relationship.ForeignKey;
+                var foreignKeyMetadata = 
+                    relationship.RelationshipType == 'belongsToMany' 
+                    || 
+                    relationship.RelationshipType == 'belongsTo' 
+                    ?
+                    metadataDictionary[typeKey] 
+                    : 
+                    metadataDictionary[relationship.RelatedTypeKey];
+                var foreignKeyField = collections.findSingle(foreignKeyMetadata.FieldDefinitions, { field: relationship.ForeignKey });
+                if (foreignKeyField) {
+                    opts.foreignKey = foreignKeyField;
+                } else {
+                    opts.foreignKey = relationship.ForeignKey;
+                }
             }
             if (relationship.TargetKey) {
                 opts['targetKey'] = relationship.TargetKey;

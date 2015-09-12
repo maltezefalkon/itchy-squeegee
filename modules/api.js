@@ -11,10 +11,10 @@ module.exports.querySingle = querySingle;
 
 function saveData(o, typeKey) {
     if (o.constructor !== Array) {
-        if (!typeKey && !o._TypeKey) {
+        if (!typeKey && !o._TypeKey && !o.Model) {
             throw new Error('No typeKey provided to API save()');
         } else if (!typeKey) {
-            typeKey = o._TypeKey;
+            typeKey = o._TypeKey || o.Model.name;
         }
     } else if (!typeKey) {
         for (var i = 0; i < o.length; i++) {
@@ -114,7 +114,7 @@ function buildIncludes(meta, contextTypeKey, paths) {
 function saveObject(typeKeyParamValue, o, txn) {
     
     // figure out the correct type key
-    var typeKey = typeKeyParamValue || o._TypeKey;
+    var typeKey = typeKeyParamValue || o._TypeKey || o.Model.name;
     if (!typeKey) {
         throw new Error('Could not infer type key for object');
     }
@@ -129,7 +129,9 @@ function saveObject(typeKeyParamValue, o, txn) {
     // create the promise for the insert or update
     var promise = null;
     var options = { transaction: txn };
-    if (operationData.operation === 'update') {
+    if (operationData.operation === 'save') {
+        promise = o.save(options);
+    } else if (operationData.operation === 'update') {
         options.where = findPrimaryKeyValues(typeKey, o);
         promise = meta.db[typeKey].update(createCloneForUpdate(typeKey, o), options);
     } else if (operationData.operation === 'insert') {
@@ -145,7 +147,6 @@ function saveObject(typeKeyParamValue, o, txn) {
     
     // save subobjects
     for (var r in meta.Metadata[typeKey].Relationships) {
-        log.debug('Examining relationship ' + r + ' on type ' + typeKey);
         if (o[r]) {
             ret = chainSubobjectSave(o[r], r, typeKey, txn, ret, o)
         }
@@ -188,7 +189,9 @@ function supplyKeyIfNecessary(typeKey, o) {
         operation: 'upsert',
         newID: undefined
     };
-    if (meta.Metadata[typeKey].PrimaryKeyFields.length == 1) {
+    if (o.Model && !o.isNewRecord) {
+        ret.operation = 'save';
+    } else if (meta.Metadata[typeKey].PrimaryKeyFields.length == 1) {
         var f = meta.Metadata[typeKey].PrimaryKeyFields[0];
         if (!o[f]) {
             ret.newID = uuid();

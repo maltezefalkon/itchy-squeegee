@@ -1,10 +1,13 @@
 ﻿var api = require('./api.js');
 var meta = require('./metadata.js')();
+var collections = require('./collections.js');
+
 var status = {
     Missing: 'MISSING',
-    Queued: 'QUEUED',
-    AwaitingResponse: 'AWAITING RESPONSE',
-    Complete: 'COMPLETE',
+    CompletedByApplicant: 'COMPLETED BY APPLICANT',
+    Emailed: 'EMAILED TO FORMER EMPLOYER',
+    AwaitingResponse: 'AWAITING RESPONSE FROM FORMER EMPLOYER',
+    CompletedByEmployer: 'COMPLETED BY FORMER EMPLOYER',
     Expired: 'EXPIRED'
 };
 
@@ -39,7 +42,7 @@ function createDocumentInstance(documentDefinitionID, educator, applicableTenure
     ret.ReferenceTenureID = referenceTenure ? referenceTenure.TenureID : null;
     ret.EducatorID = educator.EducatorID;
     ret.DocumentDate = documentDate;
-    ret.Status = status.Pending;
+    ret.Status = status.Missing;
     ret.Name = docDef.Name;
     if (referenceTenure) {
         ret.Name += ' (' + referenceTenure.Organization.Name + ')';
@@ -59,13 +62,12 @@ function buildDocumentInstanceFields(documentDefinition, documentInstance, educa
     for (var i = 0; i < documentDefinition.Fields.length; i++) {
         var documentDefinitionField = documentDefinition.Fields[i];
         if (search) {
-            documentInstanceField = findSingle(documentInstance.Fields, { DocumentDefinitionFieldID: documentDefinition.Fields[i].DocumentDefinitionFieldID });
+            documentInstanceField = this.findDocumentInstanceField(documentInstance, documentDefinitionField.DocumentDefinitionFieldID);
         }
         if (!documentInstanceField) {
-            documentInstanceField = {
-                DocumentInstanceID: documentInstance.DocumentInstanceID,
-                DocumentDefinitionFieldID: documentDefinitionField.DocumentDefinitionFieldID,
-            };
+            documentInstanceField = new meta.bo.DocumentInstanceField();
+            documentInstanceField.DocumentInstanceID = documentInstance.DocumentInstanceID;
+            documentInstanceField.DocumentDefinitionFieldID = documentDefinitionField.DocumentDefinitionFieldID;
             documentInstance.Fields.push(documentInstanceField);
         }
         documentInstanceField.FieldValue = getDocumentFieldValue(documentDefinitionField, educator, applicableTenure, referenceTenure, documentData);
@@ -110,32 +112,11 @@ function formatDate(d) {
     return (date.getMonth() + 1).toString() + '/' + date.getDate() + '/' + date.getFullYear();
 }
 
-function findSingle(array, propertiesToMatch) {
-    var ret = undefined;
-    var broken = undefined;
-    for (var i = 0; i < array.length; i++) {
-        broken = false;
-        for (var f in propertiesToMatch) {
-            if (propertiesToMatch[f]) {
-                if (!array[i][f] || array[i][f] != propertiesToMatch[f]) {
-                    broken = true;
-                    break;
-                }
-            } else {
-                if (array[i][f]) {
-                    broken = true;
-                    break;
-                }
-            }
-        }
-        if (!broken) {
-            ret = array[i];
-            break;
-        }
-    }
-    return ret;
+function findDocumentInstanceField(documentInstance, documentDefinitionFieldID) {
+    return collections.findSingle(documentInstance.Fields, { DocumentDefinitionFieldID: documentDefinitionFieldID })
 }
 
 module.exports.Form168 = form168;
 module.exports.CreateDocumentStubs = createDocumentStubs;
 module.exports.Status = status;
+module.exports.FindDocumentInstanceField = findDocumentInstanceField;
