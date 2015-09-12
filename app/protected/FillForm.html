@@ -42,7 +42,9 @@
     <div class="container">
         <div ng-include="'common/header.html'"></div>
         <div class="page-header">
-            Complete {{documentDefinition.Name}}
+            <span class="h2">
+                Complete {{documentDefinition.Name}}
+            </span>
         </div>
         <form action="/app/post/FillForm" name="DocumentForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
             <!-- tenure -->
@@ -64,8 +66,8 @@
                 </div>
             </div>
             <input type="hidden" name="DocumentInstanceID" ng-value="documentInstance.DocumentInstanceID" />
-        </form>
-        <div ng-include="'common/footer.html'"></div>
+            <input type="hidden" name="Section" ng-value="Section" />
+            <div ng-include="'common/footer.html'"></div>
     </div>
 </body>
 </html>

@@ -5,9 +5,11 @@ var collections = require('./collections.js');
 var status = {
     Missing: 'MISSING',
     CompletedByApplicant: 'COMPLETED BY APPLICANT',
-    Emailed: 'EMAILED TO FORMER EMPLOYER',
+    EmailToFormerEmployerQueued: 'EMAIL TO FORMER EMPLOYER QUEUED',
     AwaitingResponse: 'AWAITING RESPONSE FROM FORMER EMPLOYER',
     CompletedByEmployer: 'COMPLETED BY FORMER EMPLOYER',
+    ErrorContactingFormerEmployer: 'ERROR CONTACTING FORMER EMPLOYER',
+    ErrorContactingApplicationOrganization: 'ERROR CONTACTING APPLICATION ORGANIZATION',
     Expired: 'EXPIRED'
 };
 
@@ -108,7 +110,7 @@ function createDocumentStubs(documentTenure, allTenures, educator) {
 }
 
 function formatDate(d) {
-    var date = (d instanceof Date) ? d : new Date(d);
+    var date = d ? ((d instanceof Date) ? d : new Date(d)) : new Date();
     return (date.getMonth() + 1).toString() + '/' + date.getDate() + '/' + date.getFullYear();
 }
 

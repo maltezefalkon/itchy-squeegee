@@ -20,6 +20,12 @@ function EducatorDashboardController($scope, $http, $location) {
     $scope.navigateToFormFill = function (document) {
         NavigateToFormFill($scope, $location, document);
     }
+    $scope.navigateToFormDownload = function (document) {
+        NavigateToFormDownload($scope, $location, document);
+    }
+    $scope.navigateToFormUpload = function (document) {
+        NavigateToFormUpload($scope, $location, document);
+    }
 }
 
 function FetchData($scope, $http) {
@@ -102,3 +108,16 @@ function NavigateToFormFill($scope, $location, document) {
     console.log(newPath);
     location.href = newPath;
 }
+
+function NavigateToFormDownload($scope, $location, document) {
+    var newPath = '/app/protected/DownloadForm.html?DocumentInstanceID=' + document.DocumentInstanceID + '&Section=Educator'
+    console.log(newPath);
+    location.href = newPath;
+}
+
+function NavigateToFormUpload($scope, $location, document) {
+    var newPath = '/app/protected/UploadForm.html?DocumentInstanceID=' + document.DocumentInstanceID + '&Section=Educator'
+    console.log(newPath);
+    location.href = newPath;
+}
+
