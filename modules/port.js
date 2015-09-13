@@ -1,1 +1,1 @@
-﻿module.exports = process.env.PORT || 1337;
+﻿module.exports = process.env.EXTERNAL_PORT || 1337;
