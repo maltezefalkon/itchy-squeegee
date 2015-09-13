@@ -1,7 +1,7 @@
-﻿var port = require('./port.js');
+﻿var port = process.env.EXTERNAL_PORT || process.env.PORT || 1337;
 
 module.exports.domainName = process.env.DOMAIN_NAME || 'localhost';
-module.exports.domainNameAndPort = module.exports.domainName + (port != 80 ? ':' + port : '');
+module.exports.domainNameAndPort = module.exports.domainName + (port != 80 ? ':' + port.toString() : '');
 module.exports.createUrlType = {
     FormFill: 'FormFill',
     OrganizationDashboard: 'OrganizationDashboard',
