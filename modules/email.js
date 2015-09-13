@@ -5,7 +5,7 @@ var Status = require('../biz/status.js');
 var log = require('./logging.js')('email');
 var _ = require('lodash');
 
-var overrideEmailRecipient = 'dan@cassar.org';
+var overrideEmailRecipient = process.env.OVERRIDE_EMAIL_RECIPIENT;
 
 var mailgunDomain = process.env.MAILGUN_DOMAIN;
 var mailgunAPIKey = process.env.MAILGUN_API_KEY;
