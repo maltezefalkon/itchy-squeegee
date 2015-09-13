@@ -22,10 +22,10 @@ function FillFormController($scope, $http, $location) {
 
 function FetchData($scope, $http, $location) {
     if ($scope.DocumentInstanceID) {
-        querySingle($http, 'DocumentInstance/Definition.Fields,Fields,ApplicableTenure.Organization,ReferenceTenure.Organization,ApplicableTenure.Educator?DocumentInstanceID=' + $scope.DocumentInstanceID, $scope, 'documentInstance')
+        querySingle($http, 'DocumentInstance/ApplicableTenure.Organization,ReferenceTenure.Organization,ApplicableTenure.Educator,Fields?DocumentInstanceID=' + $scope.DocumentInstanceID, $scope, 'documentInstance')
             .success(function () {
-                $scope.documentDefinition = $scope.documentInstance.Definition;
                 $scope.educator = $scope.documentInstance.ApplicableTenure.Educator;
+                return querySingle($http, 'DocumentDefinition/Fields?DocumentDefinitionID=' + encodeURIComponent($scope.documentInstance.DocumentDefinitionID), $scope, 'documentDefinition');
             });
     } else {
         $scope.documentInstance = {
