@@ -31,10 +31,14 @@
             "type": "DATE",
             "field": "completed_datetime"
         },
-        "Status": {
+        "StatusDescription": {
             "type": "STRING",
-            "field": "status",
+            "field": "status_description",
             "maximumStringLength": 64
+        },
+        "StatusID": {
+            "type": "INTEGER",
+            "field": "status_id"
         },
         "ApplicableTenureID": {
             "type": "UUID",
@@ -52,6 +56,10 @@
         "EmailID": {
             "type": "STRING",
             "field": "email_id"
+        },
+        "PDF": {
+            "type": "BLOB",
+            "field": "pdf"
         }
     },
     "Relationships": {

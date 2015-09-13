@@ -12,6 +12,7 @@
 </head>
 <body ng-app="safeApp" ng-controller="controller">
     <script type="text/javascript" src="util/util.js"></script>
+    <script type="text/javascript" src="biz/status.js"></script>
     <script type="text/javascript" src="lib/angular-1.4.4/angular.min.js"></script>
     <script type="text/javascript" src="lib/angular-1.4.4/angular-messages.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -20,8 +21,9 @@
     <script type="text/javascript" src="controllers/EducatorDashboardController.js"></script>
     <script type="text/javascript">
         var app = angular.module('safeApp', ['ngMessages']);
+        app.value('Status', Status);
         var ctl = app.controller('controller', EducatorDashboardController);
-        ctl.$inject = ['$scope', '$http', '$location'];
+        ctl.$inject = ['$scope', '$http', '$location', 'Status'];
         var headerController = app.controller('headerController', HeaderController);
         headerController.$inject = ['$scope', '$http', '$location'];
     </script>
@@ -59,25 +61,25 @@
                         <tbody>
                             <tr ng-repeat="document in tenure.ApplicableDocuments | orderBy: 'Name'">
                                 <td>
-                                    <button type="button" class="btn btn-block btn-success" ng-show="document.Status == 'MISSING' && !document.Definition.IsUpload" ng-click="navigateToFormFill(document)">
+                                    <button type="button" class="btn btn-block btn-success" ng-show="document.StatusID == Status.Missing.ID && !document.Definition.IsUpload" ng-click="navigateToFormFill(document)">
                                         <span class="glyphicon glyphicon-star"></span> Create
                                     </button>
-                                    <button type="button" class="btn btn-block btn-success" ng-show="document.Status == 'MISSING' && document.Definition.IsUpload" ng-click="navigateToFormUpload(document)">
+                                    <button type="button" class="btn btn-block btn-success" ng-show="document.StatusID == Status.Missing.ID && document.Definition.IsUpload" ng-click="navigateToFormUpload(document)">
                                         <span class="glyphicon glyphicon-paperclip"></span> Upload
                                     </button>
-                                    <button type="button" class="btn btn-block btn-primary" ng-show="document.Status != 'MISSING'" ng-click="navigateToFormDownload(document)">
+                                    <button type="button" class="btn btn-block btn-primary" ng-show="document.StatusID != Status.Missing.ID" ng-click="navigateToFormDownload(document)">
                                         <span class="glyphicon glyphicon-save"></span> Download
                                     </button>
                                 </td>
                                 <td>{{document.Name}}</td>
                                 <td>
-                                    <span class="glyphicon glyphicon-ban-circle text-danger" ng-show="document.Status == 'MISSING'"></span>
-                                    <span class="glyphicon glyphicon-star text-info" ng-show="document.Status == 'COMPLETED BY APPLICANT'"></span>
-                                    <span class="glyphicon glyphicon-envelope text-warning" ng-show="document.Status == 'EMAIL TO FORMER EMPLOYER QUEUED'"></span>
-                                    <span class="glyphicon glyphicon-hourglass text-primary" ng-show="document.Status == 'AWAITING RESPONSE'"></span>
-                                    <span class="glyphicon glyphicon-ok text-success" ng-show="document.Status == 'COMPLETED BY FORMER EMPLOYER'"></span>
-                                    <span class="glyphicon glyphicon-warning-sign text-warning" ng-show="document.Status == 'EXPIRED'"></span>
-                                    {{document.Status}}
+                                    <span class="glyphicon glyphicon-ban-circle text-danger" ng-show="document.StatusID == Status.Missing.ID"></span>
+                                    <span class="glyphicon glyphicon-star text-info" ng-show="document.StatusID == Status.CompletedByApplicant.ID"></span>
+                                    <span class="glyphicon glyphicon-envelope text-warning" ng-show="document.StatusID == Status.EmailToFormerEmplyerSent.ID"></span>
+                                    <span class="glyphicon glyphicon-hourglass text-primary" ng-show="document.StatusID == Status.AwaitingResponse.ID"></span>
+                                    <span class="glyphicon glyphicon-ok text-success" ng-show="document.StatusID == Status.CompletedByFormerEmployer.ID"></span>
+                                    <span class="glyphicon glyphicon-warning-sign text-warning" ng-show="document.StatusID == Status.Expired.ID"></span>
+                                    {{document.StatusDescription}}
                                 </td>
                                 <td>{{formatDate(document.DocumentDate)}}</td>
                                 <td>{{formatDate(document.CompletedDateTime)}}</td>

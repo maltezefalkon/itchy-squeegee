@@ -22,7 +22,6 @@
     "nodemailer": "^1.4.0",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
-    "pdffiller": "0.0.0",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
     "restling": "^0.9.1",

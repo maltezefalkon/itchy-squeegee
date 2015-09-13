@@ -110,9 +110,7 @@
                         <td>{{tenure.PositionsHeld}}</td>
                         <td>{{tenure.StartDate | date}}</td>
                         <td ng-repeat="def in DocumentDefinitions">
-                            <a href="http://google.com" ng-show="HasDocument(tenure, def)">
-                                <img src="images/PDF-icon.gif" border="0" />
-                            </a>
+                            {{GetMinimumStatus(tenure, def)}}
                         </td>
                         <td>
                             <img ng-show="ValidateDocuments(tenure, def)" src="images/greencheck.png" />

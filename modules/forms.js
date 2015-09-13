@@ -1,19 +1,17 @@
 ﻿var api = require('./api.js');
 var meta = require('./metadata.js')();
 var collections = require('./collections.js');
+var Status = require('../biz/status.js');
+var Promise = require('bluebird');
+var log = require('./logging.js')('forms');
+var fs = Promise.promisifyAll(require('fs'));
+var path = require('path');
+var fdf = require('fdf');
+var exec = require('child_process').exec;
 
-var status = {
-    Missing: 'MISSING',
-    CompletedByApplicant: 'COMPLETED BY APPLICANT',
-    EmailToFormerEmployerQueued: 'EMAIL TO FORMER EMPLOYER QUEUED',
-    AwaitingResponse: 'AWAITING RESPONSE FROM FORMER EMPLOYER',
-    CompletedByEmployer: 'COMPLETED BY FORMER EMPLOYER',
-    ErrorContactingFormerEmployer: 'ERROR CONTACTING FORMER EMPLOYER',
-    ErrorContactingApplicationOrganization: 'ERROR CONTACTING APPLICATION ORGANIZATION',
-    Expired: 'EXPIRED'
-};
+var _ = require('lodash');
 
-var form168 = {
+var Form168 = {
     DocumentDefinitionID: '093076b1-3348-11e5-9a89-180373ea70a8'
 };
 
@@ -26,14 +24,14 @@ api
         module.exports.DocumentDefinitions = {};
         documentDefinitions.forEach(function (documentDefinition) {
             module.exports.DocumentDefinitions[documentDefinition.DocumentDefinitionID] = documentDefinition;
-            if (documentDefinition.DocumentDefinitionID == form168.DocumentDefinitionID) {
-                form168.DocumentDefinition = documentDefinition;
+            if (documentDefinition.DocumentDefinitionID == Form168.DocumentDefinitionID) {
+                Form168.DocumentDefinition = documentDefinition;
             }
         });
     });
 
-form168.create = function (educator, applicableTenure, referenceTenure, documentData, documentDate) {
-    return createDocumentInstance(form168.DocumentDefinitionID, educator, applicableTenure, referenceTenure, documentData, documentDate);
+Form168.create = function (educator, applicableTenure, referenceTenure, documentData, documentDate) {
+    return createDocumentInstance(Form168.DocumentDefinitionID, educator, applicableTenure, referenceTenure, documentData, documentDate);
 };
 
 function createDocumentInstance(documentDefinitionID, educator, applicableTenure, referenceTenure, documentData, documentDate) {
@@ -44,7 +42,8 @@ function createDocumentInstance(documentDefinitionID, educator, applicableTenure
     ret.ReferenceTenureID = referenceTenure ? referenceTenure.TenureID : null;
     ret.EducatorID = educator.EducatorID;
     ret.DocumentDate = documentDate;
-    ret.Status = status.Missing;
+    ret.StatusID = Status.Missing.ID;
+    ret.StatusDescription = _.template(Status.Missing.DescriptionTemplate)(ret);
     ret.Name = docDef.Name;
     if (referenceTenure) {
         ret.Name += ' (' + referenceTenure.Organization.Name + ')';
@@ -94,7 +93,7 @@ function createDocumentStubs(documentTenure, allTenures, educator) {
     var doc = null;
     var documentDate = documentTenure.ApplicationDate || new Date();
     for (var i = 0; i < documentDefinitions.length; i++) {
-        if (documentDefinitions[i].DocumentDefinitionID == form168.DocumentDefinitionID) {
+        if (documentDefinitions[i].DocumentDefinitionID == Form168.DocumentDefinitionID) {
             for (var j = 0; j < allTenures.length; j++) {
                 if (allTenures[j].StartDate) {
                     doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, documentTenure, allTenures[j], null, documentDate);
@@ -118,7 +117,69 @@ function findDocumentInstanceField(documentInstance, documentDefinitionFieldID) 
     return collections.findSingle(documentInstance.Fields, { DocumentDefinitionFieldID: documentDefinitionFieldID })
 }
 
-module.exports.Form168 = form168;
+function createFDFDataObject(documentInstance) {
+    var ret = {};
+    for (var i = 0; i < documentInstance.Definition.Fields.length; i++) {
+        var documentDefinitionField = documentInstance.Definition.Fields[i];
+        documentInstanceField = findDocumentInstanceField(documentInstance, documentDefinitionField.DocumentDefinitionFieldID);
+        var dataValue = documentInstanceField.FieldValue;
+        if (documentDefinitionField.PDFFieldType == 'Button') {
+            if (documentInstanceField.FieldValue === true) {
+                dataValue = documentDefinitionField.PDFTrueValue;
+            } else if (documentInstanceField.FieldValue === false) {
+                dataValue = documentDefinitionField.PDFFalseValue;
+            } else {
+                dataValue = documentDefinitionField.PDFNullValue;
+            }
+        }
+        ret[documentDefinitionField.FieldName] = dataValue;
+    }
+    return ret;
+}
+
+function generatePDF(documentInstance) {
+    
+    var data = createFDFDataObject(documentInstance);
+    var inputFileName = path.resolve(__dirname, '../pdf/Form-DPTT.pdf');
+    var outputFileName = path.resolve(__dirname, '../pdf/' + documentInstance.DocumentInstanceID + '.pdf');
+    log.info({ inputFile: inputFileName, outputFile: outputFileName }, 'ready to generate pdf');
+
+    var ret = mergeFormDataIntoPDF(inputFileName, outputFileName, data, documentInstance.DocumentInstanceID)
+        .then(function () {
+            log.debug('reading back filled pdf');
+            return fs.readFileAsync(outputFileName);
+        }).then(function (data) {
+            log.debug('writing pdf to database');
+            documentInstance.PDF = data;
+            return api.save(documentInstance);
+        });
+    return ret;
+}
+
+function mergeFormDataIntoPDF(sourceFile, destinationFile, fieldValues, id) {
+    
+    // determine if we're on Windows
+    var isWin = /^win/.test(process.platform);
+    var prefix = suffix = (isWin ? '"' : '');
+
+    //Generate the data from the field values.
+    var formData = fdf.generate(fieldValues),
+        tempFDF = "data-" + id + ".fdf";
+    
+    //Write the temp fdf file.
+    return fs.writeFileAsync(tempFDF, formData)
+        .then(function () {
+            return new Promise(function (resolve, reject) {
+                var commandLine = "pdftk " + prefix + sourceFile + suffix + " fill_form " + prefix + tempFDF + suffix + " output " + prefix + destinationFile + suffix + " flatten";
+                log.info({ commandLine: commandLine }, 'calling pdftk');
+                var childProcess = exec(commandLine);
+                childProcess.addListener('error', reject);
+                childProcess.addListener('exit', resolve);
+            });
+        });
+}
+
 module.exports.CreateDocumentStubs = createDocumentStubs;
-module.exports.Status = status;
 module.exports.FindDocumentInstanceField = findDocumentInstanceField;
+module.exports.Form168 = Form168;
+module.exports.GeneratePDF = generatePDF;

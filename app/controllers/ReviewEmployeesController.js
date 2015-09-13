@@ -13,7 +13,7 @@
     // public functions 
     $scope.HasDocument = HasDocument;
     $scope.ValidateDocuments = ValidateDocuments;
-    
+    $scope.GetMinimumStatus = GetMinimumStatus;
 }
 
 function FetchData($scope, $http, $location)
@@ -24,27 +24,35 @@ function FetchData($scope, $http, $location)
     queryList($http, 'DocumentDefinition', $scope, 'DocumentDefinitions');
 }
 
-function GetDocument(tenure, definition) {
+function GetDocuments(tenure, definition) {
+    var ret = [];
     for (var i = 0; i < tenure.Educator.Documents.length; i++) {
         var doc = tenure.Educator.Documents[i];
         if (doc.Definition.DocumentDefinitionID === definition.DocumentDefinitionID) {
-            return doc;
+            ret.push(doc);
         }
     }
     return null;
 }
 
 function HasDocument(tenure, definition) {
-    return GetDocument(tenure, definition);
+    return GetMinimumStatus(tenure, definition).IsComplete;
 }
 
-function CreateDocumentInstanceHyperlink(tenure, definition) {
-    var doc = GetDocument(tenure, definition);
-    if (doc) {
-        return '<a style="color: red" href="#' + doc.DocumentInstanceID + '>' + doc.Definition.name + '</a>';
-    } else {
-        return null;
+function GetMinimumStatus(tenure, definition) {
+    var ret = undefined;
+    for (var i in tenure.ApplicableDocuments) {
+        if (tenure.ApplicableDocuments[i].DocumentDefinitionID = definition.DocumentDefinitionID) {
+            if (!ret || ret.ID > tenure.ApplicableDocuments[i].StatusID) {
+                ret = {
+                    ID: tenure.ApplicableDocuments[i].StatusID,
+                    Description: tenure.ApplicableDocuments[i].StatusDescription,
+                    IsComplete: Status.LookupByID(tenure.ApplicableDocuments[i].StatusID).IsComplete
+                };
+            }
+        }
     }
+    return ret;
 }
 
 function ValidateDocuments(tenure) {

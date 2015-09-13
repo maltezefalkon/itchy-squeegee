@@ -1,7 +1,7 @@
 ﻿var rest = require('restling');
 var api = require('./api.js');
 var myurl = require('./myurl.js');
-var forms = require('./forms.js');
+var Status = require('../biz/status.js');
 var log = require('./logging.js')('email');
 var _ = require('lodash');
 
@@ -68,7 +68,8 @@ function SendForm168EmailToFormerEmployer(documentInstance) {
             if (json.response.statusCode == 200) {
                 var emailID = json.data.id;
                 documentInstance.EmailID = emailID;
-                documentInstance.Status = forms.Status.EmailToFormerEmployerQueued;
+                documentInstance.StatusID = Status.EmailToFormerEmployerSent.ID;
+                documentInstance.StatusDescription = _.template(Status.EmailToFormerEmployerSent.DescriptionTemplate)(documentInstance);
                 return api.save(documentInstance);
             } else {
                 documentInstance.Status = message;
@@ -109,10 +110,12 @@ function SendForm168EmailToApplicationOrganization(documentInstance) {
             if (json.response.statusCode == 200) {
                 var emailID = json.data.id;
                 documentInstance.EmailID = emailID;
-                documentInstance.Status = forms.Status.CompletedByEmployer;
+                documentInstance.StatusID = Status.CompletedByFormerEmployer.ID;
+                documentInstance.StatusDescription = _.template(Status.CompletedByFormerEmployer.DescriptionTemplate)(documentInstance);
                 return api.save(documentInstance);
             } else {
-                documentInstance.Status = message;
+                documentInstance.StatusID = Status.EmailError.ID;
+                documentInstance.StatusDescription = message;
                 return api.save(documentInstance);
             }
         }

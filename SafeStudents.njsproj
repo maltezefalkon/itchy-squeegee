@@ -78,10 +78,12 @@
     <Content Include="app\controllers\EducatorDashboardController.js" />
     <Content Include="app\controllers\FillFormController.js" />
     <Content Include="app\controllers\FormField.js" />
+    <Compile Include="biz\status.js" />
     <Compile Include="modules\collections.js" />
     <Compile Include="modules\email.js" />
     <Compile Include="modules\myurl.js" />
     <Compile Include="modules\port.js" />
+    <Compile Include="modules\view-engine.js" />
     <Compile Include="modules\view.js" />
     <Content Include="app\lib\angular-1.4.4\angular.min.js" />
     <Content Include="app\lib\bootstrap-3.3.5-dist\js\bootstrap.js" />
@@ -166,6 +168,7 @@
     <Folder Include="docs\" />
     <Folder Include="modules\" />
     <Folder Include="app\images\" />
+    <Folder Include="biz\" />
     <Folder Include="referenceData\" />
     <Folder Include="pdf\" />
     <Folder Include="utils\log\" />

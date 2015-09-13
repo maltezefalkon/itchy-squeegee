@@ -19,6 +19,7 @@ log.info('initializing');
 
 // set up our web app
 var app = express();
+var viewEngine = require('./modules/view-engine.js')(app, '/views');
 
 // =============
 // MIDDLEWARE
@@ -44,7 +45,8 @@ app.use('/app/public', express.static('app/public'));
 app.use('/app/protected', express.static('app/protected'));
 
 // form routes
-app.post('/app/post/FillForm', formServices.postFormData);
+app.post('/app/form/FillForm', formServices.postFormData);
+app.get('/app/form/Download/:DocumentInstanceID', formServices.getPDFForm);
 
 app.use('/app/:privacy(public|protected)/common', express.static('app/common'));
 app.use('/app/:privacy(public|protected)/controllers', express.static('app/controllers'));
@@ -53,6 +55,8 @@ app.use('/app/:privacy(public|protected)/images', express.static('app/images'));
 app.use('/app/:privacy(public|protected)/js', express.static('app/js'));
 app.use('/app/:privacy(public|protected)/lib', express.static('app/lib'));
 app.use('/app/:privacy(public|protected)/util', express.static('app/util'));
+app.use('/app/:privacy(public|protected)/biz', express.static('biz'));
+
 
 // uber-hack to force a trailing slash so that the routes below work for css and script files
 app.use('/user/signup/:entity(Educator|Organization)', function (req, res, next) {
@@ -105,6 +109,7 @@ app.post('/user/signup/:entity(Applicant|Educator)', signupServices.postEducator
 app.post('/user/signup/Educator/Tenure', signupServices.postEducatorTenureData);
 app.post('/user/signup/:entity(Organization)', signupServices.postOrganizationSignupData);
 
+app.get('/form')
 
 // =============
 

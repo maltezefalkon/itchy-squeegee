@@ -1,6 +1,4 @@
-﻿var form168DefinitionID = '093076b1-3348-11e5-9a89-180373ea70a8';
-
-function EducatorDashboardController($scope, $http, $location) {
+﻿function EducatorDashboardController($scope, $http, $location, Status) {
     
     var dict = parseQueryString();
     
@@ -8,15 +6,16 @@ function EducatorDashboardController($scope, $http, $location) {
     $scope.TenureFilter = {
         EndDate: null
     };
-    
+
     FetchData($scope, $http);
 
-    $scope.getStatus = GetStatus;
     $scope.getSortPriority = GetSortPriority;
     $scope.isApplication = IsApplication;
     $scope.isCurrentTenure = IsCurrentTenure;
     $scope.formatDate = FormatDate;
     $scope.$location = $location;
+    $scope.Status = Status;
+
     $scope.navigateToFormFill = function (document) {
         NavigateToFormFill($scope, $location, document);
     }
@@ -75,15 +74,6 @@ function GetCurrentTenures(educator) {
     return ret;
 }
 
-function GetStatus(tenure, documentDefinition) {
-    var docs = GetDocument(tenure, documentDefinition.DocumentDefinitionID);
-    if (docs.length == 0) {
-        return "missing";
-    } else {
-        return "???";
-    }
-}
-
 function GetDocuments(tenure, documentDefinitionID) {
     var ret = [];
     for (var i = 0; i < tenure.ReferenceDocuments.length; i++) {
@@ -104,13 +94,13 @@ function FormatDate(d) {
 }
 
 function NavigateToFormFill($scope, $location, document) {
-    var newPath = '/app/protected/FillForm.html?DocumentInstanceID=' + document.DocumentInstanceID + '&Section=Educator'
+    var newPath = '/app/protected/FillForm.html?DocumentInstanceID=' + document.DocumentInstanceID + '&Section=Educator';
     console.log(newPath);
     location.href = newPath;
 }
 
 function NavigateToFormDownload($scope, $location, document) {
-    var newPath = '/app/protected/DownloadForm.html?DocumentInstanceID=' + document.DocumentInstanceID + '&Section=Educator'
+    var newPath = '/app/form/Download/' + document.DocumentInstanceID;
     console.log(newPath);
     location.href = newPath;
 }
@@ -120,4 +110,3 @@ function NavigateToFormUpload($scope, $location, document) {
     console.log(newPath);
     location.href = newPath;
 }
-

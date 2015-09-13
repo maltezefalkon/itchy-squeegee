@@ -5,12 +5,16 @@ var log = require('../modules/logging')('formserver');
 var api = require('../modules/api');
 var meta = require('../modules/metadata')();
 var forms = require('../modules/forms');
+var Status = require('../biz/status');
 var Promise = require('bluebird');
 var email = require('../modules/email');
 var myurl = require('../modules/myurl');
+var _ = require('lodash');
+var exec = require('child_process').exec;
 
 // expose public methods
 module.exports.postFormData = postFormData;
+module.exports.getPDFForm = getPDFForm;
 
 function postFormData(req, res, next) {
     var data = req.body;
@@ -39,8 +43,14 @@ function postFormData(req, res, next) {
     if (section == 'Educator') {
         promise.then(function (document) {
             log.debug('Saving document status');
-            document.Status = forms.Status.CompletedByApplicant;
+            document.StatusID = Status.CompletedByApplicant.ID;
+            document.StatusDescription = _.template(Status.CompletedByApplicant.DescriptionTemplate)(document);
             return api.save(document).then(function () { return document; });
+        }).then(function (document) {
+            log.debug('writing PDF');
+            return forms.GeneratePDF(document).then(function () {
+                return document;
+            });
         }).then(function (document) {
             log.debug('Generating email');
             return email.sendForm168EmailToFormerEmployer(document).then(function () {
@@ -53,8 +63,14 @@ function postFormData(req, res, next) {
     } else if (section == 'FormerOrganization') {
         promise.then(function (document) {
             log.debug('Saving document status');
-            document.Status = forms.Status.CompletedByEmployer;
+            document.StatusID = Status.CompletedByFormerEmployer.ID;
+            document.StatusDescription = _.template(Status.CompletedByFormerEmployer.DescriptionTemplate)(document);
             return api.save(document).then(function () { return document; });
+        }).then(function (document) {
+            log.debug('writing PDF');
+            return forms.GeneratePDF(document).then(function () {
+                return document;
+            });
         }).then(function (document) {
             log.debug('Generating email');
             return email.sendForm168EmailToApplicationOrganization(document).then(function () {
@@ -71,3 +87,13 @@ function postFormData(req, res, next) {
     }
 }
 
+function getPDFForm(req, res, next) {
+    var documentInstanceID = req.params.DocumentInstanceID;
+    api.querySingle('DocumentInstance', [], null, { DocumentInstanceID: documentInstanceID })
+        .then(function (documentInstance) {
+        res.setHeader('content-type', 'application/pdf');
+        res.setHeader('content-disposition', 'attachment; filename=' + documentInstanceID + '.pdf');
+        res.write(documentInstance.PDF, 'binary');
+        res.end();
+    });
+}
