@@ -1,5 +1,6 @@
 ﻿var _ = require('lodash');
 var fs = require('fs');
+var path = require('path');
 
 var cache = {};
 
@@ -20,6 +21,20 @@ module.exports = function (app, viewFolderPath) {
     });
 
     app.set('view engine', 'view');
-    app.set('views', viewFolderPath);
+    app.set('views', path.join(path.dirname(require.main.filename), viewFolderPath));
+    app.get('/app/view/:ViewName/:Arguments?', function (req, res, next) {
+        var view = req.params.ViewName;
+        var arguments = req.params.Arguments ? req.params.Arguments.split(',') : [];
+        var dataScriptPath = path.resolve(path.join(path.dirname(require.main.filename), viewFolderPath, view + '.data.js'));
+        var promiseOrData = require(dataScriptPath).apply(null, arguments);
+        if (typeof promiseOrData.then == 'function') {
+            promiseOrData.then(function (data) {
+                res.render(view, data);
+            });
+        } else {
+            res.render(view, promiseOrData);
+        }
+    });
+
 };
 

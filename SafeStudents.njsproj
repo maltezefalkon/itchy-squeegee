@@ -5,7 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>SafeStudents</Name>
     <RootNamespace>NodejsWebApp1</RootNamespace>
-    <LaunchUrl>http://localhost:1337/user/signup/Applicant/?OrganizationID=9e1d80d1-00b3-48cd-8172-f0855b648126</LaunchUrl>
+    <LaunchUrl>http://localhost:1337/app/view/FillForm/Educator,90090432-5246-4b21-acbb-63a87ae771a9</LaunchUrl>
     <ScriptArguments>
     </ScriptArguments>
     <Environment>DEBUG=express:*</Environment>
@@ -45,6 +45,9 @@
     <Content Include="app\public\index.html" />
     <Content Include="app\public\OrganizationSignup.html" />
     <Content Include="app\public\UserSignup.html" />
+    <Content Include="app\views\EducatorDashboard.view" />
+    <Content Include="app\views\HeadTags.html" />
+    <Content Include="app\views\FillForm.view" />
     <Content Include="docs\form168 workflow.txt" />
     <Content Include="docs\signup use cases.txt" />
     <Content Include="Procfile" />
@@ -78,6 +81,9 @@
     <Content Include="app\controllers\EducatorDashboardController.js" />
     <Content Include="app\controllers\FillFormController.js" />
     <Content Include="app\controllers\FormField.js" />
+    <Compile Include="app\views\EducatorDashboard.data.js" />
+    <Compile Include="app\views\FillForm.data.js" />
+    <Compile Include="app\views\Base.data.js" />
     <Compile Include="biz\status.js" />
     <Compile Include="modules\collections.js" />
     <Compile Include="modules\email.js" />
@@ -162,6 +168,7 @@
     <Folder Include="app\common\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\dist\" />
+    <Folder Include="app\views\" />
     <Folder Include="app\protected\" />
     <Folder Include="app\public\" />
     <Folder Include="app\util\" />

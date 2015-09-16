@@ -19,7 +19,7 @@ log.info('initializing');
 
 // set up our web app
 var app = express();
-var viewEngine = require('./modules/view-engine.js')(app, '/views');
+var viewEngine = require('./modules/view-engine.js')(app, '/app/views');
 
 // =============
 // MIDDLEWARE
@@ -36,13 +36,18 @@ app.use(function (req, res, next) {
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/client', express.static('app'));
+app.use('/app/public', express.static('app/public'));
+
 // set up passport authentication
 var publicPaths = ['/$', '/app/common/', '/app/css/', '/app/images/', '/app/js/', '/app/lib/', '/app/public/', '/app/public/*/', '/app/util/', '/user/login/', '/user/signup/*/', '/user/signup/*/*/' ];
 var passport = require('./modules/authentication.js')(app, publicPaths, '/api/', '/user/login', '/app/public/Login.html', redirectToDefaultPage);
 
 // "app" routes for our website 
-app.use('/app/public', express.static('app/public'));
 app.use('/app/protected', express.static('app/protected'));
+
+// view engine
+require('./modules/view-engine.js')(app, '/app/views');
 
 // form routes
 app.post('/app/form/FillForm', formServices.postFormData);
@@ -56,7 +61,6 @@ app.use('/app/:privacy(public|protected)/js', express.static('app/js'));
 app.use('/app/:privacy(public|protected)/lib', express.static('app/lib'));
 app.use('/app/:privacy(public|protected)/util', express.static('app/util'));
 app.use('/app/:privacy(public|protected)/biz', express.static('biz'));
-
 
 // uber-hack to force a trailing slash so that the routes below work for css and script files
 app.use('/user/signup/:entity(Educator|Organization)', function (req, res, next) {

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%=headerTags%>
+    <title>Fill Form</title>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <div class="container">
+        <%=pageHeader%>
+        <%=pageMasthead%>
+        <form action="/app/form/FillForm" name="DocumentForm" method="post" class="form-horizontal" role="form">
+            <% 
+            documentDefinition.Fields.sort(function(a, b) {
+                return a.LogicalFieldOrdinal - b.LogicalFieldOrdinal;
+            });
+            for (var i in documentDefinition.Fields) {
+                var fld = documentDefinition.Fields[i];
+                if (!fld.FieldExpression && fld.FieldSection == section) {
+            %>
+            <div class="row">
+                <div class="col-sm-12">
+                    <%=generateFormField(fld)%>
+                </div>
+            </div>
+            <%
+                }
+            }
+            %>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+                        Submit This Information <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="DocumentInstanceID" value="<%=documentInstance.DocumentInstanceID%>" />
+            <input type="hidden" name="Section" value="<%=section%>" />
+    </div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%=headerTags%>
+    <title><%=pageTitle%></title>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <div class="container">
+        <%=pageHeader%>
+		<%=pageMasthead%>
+		<%
+		var filteredTenures = educator.Tenures.filter(function(e) { return IsApplication(e) || IsCurrentTenure(e); }).sort(function(a,b) { return GetRank(a) - GetRank(b); });
+		for (var i in filteredTenures) {
+			var tenure = filteredTenures[i];
+		%>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span><%=(IsApplication(tenure) ? 'Application Clearances for ' : 'Current Clearances for ') + tenure.Organization.Name %></span>
+            </div>
+            <div class="panel-body">
+                <table width="100%" class="table">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>Document</th>
+                            <th>Status</th>
+                            <th>Date Created</th>
+                            <th>Date Completed</th>
+							<% if (IsCurrentTenure(tenure)) { %>
+                            <th>
+                                Next Renewal
+                            </th>
+							<% } %>
+                        </tr>
+                    </thead>
+                    <tbody>
+<%
+			var filteredDocuments = tenure.ApplicableDocuments.sort(function(a,b) { return a.Name.localeCompare(b.Name); });
+            for (var j in filteredDocuments) {
+			    var document = filteredDocuments[j];
+%>
+                        <tr>
+                            <td>
+<% if (document.StatusID == Status.Missing.ID && !document.Definition.IsUpload) { %>
+                                <button type="button" class="btn btn-block btn-success" onclick="document.location.href = '/app/view/FillDocument/Educator,<%=document.DocumentInstanceID%>'">
+                                    <span class="glyphicon glyphicon-star"></span> Create
+                                </button>
+<% } else if (document.StatusID == Status.Missing.ID && document.Definition.IsUpload) { %>
+                                <button type="button" class="btn btn-block btn-success" onclick="document.location.href = '/app/view/UploadDocument/<%=document.DocumentInstanceID%>'">
+                                    <span class="glyphicon glyphicon-paperclip"></span> Upload
+                                </button>
+<% } else { %>
+                                <button type="button" class="btn btn-block btn-primary" onclick="document.location.href = '/app/view/DownloadDocument/<%=document.DocumentInstanceID%>'">
+                                    <span class="glyphicon glyphicon-save"></span> Download
+                                </button>
+<% } %>
+                            </td>
+                            <td><%=document.Name%></td>
+                            <td>
+                                <span class="glyphicon <%=GetStatusIcon(document)%> <%=GetStatusColor(document)%>"></span>
+                                <%=document.StatusDescription%>
+                            </td>
+                            <td><%=formatDate(document.DocumentDate)%></td>
+                            <td><%=formatDate(document.CompletedDateTime)%></td>
+							<% if (IsCurrentTenure(tenure)) { %>
+                            <td>
+                                next
+                            </td>
+							<% } %>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <% } %>
+	    <%=pageFooter%>
+    </div>
+</body>
+</html>
