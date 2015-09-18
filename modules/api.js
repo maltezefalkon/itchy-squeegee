@@ -52,10 +52,13 @@ function queryData(typeKey, joins, queryName, parameters) {
     if (joins && joins.constructor !== Array) {
         throw new Error('Joins must be an Array');
     }
+    console.time("queryData")
     var includes = buildIncludes(meta, typeKey, joins || []);
     var condition = getQueryCondition(typeKey, queryName, parameters);
     if (meta.db[typeKey]) {
-        return meta.db[typeKey].findAll({ where: condition, include: includes });
+        var ret = meta.db[typeKey].findAll({ where: condition, include: includes });
+        console.timeEnd("queryData");
+        return ret;
     } else {
         throw "Undefined type key: " + typeKey;
     }

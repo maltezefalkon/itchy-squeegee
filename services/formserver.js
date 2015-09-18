@@ -24,7 +24,8 @@ function postFormData(req, res, next) {
 
     var documentInstanceID = data.DocumentInstanceID;
     var section = data.Section;
-
+    
+    console.time("postFormData");
     var promise = api.querySingle('DocumentInstance', ['Definition.Fields', 'Fields', 'Educator', 'ReferenceTenure.Organization', 'ApplicableTenure.Organization'], null, { DocumentInstanceID: documentInstanceID })
         .then(function (document) {
         return Promise.map(document.Definition.Fields, function (field) {
@@ -43,17 +44,24 @@ function postFormData(req, res, next) {
     if (section == 'Educator') {
         promise.then(function (document) {
             log.debug('Saving document status');
+            console.time("Saving document status");
             document.StatusID = Status.CompletedByApplicant.ID;
             document.StatusDescription = _.template(Status.CompletedByApplicant.DescriptionTemplate)(document);
-            return api.save(document).then(function () { return document; });
+            return api.save(document).then(function () {
+                console.timeEnd("Saving document status");
+                return document;
+            });
         }).then(function (document) {
             log.debug('writing PDF');
+            console.time("Writing PDF");
             return forms.GeneratePDF(document).then(function () {
+                console.timeEnd("Writing PDF");
                 return document;
             });
         }).then(function (document) {
             log.debug('Generating email');
             return email.sendForm168EmailToFormerEmployer(document).then(function () {
+                console.timeEnd("postFormData");
                 return document;
             });
         }).then(function (document) {
@@ -68,12 +76,17 @@ function postFormData(req, res, next) {
             return api.save(document).then(function () { return document; });
         }).then(function (document) {
             log.debug('writing PDF');
+            console.time("Writing PDF");
             return forms.GeneratePDF(document).then(function () {
+                console.timeEnd("Writing PDF");
                 return document;
             });
         }).then(function (document) {
             log.debug('Generating email');
+            console.time("Generating email");
             return email.sendForm168EmailToApplicationOrganization(document).then(function () {
+                console.timeEnd("Generating email");
+                console.timeEnd("postFormData");
                 return document;
             });
         }).then(function (document) {
@@ -82,6 +95,7 @@ function postFormData(req, res, next) {
         });
     } else {
         promise.then(function () {
+            console.timeEnd("postFormData");
             res.redirect(myurl.createUrl(myurl.createUrlType.Error, { Message: 'Unrecognized form section' }, true));
         });
     }
