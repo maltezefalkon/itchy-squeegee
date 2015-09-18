@@ -25,7 +25,7 @@
             "ForeignKey": "document_instance_id",
             "RelatedTypeKey": "DocumentInstance"
         },
-        "DocumentDefinitionField": {
+        "Definition": {
             "RelationshipType": "belongsTo",
             "ForeignKey": "document_definition_field_id",
             "RelatedTypeKey": "DocumentDefinitionField"

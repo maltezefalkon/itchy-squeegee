@@ -48,6 +48,7 @@
     <Content Include="app\views\EducatorDashboard.view" />
     <Content Include="app\views\HeadTags.html" />
     <Content Include="app\views\FillForm.view" />
+    <Content Include="app\views\OrganizationSignup.view" />
     <Content Include="docs\form168 workflow.txt" />
     <Content Include="docs\signup use cases.txt" />
     <Content Include="Procfile" />
@@ -84,10 +85,12 @@
     <Compile Include="app\views\EducatorDashboard.data.js" />
     <Compile Include="app\views\FillForm.data.js" />
     <Compile Include="app\views\Base.data.js" />
+    <Compile Include="app\views\OrganizationSignup.data.js" />
     <Compile Include="biz\status.js" />
     <Compile Include="modules\collections.js" />
     <Compile Include="modules\email.js" />
     <Compile Include="modules\myurl.js" />
+    <Compile Include="modules\performance-timing.js" />
     <Compile Include="modules\port.js" />
     <Compile Include="modules\view-engine.js" />
     <Compile Include="modules\view.js" />

@@ -11,6 +11,7 @@ var email = require('../modules/email');
 var myurl = require('../modules/myurl');
 var _ = require('lodash');
 var exec = require('child_process').exec;
+var perf = require('../modules/performance-timing.js')();
 
 // expose public methods
 module.exports.postFormData = postFormData;
@@ -25,14 +26,21 @@ function postFormData(req, res, next) {
     var documentInstanceID = data.DocumentInstanceID;
     var section = data.Section;
     
-    console.time("postFormData");
-    var promise = api.querySingle('DocumentInstance', ['Definition.Fields', 'Fields', 'Educator', 'ReferenceTenure.Organization', 'ApplicableTenure.Organization'], null, { DocumentInstanceID: documentInstanceID })
+    perf.start('postFormData');
+    var promise = api.querySingle('DocumentInstance', ['Fields.Definition', 'Educator', 'ReferenceTenure.Organization', 'ApplicableTenure.Organization'], null, { DocumentInstanceID: documentInstanceID })
+        .then(function (documentInstance) {
+            return api.querySingle('DocumentDefinition', ['Fields'], null, { DocumentDefinitionID: documentInstance.DocumentDefinitionID })
+                .then(function (documentDefinition) {
+                    documentInstance.Definition = documentDefinition;
+                    return documentInstance;
+                });
+            })
         .then(function (document) {
-        return Promise.map(document.Definition.Fields, function (field) {
+        return Promise.map(_.map(document.Fields, 'Definition'), function (fieldDefinition) {
             var fieldInstance = null;
-            var value = data[field.DocumentDefinitionFieldID];
+            var value = data[fieldDefinition.DocumentDefinitionFieldID];
             if (value) {
-                fieldInstance = forms.FindDocumentInstanceField(document, field.DocumentDefinitionFieldID);
+                fieldInstance = forms.FindDocumentInstanceField(document, fieldDefinition.DocumentDefinitionFieldID);
                 fieldInstance.FieldValue = value;
                 return api.save(fieldInstance);
             }
@@ -44,24 +52,26 @@ function postFormData(req, res, next) {
     if (section == 'Educator') {
         promise.then(function (document) {
             log.debug('Saving document status');
-            console.time("Saving document status");
+            perf.start("Saving document status");
             document.StatusID = Status.CompletedByApplicant.ID;
             document.StatusDescription = _.template(Status.CompletedByApplicant.DescriptionTemplate)(document);
-            return api.save(document).then(function () {
-                console.timeEnd("Saving document status");
+            return api.save(document, false).then(function () {
+                perf.stop("Saving document status");
                 return document;
             });
         }).then(function (document) {
             log.debug('writing PDF');
-            console.time("Writing PDF");
+            perf.start('Writing PDF');
             return forms.GeneratePDF(document).then(function () {
-                console.timeEnd("Writing PDF");
+                perf.stop("Writing PDF");
                 return document;
             });
         }).then(function (document) {
             log.debug('Generating email');
+            perf.start('Generating email');
             return email.sendForm168EmailToFormerEmployer(document).then(function () {
-                console.timeEnd("postFormData");
+                perf.stop('Generating email');
+                perf.stop('postFormData');
                 return document;
             });
         }).then(function (document) {
@@ -73,20 +83,20 @@ function postFormData(req, res, next) {
             log.debug('Saving document status');
             document.StatusID = Status.CompletedByFormerEmployer.ID;
             document.StatusDescription = _.template(Status.CompletedByFormerEmployer.DescriptionTemplate)(document);
-            return api.save(document).then(function () { return document; });
+            return api.save(document, false).then(function () { return document; });
         }).then(function (document) {
             log.debug('writing PDF');
-            console.time("Writing PDF");
+            perf.start("Writing PDF");
             return forms.GeneratePDF(document).then(function () {
-                console.timeEnd("Writing PDF");
+                perf.stop("Writing PDF");
                 return document;
             });
         }).then(function (document) {
             log.debug('Generating email');
-            console.time("Generating email");
+            perf.start('Generating email');
             return email.sendForm168EmailToApplicationOrganization(document).then(function () {
-                console.timeEnd("Generating email");
-                console.timeEnd("postFormData");
+                perf.stop('Generating email');
+                perf.stop('postFormData');
                 return document;
             });
         }).then(function (document) {
@@ -95,7 +105,7 @@ function postFormData(req, res, next) {
         });
     } else {
         promise.then(function () {
-            console.timeEnd("postFormData");
+            perf.stop('postFormData');
             res.redirect(myurl.createUrl(myurl.createUrlType.Error, { Message: 'Unrecognized form section' }, true));
         });
     }

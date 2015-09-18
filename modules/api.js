@@ -4,12 +4,21 @@ var log = require('../modules/logging')('api');
 var uuid = require('uuid');
 var Promise = require('bluebird');
 var meta = require('./metadata.js')();
+var perf = require('./performance-timing.js')();
 
 module.exports.save = saveData;
 module.exports.query = queryData;
 module.exports.querySingle = querySingle;
 
-function saveData(o, typeKey) {
+function saveData(o, typeKeyOrDeepSave, deepSave) {
+    var typeKey = typeKeyOrDeepSave;
+    if (typeof typeKeyOrDeepSave === 'boolean') {
+        deepSave = Boolean(typeKeyOrDeepSave);
+        typeKey = null;
+    }
+    if (deepSave === undefined) {
+        deepSave = true;
+    }
     if (o.constructor !== Array) {
         if (!typeKey && !o._TypeKey && !o.Model) {
             throw new Error('No typeKey provided to API save()');
@@ -30,16 +39,16 @@ function saveData(o, typeKey) {
             // using foreach because it provides clean closure over each value
             o.forEach(function (obj, i) {
                 if (null == promise) {
-                    promise = saveObject(typeKey, obj, txn);
+                    promise = saveObject(typeKey, obj, txn, deepSave);
                 } else {
                     promise = promise.then(function () {
-                        return saveObject(typeKey, obj, txn);
+                        return saveObject(typeKey, obj, txn, deepSave);
                     });
                 }
             });
         } else {
             log.debug({ obj: o, typeKey: typeKey }, 'Saving a single ' + (typeKey || o._TypeKey));
-            promise = saveObject(typeKey, o, txn);
+            promise = saveObject(typeKey, o, txn, deepSave);
         }
         return promise;
     });
@@ -52,15 +61,17 @@ function queryData(typeKey, joins, queryName, parameters) {
     if (joins && joins.constructor !== Array) {
         throw new Error('Joins must be an Array');
     }
-    console.time("queryData")
+    perf.start('queryData');
     var includes = buildIncludes(meta, typeKey, joins || []);
     var condition = getQueryCondition(typeKey, queryName, parameters);
     if (meta.db[typeKey]) {
-        var ret = meta.db[typeKey].findAll({ where: condition, include: includes });
-        console.timeEnd("queryData");
-        return ret;
+        return meta.db[typeKey].findAll({ where: condition, include: includes })
+            .then(function (data) {
+                perf.stop('queryData');
+                return data;
+            });
     } else {
-        throw "Undefined type key: " + typeKey;
+        throw 'Undefined type key: ' + typeKey;
     }
 }
 
@@ -77,6 +88,7 @@ function querySingle(typeKey, joins, queryName, parameters) {
 function buildIncludes(meta, contextTypeKey, paths) {
     var ret = [];
     var map = {};
+    var relationship = null;
     for (var i = 0; i < paths.length; i++) {
         var currentTypeKey = contextTypeKey;
         var parsed = paths[i].split('.');
@@ -92,7 +104,11 @@ function buildIncludes(meta, contextTypeKey, paths) {
             currentInclude = map[thisPath];
         }
         while (head) {
-            currentTypeKey = meta.Metadata[currentTypeKey].Relationships[head].RelatedTypeKey;
+            relationship = meta.Metadata[currentTypeKey].Relationships[head];
+            if (!relationship) {
+                throw new Error('Relationship "' + head + '" not defined for type "' + currentTypeKey + '"');
+            }
+            currentTypeKey = relationship.RelatedTypeKey;
             currentInclude['model'] = meta.db[currentTypeKey];
             head = parsed.shift();
             if (head) {
@@ -114,7 +130,7 @@ function buildIncludes(meta, contextTypeKey, paths) {
     return ret;
 }
 
-function saveObject(typeKeyParamValue, o, txn) {
+function saveObject(typeKeyParamValue, o, txn, deepSave) {
     
     // figure out the correct type key
     var typeKey = typeKeyParamValue || o._TypeKey || o.Model.name;
@@ -148,10 +164,12 @@ function saveObject(typeKeyParamValue, o, txn) {
         log.info(typeKey + ' ' + operationData.operation + ': success');
     });
     
-    // save subobjects
-    for (var r in meta.Metadata[typeKey].Relationships) {
-        if (o[r]) {
-            ret = chainSubobjectSave(o[r], r, typeKey, txn, ret, o)
+    if (deepSave) {
+        // save subobjects
+        for (var r in meta.Metadata[typeKey].Relationships) {
+            if (o[r]) {
+                ret = chainSubobjectSave(o[r], r, typeKey, txn, ret, o)
+            }
         }
     }
     
