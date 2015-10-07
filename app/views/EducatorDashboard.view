@@ -44,15 +44,15 @@
                         <tr>
                             <td>
 <% if (document.StatusID == Status.Missing.ID && !document.Definition.IsUpload) { %>
-                                <button type="button" class="btn btn-block btn-success" onclick="document.location.href = '/app/view/FillDocument/Educator,<%=document.DocumentInstanceID%>'">
+                                <button type="button" class="btn btn-block btn-success" onclick="document.location.href = '<%=createUrl('FillForm', [document.DocumentInstanceID])%>'">
                                     <span class="glyphicon glyphicon-star"></span> Create
                                 </button>
 <% } else if (document.StatusID == Status.Missing.ID && document.Definition.IsUpload) { %>
-                                <button type="button" class="btn btn-block btn-success" onclick="document.location.href = '/app/view/UploadDocument/<%=document.DocumentInstanceID%>'">
+                                <button type="button" class="btn btn-block btn-success" onclick="document.location.href = '<%=createUrl('UploadForm', [document.DocumentInstanceID])%>'">
                                     <span class="glyphicon glyphicon-paperclip"></span> Upload
                                 </button>
 <% } else { %>
-                                <button type="button" class="btn btn-block btn-primary" onclick="document.location.href = '/app/view/DownloadDocument/<%=document.DocumentInstanceID%>'">
+                                <button type="button" class="btn btn-block btn-primary" onclick="document.location.href = '<%=createUrl('DownloadForm', [document.DocumentInstanceID])%>'">
                                     <span class="glyphicon glyphicon-save"></span> Download
                                 </button>
 <% } %>

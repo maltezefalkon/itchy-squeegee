@@ -2,10 +2,10 @@
 var ViewData = require('../../app/views/Base.data.js');
 var Status = require('../../biz/status');
 
-module.exports = function (educatorID) {
-    return api.querySingle('Educator', ['Tenures.Organization', 'Tenures.ApplicableDocuments.Definition'], null, { EducatorID: educatorID })
+module.exports = function (req) {
+    return api.querySingle('Educator', ['Tenures.Organization', 'Tenures.ApplicableDocuments.Definition'], null, { EducatorID: req.user.LinkedEducatorID })
         .then(function (educator) {
-            var ret = new ViewData('Educator Dashboard');
+            var ret = new ViewData(req, 'Educator Dashboard');
             ret.educator = educator;
             ret.IsApplication = IsApplication;
             ret.IsCurrentTenure = IsCurrentTenure;

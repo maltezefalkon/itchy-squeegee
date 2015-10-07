@@ -10,7 +10,7 @@
     <div class="container">
         <%=pageHeader%>
         <%=pageMasthead%>
-        <form action="/app/form/FillForm" name="DocumentForm" method="post" class="form-horizontal" role="form">
+        <form action="<%=path%>" name="DocumentForm" method="post" class="form-horizontal" role="form">
             <% 
             documentDefinition.Fields.sort(function(a, b) {
                 return a.LogicalFieldOrdinal - b.LogicalFieldOrdinal;

@@ -14,7 +14,7 @@ var parsed = process.env.DATABASE_URL.match(/^postgres:\/\/(\w+?):(\w+?)@(.+?):(
 if (parsed.length < 6) {
     throw new Error('Failed to parse DATABASE_URL environment variable');
 }
-var sequelizeOptions = { host: parsed[3], port: parsed[4], dialect: 'postgres', define: { timestamps: false, underscored: true }, logging: function (msg) { sqlLog.info(msg); } };
+var sequelizeOptions = { host: parsed[3], port: parsed[4], dialect: 'postgres', define: { underscored: true }, logging: function (msg) { sqlLog.info(msg); } };
 
 
 // sequelize ORM

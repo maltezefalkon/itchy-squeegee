@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%=headerTags%>
+    <title>Safe PA Students</title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <div class="container">
+        <div class="panel panel-primary" style="height: auto; margin-top: 35px">
+            <div class="panel-heading">
+                <h1>Welcome to Safe PA Students</h1>
+            </div>
+            <div class="panel-body">
+                <h3>
+                    Get Employed - Help Your Employees
+                </h3>
+                <div class="small">
+                    We create your professional digital portfolio to assist you with Pennsylvania district releases and clearances for submission to unlimited potential employers.
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <span>Organizations</span>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Manage your employee clearance documentation quickly and easily.
+                            This is some more text, too!
+                        </p>
+                        <div>
+                            <button type="button" onclick="window.location = '/user/signup/Organization/';" class="btn btn-sm btn-info">
+                                Click Here to Sign Up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <span>Educators</span>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Manage your employee clearance documentation quickly and easily.
+                            This is some more text, too!
+                        </p>
+                        <div>
+                            <button type="button" onclick="window.location = '<%=createUrl('UserSignup')%>';" class="btn btn-sm btn-info">
+                                Click Here to Sign Up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <span>Find Out More</span>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Manage your employee clearance documentation quickly and easily.
+                            This is some more text, too!
+                        </p>
+                        <div>
+                            <button type="button" onclick="window.location = '/app/public/About.html';" class="btn btn-sm btn-warning">
+                                Click Here to Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <span>Existing Users</span>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            If you're already a user, click below to log in.
+                        </p>
+                        <div>
+                            <button type="button" onclick="window.location = '<%=createUrl('Login')%>';" class="btn btn-sm btn-success">
+                                Click to Log In
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

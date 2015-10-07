@@ -51,7 +51,7 @@ function SendForm168EmailToFormerEmployer(documentInstance) {
             to: toAddress,
             text: compiledFormerEmployerTemplate(
                 {
-                    url: myurl.createUrl(myurl.createUrlType.FormFill, { DocumentInstanceID: documentInstance.DocumentInstanceID, Section: 'FormerOrganization' }),
+                    url: myurl.createUrl(myurl.createUrlType.FillForm, { DocumentInstanceID: documentInstance.DocumentInstanceID, Section: 'FormerOrganization' }),
                     doc: documentInstance
                 }),
         },

@@ -14,10 +14,14 @@ var uuid = require('uuid');
 var url = require('url');
 var path = require('path');
 var forms = require('../modules/forms');
+var sessionManagement = require('../modules/session-management');
+var myUrl = require('../modules/myurl');
+var Promise = require('bluebird');
 
 // expose public methods
 module.exports.getUserSignupData = getUserSignupData;
 
+module.exports.postUserSignupData = postUserSignupData;
 module.exports.postEducatorSignupData = postEducatorSignupData;
 module.exports.postEducatorTenureData = postEducatorTenureData;
 module.exports.postOrganizationSignupData = postOrganizationSignupData;
@@ -37,16 +41,16 @@ function getUserSignupData(req, res, next) {
 
 function postEducatorTenureData(req, res, next) {
     var data = req.body;
-
+    
     if (req.method != "POST") {
         throw new Error("Invalid verb routed to postTenureData");
     }
-    
+    var educatorID = req.user.LinkedEducatorID;
     var newOrganization = undefined;
 
     var tenure = {
         _TypeKey: 'Tenure',
-        EducatorID: data.EducatorID,
+        EducatorID: educatorID,
         StartDate: data.StartDate,
         EndDate: data.EndDate,
         PositionsHeld: data.PositionsHeld,
@@ -83,15 +87,15 @@ function postEducatorTenureData(req, res, next) {
     
     log.debug({ tenure: tenure, newOrganization: newOrganization }, 'Creating tenure objects');
     
-    var nextUrl = '/app/protected/EducatorTenure.html?EducatorID=' + encodeURIComponent(data.EducatorID);
+    var nextUrl = req.path;
     var promise = api.save(toBeSaved);
     
     if (data.DoneEnteringHistory === 'true') {
         promise = promise.then(function () {
-            return createDocumentStubs(data.EducatorID);
+            return createDocumentStubs(educatorID);
         });
         
-        nextUrl = '/app/protected/EducatorDashboard.html?EducatorID=' + encodeURIComponent(data.EducatorID);
+        nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorDashboard);
     }
 
     promise.then(function (returned) {
@@ -102,174 +106,191 @@ function postEducatorTenureData(req, res, next) {
 
 function postEducatorSignupData(req, res, next) {
     
-    var data = req.body;
-    var isApplicant = (req.params.entity === 'Applicant' || req.query.IsApplicant === 'true');
-    
-    // TODO: check permissions on data!
-    
-    if (req.method != "POST") {
-        throw new Error('Invalid verb routed to postEducatorSignupData');
-    }
-    
-    var user = {
-        _TypeKey: 'User'
-    };
-    
-    var educator = undefined;
-    var tenure = undefined;
-    var skipHistory = (data.SkipHistory === 'true');
-
-    if (data.UserID) {
-        
-        educator = {
-            _TypeKey: 'Educator',
-            EducatorID: data.EducatorID || null,
-            Title: data.Title,
-            FirstName: data.FirstName,
-            MiddleName: data.MiddleName,
-            LastName: data.LastName,
-            Suffix: data.Suffix,
-            FormerName: data.FormerName,
-            DateOfBirth: data.DateOfBirth,
-            Last4: data.Last4,
-            PPID: data.PPID,
-            EmailAddress: data.EmailAddress,
-            TelephoneNumber: data.TelephoneNumber,
-            Address1: data.Address1,
-            Address2: data.Address2,
-            City: data.City,
-            State: data.State,
-            ZipCode: data.ZipCode
-        };
-
-        user.UserID = data.UserID;
-        user.LinkedEducatorID = educator.EducatorID;
-        educator.LinkedUser = user;
-
-        if (data.OrganizationID) {
-            tenure = {
-                _TypeKey: 'Tenure',
-                EducatorID: data.EducatorID || null,
-                OrganizationID: data.OrganizationID,
-                StartDate: data.StartDate || null,
-                ApplicationDate: data.ApplicationDate || null,
-                PositionsHeld: data.PositionsHeld
-            };
-            educator.Tenures = [tenure];
-        }
-
-    } else {
-
-        var hash = bcrypt.hashSync(data.Password);
-        user.EmailAddress = data.EmailAddress;
-        user.UserName = data.EmailAddress;
-        user.Hash = hash;
-
-    }
-    
-    log.debug({ educator: educator, user: user, tenure: tenure }, 'Creating educator signup objects');
-    
-    var promise = educator ? api.save(educator) : api.save(user);
-    
-    if (educator && tenure && skipHistory) {
-        promise = promise.then(function () {
-            return createDocumentStubs(educator.EducatorID);
-        });
-    }
-
-    promise = promise
-        .then(function () {
-            var nextUrl = '/app/public/EducatorSignup.html?UserID=' + encodeURIComponent(user.UserID);
-            if (data.QueryStringOrganizationID) {
-                nextUrl += '&OrganizationID=' + encodeURIComponent(data.QueryStringOrganizationID);
-            }
-            if (data.QueryStringEducatorID) {
-                nextUrl += '&EducatorID=' + encodeURIComponent(data.QueryStringEducatorID);
-            }
-            if (data.QueryStringEmailAddress) {
-                nextUrl += '&EmailAddress=' + encodeURIComponent(data.QueryStringEmailAddress);
-            }
-            if (isApplicant) {
-                nextUrl += '&IsApplicant=true';
-            }
-            if (educator) {
-                nextUrl = skipHistory ?
-                    '/app/protected/EducatorDashboard.html'
-                    : '/app/protected/EducatorTenure.html?EducatorID=' + encodeURIComponent(educator.EducatorID);
-            }
-            req.login(user, function (err) {
-                if (err) {
-                    return next(err);
-                } else {
-                    return res.redirect(nextUrl);
-                }
-            });
-        });
-}
-
-function postOrganizationSignupData(req, res, next) {
-    var data = req.body;
-    
     if (req.method != "POST") {
         throw new Error("Invalid verb routed to postOrganizationSignupData");
     }
 
-    var user = {
-        _TypeKey: 'User'
+    var data = req.body;
+
+    var ret = {
+        errorMessage: null,
+        invitation: null,
+        tenure: null,
+        user: null,
+        educator: null,
+        skipHistory: null,
+        isApplicant: null
     };
     
-    var organization = undefined;
+    var promise = Promise.resolve(ret);
     
-    if (data.UserID) {
-        
-        organization = {
-            _TypeKey: 'Organization',
-            OrganizationID: data.OrganizationID || null,
-            Name: data.OrganizationName,
-            Address1: data.OrganizationAddress1,
-            Address2: data.OrganizationAddress2,
-            City: data.OrganizationCity,
-            State: data.OrganizationState,
-            ZipCode: data.OrganizationZipCode,
-            EmailAddress: data.OrganizationEmail,
-            TelephoneNumber: data.OrganizationTelephoneNumber,
-            FaxNumber: data.OrganizationFaxNumber
-        };
-        
-        user.UserID = data.UserID;
-        user.LinkedOrganizationID = organization.OrganizationID;
-        organization.LinkedUser = user;
-
+    var today = new Date();
+    today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    
+    if (req.params.invitationID) {
+        promise = promise.then(function () {
+            return api.querySingle('Invitation', [], null, { InvitationID: req.params.invitationID });
+        }).then(function (invitation) {
+            if (invitation) {
+                if (invitation.ExpirationDate < today) {
+                    log.warn('Expired invitation (UUID: ' + req.params.invitationID + ')');
+                    ret.errorMessage = 'Expired invitation';
+                } else {
+                    ret.invitation = invitation;
+                    ret.skipHistory = (invitation.EducatorID || invitation.EmployeeOrganizationID);
+                    ret.isApplicant = (invitation.ApplicantOrganizationID != null);
+                }
+            } else {
+                ret.errorMessage = 'Invalid Invitation UUID';
+            }
+            return ret;
+        }).then(function (ret) {
+            if (ret.invitation.EducatorID) {
+                return api.querySingle('Educator', [], null, { EducatorID: ret.invitation.EducatorID })
+                .then(function (educator) {
+                    if (!educator) {
+                        ret.errorMessage = 'Invalid Educator ID';
+                    } else {
+                        ret.educator = educator;
+                        ret.skipHistory = true;
+                    }
+                    return ret;
+                });
+            }
+            return ret;
+        })
     } else {
-        
-        var hash = bcrypt.hashSync(data.Password);
-        user.EmailAddress = data.EmailAddress;
-        user.UserName = data.EmailAddress;
-        user.Hash = hash;
-
+        ret.skipHistory = true;
     }
     
-    log.debug({ organization: organization, user: user }, 'Creating organization signup objects');
-    
-    var promise = organization ? api.save(organization) : api.save(user);
-            
-    promise
-        .then(function () {
-        var nextUrl = '/app/public/OrganizationSignup.html?UserID=' + encodeURIComponent(user.UserID);
-        if (data.QueryStringOrganizationID) {
-            nextUrl += '&OrganizationID=' + encodeURIComponent(data.QueryStringOrganizationID);
+    promise = promise.then(function (ret) {
+        if (!ret.educator) {
+            ret.educator = {
+                _TypeKey: 'Educator'
+            };
         }
-        if (organization) {
-            nextUrl = '/app/protected/ReviewEmployees.html?OrganizationID=' + encodeURIComponent(organization.OrganizationID);
-        }
-        req.login(user, function (err) {
-            if (err) {
-                return next(err);
-            } else {
-                return res.redirect(nextUrl);
-            }
+        ret.educator.Title = data.Title;
+        ret.educator.FirstName = data.FirstName;
+        ret.educator.MiddleName = data.MiddleName;
+        ret.educator.LastName = data.LastName;
+        ret.educator.Suffix = data.Suffix;
+        ret.educator.FormerName = data.FormerName;
+        ret.educator.DateOfBirth = data.DateOfBirth;
+        ret.educator.Last4 = data.Last4;
+        ret.educator.PPID = data.PPID;
+        ret.educator.EmailAddress = data.EmailAddress;
+        ret.educator.TelephoneNumber = data.TelephoneNumber;
+        ret.educator.Address1 = data.Address1;
+        ret.educator.Address2 = data.Address2;
+        ret.educator.City = data.City;
+        ret.educator.State = data.State;
+        ret.educator.ZipCode = data.ZipCode
+        return api.save(ret.educator).then(function () {
+            return ret;
         });
+    }).then(function (ret) {
+        if (ret.invitation) {
+            var organizationID = ret.invitation.ApplicantOrganizationID || ret.invitation.EmployeeOrganizationID || ret.educator.SeedOrganizationID;
+            var startDate = ret.invitation.ApplicantOrganizationID ? null : data.StartDate;
+            var applicationDate = ret.invitation.ApplicantOrganizationID ? new Date() : null;
+            ret.tenure = {
+                _TypeKey: 'Tenure',
+                EducatorID: ret.educator.EducatorID,
+                OrganizationID: organizationID,
+                StartDate: startDate,
+                ApplicationDate: applicationDate,
+                PositionsHeld: data.PositionsHeld,
+                EndDate: null
+            };
+            return api.save(ret.tenure).then(function () {
+                return ret;
+            });
+        } else {
+            return ret;
+        }
+    }).then(function (ret) {
+        req.user.LinkedEducatorID = ret.educator.EducatorID;
+        return api.save(req.user).then(function () {
+            return ret;
+        });
+    }).then(function (ret) {
+        if (ret.isApplicant && ret.skipHistory) {
+            return createDocumentStubs(ret.educator.EducatorID).then(function () {
+                return ret;
+            });
+        } else {
+            return ret;
+        }
+    }).then(function (ret) {
+        var nextUrl = ret.skipHistory? myUrl.createDefaultUrl(req.user) : myUrl.createUrl(myUrl.createUrlType.EducatorTenure);
+        res.redirect(nextUrl);
     });
+
+}
+
+function postOrganizationSignupData(req, res, next) {
+    
+    if (req.method != "POST") {
+        throw new Error("Invalid verb routed to postOrganizationSignupData");
+    }
+    
+    if (!req.params.invitationID) {
+        throw new Error('No invitationID specified with confirmation of organization signup data');
+    }
+    
+    var promise = api.querySingle('Invitation', [], null, { InvitationID: req.params.invitationID });
+    
+    var ret = {
+        errorMessage: null,
+        user: null,
+        organization: null
+    };
+
+    var today = new Date();
+    today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    
+    promise = promise.then(function (invitation) {
+        if (invitation) {
+            if (invitation.ExpirationDate < today) {
+                log.warn('Expired invitation (UUID: ' + req.params.invitationID + ')');
+                ret.errorMessage = 'Expired invitation';
+            } else if (req.body.OrganizationID != invitation.RepresentedOrganizationID) {
+                ret.errorMessage = 'Invalid request';
+            } else {
+                req.user.LinkedOrganizationID = invitation.RepresentedOrganizationID;
+                ret.user = req.user;
+            }
+        } else {
+            ret.errorMessage = 'Invalid Invitation UUID';
+        }
+        return ret;
+    }).then(function (ret) {
+        ret.organization = {
+            _TypeKey: 'Organization',
+            OrganizationID: req.body.OrganizationID || null,
+            Name: req.body.OrganizationName,
+            Address1: req.body.OrganizationAddress1,
+            Address2: req.body.OrganizationAddress2,
+            City: req.body.OrganizationCity,
+            State: req.body.OrganizationState,
+            ZipCode: req.body.OrganizationZipCode,
+            EmailAddress: req.body.OrganizationEmail,
+            TelephoneNumber: req.body.OrganizationTelephoneNumber,
+            FaxNumber: req.body.OrganizationFaxNumber
+        };
+        return ret;
+    }).then(function (ret) {
+        return api.save(ret.organization).then(function () {
+            return ret;
+        });
+    }).then(function (ret) {
+        return api.save(ret.user).then(function () {
+            return ret;
+        });
+    }).then(function (ret) {
+        res.redirect(myUrl.createDefaultUrl(req.user));
+    });
+    
 }
 
 function createDocumentStubs(educatorID) {
@@ -305,7 +326,6 @@ function createDocumentStubs(educatorID) {
     return ret;
 }
 
-/*
 function postUserSignupData(req, res, next) {
     var data = req.body;
     
@@ -314,33 +334,112 @@ function postUserSignupData(req, res, next) {
     }
     
     // gather user data
-    
     var hash = bcrypt.hashSync(data.Password);
     var user = {
         _TypeKey: 'User',
         EmailAddress: data.EmailAddress,
         UserName: data.EmailAddress,
-        Hash: hash,
-        LinkedOrganizationID: data.LinkedOrganizationID || null,
-        LinkedEducatorID: data.LinkedEducatorID || null
+        Hash: hash
     };
     
-    log.debug({ user: user }, 'Creating user signup objects');
+    var promise = Promise.resolve();
     
-    api.save(user).then(function (returned) {
-        var nextUrl = user.LinkedOrganizationID ?
-         '/app/public/OrganizationSignup.html?UserID=' + encodeURIComponent(user.UserID) + '&OrganizationID=' + encodeURIComponent(user.LinkedOrganizationID)
-         : '/app/public/EducatorSignup.html?UserID=' + encodeURIComponent(user.UserID) + '&EducatorID=' + encodeURIComponent(user.LinkedEducatorID);
-        req.login(user, function (err) {
-            if (err) {
-                return next(err);
-            } else {
-                return res.redirect(nextUrl);
-            }
-        });
+    promise = promise.then(function () {
+        return api.querySingle('User', [], null, { UserName: data.EmailAddress });
     });
+    promise = promise.then(function (returned) {
+        if (returned) {
+            return {
+                createSession: false,
+                invitation: null,
+                nextUrl: myUrl.createUrl(myUrl.createUrlType.Login, [], { message: 'The user name ' + data.EmailAddress + ' is already registered.' })
+            };
+        } else {
+            return {
+                createSession: null,
+                invitation: null,
+                nextUrl: null,
+            }
+        }
+    });
+    
+    if (req.params.invitationID) {
+        promise = promise.then(function (data) {
+            if (!data.nextUrl) {
+                return api.querySingle('Invitation', [], null, { InvitationID: req.params.invitationID })
+                    .then(function (invitation) {
+                        data.invitation = invitation;
+                        return data;
+                    });
+            } else {
+                return data;
+            }
+        })
+        promise = promise.then(function (data) {
+            var today = new Date();
+            today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            if (!data.nextUrl) {
+                if (data.invitation) {
+                    if (data.invitation.ExpirationDate < today) {
+                        log.warn('Expired invitation (UUID: ' + req.params.invitationID + ')');
+                        data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Login);
+                        data.invitation = null;
+                        data.createSession = false;
+                    } else if (data.invitation.ApplicantOrganizationID || data.invitation.EducatorID || data.invitation.EducatorOrganizationID) {
+                        data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [data.invitation.InvitationID], null, true);
+                    } else if (data.invitation.RepresentedOrganizationID) {
+                        data.nextUrl = myUrl.createUrl(myUrl.createUrlType.OrganizationSignup, [data.invitation.InvitationID], null, true);
+                    } else {
+                        data.createSession = false;
+                        data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Error, [], { Message: 'Invalid invitation' }, true);
+                    }
+                } else {
+                    log.warn('Invalid invitation UUID: ' + req.params.invitationID);
+                    data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Login);
+                    data.createSession = false;
+                }
+            }
+            return data;
+        });
+    }
+    
+    promise = promise.then(function (data) {
+        if (!data.invitation && !data.nextUrl) {
+            data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [], null, true);
+        } else {
+            user.InvitationID = data.invitation.InvitationID;
+        }
+        return api.save(user)
+            .then(function () {
+                return data;
+            });
+    });
+    
+    promise = promise.then(function (data) {
+        if (data.invitation) {
+            data.invitation.FulfillmentUserID = user.UserID;
+            data.invitation.FulfillmentDateTime = new Date();
+            return api.save(data.invitation).then(function () { return data; });
+        } else {
+            return data;
+        }
+    });
+
+    return promise
+        .then(function (data) {
+            if (data.createSession !== false) {
+                return sessionManagement.createSession(user, req, res, next)
+                    .then(function () { return data; });
+            } else {
+                return data;
+            }
+        })
+        .then(function (data) {
+            res.redirect(data.nextUrl);
+        });
 }
 
+/*
 function buildQueryString() {
     var ret = '';
     for (var i = 0; i < arguments.length; i++) {

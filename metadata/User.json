@@ -24,6 +24,10 @@
             "field": "hash",
             "allowNull": false
         },
+        "InvitationID": {
+            "type": "UUID",
+            "field": "invitation_id"
+        },
         "LinkedOrganizationID": {
             "type": "UUID",
             "field": "linked_organization_id"
@@ -43,6 +47,11 @@
             "RelationshipType": "belongsTo",
             "ForeignKey": "linked_educator_id",
             "RelatedTypeKey": "Educator"
+        },
+        "Invitation": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "invitation_id",
+            "RelatedTypeKey": "Invitation"
         }
     }
 }

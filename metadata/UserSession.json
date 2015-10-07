@@ -1,0 +1,29 @@
+﻿{
+    "TypeKey": "UserSession",
+    "TableName": "user_session",
+    "FieldDefinitions": {
+        "SessionID": {
+            "type": "UUID",
+            "field": "session_id",
+            "primaryKey": true
+        },
+        "UserID": {
+            "type": "UUID",
+            "field": "user_id",
+            "allowNull": false
+        },
+        "SessionStart": {
+            "type": "DATE",
+            "field": "session_start",
+            "allowNull": false,
+            "defaultValue": "NOW"
+        }
+    },
+    "Relationships": {
+        "User": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "user_id",
+            "RelatedTypeKey": "User"
+        }
+    }
+}

@@ -1,0 +1,72 @@
+﻿{
+    "TypeKey": "Invitation",
+    "TableName": "invitation",
+    "FieldDefinitions": {
+        "InvitationID": {
+            "type": "UUID",
+            "field": "invitation_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "EmailAddress": {
+            "type": "STRING",
+            "field": "email_address"
+        },
+        "RepresentedOrganizationID": {
+            "type": "UUID",
+            "field": "represented_organization_id"
+        },
+        "ApplicantOrganizationID": {
+            "type": "UUID",
+            "field": "applicant_organization_id"
+        },
+        "EmployeeOrganizationID": {
+            "type": "UUID",
+            "field": "employee_organization_id"
+        },
+        "EducatorID": {
+            "type": "UUID",
+            "field": "educator_id"
+        },
+        "IssueDateTime": {
+            "type": "DATE",
+            "field": "issue_date_time",
+            "defaultValue": "NOW",
+            "allowNull": false
+        },
+        "ExpirationDate": {
+            "type": "DATEONLY",
+            "field": "expiration_date"
+        },
+        "FulfillmentDateTime": {
+            "type": "DATE",
+            "field": "fulfillment_date_time"
+        },
+        "FulfillmentUserID": {
+            "type": "UUID",
+            "field": "fulfillment_user_id"
+        }
+    },
+    "Relationships": {
+        "RepresentedOrganization": {
+            "RelationshipType": "belongsTo",
+            "RelatedTypeKey": "Organization",
+            "ForeignKey": "represented_organization_id"
+        },
+        "ApplicantOrganization": {
+            "RelationshipType": "belongsTo",
+            "RelatedTypeKey": "Organization",
+            "ForeignKey": "applicant_organization_id"
+        },
+        "EmployeeOrganization": {
+            "RelationshipType": "belongsTo",
+            "RelatedTypeKey": "Organization",
+            "ForeignKey": "employee_organization_id"
+        },
+        "Educator": {
+            "RelationshipType": "belongsTo",
+            "RelatedTypeKey": "Educator",
+            "ForeignKey": "educator_id"
+        }
+    }
+}

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%=headerTags%>
+    <title>User Login</title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <%=angularTags%>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var ctl = app.controller('controller', LoginController);
+        ctl.$inject = ['$scope', '$http', '$location' ];
+    </script>
+    <div class="container">
+        <%=pageHeader%>
+		<%=pageMasthead%>
+        <form action="/app/user/login" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+            <div ng-show="Message" class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{Message}}
+            </div>
+            <div class="row form-group">
+				<div class="col-xs-12">
+					<label for="username" autofocus>Email Address</label>
+					<input type="text" name="username" class="form-control" ng-attr-value="{{UserName}}" />
+				</div>
+				<div class="col-xs-12">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" name="password" />
+				</div>
+			</div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <div class="btn-toolbar form-group">
+                        <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block btn-default" />
+                        <input type="submit" value="Create Account" class="btn btn-lg btn-info btn-block" onclick="document.location = '<%=createUrl('UserSignup')%>'; return false;" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <%=pageFooter%>
+    </div>
+</body>
+</html>

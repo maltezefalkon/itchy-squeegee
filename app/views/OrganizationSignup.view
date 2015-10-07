@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%=headerTags%>
+    <title><%=pageTitle%></title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <%=angularTags%>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var organization = <%=typeof organization !== 'undefined' ? JSON.stringify(organization) : 'undefined'%>;
+        var user = <%=typeof user !== 'undefined' ? JSON.stringify(user) : 'undefined' %>;
+        app.value('organization', organization);
+        app.value('user', user);
+        var ctl = app.controller('controller', OrganizationSignupController);
+        ctl.$inject = ['$scope', '$http', '$location', 'organization', 'user' ];
+    </script>
+    <div class="container">
+        <%=pageHeader%>
+		<%=pageMasthead%>
+        <form action="<%=path%>" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+            <!-- tenure -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>
+                        Organization Contact Information
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div ng-repeat="msg in CustomValidationMessages" class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{msg}}
+                        </div>
+                        <div class="form-group required">
+                            <label class="control-label col-sm-3" for="OrganizationName">Name of Organization</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="OrganizationName" class="form-control" ng-model="organization.Name" ng-change="searchForOrganization(tenure)" required ng-model-options="{ debounce: 1000 }" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationAddress1">Address 1</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="OrganizationAddress1" class="form-control" ng-model="organization.Address1" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationAddress2">Address 2</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="OrganizationAddress2" class="form-control" ng-model="organization.Address2" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationCity">City</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="OrganizationCity" class="form-control" ng-model="organization.City" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationState">State</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="OrganizationState" class="form-control" ng-model="organization.State" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationZipCode">Zip Code</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="OrganizationZipCode" class="form-control" ng-model="organization.ZipCode" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationEmail">Contact Email</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="email" name="OrganizationEmail" class="form-control" ng-model="organization.Email" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationTelephoneNumber">Phone Number</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="OrganizationTelephoneNumber" class="form-control" ng-model="organization.TelephoneNumber" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationFaxNumber">Fax Number</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="OrganizationFaxNumber" class="form-control" ng-model="organization.FaxNumber" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- user -->
+            <div class="panel panel-default" ng-hide="user.UserID">
+                <div class="panel-heading">
+                    <span>Login Information</span>
+                </div>
+                <div class="panel-body">
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="username">Email Address</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="email" class="form-control" name="EmailAddress" ng-model="user.EmailAddress" ng-required="!user" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="password">Password</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="password" class="form-control" name="Password" ng-model="user.Password" ng-required="!user" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="password">Re-enter Password</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="password" class="form-control" name="Password2" ng-model="password2" ng-required="!user" compare-to="controller.user.Password" />
+                            </div>
+                            <div ng-messages="SignupForm.Password2.$error" class="error-message" role="alert">
+                                <div ng-message="compare-to">Passwords don't match</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+                        Save Organization Information
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="UserID" ng-value="user.UserID" />
+            <input type="hidden" name="OrganizationID" ng-value="organization.OrganizationID" />
+        </form>
+        <%=pageFooter%>
+    </div>
+</body>
+</html>

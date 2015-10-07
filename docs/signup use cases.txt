@@ -1,25 +1,17 @@
 6 cases:
 
-To sign up a new school:
-/user/signup/Organization/
+4 kinds of invitations
+	RepresentedOrganizationID - HR Director at a school we know about [T]
+	ApplicantOrganizationID - New applicant for a school we know about
+	EmployeeOrganizationID - New employee at a school we know about
+	EducatorID - Educator we know about (presumably at a school we know about) [T]
 
+2 other kinds of signups
+	New educator (registers online) [T]
+	New organization (registers online) <- not yet supported [X]
 
-To sign up a new educator:
-/user/signup/Educator/
+All of these are signed up using:
 
+/app/view/UserSignup/<invitationID>
 
-To sign up a school we already know about:
-/user/signup/Organization/?OrganizationID=xxx
-
-
-To sign up an educator we already know about at a school we already know about
-/user/signup/Educator/?OrganizationID=xxx&EducatorID=xxx(&EmailAddress=xxx)
-
-
-To sign up a new educator at a school we already know about
-/user/signup/Educator/?OrganizationID=xxx(&EmailAddress=xxx)
-
-
-To sign up an applicant for a school we already know about
-/user/signup/Applicant/?OrganizationID=xxx(&EducatorID=xxx)(&EmailAddress=xxx)
-
+No invitationID means New (unattached) Educator

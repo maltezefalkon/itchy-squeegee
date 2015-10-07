@@ -3,6 +3,7 @@
 process.chdir('./utils');
 
 var meta = require('../modules/metadata.js')('../metadata');
+var Promise = require('bluebird');
 
 var typeKeys = [];
 
@@ -19,7 +20,7 @@ if ('*' === process.argv[2]) {
 }
 
 
-var promise = meta.Sequelize.query('SET FOREIGN_KEY_CHECKS=0;');
+var promise = Promise.resolve(null); // meta.Sequelize.query('SET FOREIGN_KEY_CHECKS=0;');
 
 typeKeys.forEach(function (tk) {
     promise = promise.then(function () {
@@ -28,9 +29,9 @@ typeKeys.forEach(function (tk) {
     });
 });
 
-promise.then(function () {
-    return meta.Sequelize.query('SET FOREIGN_KEY_CHECKS=1;')
-});
+//promise.then(function () {
+//    return meta.Sequelize.query('SET FOREIGN_KEY_CHECKS=1;')
+//});
 
 promise.then(function () {
     process.stdout.write('complete!\n');

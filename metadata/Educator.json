@@ -74,6 +74,10 @@
         "ZipCode": {
             "type": "STRING",
             "field": "zip_code"
+        },
+        "SeedOrganizationID": {
+            "type": "UUID",
+            "field": "seed_organization_id"
         }
     },
     "Relationships": {
@@ -91,6 +95,11 @@
             "RelationshipType": "hasOne",
             "RelatedTypeKey": "User",
             "ForeignKey": "linked_educator_id"
+        },
+        "SeedOrganization": {
+            "RelationshipType": "belongsTo",
+            "RelatedTypeKey": "Organization",
+            "ForeignKey": "seed_organization_id"
         }
     }
 }

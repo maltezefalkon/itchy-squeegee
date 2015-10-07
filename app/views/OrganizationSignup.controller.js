@@ -1,28 +1,16 @@
 ﻿"use strict"
 
 function OrganizationSignupController($scope, $http, $location, organization, user) {
-
+    
     var dict = parseQueryString();
     $scope.OrganizationID = dict['OrganizationID'];
     $scope.UserID = dict['UserID'];
     $scope.organization = organization;
     $scope.user = user;
-
-    //FetchData($scope, $http, $location);
-
+    
     // expose public functions
-
     $scope.submitForm = function ($event) {
         SubmitForm($scope, $http, $event);
-    }
-}
-
-function FetchData($scope, $http, $location) {
-    if ($scope.OrganizationID) {
-        querySingle($http, 'Organization?OrganizationID=' + $scope.OrganizationID, $scope, 'organization');
-    }
-    if ($scope.UserID) {
-        querySingle($http, 'User?UserID=' + $scope.UserID, $scope, 'user');
     }
 }
 

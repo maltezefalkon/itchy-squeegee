@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%=headerTags%>
+    <title><%=pageTitle%></title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <%=angularTags%>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var educator = <%=typeof educator !== 'undefined' ? JSON.stringify(educator) : 'undefined' %>;
+        app.value('educator', educator);
+		app.value('isApplicant', <%=isApplicant%>);
+        var ctl = app.controller('controller', EducatorSignupController);
+        ctl.$inject = ['$scope', '$http', '$location', 'educator' ];
+    </script>
+    <div class="container">
+        <%=pageHeader%>
+		<%=pageMasthead%>
+        <form action="<%=path%>" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+            <!-- educator -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Personal Information</span>
+                </div>
+                <div class="panel-body">
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="Title">Title</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <select name="Title" ng-model="educator.Title" class="form-control" ng-required="true">
+                                    <option></option>
+                                    <option>Dr.</option>
+                                    <option>Mr.</option>
+                                    <option>Ms.</option>
+                                    <option>Mrs.</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="FirstName">First Name</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="FirstName" ng-model="educator.FirstName" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group">
+                            <label class="<%=formControlLabelClasses%>" for="MiddleName">Middle Name</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="MiddleName" ng-model="educator.MiddleName" />
+                            </div>
+                        </div>
+                    </div><div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="LastName">Last Name</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="LastName" ng-model="educator.LastName" ng-required="true" />
+                            </div>
+                        </div>
+                    </div><div class="<%=formControlGroupClasses%>">
+                        <div class="form-group">
+                            <label class="<%=formControlLabelClasses%>" for="Suffix">Suffix</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="Suffix" ng-model="educator.Suffix" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group">
+                            <label class="<%=formControlLabelClasses%>" for="Suffix">Former Name</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="FormerName" ng-model="educator.FormerName" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="TelephoneNumber">Phone Number</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="TelephoneNumber" ng-model="educator.TelephoneNumber" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="DateOfBirth">Date of Birth</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="date" class="form-control" name="DateOfBirth" ng-model="educator.DateOfBirth" ng-required="true" parse-date />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="Last4">Last 4 Digits of SSN</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="Last4" ng-model="educator.Last4" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group">
+                            <label class="<%=formControlLabelClasses%>" for="Last4">PPID</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="PPID" ng-model="educator.PPID" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="Address1">Address 1</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="Address1" ng-model="educator.Address1" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group">
+                            <label class="<%=formControlLabelClasses%>" for="Address2">Address 2</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="Address2" ng-model="educator.Address2" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="City">City</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="City" ng-model="educator.City" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="State">State</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="State" ng-model="educator.State" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="State">Zip Code</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" class="form-control" name="ZipCode" ng-model="educator.ZipCode" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- tenure -->
+			<% if (organization) { %>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+				<% if (isApplicant) { %>
+                    <span>
+                        Application to <%=organization.Name%>
+                    </span>
+				<% } else { %>
+                    <span>
+                        Tenure at <%=organization.Name%>
+                    </span>
+				<% } %>
+                </div>
+                <div class="panel-body">
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="PositionsHeld">{{isApplicant ? 'Position Applied For' : 'Position(s) Held'}}</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="PositionsHeld" class="form-control" ng-model="tenure.PositionsHeld" ng-required="organization" />
+                            </div>
+                        </div>
+                    </div>
+					<% if (!isApplicant) { %>
+                    <div class="<%=formControlGroupClasses%>" ng-hide="isApplicant">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="StartDate">Start Date</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="date" name="StartDate" class="form-control" ng-model="tenure.StartDate" parse-date />
+                            </div>
+                        </div>
+                    </div>
+					<% } %>
+                </div>
+            </div>
+			<% } %>
+
+            <!-- submit buttons -->
+				<%
+				if (!isApplicant) {
+				%>
+	            <div class="row">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-hide="isApplicant">
+                        Save
+                    </button>
+				</div>
+				<% } else { %>
+		        <div class="row">
+					<div class="col-xs-12 col-md-offset-2 col-md-8">
+						<button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+							<span ng-hide="skipHistory">Save and Enter Prior Work History<span class="glyphicon glyphicon-step-forward"></span></span>
+							<span ng-show="skipHistory">Save <span class="glyphicon glyphicon-ok"></span></span>
+						</button>
+					</div>
+				</div>
+	            <div class="row" style="margin-top: 10px">
+					<div class="col-xs-12 col-md-offset-2 col-md-8">
+						<div class="well">
+							<div class="checkbox">
+								<label><input type="checkbox" name="OptToSkipHistory" value="true" ng-model="skipHistory" />
+								Check this box if you have no relevant work history.  Only check this box 
+								if you have never held a position where you had direct contact with minors.</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% } %>
+            </div>
+            <input type="hidden" name="SkipHistory" ng-value="skipHistory" />
+            <input type="hidden" name="isApplicant" ng-value="isApplicant" />
+        </form>
+        <%=pageFooter%>
+    </div>
+</body>
+</html>

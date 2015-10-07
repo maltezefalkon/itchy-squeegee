@@ -1,12 +1,22 @@
 ﻿var api = require('../../modules/api');
 var ViewData = require('../../app/views/Base.data.js');
 
-module.exports = function (section, documentInstanceID) {
+module.exports = function (req, documentInstanceID) {
     return api.querySingle('DocumentInstance', ['Fields', 'ApplicableTenure.Organization', 'ApplicableTenure.Educator', 'ReferenceTenure.Organization'], null, { DocumentInstanceID: documentInstanceID })
         .then(function (documentInstance) {
             return api.querySingle('DocumentDefinition', ['Fields'], null, { DocumentDefinitionID: documentInstance.DocumentDefinitionID })
             .then(function (documentDefinition) {
-                var ret = new ViewData('Complete ' + documentDefinition.Name);
+                var ret = new ViewData(req, 'Complete ' + documentDefinition.Name);
+                var section = undefined;
+                if (documentInstance.EducatorID == req.user.LinkedEducatorID) {
+                    section = 'Educator';
+                } else if (documentInstance.ApplicableTenure.OrganizationID == req.user.LinkedOrganizationID) {
+                    section = 'ApplicationOrganization';
+                } else if (documentInstance.ReferenceTenure.OrganizationID == req.user.LinkedOrganizationID) {
+                    section = 'FormerOrganization';
+                } else {
+                    ret.fatalError = 'Invalid document for this user';
+                }
                 ret.section = section;
                 ret.documentDefinition = documentDefinition;
                 ret.documentInstance = documentInstance;

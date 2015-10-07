@@ -5,10 +5,11 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>SafeStudents</Name>
     <RootNamespace>NodejsWebApp1</RootNamespace>
-    <LaunchUrl>http://localhost:1337/app/view/FillForm/Educator,90090432-5246-4b21-acbb-63a87ae771a9</LaunchUrl>
+    <LaunchUrl>http://localhost:1337/app/view/UserSignup/9d785b60-353e-4818-8c58-90c7feebad66</LaunchUrl>
     <ScriptArguments>
     </ScriptArguments>
-    <Environment>DEBUG=express:*</Environment>
+    <Environment>
+    </Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -35,6 +36,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="app\images\check.png" />
+    <Content Include="app\images\x.png" />
+    <Content Include="app\images\question.png" />
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\.jshintrc" />
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.Core.min.map" />
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.min.map" />
@@ -46,11 +50,22 @@
     <Content Include="app\public\OrganizationSignup.html" />
     <Content Include="app\public\UserSignup.html" />
     <Content Include="app\views\EducatorDashboard.view" />
-    <Content Include="app\views\HeadTags.html" />
+    <Content Include="app\views\EducatorSignup.view" />
+    <Content Include="app\views\EducatorTenure.view" />
+    <Content Include="app\views\FatalError.view" />
+    <Content Include="app\views\Home.view" />
+    <Content Include="app\views\Login.view" />
+    <Content Include="app\views\Standard.HeadTags.html" />
     <Content Include="app\views\FillForm.view" />
+    <Content Include="app\views\OrganizationDashboard.view" />
     <Content Include="app\views\OrganizationSignup.view" />
+    <Content Include="app\views\Standard.Footer.html" />
+    <Content Include="app\views\Standard.Header.html" />
+    <Content Include="app\views\UserSignup.view" />
     <Content Include="docs\form168 workflow.txt" />
     <Content Include="docs\signup use cases.txt" />
+    <Content Include="metadata\Invitation.json" />
+    <Content Include="metadata\UserSession.json" />
     <Content Include="Procfile" />
     <Content Include="app\common\footer.html" />
     <Content Include="app\common\header.html" />
@@ -82,16 +97,31 @@
     <Content Include="app\controllers\EducatorDashboardController.js" />
     <Content Include="app\controllers\FillFormController.js" />
     <Content Include="app\controllers\FormField.js" />
+    <Content Include="app\lib\validatr-0.5.1\validatr.min.js" />
     <Compile Include="app\views\EducatorDashboard.data.js" />
+    <Compile Include="app\views\EducatorSignup.controller.js" />
+    <Compile Include="app\views\EducatorSignup.data.js" />
+    <Compile Include="app\views\EducatorTenure.data.js" />
+    <Compile Include="app\views\EducatorTenure.controller.js" />
+    <Compile Include="app\views\FatalError.data.js" />
     <Compile Include="app\views\FillForm.data.js" />
     <Compile Include="app\views\Base.data.js" />
+    <Compile Include="app\views\Home.data.js" />
+    <Compile Include="app\views\Login.controller.js" />
+    <Compile Include="app\views\Login.data.js" />
+    <Compile Include="app\views\OrganizationDashboard.data.js" />
+    <Compile Include="app\views\OrganizationSignup.controller.js" />
     <Compile Include="app\views\OrganizationSignup.data.js" />
+    <Compile Include="app\views\UserSignup.controller.js" />
+    <Compile Include="app\views\UserSignup.data.js" />
     <Compile Include="biz\status.js" />
     <Compile Include="modules\collections.js" />
     <Compile Include="modules\email.js" />
     <Compile Include="modules\myurl.js" />
+    <Compile Include="modules\path-protector.js" />
     <Compile Include="modules\performance-timing.js" />
     <Compile Include="modules\port.js" />
+    <Compile Include="modules\session-management.js" />
     <Compile Include="modules\view-engine.js" />
     <Compile Include="modules\view.js" />
     <Content Include="app\lib\angular-1.4.4\angular.min.js" />
@@ -110,6 +140,7 @@
     <Compile Include="services\signupserver.js" />
     <Compile Include="utils\AddJSONField.js" />
     <Compile Include="utils\GenerateFDF.js" />
+    <Compile Include="utils\GenerateInvitation.js" />
     <Compile Include="utils\Hash.js" />
     <Compile Include="utils\HTML2Jade.js" />
     <Compile Include="utils\PDFFieldsToJSON.js" />
@@ -169,6 +200,7 @@
     <Folder Include="app\lib\bootstrap-3.3.5-dist\fonts\" />
     <Folder Include="app\lib\bootstrap-3.3.5-dist\js\" />
     <Folder Include="app\common\" />
+    <Folder Include="app\lib\validatr-0.5.1\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\dist\" />
     <Folder Include="app\views\" />

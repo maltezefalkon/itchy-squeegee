@@ -19,7 +19,7 @@ var Status = {
     LookupByID: function (id) {
         for (var s in Status) {
             if (Status[s].ID == id) {
-                return s;
+                return Status[s];
             }
         }
         return undefined;
@@ -34,8 +34,9 @@ var Status = {
                     ret = e;
                     minID = e.ID;
                 }
-            } else if (Number(e) < minID) {
-
+            } else if (typeof e === 'Number' && Number(e) < minID) {
+                ret = Status.LookupByID(Number(e));
+                minID = Number(e);
             }
         }
         return ret;

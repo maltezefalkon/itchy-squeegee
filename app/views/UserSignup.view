@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%=headerTags%>
+    <%=angularTags%>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', ['ngMessages']);
+        var ctl = app.controller('controller', UserSignupController);
+        ctl.$inject = ['$scope', '$http', '$location' ];
+    </script>
+    <title><%=pageTitle%></title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <div class="container">
+        <%=pageHeader%>
+		<%=pageMasthead%>
+        <!-- no action = post back to the URL that served this page -->
+        <form name="SignupForm" action="<%=path%>" method="post" class="form-horizontal" role="form">
+            <!-- user -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Login Information</span>
+                </div>
+                <div class="panel-body">
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="username">Email Address</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="email" class="form-control" name="EmailAddress" ng-model="user.EmailAddress" ng-required="true" value="<%=emailAddress%>" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="password">Password</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="password" class="form-control" name="Password" ng-model="user.Password" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="password">Re-enter Password</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="password" class="form-control" name="Password2" ng-model="password2" ng-required="true" compare-to="controller.user.Password" />
+                            </div>
+                            <div ng-messages="SignupForm.Password2.$error" class="error-message" role="alert">
+                                <div ng-message="compare-to">Passwords don't match</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+                        Create User Account
+                    </button>
+                </div>
+            </div>
+        </form>
+        <%=pageFooter%>
+    </div>
+</body>
+</html>

@@ -6,6 +6,8 @@ var uuid = require('uuid');
 var session = require('express-session');
 var passportLocal = require('passport-local');
 var bcrypt = require('bcryptjs');
+var pathProtector = require('./path-protector.js');
+
 var LocalStrategy = passportLocal.Strategy;
 
 module.exports = function (app, publicPaths, apiPath, loginHandlerPath, loginPagePath, defaultPageHandler) {
@@ -13,34 +15,7 @@ module.exports = function (app, publicPaths, apiPath, loginHandlerPath, loginPag
     app.use(passport.initialize());
     app.use(passport.session());
     setupStrategy(app, loginHandlerPath);
-    var ppRegex = [];
-    publicPaths.forEach(function (x) {
-        var replaced = x.replace(/\//g, '\\/').replace(/\*/g, '([^\\/]+?)');
-        ppRegex.push(new RegExp('^' + replaced));
-    });
-    // redirect if requesting a protected page and the user is not authenticated
-    app.use(function (req, res, next) {
-        var publicPath = false;
-        var compare = req.path;
-        if (compare.substr(-1) != '/') {
-            compare += '/';
-        }
-        for (var i = 0; i < ppRegex.length; i++) {
-            if (ppRegex[i].test(compare)) {
-                publicPath = true;
-                break;
-            }
-        }
-        if (!publicPath && !req.isAuthenticated()) {
-            if (compare.indexOf(apiPath) == 0) {
-                return res.send([]);
-            } else {
-                return res.redirect(loginPagePath);
-            }
-        } else {
-            next();
-        }
-    });
+    app.use(pathProtector.createMiddleware(publicPaths, '/app/views/login', '/api'));
 
     // login handling function
     app.post(loginHandlerPath, function (req, res, next) {
