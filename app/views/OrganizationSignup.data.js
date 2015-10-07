@@ -1,4 +1,4 @@
-﻿var ViewData = require('./Base.Data.js');
+﻿var ViewData = require('./Base.data.js');
 var api = require('../../modules/api');
 var log = require('../../modules/logging')('OrganizationSignup');
 

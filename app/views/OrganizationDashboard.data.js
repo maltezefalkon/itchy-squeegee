@@ -1,4 +1,4 @@
-﻿var ViewData = require('./Base.Data.js');
+﻿var ViewData = require('./Base.data.js');
 var api = require('../../modules/api');
 var myurl = require('../../modules/myurl.js');
 var Status = require('../../biz/status.js');
