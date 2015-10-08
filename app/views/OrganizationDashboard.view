@@ -91,7 +91,7 @@
                     <tr>
                         <th>Employee</th>
                         <th>Position</th>
-                        <th>Hire Date</th>
+                        <th><%= (s == 0) ? 'Application Date' : 'Hire Date' %></th>
 <% for (var i in documentDefinitions) { %>
 						<th><%=documentDefinitions[i].Name%></th>
 <% } %>
@@ -105,7 +105,7 @@
                     <tr>
                         <td><%=tenure.Educator.Title + ' ' + tenure.Educator.FirstName + ' ' + tenure.Educator.LastName %></td>
                         <td><%=tenure.PositionsHeld%></td>
-                        <td><%=formatDate(tenure.StartDate)%></td>
+                        <td><%=formatDate((s == 0) ? tenure.ApplicationDate : tenure.StartDate)%></td>
 <%  for (var i in documentDefinitions) { %>
 						<td><%=getMinimumStatusDescription(tenure, documentDefinitions[i])%></td>
 <%  } %>
