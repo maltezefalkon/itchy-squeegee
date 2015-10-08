@@ -43,22 +43,20 @@
 							<h4 class="modal-title">Upload <%=educator.Tenures[t].ApplicableDocuments[d].Definition.Name%></h4>
 						</div>
 						<div class="modal-body">
+							<p>
+							Once you have completed your form and downloaded it to your
+							computer, use this form to upload it to our system.
+							</p>
 							<div class="row">
-								<div class="<%=formControlGroupClasses%>">
-									<div class="<%=formControlLabelClasses%>">
-										<label for="UploadFile">File to Upload</label>
-									</div>
-									<div class="<%=formControlFieldClasses%>">
-										<input type="file" name="UploadFile" />
-									</div>
+								<label class="<%=formControlLabelClasses%>" for="UploadFile">File to Upload</label>
+								<div class="<%=formControlFieldClasses%>">
+									<input type="file" name="UploadFile" />
 								</div>
-								<div class="<%=formControlGroupClasses%>">
-									<div class="<%=formControlLabelClasses%>">
-										<label for="DocumentDate">Document Date</label>
-									</div>
-									<div class="<%=formControlFieldClasses%>">
-										<input type="date" name="DocumentDate" value="<%=new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).substr(-2) + '-' + ('0' + new Date().getDate()).substr(-2)%>" />
-									</div>
+							</div>
+							<div class="row">
+								<label class="<%=formControlLabelClasses%>" for="DocumentDate">Document Date</label>
+								<div class="<%=formControlFieldClasses%>">
+									<input type="date" name="DocumentDate" value="<%=new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).substr(-2) + '-' + ('0' + new Date().getDate()).substr(-2)%>" />
 								</div>
 							</div>
 						</div>

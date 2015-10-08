@@ -112,7 +112,7 @@
         "PDFFieldOrdinal": 5,
         "DocumentDefinitionFieldID": "4136418b-2ce2-46fe-8061-6a58554dfbeb",
         "FieldSection": "Educator",
-        "FieldExpression": "null",
+        "FieldExpression": null,
         "FieldDescription": "(Empty area)",
         "LogicalFieldType": "undefined",
         "FieldRegex": null,
