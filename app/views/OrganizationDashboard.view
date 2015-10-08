@@ -67,11 +67,13 @@
                 </ul>
             </div>
         </div>
-        <div class="small" style="margin-bottom: 15px">
-            <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            <span class="text-muted">
-                <%=organization.Name + ' &bull; ' + organization.Address1 + ' ' + organization.Address2 + ', ' + organization.City + ', ' + organization.State + ' ' + organization.ZipCode + ' &bull; Phone: ' + organization.TelephoneNumber + ' &bull; Fax: ' + organization.FaxNumber + ' &bull; Email: ' + organization.EmailAddress %>
-            </span>
+        <div class="row" style="margin-bottom: 15px">
+			<div class="col-xs-1"
+				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+			</div>
+			<div class="col-xs-11 text-muted">
+                <%=organization.Name + ' &bull; ' + organization.Address1 + ' ' + organization.Address2 + ' &bull; ' + organization.City + ', ' + organization.State + ' ' + organization.ZipCode + '<br />Phone: ' + organization.TelephoneNumber + ' &bull; Fax: ' + organization.FaxNumber + ' &bull; Email: ' + organization.EmailAddress + '<br />Representative: ' + organization.RepresentativeFirstName + ' ' + organization.RepresentativeLastName + ', ' + organization.RepresentativeJobTitle %>
+            </div>
         </div>
 <% 
         var sections = [ applicationTenures, currentTenures ];

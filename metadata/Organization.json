@@ -46,6 +46,18 @@
         "ZipCode": {
             "type": "STRING",
             "field": "zip_code"
+        },
+        "RepresentativeFirstName": {
+            "type": "STRING",
+            "field": "representative_first_name"
+        },
+        "RepresentativeLastName": {
+            "type": "STRING",
+            "field": "representative_last_name"
+        },
+        "RepresentativeJobTitle": {
+            "type": "STRING",
+            "field": "representative_job_title"
         }
     },
     "Relationships": {

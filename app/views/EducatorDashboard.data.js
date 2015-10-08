@@ -42,6 +42,7 @@ function GetStatusIcon(document) {
         case Status.EmailToFormerEmployerSent.ID: return 'glyphicon-envelope';
         case Status.AwaitingResponse.ID: return 'glyphicon-hourglass';
         case Status.CompletedByFormerEmployer.ID: return 'glyphicon-ok';
+        case Status.Completed.ID: return 'glyphicon-ok';
         case Status.Expired.ID: return 'glyphicon-warning-sign';
     }
 }
@@ -52,6 +53,7 @@ function GetStatusColor(document) {
         case Status.CompletedByApplicant.ID: return 'text-info';
         case Status.EmailToFormerEmployerSent.ID: return 'text-warning';
         case Status.AwaitingResponse.ID: return 'text-primary';
+        case Status.Completed.ID: return 'text-success';
         case Status.CompletedByFormerEmployer.ID: return 'text-success';
         case Status.Expired.ID: return 'text-danger';
     }

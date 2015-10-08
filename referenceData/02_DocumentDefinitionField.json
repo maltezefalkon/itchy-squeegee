@@ -185,7 +185,7 @@
     {
         "DocumentDefinitionID": "093076b1-3348-11e5-9a89-180373ea70a8",
         "PDFFieldType": "Text",
-        "FieldName": "Last 4 digits of Applicants So,cial Security Number",
+        "FieldName": "Last 4 digits of Applicants Social Security Number",
         "FieldNameAlt": "Last 4 digits of Applicant&#8217;s Social Security Number: ",
         "FieldFlags": 0,
         "FieldJustification": "Left",
@@ -331,7 +331,7 @@
         "PDFFieldOrdinal": 16,
         "DocumentDefinitionFieldID": "06a8dd0e-7145-4f69-9334-ba29b07012e5",
         "FieldSection": "FormerOrganization",
-        "FieldExpression": "referenceTenure.HRRep ? (referenceTenure.HRRep.FirstName + ' ' + referenceTenure.HRRep.LastName) : '?'",
+        "FieldExpression": "referenceTenure.Organization.RepresentativeFirstName + ' ' + referenceTenure.Organization.RepresentativeLastName + ', ' + referenceTenure.Organization.RepresentativeJobTitle",
         "FieldDescription": "Received by",
         "LogicalFieldType": "String",
         "FieldRegex": null,

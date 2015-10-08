@@ -20,9 +20,12 @@ module.exports = function (req, pageTitle, controllerName) {
     this.createUrl = createUrl;
     this.createDefaultUrl = function () { return createDefaultUrl(this.user); };
     this.pageHeader = pageHeader(this);
-    this.formControlGroupClasses = 'col-sm-6 col-lg-4';
-    this.formControlLabelClasses = 'control-label col-md-4';
-    this.formControlFieldClasses = 'col-md-8';
+    this.formControlGroupClasses = 'col-md-6';
+    this.formControlLabelClasses = 'control-label col-sm-4 col-md-6 col-lg-4';
+    this.formControlFieldClasses = 'col-sm-8 col-md-6 col-lg-8';
+    //this.formControlGroupClasses = 'col-sm-6 col-lg-4';
+    //this.formControlLabelClasses = 'control-label col-md-4';
+    //this.formControlFieldClasses = 'col-md-8';
     if (controllerName) {
         this.angularTags = generateAngularIncludes(controllerName);
     }

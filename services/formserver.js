@@ -8,14 +8,15 @@ var forms = require('../modules/forms');
 var Status = require('../biz/status');
 var Promise = require('bluebird');
 var email = require('../modules/email');
-var myurl = require('../modules/myurl');
+var myUrl = require('../modules/myurl');
 var _ = require('lodash');
 var exec = require('child_process').exec;
 var perf = require('../modules/performance-timing.js')();
 
 // expose public methods
 module.exports.postFormData = postFormData;
-module.exports.getPDFForm = getPDFForm;
+module.exports.downloadDocument = downloadDocument;
+module.exports.uploadFormFile = uploadFormFile;
 
 function postFormData(req, res, next) {
     var data = req.body;
@@ -60,13 +61,6 @@ function postFormData(req, res, next) {
                 return document;
             });
         }).then(function (document) {
-            log.debug('writing PDF');
-            perf.start('Writing PDF');
-            return forms.GeneratePDF(document).then(function () {
-                perf.stop("Writing PDF");
-                return document;
-            });
-        }).then(function (document) {
             log.debug('Generating email');
             perf.start('Generating email');
             return email.sendForm168EmailToFormerEmployer(document).then(function () {
@@ -76,7 +70,7 @@ function postFormData(req, res, next) {
             });
         }).then(function (document) {
             log.debug('Redirecting to educator dashboard');
-            res.redirect(myurl.createUrl(myurl.createUrlType.EducatorDashboard, { EducatorID: document.EducatorID }, true));
+            res.redirect(myUrl.createUrl(myUrl.createUrlType.EducatorDashboard, { EducatorID: document.EducatorID }, true));
         });
     } else if (section == 'FormerOrganization') {
         promise.then(function (document) {
@@ -84,13 +78,6 @@ function postFormData(req, res, next) {
             document.StatusID = Status.CompletedByFormerEmployer.ID;
             document.StatusDescription = _.template(Status.CompletedByFormerEmployer.DescriptionTemplate)(document);
             return api.save(document, false).then(function () { return document; });
-        }).then(function (document) {
-            log.debug('writing PDF');
-            perf.start("Writing PDF");
-            return forms.GeneratePDF(document).then(function () {
-                perf.stop("Writing PDF");
-                return document;
-            });
         }).then(function (document) {
             log.debug('Generating email');
             perf.start('Generating email');
@@ -101,23 +88,94 @@ function postFormData(req, res, next) {
             });
         }).then(function (document) {
             log.debug('Redirecting to organization dashboard');
-            res.redirect(myurl.createUrl(myurl.createUrlType.OrganizationDashboard, { OrganizationID: document.ApplicableTenure.OrganizationID }, true));
+            res.redirect(myUrl.createUrl(myUrl.createUrlType.OrganizationDashboard, { OrganizationID: document.ApplicableTenure.OrganizationID }, true));
         });
     } else {
         promise.then(function () {
             perf.stop('postFormData');
-            res.redirect(myurl.createUrl(myurl.createUrlType.Error, { Message: 'Unrecognized form section' }, true));
+            res.redirect(myUrl.createUrl(myUrl.createUrlType.Error, { Message: 'Unrecognized form section' }, true));
         });
     }
 }
 
-function getPDFForm(req, res, next) {
-    var documentInstanceID = req.params.DocumentInstanceID;
-    api.querySingle('DocumentInstance', [], null, { DocumentInstanceID: documentInstanceID })
-        .then(function (documentInstance) {
-        res.setHeader('content-type', 'application/pdf');
-        res.setHeader('content-disposition', 'attachment; filename=' + documentInstanceID + '.pdf');
-        res.write(documentInstance.PDF, 'binary');
-        res.end();
+function downloadDocument(req, res, next) {
+    var documentInstanceID = req.params.documentInstanceID;
+    api.querySingle('DocumentInstance', ['Definition.Fields', 'Fields'], null, { DocumentInstanceID: documentInstanceID })
+    .then(function (documentInstance) {
+        var ret = {
+            redirect: null,
+            documentInstance: documentInstance,
+            fileData: null,
+            mimeType: null
+        };
+        if (!documentInstance) {
+            ret.redirect = myUrl.createUrl(myUrl.createUrlType.Error, { message: 'Invalid Document UUID' });
+            return Promise.resolve(ret);
+        } else if (!documentInstance.Definition.IsUpload) {
+            return forms.GeneratePDF(documentInstance).then(function (fileData) {
+                ret.mimeType = 'application/pdf';
+                ret.fileData = fileData;
+                return ret;
+            });
+        } else {
+            ret.mimeType = documentInstance.FileMimeType;
+            ret.fileData = documentInstance.RawFileData;
+            return Promise.resolve(ret);
+        }
+    }).then(function (values) {
+        if (values.redirect) {
+            res.redirect(values.redirect);
+        } else {
+            res.setHeader('content-type', values.mimeType);
+            var extension = values.mimeType.split('/')[1]; // hack!
+            res.setHeader('content-disposition', 'attachment; filename=' + documentInstanceID + '.' + extension);
+            res.write(values.fileData, 'binary');
+            res.end();
+        }
+    });
+}
+
+function uploadFormFile(req, res, next) {
+    var documentInstanceID = req.params.documentInstanceID;
+    var data = {
+        file: null,
+        documentDate: null,
+        mimeType: null
+    };
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldName, file, fileName, encoding, mimeType) {
+        var fileData = [];
+        data.mimeType = mimeType;
+        file.on('data', function (chunk) {
+            fileData.push(chunk);
+        });
+        file.on('end', function () {
+            data.file = Buffer.concat(fileData);
+        });
+    });
+    req.busboy.on('field', function (fieldName, fieldValue, fieldNameTruncated, fieldValueTruncated) {
+        if (fieldName == 'DocumentDate') {
+            data.documentDate = new Date(Number(fieldValue.substr(0, 4)), Number(fieldValue.substr(5, 2)) - 1, Number(fieldValue.substr(8, 2)));
+        } else {
+            log.debug('Unhandled field: ' + fieldName);
+        }
+    });
+    req.busboy.on('finish', function () {
+        log.debug(data, 'Finished parsing file upload data. Saving.');
+        Promise.settle(
+            api.querySingle('DocumentInstance', ['Definition'], null, { DocumentInstanceID: documentInstanceID })
+            .then(function (documentInstance) {
+                documentInstance.RawFileData = data.file;
+                documentInstance.DocumentDate = data.documentDate;
+                documentInstance.CompletedDateTime = new Date();
+                documentInstance.FileMimeType = data.mimeType;
+                documentInstance.NextRenewalDate = forms.CalculateRenewalDate(documentInstance.Definition, data.documentDate);
+                var status = documentInstance.NextRenewalDate > new Date() ? Status.Completed : Status.Expired;
+                documentInstance.StatusID = status.ID;
+                documentInstance.StatusDescription = _.template(status.DescriptionTemplate)(documentInstance);
+                return api.save(documentInstance);
+            }).then(function () {
+                res.redirect(myUrl.createDefaultUrl(req.user));
+            }).reflect());
     });
 }

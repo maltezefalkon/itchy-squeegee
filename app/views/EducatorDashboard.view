@@ -5,9 +5,74 @@
     <title><%=pageTitle%></title>
     <style type="text/css">
     </style>
+	<script type="text/javascript">
+	function doUpload(button, form, dialog) {
+		button.disabled = true;
+		var data = new FormData(form);
+		$.ajax({
+			url: form.action,
+			data: data,
+			cache: false,
+			contentType: false,
+			processData: false,
+			type: 'POST',
+			success: function(returnedData) {
+				button.disabled = false;
+				dialog.modal('hide');
+			},
+			complete: function(jqXHR) {
+				dialog.modal('hide');
+			}
+		});
+		return true;
+	}
+	</script>
 </head>
 <body>
     <div class="container">
+		<% 
+		for (var t in educator.Tenures) {
+			for (var d in educator.Tenures[t].ApplicableDocuments) { 
+		%>
+        <div id="uploadDialog-<%=educator.Tenures[t].ApplicableDocuments[d].DocumentInstanceID%>" class="modal fade" role="dialog">
+			<form id="uploadForm-<%=educator.Tenures[t].ApplicableDocuments[d].DocumentInstanceID%>" action="/app/form/Upload/<%=educator.Tenures[t].ApplicableDocuments[d].DocumentInstanceID%>" method="POST" enctype="multipart/form-data">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Upload <%=educator.Tenures[t].ApplicableDocuments[d].Definition.Name%></h4>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="<%=formControlGroupClasses%>">
+									<div class="<%=formControlLabelClasses%>">
+										<label for="UploadFile">File to Upload</label>
+									</div>
+									<div class="<%=formControlFieldClasses%>">
+										<input type="file" name="UploadFile" />
+									</div>
+								</div>
+								<div class="<%=formControlGroupClasses%>">
+									<div class="<%=formControlLabelClasses%>">
+										<label for="DocumentDate">Document Date</label>
+									</div>
+									<div class="<%=formControlFieldClasses%>">
+										<input type="date" name="DocumentDate" value="<%=new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).substr(-2) + '-' + ('0' + new Date().getDate()).substr(-2)%>" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-default" type="submit">Upload</button>
+						</div>
+					</div>
+				</div>
+			</form>
+        </div>
+		<%	
+			} 
+		} 
+		%>
         <%=pageHeader%>
 		<%=pageMasthead%>
 		<%
@@ -48,7 +113,7 @@
                                     <span class="glyphicon glyphicon-star"></span> Create
                                 </button>
 <% } else if (document.StatusID == Status.Missing.ID && document.Definition.IsUpload) { %>
-                                <button type="button" class="btn btn-block btn-success" onclick="document.location.href = '<%=createUrl('UploadForm', [document.DocumentInstanceID])%>'">
+                                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#uploadDialog-<%=document.DocumentInstanceID%>">
                                     <span class="glyphicon glyphicon-paperclip"></span> Upload
                                 </button>
 <% } else { %>
@@ -62,11 +127,11 @@
                                 <span class="glyphicon <%=GetStatusIcon(document)%> <%=GetStatusColor(document)%>"></span>
                                 <%=document.StatusDescription%>
                             </td>
-                            <td><%=formatDate(document.DocumentDate)%></td>
+                            <td><%=Status.LookupByID(document.StatusID).IsBegun ? formatDate(document.DocumentDate) : null%></td>
                             <td><%=formatDate(document.CompletedDateTime)%></td>
 							<% if (IsCurrentTenure(tenure)) { %>
                             <td>
-                                next
+                                <%=Status.LookupByID(document.StatusID).IsCompleted ? formatDate(document.NextRenewalDate) : null%>
                             </td>
 							<% } %>
                         </tr>

@@ -104,7 +104,7 @@
                     </div>
                     <div class="<%=formControlGroupClasses%>">
                         <div class="form-group">
-                            <label class="<%=formControlLabelClasses%>" for="Last4">PPID</label>
+                            <label class="<%=formControlLabelClasses%>" for="PPID">PPID</label>
                             <div class="<%=formControlFieldClasses%>">
                                 <input type="text" class="form-control" name="PPID" ng-model="educator.PPID" />
                             </div>
@@ -173,7 +173,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="PositionsHeld">{{isApplicant ? 'Position Applied For' : 'Position(s) Held'}}</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" name="PositionsHeld" class="form-control" ng-model="tenure.PositionsHeld" ng-required="organization" />
+                                <input type="text" name="PositionsHeld" class="form-control" ng-model="tenure.PositionsHeld" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -182,7 +182,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="StartDate">Start Date</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="date" name="StartDate" class="form-control" ng-model="tenure.StartDate" parse-date />
+                                <input type="date" name="StartDate" class="form-control" ng-model="tenure.StartDate" ng-required="true" parse-date />
                             </div>
                         </div>
                     </div>

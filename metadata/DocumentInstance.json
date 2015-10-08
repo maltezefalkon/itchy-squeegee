@@ -31,6 +31,10 @@
             "type": "DATE",
             "field": "completed_datetime"
         },
+        "NextRenewalDate": {
+            "type": "DATEONLY",
+            "field": "next_renewal_date"
+        },
         "StatusDescription": {
             "type": "STRING",
             "field": "status_description",
@@ -57,9 +61,13 @@
             "type": "STRING",
             "field": "email_id"
         },
-        "PDF": {
+        "RawFileData": {
             "type": "BLOB",
-            "field": "pdf"
+            "field": "raw_file_data"
+        },
+        "FileMimeType": {
+            "type": "STRING",
+            "field": "file_mime_type"
         }
     },
     "Relationships": {

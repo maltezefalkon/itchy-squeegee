@@ -10,7 +10,10 @@
     "Address2": null,
     "City": "Jenkintown",
     "State": "PA",
-    "ZipCode": "54321"
+    "ZipCode": "54321",
+    "RepresentativeFirstName": "Jack",
+    "RepresentativeLastName": "Rabbit",
+    "RepresentativeJobTitle": "HR Director"
   },
   {
     "OrganizationID": "f28d1d18-f264-4914-b9f8-a17f0aed7436",
@@ -23,6 +26,9 @@
     "Address2": null,
     "City": "Doylestown",
     "State": "PA",
-    "ZipCode": "12345"
+    "ZipCode": "12345",
+    "RepresentativeFirstName": "Robert",
+    "RepresentativeLastName": "Stirgine",
+    "RepresentativeJobTitle": "Secretary"
   }
 ]

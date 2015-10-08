@@ -92,7 +92,7 @@ function postEducatorTenureData(req, res, next) {
     
     if (data.DoneEnteringHistory === 'true') {
         promise = promise.then(function () {
-            return createDocumentStubs(educatorID);
+            return createDocumentStubs(educatorID, function (tenure) { return !tenure.StartDate; });
         });
         
         nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorDashboard);
@@ -178,7 +178,7 @@ function postEducatorSignupData(req, res, next) {
         ret.educator.DateOfBirth = data.DateOfBirth;
         ret.educator.Last4 = data.Last4;
         ret.educator.PPID = data.PPID;
-        ret.educator.EmailAddress = data.EmailAddress;
+        ret.educator.EmailAddress = req.user.EmailAddress;
         ret.educator.TelephoneNumber = data.TelephoneNumber;
         ret.educator.Address1 = data.Address1;
         ret.educator.Address2 = data.Address2;
@@ -214,8 +214,8 @@ function postEducatorSignupData(req, res, next) {
             return ret;
         });
     }).then(function (ret) {
-        if (ret.isApplicant && ret.skipHistory) {
-            return createDocumentStubs(ret.educator.EducatorID).then(function () {
+        if (ret.skipHistory) {
+            return createDocumentStubs(ret.educator.EducatorID, function (tenure) { return !tenure.EndDate; }).then(function () {
                 return ret;
             });
         } else {
@@ -276,7 +276,10 @@ function postOrganizationSignupData(req, res, next) {
             ZipCode: req.body.OrganizationZipCode,
             EmailAddress: req.body.OrganizationEmail,
             TelephoneNumber: req.body.OrganizationTelephoneNumber,
-            FaxNumber: req.body.OrganizationFaxNumber
+            FaxNumber: req.body.OrganizationFaxNumber,
+            RepresentativeFirstName: req.body.RepresentativeFirstName,
+            RepresentativeLastName: req.body.RepresentativeLastName,
+            RepresentativeJobTitle: req.body.RepresentativeJobTitle
         };
         return ret;
     }).then(function (ret) {
@@ -293,23 +296,23 @@ function postOrganizationSignupData(req, res, next) {
     
 }
 
-function createDocumentStubs(educatorID) {
+function createDocumentStubs(educatorID, tenurePredicate) {
     log.debug('Creating document stubs');
     var ret = api.query('Educator', ['Tenures.Organization'], null, { EducatorID: educatorID });
     ret = ret.then(function (educatorList) {
-        var applicationTenure = null;
+        var documentTenure = null;
         var educator = educatorList[0];
         for (var i = 0; i < educator.Tenures.length; i++) {
-            if (!educator.Tenures[i].StartDate) {
-                applicationTenure = educator.Tenures[i];
+            if (tenurePredicate(educator.Tenures[i])) {
+                documentTenure = educator.Tenures[i];
                 break;
             }
         }
-        if (null == applicationTenure) {
-            throw new Error('Failed to find applicationTenure');
+        if (null == documentTenure) {
+            throw new Error('Failed to find documentTenure');
         }
         var docs = null;
-        docs = forms.CreateDocumentStubs(applicationTenure, educator.Tenures, educator);
+        docs = forms.CreateDocumentStubs(documentTenure, educator.Tenures, educator);
         log.debug({ docs: docs}, 'Created ' + docs.length.toString() + ' document stubs');
         var innerPromise = null;
         docs.forEach(function (doc) {
@@ -385,13 +388,13 @@ function postUserSignupData(req, res, next) {
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Login);
                         data.invitation = null;
                         data.createSession = false;
-                    } else if (data.invitation.ApplicantOrganizationID || data.invitation.EducatorID || data.invitation.EducatorOrganizationID) {
+                    } else if (data.invitation.ApplicantOrganizationID || data.invitation.EducatorID || data.invitation.EmployeeOrganizationID) {
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [data.invitation.InvitationID], null, true);
                     } else if (data.invitation.RepresentedOrganizationID) {
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.OrganizationSignup, [data.invitation.InvitationID], null, true);
                     } else {
                         data.createSession = false;
-                        data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Error, [], { Message: 'Invalid invitation' }, true);
+                        data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'Invalid invitation' }, true);
                     }
                 } else {
                     log.warn('Invalid invitation UUID: ' + req.params.invitationID);
@@ -406,13 +409,12 @@ function postUserSignupData(req, res, next) {
     promise = promise.then(function (data) {
         if (!data.invitation && !data.nextUrl) {
             data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [], null, true);
-        } else {
+        } else if (data.invitation) {
             user.InvitationID = data.invitation.InvitationID;
         }
-        return api.save(user)
-            .then(function () {
-                return data;
-            });
+        return api.save(user).then(function () {
+            return data;
+        });
     });
     
     promise = promise.then(function (data) {

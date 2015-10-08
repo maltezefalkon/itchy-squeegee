@@ -21,11 +21,10 @@
         <%=pageHeader%>
 		<%=pageMasthead%>
         <form action="<%=path%>" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
-            <!-- tenure -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>
-                        Organization Contact Information
+                        Organization Information
                     </span>
                 </div>
                 <div class="panel-body">
@@ -106,6 +105,40 @@
                     </div>
                 </div>
             </div>
+			<!-- organization representative -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>
+                        Representative Information
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="RepresentativeFirstName">First Name</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="RepresentativeFirstName" class="form-control" ng-model="organization.RepresentativeFirstName" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="RepresentativeLastName">Last Name</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="RepresentativeLastName" class="form-control" ng-model="organization.RepresentativeLastName" ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="RepresentativeJobTitle">Job Title</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" name="RepresentativeJobTitle" class="form-control" ng-model="organization.RepresentativeJobTitle" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- user -->
             <div class="panel panel-default" ng-hide="user.UserID">
                 <div class="panel-heading">
@@ -144,7 +177,7 @@
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-8 col-xs-12">
                     <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
-                        Save Organization Information
+                        Save Information <span class="glyphicon glyphicon-ok"></span>
                     </button>
                 </div>
             </div>

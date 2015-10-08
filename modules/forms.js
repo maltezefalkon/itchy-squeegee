@@ -93,16 +93,19 @@ function createDocumentStubs(documentTenure, allTenures, educator) {
     var doc = null;
     var documentDate = documentTenure.ApplicationDate || new Date();
     for (var i = 0; i < documentDefinitions.length; i++) {
-        if (documentDefinitions[i].DocumentDefinitionID == Form168.DocumentDefinitionID) {
-            for (var j = 0; j < allTenures.length; j++) {
-                if (allTenures[j].StartDate) {
-                    doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, documentTenure, allTenures[j], null, documentDate);
-                    ret.push(doc);
+        if (documentDefinitions[i].RenewDuringEmployment || !documentTenure.StartDate) {
+            if (documentDefinitions[i].DocumentDefinitionID == Form168.DocumentDefinitionID) {
+                for (var j = 0; j < allTenures.length; j++) {
+                    if (allTenures[j].StartDate) {
+                        doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, documentTenure, allTenures[j], null, documentDate);
+                        ret.push(doc);
+                    }
                 }
+            } else {
+                doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, documentTenure, null, null, documentDate);
+                doc.NextRenewalDate = calculateDocumentRenewalDate(documentDefinitions[i], documentDate);
+                ret.push(doc);
             }
-        } else {
-            doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, documentTenure, null, null, documentDate);
-            ret.push(doc);
         }
     }
     return ret;
@@ -117,6 +120,27 @@ function findDocumentInstanceField(documentInstance, documentDefinitionFieldID) 
     return collections.findSingle(documentInstance.Fields, { DocumentDefinitionFieldID: documentDefinitionFieldID })
 }
 
+function calculateDocumentRenewalDate(documentDefinition, documentDate) {
+    if (documentDefinition.RenewalPeriod) {
+        var pieces = documentDefinition.RenewalPeriod.split(" ");
+        if (pieces.length == 2 && pieces[1] == 'years') {
+            return new Date(documentDate.getFullYear() + Number(pieces[0]), documentDate.getMonth(), documentDate.getDate());
+        } else if (pieces.length == 2 && pieces[1] == 'months') {
+            var newYear = documentDate.getFullYear();
+            var newMonth = documentDate.getMonth() + Number(pieces[0]);
+            if (newMonth > 11) {
+                newMonth -= 12;
+                newYear += 1;
+            }
+            return new Date(newYear, newMonth, documentDate.getDate());
+        } else {
+            throw new Error('Unsupported time span descriptor: "' + documentDefinition.RenewalPeriod + '"');
+        }
+    } else {
+        return null;
+    }
+}
+
 function createFDFDataObject(documentInstance) {
     var ret = {};
     for (var i = 0; i < documentInstance.Definition.Fields.length; i++) {
@@ -124,9 +148,9 @@ function createFDFDataObject(documentInstance) {
         documentInstanceField = findDocumentInstanceField(documentInstance, documentDefinitionField.DocumentDefinitionFieldID);
         var dataValue = documentInstanceField.FieldValue;
         if (documentDefinitionField.PDFFieldType == 'Button') {
-            if (documentInstanceField.FieldValue === true) {
+            if (documentInstanceField.FieldValue === 'true') {
                 dataValue = documentDefinitionField.PDFTrueValue;
-            } else if (documentInstanceField.FieldValue === false) {
+            } else if (documentInstanceField.FieldValue === 'false') {
                 dataValue = documentDefinitionField.PDFFalseValue;
             } else {
                 dataValue = documentDefinitionField.PDFNullValue;
@@ -134,9 +158,11 @@ function createFDFDataObject(documentInstance) {
         }
         ret[documentDefinitionField.FieldName] = dataValue;
     }
+    log.debug({ fdf: ret }, 'Generated FDF data');
     return ret;
 }
 
+/// returns a promise
 function generatePDF(documentInstance) {
     
     var data = createFDFDataObject(documentInstance);
@@ -148,10 +174,6 @@ function generatePDF(documentInstance) {
         .then(function () {
             log.debug('reading back filled pdf');
             return fs.readFileAsync(outputFileName);
-        }).then(function (data) {
-            log.debug('writing pdf to database');
-            documentInstance.PDF = data;
-            return api.save(documentInstance);
         });
     return ret;
 }
@@ -183,3 +205,4 @@ module.exports.CreateDocumentStubs = createDocumentStubs;
 module.exports.FindDocumentInstanceField = findDocumentInstanceField;
 module.exports.Form168 = Form168;
 module.exports.GeneratePDF = generatePDF;
+module.exports.CalculateRenewalDate = calculateDocumentRenewalDate;

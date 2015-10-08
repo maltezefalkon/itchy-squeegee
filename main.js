@@ -16,6 +16,7 @@ var port = require('./modules/port.js');
 var cookieParser = require('cookie-parser');
 var sessionManagement = require('./modules/session-management.js');
 var myUrl = require('./modules/myurl.js');
+var busboy = require('connect-busboy')();
 
 log.info('initializing');
 
@@ -50,7 +51,8 @@ app.use(function (req, res, next) {
 
 // set up cookie parsing and body parsing for all paths
 app.use(cookieParser('doralia-x-e3'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/app/view/', bodyParser.urlencoded({ extended: false }));
+app.use('/app/user/', bodyParser.urlencoded({ extended: false }));
 
 app.use('/client', express.static('app'));
 
@@ -85,7 +87,9 @@ app.get('/app/user/logout', sessionManagement.createLogoutHandler(loginPath));
 
 // form routes
 app.post('/app/view/FillForm/:documentInstanceID', formServices.postFormData);
-app.get('/app/form/Download/:DocumentInstanceID', formServices.getPDFForm);
+app.get('/app/form/Download/:documentInstanceID', formServices.downloadDocument);
+app.use('/app/form/Upload', busboy);
+app.post('/app/form/Upload/:documentInstanceID', formServices.uploadFormFile)
 
 // signup routes
 app.post('/app/view/UserSignup/:invitationID?', signupServices.postUserSignupData);
