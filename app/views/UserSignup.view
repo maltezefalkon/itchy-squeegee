@@ -18,6 +18,9 @@
 		<%=pageMasthead%>
         <!-- no action = post back to the URL that served this page -->
         <form name="SignupForm" action="<%=path%>" method="post" class="form-horizontal" role="form">
+            <div ng-show="Message" class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{Message}}
+            </div>
             <!-- user -->
             <div class="panel panel-default">
                 <div class="panel-heading">

@@ -1,9 +1,9 @@
 ﻿"use strict"
 
-function UserSignupController($scope, $http, $location, educatorID, organizationID) {
+function UserSignupController($scope, $http, $location) {
+    var dict = parseQueryString();
+    $scope.Message = dict.Message;
     
-    $scope.OrganizationID = organizationID;
-    $scope.EducatorID = educatorID;
     // expose public functions
     $scope.submitForm = function ($event) {
         SubmitForm($scope, $http, $event);

@@ -349,13 +349,12 @@ function postUserSignupData(req, res, next) {
     
     promise = promise.then(function () {
         return api.querySingle('User', [], null, { UserName: data.EmailAddress });
-    });
-    promise = promise.then(function (returned) {
+    }).then(function (returned) {
         if (returned) {
             return {
                 createSession: false,
                 invitation: null,
-                nextUrl: myUrl.createUrl(myUrl.createUrlType.Login, [], { message: 'The user name ' + data.EmailAddress + ' is already registered.' })
+                nextUrl: req.path + '?Message=' + encodeURIComponent('The user name ' + data.EmailAddress + ' is already registered.')
             };
         } else {
             return {
@@ -407,18 +406,22 @@ function postUserSignupData(req, res, next) {
     }
     
     promise = promise.then(function (data) {
-        if (!data.invitation && !data.nextUrl) {
-            data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [], null, true);
-        } else if (data.invitation) {
-            user.InvitationID = data.invitation.InvitationID;
-        }
-        return api.save(user).then(function () {
+        if (data.createSession) {
+            if (!data.invitation) {
+                data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [], null, true);
+            } else if (data.invitation) {
+                user.InvitationID = data.invitation.InvitationID;
+            }
+            return api.save(user).then(function () {
+                return data;
+            });
+        } else {
             return data;
-        });
+        }
     });
     
     promise = promise.then(function (data) {
-        if (data.invitation) {
+        if (data.invitation && data.createSession) {
             data.invitation.FulfillmentUserID = user.UserID;
             data.invitation.FulfillmentDateTime = new Date();
             return api.save(data.invitation).then(function () { return data; });
