@@ -388,8 +388,10 @@ function postUserSignupData(req, res, next) {
                         data.invitation = null;
                         data.createSession = false;
                     } else if (data.invitation.ApplicantOrganizationID || data.invitation.EducatorID || data.invitation.EmployeeOrganizationID) {
+                        data.createSession = true;
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [data.invitation.InvitationID], null, true);
                     } else if (data.invitation.RepresentedOrganizationID) {
+                        data.createSession = true;
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.OrganizationSignup, [data.invitation.InvitationID], null, true);
                     } else {
                         data.createSession = false;
@@ -438,8 +440,7 @@ function postUserSignupData(req, res, next) {
             } else {
                 return data;
             }
-        })
-        .then(function (data) {
+        }).then(function (data) {
             res.redirect(data.nextUrl);
         });
 }
