@@ -18,43 +18,34 @@ function EducatorSignupController($scope, $http, $location, educator, isApplican
     $scope.setSkipHistory = function (skip) {
         SetSkipHistory($scope, $http, skip);
     };
+    
     $scope.searchForOrganization = function (tenureObject) {
         SearchForSchool($scope, $http, tenureObject);
     };
+    
     $scope.setOrganization = function (tenureObject) {
         SetSchool($scope, $http, tenureObject);
     };
+    
     $scope.clearOrganization = function (tenureObject) {
         ClearOrganization($scope, $http, tenureObject);
     }
+    
     $scope.createOrganization = function (tenureObject) {
         CreateOrganization($scope, $http, tenureObject);
     };
+    
     $scope.submitForm = function ($event) {
-        SubmitForm($scope, $http, $event);
+        if (!$event.$valid) {
+            $event.preventDefault();
+        } else {
+            SubmitForm($scope, $http, $event);
+        }
     }
+
     $scope.setDoneEnteringHistory = function (done) {
         SetDoneEnteringHistory($scope, $http, done);
     }
-}
-
-function CompareTo() {
-    return {
-        require: "ngModel",
-        scope: {
-            otherModelValue: "=compareTo"
-        },
-        link: function (scope, element, attributes, ngModel) {
-            
-            ngModel.$validators.compareTo = function (modelValue) {
-                return modelValue == scope.otherModelValue;
-            };
-            
-            scope.$watch("otherModelValue", function () {
-                ngModel.$validate();
-            });
-        }
-    };
 }
 
 function FetchData($scope, $http, $location) {

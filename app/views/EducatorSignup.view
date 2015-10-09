@@ -1,21 +1,23 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<%=headerTags%>
     <title><%=pageTitle%></title>
+	<%=headerTags%>
+	<link rel="stylesheet" href="/client/lib/jquery-ui-1.11.4.custom/jquery-ui.css"/>
     <style type="text/css">
     </style>
 </head>
 <body ng-app="safeApp" ng-controller="controller">
-    <%=angularTags%>
+    <%=advancedAngularTags%>
     <script type="text/javascript">
-        var app = angular.module('safeApp', ['ngMessages']);
+        var app = angular.module('safeApp', [ 'ngMessages', 'ui.mask', 'ui.date', 'ui.validate' ]);
         var educator = <%=typeof educator !== 'undefined' ? JSON.stringify(educator) : 'undefined' %>;
         app.value('educator', educator);
 		app.value('isApplicant', <%=isApplicant%>);
         var ctl = app.controller('controller', EducatorSignupController);
         ctl.$inject = ['$scope', '$http', '$location', 'educator' ];
     </script>
+	<script type="text/javascript" src="/client/util/angular-directives.js"></script>
     <div class="container">
         <%=pageHeader%>
 		<%=pageMasthead%>
@@ -30,7 +32,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="Title">Title</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <select name="Title" ng-model="educator.Title" class="form-control" ng-required="true">
+                                <select ng-model="educator.Title" name="Title" class="form-control" ng-required="true">
                                     <option></option>
                                     <option>Dr.</option>
                                     <option>Mr.</option>
@@ -72,7 +74,7 @@
                     </div>
                     <div class="<%=formControlGroupClasses%>">
                         <div class="form-group">
-                            <label class="<%=formControlLabelClasses%>" for="Suffix">Former Name</label>
+                            <label class="<%=formControlLabelClasses%>" for="FormerName">Former Name</label>
                             <div class="<%=formControlFieldClasses%>">
                                 <input type="text" class="form-control" name="FormerName" ng-model="educator.FormerName" />
                             </div>
@@ -82,7 +84,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="TelephoneNumber">Phone Number</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" class="form-control" name="TelephoneNumber" ng-model="educator.TelephoneNumber" ng-required="true" />
+                                <input type="text" class="form-control" name="TelephoneNumber" ng-model="educator.TelephoneNumber" ng-required="true" ui-mask="(999) 999-9999" />
                             </div>
                         </div>
                     </div>
@@ -90,7 +92,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="DateOfBirth">Date of Birth</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="date" class="form-control" name="DateOfBirth" ng-model="educator.DateOfBirth" ng-required="true" parse-date />
+                                <input type="text" class="form-control" name="DateOfBirth" ng-model="educator.DateOfBirth" ng-required="true" id="DateOfBirth" ui-date ui-date-format="MM/dd/yyyy" placeholder="mm/dd/yyyy" parse-date-model-value />
                             </div>
                         </div>
                     </div>
@@ -98,7 +100,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="Last4">Last 4 Digits of SSN</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" class="form-control" name="Last4" ng-model="educator.Last4" ng-required="true" />
+                                <input type="text" class="form-control" name="Last4" ng-model="educator.Last4" ui-mask="9999" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -106,7 +108,7 @@
                         <div class="form-group">
                             <label class="<%=formControlLabelClasses%>" for="PPID">PPID</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" class="form-control" name="PPID" ng-model="educator.PPID" />
+                                <input type="text" class="form-control" name="PPID" ng-model="educator.PPID" ui-mask="9999999" />
                             </div>
                         </div>
                     </div>
@@ -138,15 +140,76 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="State">State</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" class="form-control" name="State" ng-model="educator.State" ng-required="true" />
+								<select class="form-control" ng-model="educator.State" name="State" ng-required="true">
+									<option value="AL">Alabama</option>
+									<option value="AK">Alaska</option>
+									<option value="AZ">Arizona</option>
+									<option value="AR">Arkansas</option>
+									<option value="CA">California</option>
+									<option value="CO">Colorado</option>
+									<option value="CT">Connecticut</option>
+									<option value="DE">Delaware</option>
+									<option value="DC">District Of Columbia</option>
+									<option value="FL">Florida</option>
+									<option value="GA">Georgia</option>
+									<option value="HI">Hawaii</option>
+									<option value="ID">Idaho</option>
+									<option value="IL">Illinois</option>
+									<option value="IN">Indiana</option>
+									<option value="IA">Iowa</option>
+									<option value="KS">Kansas</option>
+									<option value="KY">Kentucky</option>
+									<option value="LA">Louisiana</option>
+									<option value="ME">Maine</option>
+									<option value="MD">Maryland</option>
+									<option value="MA">Massachusetts</option>
+									<option value="MI">Michigan</option>
+									<option value="MN">Minnesota</option>
+									<option value="MS">Mississippi</option>
+									<option value="MO">Missouri</option>
+									<option value="MT">Montana</option>
+									<option value="NE">Nebraska</option>
+									<option value="NV">Nevada</option>
+									<option value="NH">New Hampshire</option>
+									<option value="NJ">New Jersey</option>
+									<option value="NM">New Mexico</option>
+									<option value="NY">New York</option>
+									<option value="NC">North Carolina</option>
+									<option value="ND">North Dakota</option>
+									<option value="OH">Ohio</option>
+									<option value="OK">Oklahoma</option>
+									<option value="OR">Oregon</option>
+									<option value="PA">Pennsylvania</option>
+									<option value="RI">Rhode Island</option>
+									<option value="SC">South Carolina</option>
+									<option value="SD">South Dakota</option>
+									<option value="TN">Tennessee</option>
+									<option value="TX">Texas</option>
+									<option value="UT">Utah</option>
+									<option value="VT">Vermont</option>
+									<option value="VA">Virginia</option>
+									<option value="WA">Washington</option>
+									<option value="WV">West Virginia</option>
+									<option value="WI">Wisconsin</option>
+									<option value="WY">Wyoming</option>
+									<option value="AS">American Samoa</option>
+									<option value="GU">Guam</option>
+									<option value="MP">Northern Mariana Islands</option>
+									<option value="PR">Puerto Rico</option>
+									<option value="UM">United States Minor Outlying Islands</option>
+									<option value="VI">Virgin Islands</option>
+									<option value="AA">Armed Forces Americas</option>
+									<option value="AP">Armed Forces Pacific</option>
+									<option value="AE">Armed Forces Others</option>	
+								</select>
                             </div>
                         </div>
                     </div>
                     <div class="<%=formControlGroupClasses%>">
                         <div class="form-group required">
-                            <label class="<%=formControlLabelClasses%>" for="State">Zip Code</label>
+                            <label class="<%=formControlLabelClasses%>" for="ZipCode">Zip Code</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" class="form-control" name="ZipCode" ng-model="educator.ZipCode" ng-required="true" />
+                                <input type="text" class="form-control" name="ZipCode" ng-model="educator.ZipCode" ui-mask="99999" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -196,14 +259,14 @@
 				if (!isApplicant) {
 				%>
 	            <div class="row">
-                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-hide="isApplicant">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-hide="isApplicant" ng-disabled="!SignupForm.$valid">
                         Save
                     </button>
 				</div>
 				<% } else { %>
 		        <div class="row">
 					<div class="col-xs-12 col-md-offset-2 col-md-8">
-						<button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+						<button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-disabled="!SignupForm.$valid">
 							<span ng-hide="skipHistory">Save and Enter Prior Work History<span class="glyphicon glyphicon-step-forward"></span></span>
 							<span ng-show="skipHistory">Save <span class="glyphicon glyphicon-ok"></span></span>
 						</button>

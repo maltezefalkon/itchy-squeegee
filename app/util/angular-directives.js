@@ -1,5 +1,4 @@
-﻿angular.module('safeApp')
-    .directive("parseDate", function () {
+﻿angular.module('safeApp').directive("parseDateModelValue", function () {
         return {
             require: 'ngModel',
             link: function (scope, elem, attr, modelCtrl) {

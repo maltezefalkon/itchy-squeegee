@@ -330,77 +330,74 @@ function createDocumentStubs(educatorID, tenurePredicate) {
 }
 
 function postUserSignupData(req, res, next) {
-    var data = req.body;
     
     if (req.method != "POST") {
         throw new Error("Invalid verb routed to postUserSignupData");
     }
     
     // gather user data
-    var hash = bcrypt.hashSync(data.Password);
+    var hash = bcrypt.hashSync(req.body.Password);
     var user = {
         _TypeKey: 'User',
-        EmailAddress: data.EmailAddress,
-        UserName: data.EmailAddress,
+        EmailAddress: req.body.EmailAddress,
+        UserName: req.body.EmailAddress,
         Hash: hash
+    };
+    
+    var data = {
+        isValid: true,
+        invitation: null,
+        nextUrl: null
     };
     
     var promise = Promise.resolve();
     
     promise = promise.then(function () {
-        return api.querySingle('User', [], null, { UserName: data.EmailAddress });
+        return api.querySingle('User', [], null, { UserName: req.body.EmailAddress });
     }).then(function (returned) {
         if (returned) {
-            return {
-                createSession: false,
-                invitation: null,
-                nextUrl: req.path + '?Message=' + encodeURIComponent('The user name ' + data.EmailAddress + ' is already registered.')
-            };
+            data.isValid = false;
+            data.nextUrl = req.path + '?Message=' + encodeURIComponent('The user name ' + req.body.EmailAddress + ' is already registered.');
+            return data;
         } else {
-            return {
-                createSession: null,
-                invitation: null,
-                nextUrl: null,
-            }
+            return data;
         }
     });
     
     if (req.params.invitationID) {
         promise = promise.then(function (data) {
-            if (!data.nextUrl) {
+            if (data.isValid) {
                 return api.querySingle('Invitation', [], null, { InvitationID: req.params.invitationID })
                     .then(function (invitation) {
-                        data.invitation = invitation;
-                        return data;
-                    });
+                    data.invitation = invitation;
+                    return data;
+                });
             } else {
                 return data;
             }
-        })
+        });
         promise = promise.then(function (data) {
             var today = new Date();
             today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-            if (!data.nextUrl) {
+            if (data.isValid) {
                 if (data.invitation) {
                     if (data.invitation.ExpirationDate < today) {
                         log.warn('Expired invitation (UUID: ' + req.params.invitationID + ')');
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Login);
                         data.invitation = null;
-                        data.createSession = false;
+                        data.isValid = false;
                     } else if (data.invitation.ApplicantOrganizationID || data.invitation.EducatorID || data.invitation.EmployeeOrganizationID) {
-                        data.createSession = true;
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [data.invitation.InvitationID], null, true);
                     } else if (data.invitation.RepresentedOrganizationID) {
-                        data.createSession = true;
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.OrganizationSignup, [data.invitation.InvitationID], null, true);
                     } else {
-                        data.createSession = false;
+                        data.isValid = false;
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'Invalid invitation' }, true);
                     }
                 } else {
                     log.warn('Invalid invitation UUID: ' + req.params.invitationID);
+                    data.isValid = false;
                     data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Login);
-                    data.createSession = false;
                 }
             }
             return data;
@@ -408,10 +405,10 @@ function postUserSignupData(req, res, next) {
     }
     
     promise = promise.then(function (data) {
-        if (data.createSession) {
+        if (data.isValid) {
             if (!data.invitation) {
                 data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [], null, true);
-            } else if (data.invitation) {
+            } else {
                 user.InvitationID = data.invitation.InvitationID;
             }
             return api.save(user).then(function () {
@@ -423,7 +420,7 @@ function postUserSignupData(req, res, next) {
     });
     
     promise = promise.then(function (data) {
-        if (data.invitation && data.createSession) {
+        if (data.isValid && data.invitation) {
             data.invitation.FulfillmentUserID = user.UserID;
             data.invitation.FulfillmentDateTime = new Date();
             return api.save(data.invitation).then(function () { return data; });
@@ -434,7 +431,7 @@ function postUserSignupData(req, res, next) {
 
     return promise
         .then(function (data) {
-            if (data.createSession !== false) {
+            if (data.isValid) {
                 return sessionManagement.createSession(user, req, res, next)
                     .then(function () { return data; });
             } else {

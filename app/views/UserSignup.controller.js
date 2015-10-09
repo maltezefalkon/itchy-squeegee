@@ -8,11 +8,30 @@ function UserSignupController($scope, $http, $location) {
     $scope.submitForm = function ($event) {
         SubmitForm($scope, $http, $event);
     }
+
+    $scope.hasLowercase = function (value) {
+        return !value || Boolean(value.match(/[a-z]/));
+    }
+
+    $scope.hasUppercase = function (value) {
+        return !value || Boolean(value.match(/[A-Z]/));
+    }
+
+    $scope.hasNumber = function (value) {
+        return !value || Boolean(value.match(/[0-9]/));
+    }
+
+    $scope.confirmMatch = function (value, compare) {
+        return !value || value == compare;
+    }
+
+    $scope.minimumLength = function (value) {
+        return !value || value.length >= 6;
+    }
 }
 
 function SubmitForm($scope, $http, $event) {
-    $scope.CustomValidationMessages = [];
-    if ($scope.CustomValidationMessages.length > 0) {
+    if (!$event.$valid) {
         $event.preventDefault();
     }
 }

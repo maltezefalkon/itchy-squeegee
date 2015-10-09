@@ -21,13 +21,14 @@ module.exports = function (req, pageTitle, controllerName) {
     this.createDefaultUrl = function () { return createDefaultUrl(this.user); };
     this.pageHeader = pageHeader(this);
     this.formControlGroupClasses = 'col-md-6';
-    this.formControlLabelClasses = 'control-label col-sm-4 col-md-6 col-lg-4';
-    this.formControlFieldClasses = 'col-sm-8 col-md-6 col-lg-8';
+    this.formControlLabelClasses = 'control-label col-sm-4 col-md-4';
+    this.formControlFieldClasses = 'col-sm-8 col-md-8';
     //this.formControlGroupClasses = 'col-sm-6 col-lg-4';
     //this.formControlLabelClasses = 'control-label col-md-4';
     //this.formControlFieldClasses = 'col-md-8';
     if (controllerName) {
-        this.angularTags = generateAngularIncludes(controllerName);
+        this.angularTags = generateAngularIncludes(controllerName, false);
+        this.advancedAngularTags = generateAngularIncludes(controllerName, true);
     }
 }
 
@@ -44,11 +45,21 @@ function formatDate(d) {
     }
 }
 
-function generateAngularIncludes(controllerName) {
-    var ret = '<script type="text/javascript" src="/client/lib/angular-1.4.4/angular.min.js"></script>\n';
+function generateAngularIncludes(controllerName, includeAdvancedFormSupport) {
+    var ret = '';
+    if (includeAdvancedFormSupport) {
+        ret += '<script type="text/javascript" src="/client/lib/jquery-ui-1.11.4.custom/jquery-ui.js"></script>\n';
+    } else {
+        ret += '<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>\n';
+    }
+    ret += '<script type="text/javascript" src="/client/lib/angular-1.4.4/angular.min.js"></script>\n';
     ret += '<script type="text/javascript" src="/client/lib/angular-1.4.4/angular-messages.min.js"></script>\n';
-    ret += '<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>\n';
     ret += '<script type="text/javascript" src="/controllers/' + controllerName + '.controller.js"></script>\n';
+    if (includeAdvancedFormSupport) {
+        ret += '<script type="text/javascript" src="/client/lib/angular-ui-ui-validate-1.2.0/validate.min.js"></script>\n';
+        ret += '<script type="text/javascript" src="/client/lib/angular-ui-ui-date-0.0.8/date.js"></script>\n';
+        ret += '<script type="text/javascript" src="/client/lib/angular-ui-ui-mask-1.4.7/mask.min.js"></script>\n';
+    }
     return ret;
 }
 

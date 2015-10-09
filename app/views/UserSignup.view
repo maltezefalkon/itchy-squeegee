@@ -2,25 +2,29 @@
 <html lang="en">
 <head>
 	<%=headerTags%>
-    <%=angularTags%>
-    <script type="text/javascript">
-        var app = angular.module('safeApp', ['ngMessages']);
-        var ctl = app.controller('controller', UserSignupController);
-        ctl.$inject = ['$scope', '$http', '$location' ];
-    </script>
     <title><%=pageTitle%></title>
     <style type="text/css">
+	.validation-message {
+		margin-top: 10px;
+		margin-bottom: 0px;
+	}
     </style>
 </head>
 <body ng-app="safeApp" ng-controller="controller">
+    <%=advancedAngularTags%>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', [ 'ngMessages', 'ui.validate' ]);
+        var ctl = app.controller('controller', UserSignupController);
+        ctl.$inject = ['$scope', '$http', '$location' ];
+    </script>
     <div class="container">
         <%=pageHeader%>
 		<%=pageMasthead%>
+		<div ng-show="Message" class="alert alert-danger alert-dismissible">
+			<a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{Message}}
+		</div>
         <!-- no action = post back to the URL that served this page -->
         <form name="SignupForm" action="<%=path%>" method="post" class="form-horizontal" role="form">
-            <div ng-show="Message" class="alert alert-danger alert-dismissible">
-                <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{Message}}
-            </div>
             <!-- user -->
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -29,36 +33,41 @@
                 <div class="panel-body">
                     <div class="<%=formControlGroupClasses%>">
                         <div class="form-group required">
-                            <label class="<%=formControlLabelClasses%>" for="username">Email Address</label>
+							<div>
+								<label class="<%=formControlLabelClasses%>" for="username">Email Address</label>
+								<div class="<%=formControlFieldClasses%>">
+									<input type="email" class="form-control" name="EmailAddress" ng-model="emailAddress" ng-required="true" value="<%=emailAddress%>" />
+									<div ng-show="SignupForm.EmailAddress.$error.email" class="alert alert-danger validation-message">Invalid email address</div>
+								</div>
+							</div>
+                        </div>
+                    </div>
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="Password">Password</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="email" class="form-control" name="EmailAddress" ng-model="user.EmailAddress" ng-required="true" value="<%=emailAddress%>" />
+                                <input type="password" class="form-control" name="Password" ng-model="pwd" ng-required="true" ui-validate="{ containsLowercase: 'hasLowercase($value)', containsUppercase: 'hasUppercase($value)', containsNumber: 'hasNumber($value)', minimumLength: 'minimumLength($value)' }" />
+								<div ng-show="SignupForm.Password.$error.minimumLength" class="alert alert-danger validation-message">Password must be at least 6 characters long</div>
+								<div ng-show="SignupForm.Password.$error.containsLowercase" class="alert alert-danger validation-message">Password must contain at least 1 lowercase letter</div>
+								<div ng-show="SignupForm.Password.$error.containsUppercase" class="alert alert-danger validation-message">Password must contain at least 1 uppercase letter</div>
+								<div ng-show="SignupForm.Password.$error.containsNumber" class="alert alert-danger validation-message">Password must contain at least 1 number</div>
                             </div>
                         </div>
                     </div>
                     <div class="<%=formControlGroupClasses%>">
                         <div class="form-group required">
-                            <label class="<%=formControlLabelClasses%>" for="password">Password</label>
+                            <label class="<%=formControlLabelClasses%>" for="Password2">Re-enter Password</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="password" class="form-control" name="Password" ng-model="user.Password" ng-required="true" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="<%=formControlGroupClasses%>">
-                        <div class="form-group required">
-                            <label class="<%=formControlLabelClasses%>" for="password">Re-enter Password</label>
-                            <div class="<%=formControlFieldClasses%>">
-                                <input type="password" class="form-control" name="Password2" ng-model="password2" ng-required="true" compare-to="controller.user.Password" />
-                            </div>
-                            <div ng-messages="SignupForm.Password2.$error" class="error-message" role="alert">
-                                <div ng-message="compare-to">Passwords don't match</div>
-                            </div>
+                                <input type="password" class="form-control" name="Password2" ng-model="pwd2" ng-required="true" ui-validate-watch="'pwd'" ui-validate="{ match: 'confirmMatch($value, SignupForm.Password.$viewValue)' }" />
+								<div ng-show="SignupForm.Password2.$error.match" class="alert alert-danger validation-message">Passwords do not match</div>
+							</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-8 col-xs-12">
-                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-disabled="!SignupForm.$valid">
                         Create User Account
                     </button>
                 </div>

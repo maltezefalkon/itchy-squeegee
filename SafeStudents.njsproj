@@ -25,7 +25,7 @@
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <NodejsPort>1337</NodejsPort>
     <StartWebBrowser>True</StartWebBrowser>
   </PropertyGroup>
@@ -39,6 +39,27 @@
     <Content Include="app\images\check.png" />
     <Content Include="app\images\x.png" />
     <Content Include="app\images\question.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-icons_222222_256x240.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\index.html" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.css" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.min.css" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.structure.css" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.structure.min.css" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.theme.css" />
+    <Content Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.theme.min.css" />
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\.jshintrc" />
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.Core.min.map" />
     <Content Include="app\lib\zeroclipboard-2.2.0\dist\ZeroClipboard.min.map" />
@@ -98,6 +119,12 @@
     <Content Include="app\controllers\FillFormController.js" />
     <Content Include="app\controllers\FormField.js" />
     <Content Include="app\lib\validatr-0.5.1\validatr.min.js" />
+    <Compile Include="app\lib\angular-ui-ui-date-0.0.8\date.js" />
+    <Compile Include="app\lib\angular-ui-ui-mask-1.4.7\mask.min.js" />
+    <Compile Include="app\lib\angular-ui-ui-validate-1.2.0\validate.min.js" />
+    <Compile Include="app\lib\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
+    <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.js" />
+    <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.min.js" />
     <Compile Include="app\views\EducatorDashboard.data.js" />
     <Compile Include="app\views\EducatorSignup.controller.js" />
     <Compile Include="app\views\EducatorSignup.data.js" />
@@ -195,11 +222,18 @@
     <Folder Include="app\js\" />
     <Folder Include="app\lib\" />
     <Folder Include="app\lib\angular-1.4.4\" />
+    <Folder Include="app\lib\angular-ui-ui-date-0.0.8\" />
     <Folder Include="app\lib\bootstrap-3.3.5-dist\" />
     <Folder Include="app\lib\bootstrap-3.3.5-dist\css\" />
     <Folder Include="app\lib\bootstrap-3.3.5-dist\fonts\" />
     <Folder Include="app\lib\bootstrap-3.3.5-dist\js\" />
     <Folder Include="app\common\" />
+    <Folder Include="app\lib\angular-ui-ui-mask-1.4.7\" />
+    <Folder Include="app\lib\jquery-ui-1.11.4.custom\" />
+    <Folder Include="app\lib\jquery-ui-1.11.4.custom\external\" />
+    <Folder Include="app\lib\jquery-ui-1.11.4.custom\external\jquery\" />
+    <Folder Include="app\lib\jquery-ui-1.11.4.custom\images\" />
+    <Folder Include="app\lib\angular-ui-ui-validate-1.2.0\" />
     <Folder Include="app\lib\validatr-0.5.1\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\dist\" />
