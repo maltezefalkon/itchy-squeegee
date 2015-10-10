@@ -21,7 +21,7 @@
     <div class="container">
         <%=pageHeader%>
 		<%=pageMasthead%>
-        <form action="<%=path%>" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+        <form action="<%=path%>" name="SignupForm" method="post" class="form-horizontal" role="form">
             <!-- educator -->
             <div class="panel panel-default">
                 <div class="panel-heading">

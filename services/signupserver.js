@@ -214,7 +214,7 @@ function postEducatorSignupData(req, res, next) {
             return ret;
         });
     }).then(function (ret) {
-        if (ret.skipHistory) {
+        if (ret.skipHistory && ret.invitation) {
             return createDocumentStubs(ret.educator.EducatorID, function (tenure) { return !tenure.EndDate; }).then(function () {
                 return ret;
             });

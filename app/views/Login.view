@@ -16,6 +16,11 @@
     <div class="container">
         <%=pageHeader%>
 		<%=pageMasthead%>
+		<noscript>
+			<div class="alert alert-danger">
+				Our website doesn't function properly with JavaScript disabled.
+			</div>
+		</noscript>
         <form action="/app/user/login" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
             <div ng-show="Message" class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{Message}}
