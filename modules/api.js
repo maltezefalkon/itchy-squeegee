@@ -5,10 +5,12 @@ var uuid = require('uuid');
 var Promise = require('bluebird');
 var meta = require('./metadata.js')();
 var perf = require('./performance-timing.js')();
+var myUrl = require('./myurl.js');
 
 module.exports.save = saveData;
 module.exports.query = queryData;
 module.exports.querySingle = querySingle;
+module.exports.executeCommand = executeCommand;
 
 function saveData(o, typeKeyOrDeepSave, deepSave) {
     var typeKey = typeKeyOrDeepSave;
@@ -309,4 +311,42 @@ function createCloneForUpdate(typeKey, o) {
         }
     }
     return ret;
+}
+
+function executeCommand(command, commandArguments) {
+    var ret = null;
+    switch (command) {
+        case 'GenerateInvitation':
+            ret = GenerateInvitation(commandArguments);
+            break;
+    }
+    return ret;
+}
+
+function GenerateInvitation(commandArguments) {
+    var invitationType = commandArguments.invitationType;
+    var date = commandArguments.date || new Date();
+    var emailAddress = commandArguments.emailAddress || null;
+    var expirationDate = commandArguments.expirationDate;
+    var organizationID = commandArguments.user.LinkedOrganizationID;
+    if (!expirationDate) {
+        expirationDate = date;
+        expirationDate.setDate(expirationDate.getDate() + 14);
+    }
+    var o = {
+        _TypeKey: 'Invitation',
+        IssueDateTime: date,
+        ExpirationDate: expirationDate,
+        EmailAddress: emailAddress
+    };
+    if (invitationType === 'Employee') {
+        o.EmployeeOrganizationID = organizationID;
+    } else if (invitationType === 'Applicant') {
+        o.ApplicantOrganizationID = organizationID;
+    } else {
+        throw new Error('Unsupported invitation type: ' + invitationType);
+    }
+    return saveData(o, false).then(function () {
+        return { Url: myUrl.createUrl(myUrl.createUrlType.UserSignup, [o.InvitationID]) };
+    });
 }

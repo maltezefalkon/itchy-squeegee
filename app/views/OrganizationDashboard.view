@@ -2,23 +2,67 @@
 <html lang="en">
 <head>
 	<%=headerTags%>
-	<script type="text/javascript" src="lib/zeroclipboard-2.2.0/dist/ZeroClipboard.js"></script>
+	<script type="text/javascript" src="/client/lib/zeroclipboard-2.2.0/dist/ZeroClipboard.js"></script>
     <title><%=pageTitle%></title>
     <style type="text/css">
     </style>
 </head>
 <body>
+	<script type="text/javascript">
+	var employeeLink = null;
+	function generateEmployeeInvitation() {
+		$.ajax({
+			url: '<%=createUrl('ApiCommand', [ 'GenerateInvitation' ], { invitationType: 'Employee' })%>',
+			success: function(returnedData) {
+				employeeLink = returnedData.Url;
+				$('#employeeLink').attr('href', employeeLink);
+				$('#employeeCopyLinkButton').attr('data-clipboard-text', employeeLink);
+				$('#employeeLink').text(employeeLink);
+				$('#employeeSuccessDialog').modal('show');
+			}
+		});
+	}
+	var applicantLink = null;
+	function generateApplicantInvitation() {
+		$.ajax({
+			url: '<%=createUrl('ApiCommand', [ 'GenerateInvitation' ], { invitationType: 'Applicant' })%>',
+			success: function(returnedData) {
+				applicantLink = returnedData.Url;
+				$('#applicantLink').attr('href', applicantLink);
+				$('#applicantCopyLinkButton').attr('data-clipboard-text', applicantLink);
+				$('#applicantLink').text(applicantLink);
+				$('#applicantSuccessDialog').modal('show');
+			}
+		});
+	}
+
+	function showButtonConfirm(button) {
+		$(button).addClass('btn-success');
+		$(button).text('Copied!');
+		window.setTimeout(function() { resetButtonConfirm(button); }, 1000);
+	}
+
+	function resetButtonConfirm(button) {
+		$(button).removeClass('btn-success');
+		$(button).text('Copy Link');
+	}
+	</script>
     <div class="container">
         <div id="employeeSuccessDialog" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg vertical-center">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Employee Sign-Up Link Copied</h4>
+                        <h4 class="modal-title">Employee Sign-Up Link Generated</h4>
                     </div>
                     <div class="modal-body">
-                        <p>The following link has been copied to your clipboard:</p>
-                        <p><a href="<%=employeeLink%>" target="_blank" class="small"><%=employeeLink%></a></p>
+                        <p>
+							The system has generated a sign-up invitation for your employees.
+						</p>
+                        <p>
+							<button id="employeeCopyLinkButton" class="btn btn-xs btn-primary pull-right" style="margin-right: 15px; width: 75px" onclick="showButtonConfirm(this)">Copy Link</button>
+							<a id="employeeLink" target="_blank" class="small"></a>
+						</p>
                         <p>
                             You can now paste this link into an email to send to your employee(s)
                             so that they can sign up to use this website.
@@ -35,11 +79,16 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Applicant Sign-Up Link Copied</h4>
+                        <h4 class="modal-title">Applicant Sign-Up Link Generated</h4>
                     </div>
                     <div class="modal-body">
-                        <p>The following link has been copied to your clipboard:</p>
-                        <p><a href="<%=applicantLink%>" target="_blank" class="small"><%=applicantLink%></a></p>
+                        <p>
+							The system has generated a sign-up invitation for a job applicant.
+						</p>
+                        <p>
+							<button id="applicantCopyLinkButton" class="btn btn-xs btn-primary pull-right" style="margin-right: 15px; width: 75px" onclick="showButtonConfirm(this)">Copy Link</button>
+							<a id="applicantLink" target="_blank" class="small"></a>
+						</p>
                         <p>
                             You can now paste this link into an email to send to your applicant
                             so that they can use this website.
@@ -62,8 +111,8 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a role="menuitem" id="EmployeeLinkButton" href="#" data-toggle="modal" data-target="#employeeSuccessDialog" data-clipboard-text="<%=employeeLink%>">Employee</a></li>
-                    <li><a role="menuitem" id="ApplicantLinkButton" href="#" data-toggle="modal" data-target="#applicantSuccessDialog" data-clipboard-text="<%=applicantLink%>">Applicant</a></li>
+                    <li><a role="menuitem" id="EmployeeLinkButton" href="#" onclick="generateEmployeeInvitation()">Employee</a></li>
+                    <li><a role="menuitem" id="ApplicantLinkButton" href="#" onclick="generateApplicantInvitation()">Applicant</a></li>
                 </ul>
             </div>
         </div>
@@ -122,7 +171,7 @@
     </div>
     <%=pageFooter%>
     <script type="text/javascript">
-        var linkButtons = [document.getElementById('EmployeeLinkButton'), document.getElementById('ApplicantLinkButton')];
+        var linkButtons = [document.getElementById('employeeCopyLinkButton'), document.getElementById('applicantCopyLinkButton')];
         var client = new ZeroClipboard(linkButtons);
         client.on('ready', function (event) { console.log('Movie is loaded'); });
         client.on('aftercopy', function (event) { console.log('Copied text to clipboard: ' + event.data['text/plain']); });

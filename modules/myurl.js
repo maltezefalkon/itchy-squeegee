@@ -16,7 +16,8 @@ module.exports.createUrlType = {
     Home: 'Home',
     UserSignup: 'UserSignup',
     DownloadForm: 'DownloadForm',
-    UploadForm: 'UploadForm'
+    UploadForm: 'UploadForm',
+    ApiCommand: 'ApiCommand'
 };
 
 var urls = {
@@ -32,7 +33,8 @@ var urls = {
     Home: '/app/view/Home',
     UserSignup: '/app/view/UserSignup',
     DownloadForm: '/app/form/Download',
-    UploadForm: '/app/view/UploadForm'
+    UploadForm: '/app/view/UploadForm',
+    ApiCommand: '/api/command'
 };
 
 

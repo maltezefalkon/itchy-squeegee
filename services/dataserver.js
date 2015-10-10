@@ -19,6 +19,9 @@ module.exports.getData = getData;
 // expose the postData method
 module.exports.postData = postData;
 
+// expose the executeCommand method
+module.exports.executeCommand = executeCommand;
+
 // --------------------------------------------------------------------------------------------------------------------
 
 // public functions
@@ -65,6 +68,22 @@ function postData(req, res) {
         );
     } else {
         throw "Invalid verb routed to postData method";
+    }
+}
+
+function executeCommand(req, res, next) {
+    var command = req.params.commandName;
+    var commandArguments = req.query;
+    commandArguments.user = req.user;
+    var ret = api.executeCommand(command, commandArguments);
+    if (typeof ret.then === 'function') {
+        ret.then(function (value) {
+            res.send(value);
+            next();
+        });
+    } else {
+        res.send(ret);
+        next();
     }
 }
 

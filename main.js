@@ -80,6 +80,7 @@ app.get('/api/:type/:joins?', dataServices.getData);
 app.post('/api/:type?', dataServices.postData);
 */
 app.get('/api/:type/query/:query/:joins?', dataServices.getData);
+app.get('/api/command/:commandName/:commandType?', dataServices.executeCommand);
 
 // user management routes
 app.post('/app/user/login', sessionManagement.createLoginHandler(loginPath));
