@@ -25,7 +25,7 @@
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <ProjectView>ShowAllFiles</ProjectView>
+    <ProjectView>ProjectFiles</ProjectView>
     <NodejsPort>1337</NodejsPort>
     <StartWebBrowser>True</StartWebBrowser>
   </PropertyGroup>
@@ -85,8 +85,10 @@
     <Content Include="app\views\UserSignup.view" />
     <Content Include="docs\form168 workflow.txt" />
     <Content Include="docs\signup use cases.txt" />
+    <Content Include="metadata\DocumentSubmission.json" />
     <Content Include="metadata\Invitation.json" />
     <Content Include="metadata\UserSession.json" />
+    <Content Include="pdf\Arrest_or_Conviction_form_Fillable.pdf" />
     <Content Include="Procfile" />
     <Content Include="app\common\footer.html" />
     <Content Include="app\common\header.html" />
@@ -125,6 +127,7 @@
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.js" />
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.min.js" />
+    <Compile Include="app\views\EducatorDashboard.controller.js" />
     <Compile Include="app\views\EducatorDashboard.data.js" />
     <Compile Include="app\views\EducatorSignup.controller.js" />
     <Compile Include="app\views\EducatorSignup.data.js" />

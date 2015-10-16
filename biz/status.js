@@ -15,7 +15,7 @@ var Status = {
     CompletedByFormerEmployer: new StatusEnum(3000, 'Completed by Former Employer', 'Completed by <%=ReferenceTenure.Organization.Name%>', true, true),
     Completed: new StatusEnum(5000, 'Completed', 'Completed', true, true),
     ErrorContactingFormerEmployer: new StatusEnum(10100, 'Error Contacting Former Employer', 'Error Contacting <%=ReferenceTenure.Organization.Name%>', false, true),
-    ErrorContactingApplicationOrganization: new StatusEnum(10200, 'Error Contacting Application Organization', 'Email Sent to <%=ApplicationTenure.Organization.Name%>', false, true),
+    ErrorContactingApplicationOrganization: new StatusEnum(10200, 'Error Contacting Application Organization', 'Email Sent to <%=ApplicableTenure.Organization.Name%>', false, true),
     EmailError: new StatusEnum(10300, 'Email Error', 'Email Error', false, true),
     Expired: new StatusEnum(50000, 'Expired', 'Expired', false, true),
     LookupByID: function (id) {

@@ -27,6 +27,8 @@ module.exports.createMiddleware = function (publicPathPatterns, loginPagePath) {
                 if (sessionObject) {
                     req.session = sessionObject;
                     req.user = sessionObject.User;
+                } else if (!publicPath) {
+                    res.redirect(loginPagePath);
                 }
                 next();
             });
@@ -35,20 +37,27 @@ module.exports.createMiddleware = function (publicPathPatterns, loginPagePath) {
 }
 
 module.exports.createLoginHandler = function (loginPagePath) {
+    var nextUrl = null;
     return function (req, res, next) {
         var data = req.body; // assumes body-parser is in place
         api.querySingle('User', ['LinkedOrganization', 'LinkedEducator'], null, { UserName: data.username })
             .then(function (user) {
-            if (user && bcrypt.compareSync(data.password, user.Hash)) {
-                return CreateSession(user, req, res, next).then(function () {
-                    var url = myUrl.createDefaultUrl(user);
-                    res.redirect(url);
-                });
-            } else {
-                res.redirect(loginPagePath + '?Message=' + encodeURIComponent('User not found or incorrect password.'));
-            }
-        });
-    };
+                if (user) {
+                    if (user.Deactivated) {
+                        nextUrl = loginPagePath + '?Message=' + encodeURIComponent('This user account is no longer active.');
+                    } else if (!bcrypt.compareSync(data.password, user.Hash)) {
+                        nextUrl = loginPagePath + '?Message=' + encodeURIComponent('Incorrect password.');
+                    } else {
+                        return CreateSession(user, req, res, next).then(function () {
+                            var url = myUrl.createDefaultUrl(user);
+                            res.redirect(url);
+                        });
+                    }
+                } else {
+                    res.redirect(loginPagePath + '?Message=' + encodeURIComponent('User not found.'));
+                }
+            });
+        };
 }
 
 module.exports.createLogoutHandler = function (afterLogoutPath) {

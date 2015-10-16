@@ -35,6 +35,12 @@
         "LinkedEducatorID": {
             "type": "UUID",
             "field": "linked_educator_id"
+        },
+        "Deactivated": {
+            "type": "BOOLEAN",
+            "field": "deactivated",
+            "allowNull": false,
+            "defaultValue": false
         }
     },
     "Relationships": {

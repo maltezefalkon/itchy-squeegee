@@ -4,20 +4,16 @@ function EducatorSignupController($scope, $http, $location) {
     
     var dict = parseQueryString();
     
-    $scope.OrganizationID = dict['OrganizationID'];
-    $scope.EducatorID = dict['EducatorID'];
-    $scope.UserID = dict['UserID'];
-    $scope.IsApplicant = (dict['IsApplicant'] == 'true');
-    
-    $scope.tenure = { OrganizationSearchFound: false, OrganizationSearchBegun: false, OrganizationSearchComplete: false, EducatorID: $scope.EducatorID };
-    $scope.DoneEnteringHistory = undefined;
-    $scope.SkipHistory = !$scope.IsApplicant;
-    
-    FetchData($scope, $http, $location);
+    $scope.tenure = {
+        OrganizationSearchFound: false, 
+        OrganizationSearchBegun: false, 
+        OrganizationSearchComplete: false, 
+        PresentEmployer: true
+    };
+
+    $scope.DoneEnteringHistory = "false";
     
     // expose public functions
-    
-    $scope.CreateFieldName = CreateFieldName;
     
     $scope.setSkipHistory = function (skip) {
         SetSkipHistory($scope, $http, skip);
@@ -59,22 +55,6 @@ function CompareTo() {
             });
         }
     };
-}
-
-function FetchData($scope, $http, $location) {
-    if ($scope.EducatorID) {
-        querySingle($http, 'Educator?EducatorID=' + $scope.EducatorID, $scope, 'educator');
-    }
-    if ($scope.OrganizationID) {
-        querySingle($http, 'Organization?OrganizationID=' + $scope.OrganizationID, $scope, 'organization');
-    }
-    if ($scope.UserID) {
-        querySingle($http, 'User?UserID=' + $scope.UserID, $scope, 'user');
-    }
-}
-
-function CreateFieldName(f) {
-    return f.DocumentDefinitionFieldID;
 }
 
 function SearchForSchool($scope, $http, tenureObject) {

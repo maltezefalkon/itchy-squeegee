@@ -1,11 +1,24 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<%=headerTags%>
     <title><%=pageTitle%></title>
+	<%=headerTags%>
+	<link rel="stylesheet" href="/client/lib/jquery-ui-1.11.4.custom/jquery-ui.css"/>
     <style type="text/css">
+	button.doc-command {
+		width: 80px
+	}
     </style>
 	<script type="text/javascript">
+	var uploadableDocumentDefinitions = {
+	<%=uploadableDocumentDefinitions.map(function(def) { return '"' + def.DocumentDefinitionID + '": '+ JSON.stringify(def) }).join(',')%>
+	};
+
+	function showUploadDialog(documentDefinitionID) {
+		$('#uploadDialogTitle').text('Upload ' + uploadableDocumentDefinitions[documentDefinitionID].Name);
+		$('#uploadDialog').modal('show');
+	}
+
 	function doUpload(button, form, dialog) {
 		button.disabled = true;
 		var data = new FormData(form);
@@ -26,21 +39,28 @@
 		});
 		return true;
 	}
+
+	$(function () {
+		$('[data-toggle="popover"]').popover({ trigger: 'hover' });
+	})
 	</script>
 </head>
-<body>
+<body ng-app="safeApp" ng-controller="controller">
+    <%=advancedAngularTags%>
+    <script type="text/javascript">
+        var app = angular.module('safeApp', [ 'ngMessages', 'ui.mask', 'ui.date', 'ui.validate' ]);
+        var ctl = app.controller('controller', EducatorDashboardController);
+        ctl.$inject = ['$scope', '$http', '$location' ];
+    </script>
+	<script type="text/javascript" src="/client/util/angular-directives.js"></script>
     <div class="container">
-		<% 
-		for (var t in educator.Tenures) {
-			for (var d in educator.Tenures[t].ApplicableDocuments) { 
-		%>
-        <div id="uploadDialog-<%=educator.Tenures[t].ApplicableDocuments[d].DocumentInstanceID%>" class="modal fade" role="dialog">
-			<form id="uploadForm-<%=educator.Tenures[t].ApplicableDocuments[d].DocumentInstanceID%>" action="/app/form/Upload/<%=educator.Tenures[t].ApplicableDocuments[d].DocumentInstanceID%>" method="POST" enctype="multipart/form-data">
+        <div id="uploadDialog" class="modal fade" role="dialog">
+			<form id="uploadForm" method="POST" enctype="multipart/form-data">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Upload <%=educator.Tenures[t].ApplicableDocuments[d].Definition.Name%></h4>
+							<h4 id="uploadDialogTitle" class="modal-title"></h4>
 						</div>
 						<div class="modal-body">
 							<p>
@@ -50,13 +70,13 @@
 							<div class="row">
 								<label class="<%=formControlLabelClasses%>" for="UploadFile">File to Upload</label>
 								<div class="<%=formControlFieldClasses%>">
-									<input type="file" name="UploadFile" />
+									<input type="file" name="UploadFile" ng-model="uploadDocument.RawFile" />
 								</div>
 							</div>
 							<div class="row">
 								<label class="<%=formControlLabelClasses%>" for="DocumentDate">Document Date</label>
 								<div class="<%=formControlFieldClasses%>">
-									<input type="date" name="DocumentDate" value="<%=new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).substr(-2) + '-' + ('0' + new Date().getDate()).substr(-2)%>" />
+									<input type="text" name="DocumentDate" value="<%=formatDate(new Date())%>" ui-date ui-date-format="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="uploadDocument.DocumentDate" parse-date-model-value />
 								</div>
 							</div>
 						</div>
@@ -67,78 +87,111 @@
 				</div>
 			</form>
         </div>
-		<%	
-			} 
-		} 
-		%>
         <%=pageHeader%>
 		<%=pageMasthead%>
-		<%
-		var filteredTenures = educator.Tenures.filter(function(e) { return IsApplication(e) || IsCurrentTenure(e); }).sort(function(a,b) { return GetRank(a) - GetRank(b); });
-		for (var i in filteredTenures) {
-			var tenure = filteredTenures[i];
-		%>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><%=(IsApplication(tenure) ? 'Application Clearances for ' : 'Current Clearances for ') + tenure.Organization.Name %></span>
+				<span>My Clearance Documents</span>
+			</div>
+			<div class="panel-body">
+                <table width="100%" class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-3">Action</th>
+                            <th class="col-xs-6">Document</th>
+                            <th class="col-xs-1 text-center">Document Date</th>
+                            <th class="col-xs-1 text-center">Valid Through</th>
+							<th class="col-xs-1 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<% 
+for (var i in requiredDocumentDescriptors) { 
+	var desc = requiredDocumentDescriptors[i];
+	var doc = desc.Documents.length > 0 ? desc.Documents[0] : null;
+	var def = desc.DocumentDefinition;
+	var createFormUrlParameters = [ 
+		desc.DocumentDefinition.DocumentDefinitionID,
+		desc.ApplicableTenure ? desc.ApplicableTenure.TenureID : null,
+		desc.ReferenceTenure ? desc.ReferenceTenure.TenureID : null
+	];
+%>
+						<tr>
+							<td>
+								<div class="btn-group-sm">
+<% if (!doc && !def.IsUpload) { %>
+									<button type="button" class="btn btn-success doc-command" onclick="document.location.href = '<%=createUrl('CreateForm', createFormUrlParameters)%>'">
+										<span class="glyphicon glyphicon-star"></span> Create
+									</button>
+<% } %>
+<% if (doc) { %>
+									<button type="button" class="btn btn-primary doc-command" onclick="document.location.href = '<%=createUrl('DownloadForm', [doc.DocumentInstanceID])%>'">
+										<span class="glyphicon glyphicon-download"></span> Download
+									</button>
+<% } %>
+<% if (def.ExternalUrl) { %>
+									<button type="button" class="btn btn-warning doc-command" onclick="window.open('<%=def.ExternalUrl%>', '<%=def.DocumentDefinitionID%>')">
+										<span class="glyphicon glyphicon-link"></span> Website
+									</button>
+<% } %>
+<% if (def.IsUpload) { %>
+									<button type="button" class="btn btn-success doc-command" onclick="showUploadDialog('<%=def.DocumentDefinitionID%>')">
+										<span class="glyphicon glyphicon-upload"></span> Upload
+									</button>
+<% } %>
+								</div>
+							</td>
+							<td><%=requiredDocumentDescriptors[i].Name%></td>
+							<td class="text-center"><%=doc ? formatDate(doc.DocumentDate) : null%></td>
+							<td class="text-center"><%=doc ? formatDate(doc.RenewalDate) : null%></td>
+							<td class="text-center"><%=getStatusIcon(doc)%> <%=getStatusDescription(doc)%></td>
+						</tr>
+<% } %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+<% for (var i in displayTenures) { %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+				<span><%=isTenureApplication(displayTenures[i]) ? 'Application ' : ''%>Clearances for <%=displayTenures[i].Organization.Name%></span>
             </div>
             <div class="panel-body">
                 <table width="100%" class="table">
                     <thead>
                         <tr>
-                            <th>Action</th>
                             <th>Document</th>
+                            <th>Date Submitted</th>
+                            <th>Date Approved</th>
+                            <th>Next Renewal</th>
                             <th>Status</th>
-                            <th>Date Created</th>
-                            <th>Date Completed</th>
-							<% if (IsCurrentTenure(tenure)) { %>
-                            <th>
-                                Next Renewal
-                            </th>
-							<% } %>
                         </tr>
                     </thead>
                     <tbody>
-<%
-			var filteredDocuments = tenure.ApplicableDocuments.sort(function(a,b) { return a.Name.localeCompare(b.Name); });
-            for (var j in filteredDocuments) {
-			    var document = filteredDocuments[j];
+<% 
+var filteredDescriptors = _.filter(requiredDocumentDescriptors, function(desc) { return desc.ApplicableTenureID == displayTenures[i].TenureID || !desc.ApplicableTenureID; });
+for (var j in filteredDescriptors) {
+	var def = filteredDescriptors[j].DocumentDefinition;
+	var sub = _.find(displayTenures[i].Submissions, function(submission) {
+		return submission.DocumentInstance.DocumentDefinitionID == def.DocumentDefinitionID 
+			&& submission.DocumentInstance.ReferenceTenureID == filteredDescriptors[j].ReferenceTenure.TenureID; });
+	var name = !def.HasInstancePerPreviousTenure ? def.ShortName : def.ShortName + ' (' + filteredDescriptors[j].ReferenceTenure.Organization.Name + ')';
 %>
-                        <tr>
-                            <td>
-<% if (document.StatusID == Status.Missing.ID && !document.Definition.IsUpload) { %>
-                                <button type="button" class="btn btn-block btn-success" onclick="document.location.href = '<%=createUrl('FillForm', [document.DocumentInstanceID])%>'">
-                                    <span class="glyphicon glyphicon-star"></span> Create
-                                </button>
-<% } else if (document.StatusID == Status.Missing.ID && document.Definition.IsUpload) { %>
-                                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#uploadDialog-<%=document.DocumentInstanceID%>">
-                                    <span class="glyphicon glyphicon-paperclip"></span> Upload
-                                </button>
-<% } else { %>
-                                <button type="button" class="btn btn-block btn-primary" onclick="document.location.href = '<%=createUrl('DownloadForm', [document.DocumentInstanceID])%>'">
-                                    <span class="glyphicon glyphicon-save"></span> Download
-                                </button>
-<% } %>
-                            </td>
-                            <td><%=document.Name%></td>
-                            <td>
-                                <span class="glyphicon <%=GetStatusIcon(document)%> <%=GetStatusColor(document)%>"></span>
-                                <%=document.StatusDescription%>
-                            </td>
-                            <td><%=Status.LookupByID(document.StatusID).IsBegun ? formatDate(document.DocumentDate) : null%></td>
-                            <td><%=formatDate(document.CompletedDateTime)%></td>
-							<% if (IsCurrentTenure(tenure)) { %>
-                            <td>
-                                <%=Status.LookupByID(document.StatusID).IsCompleted ? formatDate(document.NextRenewalDate) : null%>
-                            </td>
-							<% } %>
-                        </tr>
-                        <% } %>
+						<tr>
+							<td><%=name%></td>
+							<td><%=sub ? formatDate(sub.SubmissionDate) : null%></td>
+							<td><%=sub ? formatDate(sub.ApprovalDate) : null%></td>
+							<td><%=sub ? formatDate(sub.RenewalDate) : null%></td>
+							<td><%=getStatusIcon(sub)%> <%=getStatusDescription(sub)%></td>
+						</tr>
+<% 
+}
+%>
                     </tbody>
                 </table>
             </div>
         </div>
-        <% } %>
+<% } %>
 	    <%=pageFooter%>
     </div>
 </body>

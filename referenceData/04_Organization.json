@@ -30,5 +30,21 @@
     "RepresentativeFirstName": "Robert",
     "RepresentativeLastName": "Stirgine",
     "RepresentativeJobTitle": "Secretary"
+  },
+  {
+    "OrganizationID": "5095e5e6-fe11-4a99-87ce-8f10459016ad",
+    "Name": "Wolf Charter School",
+    "OrganizationTypeID": "248306cf-f840-462c-851d-76048e907a1a",
+    "EmailAddress": "wolf@school.edu",
+    "TelephoneNumber": "215-555-1212",
+    "FaxNumber": "215-555-1313",
+    "Address1": "13 Wolf Avenue",
+    "Address2": null,
+    "City": "Wolverton",
+    "State": "PA",
+    "ZipCode": "55551",
+    "RepresentativeFirstName": "Wolfgang",
+    "RepresentativeLastName": "Wolverino",
+    "RepresentativeJobTitle": "HR Director"
   }
 ]

@@ -5,6 +5,7 @@ module.exports.domainNameAndPort = module.exports.domainName + (port != 80 && po
 
 module.exports.createUrlType = {
     FillForm: 'FillForm',
+    CreateForm: 'CreateForm',
     OrganizationDashboard: 'OrganizationDashboard',
     EducatorDashboard: 'EducatorDashboard',
     Error: 'Error',
@@ -22,6 +23,7 @@ module.exports.createUrlType = {
 
 var urls = {
     FillForm: '/app/view/FillForm',
+    CreateForm: '/app/form/CreateForm',
     EducatorDashboard: '/app/view/EducatorDashboard',
     OrganizationDashboard: '/app/view/OrganizationDashboard',
     Error: '/app/view/FatalError',
@@ -44,12 +46,14 @@ function createUrl(type, routeArgArray, queryStringArgObject, relative) {
     if (routeArgArray instanceof Array) {
         for (var f in routeArgArray) {
             if (!first) {
-                ret += ',';
+                ret += ';';
             } else {
                 ret += '/';
                 first = false;
             }
-            ret += encodeURIComponent(routeArgArray[f]);
+            if (routeArgArray[f]) {
+                ret += encodeURIComponent(routeArgArray[f]);
+            }
         }
     } 
     if (queryStringArgObject instanceof Object) {

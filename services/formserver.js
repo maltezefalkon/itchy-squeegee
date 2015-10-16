@@ -17,6 +17,7 @@ var perf = require('../modules/performance-timing.js')();
 module.exports.postFormData = postFormData;
 module.exports.downloadDocument = downloadDocument;
 module.exports.uploadFormFile = uploadFormFile;
+module.exports.createFormData = createFormData;
 
 function postFormData(req, res, next) {
     var data = req.body;
@@ -177,5 +178,39 @@ function uploadFormFile(req, res, next) {
             }).then(function () {
                 res.redirect(myUrl.createDefaultUrl(req.user));
             }).reflect());
+    });
+}
+
+function createFormData(req, res, next) {
+    var documentDefinitionID = req.params.documentDefinitionID;
+    var referenceTenureID = req.params.referenceTenureID;
+    var applicableTenureID = req.params.applicableTenureID;
+    var referenceTenure = null;
+    var applicableTenure = null;
+    var promise = Promise.resolve();
+    if (referenceTenureID) {
+        promise = promise.then(function () {
+            return api.querySingle('Tenure', ['Organization'], null, { TenureID: referenceTenureID });
+        }).then(function (returned) {
+            referenceTenure = returned;
+            return referenceTenure;
+        });
+        if (applicableTenureID) {
+            promise = promise.then(function (referenceTenure) {
+                return api.querySingle('Tenure', ['Organization'], null, { TenureID: applicableTenureID });
+            }).then(function (returned) {
+                applicableTenure = returned;
+                return applicableTenure;
+            });
+        }
+    }
+    promise = promise.then(function () {
+        return forms.CreateDocumentInstance(documentDefinitionID, req.user.LinkedEducator, applicableTenure, referenceTenure, null, new Date());
+    }).then(function (documentInstance) {
+        return api.save(documentInstance, true).then(function () {
+            return documentInstance;
+        });
+    }).then(function (documentInstance) {
+        res.redirect(myUrl.createUrl(myUrl.createUrlType.FillForm, [documentInstance.DocumentInstanceID], req.query, true));
     });
 }

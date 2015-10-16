@@ -7,9 +7,11 @@ if (process.argv.length < 2) {
 }
 
 var spawn = require('child_process').spawn;
-var pdftkPath = "C:\Program Files (x86)\PDFtk\bin\pdftk.exe";
+var pdftkPath = "C:\\Program Files (x86)\\PDFtk\\bin\\pdftk.exe";
 
-var proc = spawn(pdftkPath, [process.argv[2], 'dump_data_fields']);
+var proc = spawn('"' + pdftkPath + '"', ['"' + process.argv[2] + '"', 'dump_data_fields']);
+
+proc.on('error', function (err) { throw err; });
 
 var leftover = '';
 var json = '[ ';

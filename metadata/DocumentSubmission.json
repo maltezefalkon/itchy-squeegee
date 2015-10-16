@@ -1,0 +1,70 @@
+﻿{
+    "TypeKey": "DocumentSubmission",
+    "TableName": "document_submission",
+    "FieldDefinitions": {
+        "DocumentSubmissionID": {
+            "type": "UUID",
+            "field": "document_submission_id",
+            "primaryKey": true
+        },
+        "DocumentInstanceID": {
+            "type": "UUID",
+            "field": "document_instance_id",
+            "allowNull": false
+        },
+        "ApplicableTenureID": {
+            "type": "UUID",
+            "field": "applicable_tenure_id"
+        },
+        "StatusDescription": {
+            "type": "STRING",
+            "field": "status_description",
+            "maximumStringLength": 128
+        },
+        "StatusID": {
+            "type": "INTEGER",
+            "field": "status_id"
+        },
+        "EducatorID": {
+            "type": "UUID",
+            "field": "educator_id",
+            "allowNull": false
+        },
+        "SubmissionDate": {
+            "type": "DATEONLY",
+            "field": "submission_date",
+            "allowNull": false,
+            "defaultValue": "NOW"
+        },
+        "ApprovalDate": {
+            "type": "DATEONLY",
+            "field": "approval_date"
+        },
+        "RenewalDate": {
+            "type": "DATEONLY",
+            "field": "renewal_date"
+        }
+    },
+    "Relationships": {
+        "Educator": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "educator_id",
+            "RelatedTypeKey": "Educator"
+        },
+        "ApplicableTenure": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "applicable_tenure_id",
+            "RelatedTypeKey": "Tenure"
+        },
+        "ReferenceTenure": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "reference_tenure_id",
+            "RelatedTypeKey": "Tenure"
+        },
+        "DocumentInstance": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "document_instance_id",
+            "RelatedTypeKey": "DocumentInstance"
+        }
+    }
+}

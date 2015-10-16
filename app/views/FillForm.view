@@ -4,6 +4,9 @@
     <%=headerTags%>
     <title>Fill Form</title>
     <style type="text/css">
+	.form-field-row {
+		padding-bottom: 25px;
+	}
     </style>
 </head>
 <body>
@@ -17,7 +20,7 @@
             });
             for (var i in documentDefinition.Fields) {
                 var fld = documentDefinition.Fields[i];
-                if (!fld.FieldExpression && fld.FieldSection == section) {
+                if (!fld.FieldExpression && (!section || fld.FieldSection == section)) {
             %>
             <div class="row">
                 <div class="col-sm-12">

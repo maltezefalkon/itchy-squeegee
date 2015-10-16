@@ -38,7 +38,7 @@ function createDocumentInstance(documentDefinitionID, educator, applicableTenure
     var ret = new meta.bo.DocumentInstance();
     var docDef = module.exports.DocumentDefinitions[documentDefinitionID];
     ret.DocumentDefinitionID = documentDefinitionID;
-    ret.ApplicableTenureID = applicableTenure.TenureID;
+    ret.ApplicableTenureID = applicableTenure ? applicableTenure.TenureID : null;
     ret.ReferenceTenureID = referenceTenure ? referenceTenure.TenureID : null;
     ret.EducatorID = educator.EducatorID;
     ret.DocumentDate = documentDate;
@@ -88,24 +88,23 @@ function getDocumentFieldValue(documentDefinitionField, educator, applicableTenu
     }
 }
 
-function createDocumentStubs(documentTenure, allTenures, educator) {
+function createDocumentStubs(allTenures, educator, applicableTenure) {
     var ret = [];
     var doc = null;
-    var documentDate = documentTenure.ApplicationDate || new Date();
     for (var i = 0; i < documentDefinitions.length; i++) {
-        if (documentDefinitions[i].RenewDuringEmployment || !documentTenure.StartDate) {
-            if (documentDefinitions[i].DocumentDefinitionID == Form168.DocumentDefinitionID) {
+        if (documentDefinitions[i].DocumentDefinitionID == Form168.DocumentDefinitionID) {
+            if (applicableTenure) {
                 for (var j = 0; j < allTenures.length; j++) {
                     if (allTenures[j].StartDate) {
-                        doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, documentTenure, allTenures[j], null, documentDate);
+                        doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, applicableTenure, allTenures[j], null, applicableTenure.ApplicationDate);
                         ret.push(doc);
                     }
                 }
-            } else {
-                doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, documentTenure, null, null, documentDate);
-                doc.NextRenewalDate = calculateDocumentRenewalDate(documentDefinitions[i], documentDate);
-                ret.push(doc);
             }
+        } else {
+            doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, applicableTenure, null, null, new Date());
+            doc.NextRenewalDate = calculateDocumentRenewalDate(documentDefinitions[i], new Date());
+            ret.push(doc);
         }
     }
     return ret;
@@ -166,7 +165,7 @@ function createFDFDataObject(documentInstance) {
 function generatePDF(documentInstance) {
     
     var data = createFDFDataObject(documentInstance);
-    var inputFileName = path.resolve(__dirname, '../pdf/Form-DPTT.pdf');
+    var inputFileName = path.resolve(__dirname, '../pdf/' + documentInstance.Definition.PDFFileName);
     var outputFileName = path.resolve(__dirname, '../pdf/' + documentInstance.DocumentInstanceID + '.pdf');
     log.info({ inputFile: inputFileName, outputFile: outputFileName }, 'ready to generate pdf');
 
@@ -206,3 +205,4 @@ module.exports.FindDocumentInstanceField = findDocumentInstanceField;
 module.exports.Form168 = Form168;
 module.exports.GeneratePDF = generatePDF;
 module.exports.CalculateRenewalDate = calculateDocumentRenewalDate;
+module.exports.CreateDocumentInstance = createDocumentInstance;

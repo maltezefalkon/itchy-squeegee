@@ -27,27 +27,13 @@
             "type": "DATE",
             "field": "upload_datetime"
         },
-        "CompletedDateTime": {
-            "type": "DATE",
-            "field": "completed_datetime"
-        },
-        "NextRenewalDate": {
+        "RenewalDate": {
             "type": "DATEONLY",
-            "field": "next_renewal_date"
-        },
-        "StatusDescription": {
-            "type": "STRING",
-            "field": "status_description",
-            "maximumStringLength": 64
-        },
-        "StatusID": {
-            "type": "INTEGER",
-            "field": "status_id"
+            "field": "renewal_date"
         },
         "ApplicableTenureID": {
             "type": "UUID",
-            "field": "applicable_tenure_id",
-            "allowNull": false
+            "field": "applicable_tenure_id"
         },
         "ReferenceTenureID": {
             "type": "UUID",
@@ -56,10 +42,6 @@
         "Name": {
             "type": "STRING",
             "field": "name"
-        },
-        "EmailID": {
-            "type": "STRING",
-            "field": "email_id"
         },
         "RawFileData": {
             "type": "BLOB",
@@ -95,6 +77,11 @@
             "RelationshipType": "hasMany",
             "ForeignKey": "document_instance_id",
             "RelatedTypeKey": "DocumentInstanceField"
+        },
+        "Submissions": {
+            "RelationshipType": "hasMany",
+            "ForeignKey": "document_instance_id",
+            "RelatedTypeKey": "DocumentSubmission"
         }
     }
 }

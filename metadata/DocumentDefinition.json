@@ -13,11 +13,34 @@
             "field": "name",
             "allowNull": false
         },
+        "ShortName": {
+            "type": "STRING",
+            "field": "short_name",
+            "allowNull": false,
+            "maximumStringLength": 32
+        },
         "RenewDuringEmployment": {
             "type": "BOOLEAN",
             "field": "renew_during_employment",
             "allowNull": false,
             "defaultValue": true
+        },
+        "HasInstancePerPreviousTenure": {
+            "type": "BOOLEAN",
+            "field": "instance_per_previous_tenure",
+            "allowNull": false,
+            "defaultValue": false
+        },
+        "HasInstancePerEmployer": {
+            "type": "BOOLEAN",
+            "field": "instance_per_employer",
+            "allowNull": false,
+            "defaultValue": false
+        },
+        "NewHireValidityPeriod": {
+            "type": "STRING",
+            "field": "new_hire_validity_period",
+            "allowNull": true
         },
         "RenewalPeriod": {
             "type": "STRING",
@@ -27,8 +50,22 @@
         "IsUpload": {
             "type": "BOOLEAN",
             "field": "is_upload",
-            "allowNull": false,
-            "defaultValue": true
+            "allowNull": false
+        },
+        "ExternalUrl": {
+            "type": "STRING",
+            "field": "external_url",
+            "allowNull": true
+        },
+        "PDFFileName": {
+            "type": "STRING",
+            "field": "pdf_file_name",
+            "allowNull": true
+        },
+        "BriefInstructions": {
+            "type": "STRING",
+            "field": "brief_instructions",
+            "maximumStringLength": 4096
         }
     },
     "Relationships": {

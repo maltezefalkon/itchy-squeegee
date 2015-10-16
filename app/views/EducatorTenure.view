@@ -3,20 +3,22 @@
 <head>
 	<%=headerTags%>
     <title><%=pageTitle%></title>
+	<link rel="stylesheet" href="/client/lib/jquery-ui-1.11.4.custom/jquery-ui.css"/>
     <style type="text/css">
     </style>
 </head>
 <body ng-app="safeApp" ng-controller="controller">
-    <%=angularTags%>
+    <%=advancedAngularTags%>
     <script type="text/javascript">
-        var app = angular.module('safeApp', ['ngMessages']);
+        var app = angular.module('safeApp', ['ngMessages', 'ui.date', 'ui.mask']);
         var ctl = app.controller('controller', EducatorSignupController);
         ctl.$inject = ['$scope', '$http', '$location' ];
     </script>
+	<script type="text/javascript" src="/client/util/angular-directives.js"></script>
     <div class="container">
         <%=pageHeader%>
 		<%=pageMasthead%>
-        <form action="<%=path%>" name="SignupForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+        <form action="<%=path%>" name="TenureForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
             <!-- tenure -->
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -25,33 +27,35 @@
                     </span>
                 </div>
                 <div class="panel-body">
-                    <div class="col-sm-12">
-                        <div ng-repeat="msg in CustomValidationMessages" class="alert alert-danger alert-dismissible">
+                    <div class="row">
+                        <div ng-repeat="msg in CustomValidationMessages" class="alert alert-danger alert-dismissible col-xs-12">
                             <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{msg}}
                         </div>
-                        <div class="form-group required">
-                            <label class="control-label col-sm-2" for="OrganizationSearchName">Name of Employer</label>
-                            <div class="col-sm-6">
-                                <input type="text" name="OrganizationSearchName" class="form-control" ng-model="tenure.OrganizationSearchName" ng-change="searchForOrganization(tenure)" required ng-model-options="{ debounce: 1000 }" ng-disabled="tenure.Organization" />
-                            </div>
-                            <div class="col-sm-4">
-                                <button type="button" class="btn btn-success btn-sm" ng-show="!tenure.Organization && tenure.OrganizationSearchBegun && tenure.OrganizationSearchFound" ng-click="setOrganization(tenure)">
-                                    <span class="glyphicon glyphicon-check"></span> Recognized! Click to confirm.
-                                </button>
-                                <button type="button" class="btn btn-info btn-sm" ng-show="!tenure.Organization && tenure.OrganizationSearchBegun && !tenure.OrganizationSearchFound" ng-click="createOrganization(tenure)">
-                                    <span class="glyphicon glyphicon-question-sign"></span> Click to provide details.
-                                </button>
-                                <button type="button" class="btn btn-warning btn-sm" ng-show="tenure.Organization" ng-click="clearOrganization(tenure)">
-                                    <span class="glyphicon glyphicon-erase"></span> Click to change name.
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+					</div>
+					<div class="row">
+						<div class="form-group required col-xs-12">
+							<label class="control-label col-xs-12 col-sm-2" for="OrganizationSearchName">Name of Employer</label>
+							<div class="col-xs-6 col-sm-6">
+								<input type="text" name="OrganizationSearchName" class="form-control" ng-model="tenure.OrganizationSearchName" ng-change="searchForOrganization(tenure)" required ng-model-options="{ debounce: 1000 }" ng-disabled="tenure.Organization" />
+							</div>
+							<div class="col-xs-4 col-sm-4">
+								<button type="button" class="btn btn-success btn-sm" ng-show="!tenure.Organization && tenure.OrganizationSearchBegun && tenure.OrganizationSearchFound" ng-click="setOrganization(tenure)">
+									<span class="glyphicon glyphicon-check"></span> Recognized! Click to confirm.
+								</button>
+								<button type="button" class="btn btn-info btn-sm" ng-show="!tenure.Organization && tenure.OrganizationSearchBegun && !tenure.OrganizationSearchFound" ng-click="createOrganization(tenure)">
+									<span class="glyphicon glyphicon-question-sign"></span> Click to provide details.
+								</button>
+								<button type="button" class="btn btn-warning btn-sm" ng-show="tenure.Organization" ng-click="clearOrganization(tenure)">
+									<span class="glyphicon glyphicon-erase"></span> Click to change name.
+								</button>
+							</div>
+						</div>
+					</div>
                     <div class="<%=formControlGroupClasses%>" ng-show="tenure.OrganizationSearchComplete">
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="OrganizationAddress1">Address 1</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" name="OrganizationAddress1" class="form-control" ng-model="tenure.Organization.Address1" ng-disabled="tenure.OrganizationSearchFound" ng-required="!tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="text" name="OrganizationAddress1" class="form-control" ng-model="tenure.Organization.Address1" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -67,7 +71,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="OrganizationCity">City</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" name="OrganizationCity" class="form-control" ng-model="tenure.Organization.City" ng-disabled="tenure.OrganizationSearchFound" ng-required="!tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="text" name="OrganizationCity" class="form-control" ng-model="tenure.Organization.City" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -75,7 +79,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="OrganizationState">State</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" name="OrganizationState" class="form-control" ng-model="tenure.Organization.State" ng-disabled="tenure.OrganizationSearchFound" ng-required="!tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="text" name="OrganizationState" class="form-control" ng-model="tenure.Organization.State" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -83,7 +87,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="OrganizationZipCode">Zip Code</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" name="OrganizationZipCode" class="form-control" ng-model="tenure.Organization.ZipCode" ng-disabled="tenure.OrganizationSearchFound" ng-required="!tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="text" name="OrganizationZipCode" class="form-control" ng-model="tenure.Organization.ZipCode" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -91,7 +95,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="OrganizationEmail">Contact Email</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="email" name="OrganizationEmail" class="form-control" ng-model="tenure.Organization.Email" ng-disabled="tenure.OrganizationSearchFound" ng-required="!tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="email" name="OrganizationEmail" class="form-control" ng-model="tenure.Organization.EmailAddress" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -99,7 +103,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="OrganizationTelephoneNumber">Phone Number</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" name="OrganizationTelephoneNumber" class="form-control" ng-model="tenure.Organization.TelephoneNumber" ng-disabled="tenure.OrganizationSearchFound" ng-required="!tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="text" name="OrganizationTelephoneNumber" class="form-control" ng-model="tenure.Organization.TelephoneNumber" ng-disabled="tenure.OrganizationSearchFound" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -115,7 +119,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="PositionsHeld">Position(s) Held</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" name="PositionsHeld" class="form-control" ng-model="tenure.PositionsHeld" ng-required="!tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="text" name="PositionsHeld" class="form-control" ng-model="tenure.PositionsHeld" ng-required="true" />
                             </div>
                         </div>
                     </div>
@@ -123,15 +127,16 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="StartDate">Start Date</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="date" name="StartDate" class="form-control" ng-model="tenure.StartDate" ng-required="!tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="text" name="StartDate" class="form-control" ng-model="tenure.StartDate" ng-required="true" ui-date ui-date-format="MM/dd/yyyy" placeholder="mm/dd/yyyy" parse-date-model-value />
                             </div>
                         </div>
                     </div>
+					<% if (!forceCurrent) { %> 
                     <div class="<%=formControlGroupClasses%>">
                         <div class="form-group" ng-class="{ required: !tenure.PresentEmployer }">
                             <label class="<%=formControlLabelClasses%>" for="EndDate" ng-class="{ 'text-muted': tenure.PresentEmployer }">End Date</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="date" name="EndDate" class="form-control" ng-model="tenure.EndDate" ng-disabled="tenure.PresentEmployer" ng-required="!tenure.PresentEmployer && !tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" />
+                                <input type="text" name="EndDate" class="form-control" ng-model="tenure.EndDate" ng-disabled="tenure.PresentEmployer" ng-required="!tenure.PresentEmployer && !tenure.OrganizationSearchFound && tenure.OrganizationSearchComplete" ui-date ui-date-format="MM/dd/yyyy" placeholder="mm/dd/yyyy" parse-date-model-value />
                             </div>
                         </div>
                     </div>
@@ -140,11 +145,14 @@
 							<label><input type="checkbox" name="present" ng-model="tenure.PresentEmployer" />&nbsp;This is my current employer</label>
 						</div>
 					</div>
+					<% } else { %>
+					<input type="hidden" name="present" ng-value="tenure.PresentEmployer" />
+					<% } %>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-8 col-xs-12">
-                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-click="setDoneEnteringHistory(false)">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-click="setDoneEnteringHistory(false)" ng-disabled="!TenureForm.$valid">
                         Save and Add Another Employer <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </div>
@@ -152,8 +160,8 @@
             <br />
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-8 col-xs-12">
-                    <button class="btn btn-success btn-block btn-lg shrink-sm" type="submit" ng-click="setDoneEnteringHistory(true)">
-                        Save and I am Done Adding Work History <span class="glyphicon glyphicon-ok"></span>
+                    <button class="btn btn-success btn-block btn-lg shrink-sm" type="submit" ng-click="setDoneEnteringHistory(true)" ng-disabled="!TenureForm.$valid">
+                        Save and I am Done Adding <%=forceCurrent ? "Current Employers" : "Work History"%> <span class="glyphicon glyphicon-ok"></span>
                     </button>
                 </div>
             </div>

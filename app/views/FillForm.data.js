@@ -2,7 +2,7 @@
 var ViewData = require('../../app/views/Base.data.js');
 
 module.exports = function (req, documentInstanceID) {
-    return api.querySingle('DocumentInstance', ['Fields', 'ApplicableTenure.Organization', 'ApplicableTenure.Educator', 'ReferenceTenure.Organization'], null, { DocumentInstanceID: documentInstanceID })
+    return api.querySingle('DocumentInstance', ['Fields', 'ApplicableTenure.Organization', 'Educator', 'ReferenceTenure.Organization'], null, { DocumentInstanceID: documentInstanceID })
         .then(function (documentInstance) {
             return api.querySingle('DocumentDefinition', ['Fields'], null, { DocumentDefinitionID: documentInstance.DocumentDefinitionID })
             .then(function (documentDefinition) {
@@ -31,7 +31,7 @@ function generateFormField(field) {
     var controlName = field.DocumentDefinitionFieldID;
     if (field.FormFieldType == 'YesNoRadio') {
         html =
-            '<div class="row">' +
+            '<div class="row form-field-row">' +
                 '<div class="col-sm-3">' +
                     '<div class="controls-row">' +
                         '<label class="radio-inline"><input type="radio" ng-model="ngModel" name="' + controlName + '" value="true" required="required" /> Yes</label> ' +
@@ -41,15 +41,10 @@ function generateFormField(field) {
                 '<div class="col-sm-9">' +
                     field.FieldDescription +
                 '</div>' +
-                '<div class="row">' +
-                    '<div class="col-sm-12">' +
-                        '<br />' +
-                    '</div>' +
-                '</div>' +
             '</div>';
     } else if (field.FormFieldType == 'Signature') {
         html =
-            '<div class="row">' +
+            '<div class="row form-field-row">' +
                 '<div class="">' +
                     '<div class="form-group">' +
                         '<label class="control-label col-sm-3" for="' + controlName + '">' + field.FieldDescription + '</label>' +
@@ -64,9 +59,25 @@ function generateFormField(field) {
                         '</span>' +
                     '</div>' +
                 '</div>' +
-                '<div class="row">' +
-                    '<div class="col-sm-12">' +
-                        '<br />' +
+            '</div>';
+    } else if (field.FormFieldType == 'Textarea') {
+        html =
+            '<div class="row form-field-row">' +
+                '<div class="col-xs-12">' + field.FieldDescription + '</div>' +
+                '<div class="col-xs-12">' +
+                    '<textarea name="' + controlName + '" ng-model="ngModel" rows="5" class="form-control">' +
+                    '</textarea>' +
+                '</div>' +
+            '</div>';
+    } else if (field.FormFieldType == 'Checkbox') {
+        html =
+            '<div class="row form-field-row">' +
+                '<div class="col-sm-12">' +
+                    '<div class="checkbox">' +
+                        '<label for="' + controlName + '">' +
+                            '<input type="checkbox" ng-model="ngModel" name="' + controlName + '" value="true" />' +
+                            '<span>' + field.FieldDescription + '</span>' +
+                        '</label>' +
                     '</div>' +
                 '</div>' +
             '</div>';

@@ -65,6 +65,11 @@
             "RelationshipType": "hasMany",
             "ForeignKey": "reference_tenure_id",
             "RelatedTypeKey": "DocumentInstance"
+        },
+        "Submissions": {
+            "RelationshipType": "hasMany",
+            "ForeignKey": "applicable_tenure_id",
+            "RelatedTypeKey": "DocumentSubmission"
         }
     }
 }

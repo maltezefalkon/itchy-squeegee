@@ -91,14 +91,14 @@ function postEducatorTenureData(req, res, next) {
     var promise = api.save(toBeSaved);
     
     if (data.DoneEnteringHistory === 'true') {
-        promise = promise.then(function () {
-            return createDocumentStubs(educatorID, function (tenure) { return !tenure.StartDate; });
-        });
+        //promise = promise.then(function () {
+        //    return createDocumentStubs(educatorID, function (tenure) { return !tenure.StartDate; });
+        //});
         
         nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorDashboard);
     }
 
-    promise.then(function (returned) {
+    promise = promise.then(function (returned) {
         res.redirect(nextUrl);
         res.end();
     });
@@ -118,7 +118,7 @@ function postEducatorSignupData(req, res, next) {
         tenure: null,
         user: null,
         educator: null,
-        skipHistory: null,
+        skipHistory: (data.SkipHistory === 'true'),
         isApplicant: null
     };
     
@@ -137,7 +137,9 @@ function postEducatorSignupData(req, res, next) {
                     ret.errorMessage = 'Expired invitation';
                 } else {
                     ret.invitation = invitation;
-                    ret.skipHistory = (invitation.EducatorID || invitation.EmployeeOrganizationID);
+                    if (invitation.EducatorID || invitation.EmployeeOrganizationID) {
+                        ret.skipHistory = true;
+                    }
                     ret.isApplicant = (invitation.ApplicantOrganizationID != null);
                 }
             } else {
@@ -152,17 +154,14 @@ function postEducatorSignupData(req, res, next) {
                         ret.errorMessage = 'Invalid Educator ID';
                     } else {
                         ret.educator = educator;
-                        ret.skipHistory = true;
                     }
                     return ret;
                 });
             }
             return ret;
         })
-    } else {
-        ret.skipHistory = true;
     }
-    
+        
     promise = promise.then(function (ret) {
         if (!ret.educator) {
             ret.educator = {
@@ -213,16 +212,16 @@ function postEducatorSignupData(req, res, next) {
         return api.save(req.user).then(function () {
             return ret;
         });
+    //}).then(function (ret) {
+    //    if (ret.skipHistory && ret.invitation) {
+    //        return createDocumentStubs(ret.educator.EducatorID, function (tenure) { return !tenure.EndDate; }).then(function () {
+    //            return ret;
+    //        });
+    //    } else {
+    //        return ret;
+    //    }
     }).then(function (ret) {
-        if (ret.skipHistory && ret.invitation) {
-            return createDocumentStubs(ret.educator.EducatorID, function (tenure) { return !tenure.EndDate; }).then(function () {
-                return ret;
-            });
-        } else {
-            return ret;
-        }
-    }).then(function (ret) {
-        var nextUrl = ret.skipHistory? myUrl.createDefaultUrl(req.user) : myUrl.createUrl(myUrl.createUrlType.EducatorTenure);
+        var nextUrl = ret.skipHistory ? myUrl.createDefaultUrl(req.user) : myUrl.createUrl(myUrl.createUrlType.EducatorTenure);
         res.redirect(nextUrl);
     });
 
@@ -300,19 +299,16 @@ function createDocumentStubs(educatorID, tenurePredicate) {
     log.debug('Creating document stubs');
     var ret = api.query('Educator', ['Tenures.Organization'], null, { EducatorID: educatorID });
     ret = ret.then(function (educatorList) {
-        var documentTenure = null;
+        var applicableTenure = null;
         var educator = educatorList[0];
         for (var i = 0; i < educator.Tenures.length; i++) {
-            if (tenurePredicate(educator.Tenures[i])) {
-                documentTenure = educator.Tenures[i];
+            if (tenurePredicate && tenurePredicate(educator.Tenures[i])) {
+                applicableTenure = educator.Tenures[i];
                 break;
             }
         }
-        if (null == documentTenure) {
-            throw new Error('Failed to find documentTenure');
-        }
         var docs = null;
-        docs = forms.CreateDocumentStubs(documentTenure, educator.Tenures, educator);
+        docs = forms.CreateDocumentStubs(educator.Tenures, educator, applicableTenure);
         log.debug({ docs: docs}, 'Created ' + docs.length.toString() + ' document stubs');
         var innerPromise = null;
         docs.forEach(function (doc) {

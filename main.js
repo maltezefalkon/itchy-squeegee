@@ -88,6 +88,7 @@ app.get('/app/user/logout', sessionManagement.createLogoutHandler(loginPath));
 
 // form routes
 app.post('/app/view/FillForm/:documentInstanceID', formServices.postFormData);
+app.get('/app/form/CreateForm/:documentDefinitionID;:applicableTenureID?;:referenceTenureID?', formServices.createFormData);
 app.get('/app/form/Download/:documentInstanceID', formServices.downloadDocument);
 app.use('/app/form/Upload', busboy);
 app.post('/app/form/Upload/:documentInstanceID', formServices.uploadFormFile)

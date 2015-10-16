@@ -13,9 +13,9 @@
         var app = angular.module('safeApp', [ 'ngMessages', 'ui.mask', 'ui.date', 'ui.validate' ]);
         var educator = <%=typeof educator !== 'undefined' ? JSON.stringify(educator) : 'undefined' %>;
         app.value('educator', educator);
-		app.value('isApplicant', <%=isApplicant%>);
+		app.value('invitationType', <%=invitationType.id%>);
         var ctl = app.controller('controller', EducatorSignupController);
-        ctl.$inject = ['$scope', '$http', '$location', 'educator' ];
+        ctl.$inject = ['$scope', '$http', '$location', 'educator', 'invitationType' ];
     </script>
 	<script type="text/javascript" src="/client/util/angular-directives.js"></script>
     <div class="container">
@@ -252,17 +252,36 @@
 					<% } %>
                 </div>
             </div>
+			<% } else { %>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>
+                        Working Status
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="">
+                        <div class="form-group required">
+                            <label class="control-label col-sm-4 col-md-2" for="WorkStatus">Status</label>
+                            <div class="col-sm-8 col-md-10">
+								<select name="WorkStatus" class="form-control" ng-model="skipHistory" ng-required="true">
+									<option value="false">Currently Employed at a Job that requires Clearances</option>
+									<option value="true">Not Currently Employed at a Job that requires Clearances</option>
+								</select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			<% } %>
 
             <!-- submit buttons -->
 				<%
-				if (!isApplicant) {
+				if (!organization || !isApplicant) {
 				%>
-	            <div class="row">
-                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-hide="isApplicant" ng-disabled="!SignupForm.$valid">
-                        Save
-                    </button>
-				</div>
+                <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-hide="isApplicant" ng-disabled="!SignupForm.$valid">
+                    Save
+                </button>
 				<% } else { %>
 		        <div class="row">
 					<div class="col-xs-12 col-md-offset-2 col-md-8">

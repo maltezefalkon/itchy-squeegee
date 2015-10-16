@@ -14,6 +14,7 @@ module.exports = function (req, pageTitle, controllerName) {
     this.headerTags = headerTags;
     this.pageFooter = pageFooter;
     this.pageMasthead = generatePageMasthead(pageTitle);
+    this.generatePageMasthead = generatePageMasthead;
     this.formatDate = formatDate;
     this.fatalError = null;
     this.redirect = null;
