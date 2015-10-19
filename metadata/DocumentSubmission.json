@@ -12,6 +12,10 @@
             "field": "document_instance_id",
             "allowNull": false
         },
+        "OrganizationID": {
+            "type": "UUID",
+            "field": "organization_id"
+        },
         "ApplicableTenureID": {
             "type": "UUID",
             "field": "applicable_tenure_id"
@@ -60,6 +64,11 @@
             "RelationshipType": "belongsTo",
             "ForeignKey": "reference_tenure_id",
             "RelatedTypeKey": "Tenure"
+        },
+        "Organization": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "organization_id",
+            "RelatedTypeKey": "Organization"
         },
         "DocumentInstance": {
             "RelationshipType": "belongsTo",

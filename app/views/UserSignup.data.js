@@ -6,6 +6,8 @@ module.exports = function (req, invitationID) {
     var ret = new ViewData(req, 'New User Sign-Up', 'UserSignup');
     ret.emailAddress = null;
     ret.invitation = null;
+    ret.invitationNotice = null;
+    ret.invitationDescriptor = null;
     if (invitationID) {
         return api.querySingle('Invitation', ['RepresentedOrganization', 'ApplicantOrganization', 'EmployeeOrganization', 'Educator'], null, { InvitationID: invitationID }).then(function (invitation) {
             var today = new Date();
@@ -18,15 +20,20 @@ module.exports = function (req, invitationID) {
                 } else {
                     ret.invitation = invitation;
                     if (invitation.RepresentedOrganization) {
-                        ret.pageTitle = 'Sign-Up for Representative of ' + invitation.RepresentedOrganization.Name;
+                        ret.invitationDescriptor = 'Representative of ' + invitation.RepresentedOrganization.Name;
                     } else if (invitation.ApplicantOrganization) {
-                        ret.pageTitle = 'Sign-Up for Applicant to ' + invitation.ApplicantOrganization.Name;
+                        ret.invitationDescriptor = 'Applicant to ' + invitation.ApplicantOrganization.Name;
                     } else if (invitation.EmployeeOrganization) {
-                        ret.pageTitle = 'Sign-Up for Employee of ' + invitation.EmployeeOrganization.Name;
+                        ret.invitationDescriptor = 'Employee of ' + invitation.EmployeeOrganization.Name;
                     } else if (invitation.Educator) {
-                        ret.pageTitle = 'Sign-Up for ' + invitation.Educator.FirstName + ' ' + invitation.Educator.LastName;
+                        ret.invitationDescriptor = invitation.Educator.FirstName + ' ' + invitation.Educator.LastName;
                     }
+                    ret.pageTitle = 'Sign-Up for ' + ret.invitationDescriptor;
                     ret.pageMasthead = ret.generatePageMasthead(ret.pageTitle);
+                    ret.invitationNotice = 'You have reached this page through an invitation ' +
+                        'to create a new user account as <b>' + ret.invitationDescriptor + '</b>. ' +
+                        'If this is incorrect, please <a href="' + ret.createUrl('UserSignup') + '">click here</a> ' +
+                        'to create an individual account instead.';
                     ret.emailAddress = invitation.EmailAddress;
                 }
                 return ret;

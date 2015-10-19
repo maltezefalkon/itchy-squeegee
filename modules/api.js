@@ -70,9 +70,9 @@ function queryData(typeKey, joins, queryName, parameters) {
     if (meta.db[typeKey]) {
         return meta.db[typeKey].findAll({ where: condition, include: includes })
             .then(function (data) {
-                perf.stop('queryData');
-                return data;
-            });
+            perf.stop('queryData');
+            return data;
+        });
     } else {
         throw 'Undefined type key: ' + typeKey;
     }
@@ -323,6 +323,9 @@ function executeCommand(command, commandArguments) {
         case 'SubmitDocument':
             ret = SubmitDocument(commandArguments);
             break;
+        case 'ApproveSubmission':
+            ret = ApproveSubmission(commandArguments);
+            break;
     }
     return ret;
 }
@@ -358,6 +361,7 @@ function GenerateInvitation(commandArguments) {
 function SubmitDocument(commandArguments) {
     var documentInstanceID = commandArguments.documentInstanceID;
     var tenureID = commandArguments.tenureID;
+    var organizationID = commandArguments.organizationID;
     if (!tenureID || !documentInstanceID) {
         throw new Error('Invalid parameters specified for SubmitDocument command');
     }
@@ -377,6 +381,7 @@ function SubmitDocument(commandArguments) {
             StatusID: SubmissionStatus.AwaitingApproval.StatusID,
             StatusDescription: SubmissionStatus.AwaitingApproval.Description,
             EducatorID: commandArguments.user.LinkedEducatorID,
+            OrganizationID: tenure.OrganizationID,
             SubmissionDate: new Date()
         };
         return saveData(submission).then(function () {
@@ -394,7 +399,7 @@ function SubmitDocument(commandArguments) {
             DocumentInstanceID: documentInstanceID,
             DocumentSubmissionID: o.submission.DocumentSubmissionID,
             EducatorID: o.submission.EducatorID,
-            OrganizationID: o.tenure.OrganizationID
+            OrganizationID: o.submission.OrganizationID
         };
         event.EventDateTime = new Date();
         event.ProcessDateTime = null;
@@ -402,3 +407,37 @@ function SubmitDocument(commandArguments) {
         return saveData(event);
     });
 }
+
+function ApproveSubmission(commandArguments) {
+    var documentSubmissionID = commandArguments.documentSubmissionID;
+    if (!documentSubmissionID) {
+        throw new Error('Invalid parameters passed to ApproveSubmission');
+    }
+    return querySingle('DocumentSubmission', ['DocumentInstance.Definition'], null, { DocumentSubmissionID: documentSubmissionID })
+    .then(function (submission) {
+        if (submission.OrganizationID != commandArguments.user.LinkedOrganizationID) {
+            throw new Error('Not authorized to approve submission');
+        }
+        submission.ApprovalDate = new Date();
+        submission.RenewalDate = require('./forms.js').CalculateRenewalDate(submission.DocumentInstance.Definition, submission.DocumentInstance.DocumentDate);
+        submission.StatusID = SubmissionStatus.Approved.StatusID;
+        submission.StatusDescription = SubmissionStatus.Approved.Description;
+        return saveData(submission).then(function () { return submission; });
+    }).then(function (submission) {
+        var event = new meta.bo.SystemEvent();
+        event.ObjectTypeKey = 'DocumentSubmission';
+        event.ObjectID = submission.DocumentSubmissionID;
+        event.Description = 'Submission approved by organization';
+        event.Data = {
+            DocumentInstanceID: submission.DocumentInstanceID,
+            DocumentSubmissionID: submission.DocumentSubmissionID,
+            EducatorID: submission.EducatorID,
+            OrganizationID: submission.OrganizationID
+        };
+        event.EventDateTime = new Date();
+        event.ProcessDateTime = null;
+        event.ProcessStatus = null;
+        return saveData(event);
+    });
+}
+

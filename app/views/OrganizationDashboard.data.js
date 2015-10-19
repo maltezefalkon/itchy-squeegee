@@ -7,66 +7,72 @@ var _ = require('lodash');
 
 module.exports = function (req) {
     var data = new ViewData(req, 'Organization Dashboard', 'OrganizationDashboard');
-    data.generateEmployeeLink = generateEmployeeLink;
-    data.generateApplicantLink = generateApplicantLink;
-    data.employeeLink = '???';
-    data.applicantLink = '???';
     data.getValidationImage = getValidationImage;
-    data.getMinimumStatusDescription = getMinimumStatusDescription;
+    data.getSubmissionStatus = getSubmissionStatus;
+    data.findTenure = findTenure;
+    data.SubmissionStatus = SubmissionStatus;
     var ret = data;
     var organizationID = req.user.LinkedOrganizationID;
     if (organizationID) {
-        ret = api.querySingle('Organization', ['Tenures.Educator', 'Tenures.ApplicableDocuments'], null, { OrganizationID: organizationID })
+        ret = api.querySingle('Organization', ['Tenures.Educator', 'Tenures.Submissions.DocumentInstance'], null, { OrganizationID: organizationID })
             .then(function (org) {
-                data.organizationID = organizationID;
-                data.organization = org;
-                data.applicationTenures = [];
-                data.currentTenures = [];
-                for (var i in data.organization.Tenures) {
-                    if (data.organization.Tenures[i].StartDate) {
-                        data.currentTenures.push(data.organization.Tenures[i]);
-                    } else {
-                        data.applicationTenures.push(data.organization.Tenures[i]);
-                    }
+            data.organizationID = organizationID;
+            data.organization = org;
+            data.applicationTenures = [];
+            data.currentTenures = [];
+            for (var i in data.organization.Tenures) {
+                if (data.organization.Tenures[i].StartDate) {
+                    data.currentTenures.push(data.organization.Tenures[i]);
+                } else {
+                    data.applicationTenures.push(data.organization.Tenures[i]);
                 }
-                return data;
-            }).then(function (data) {
-                return api.query('DocumentDefinition', ['Fields'], null, null);
-            }).then(function (documentDefinitions) {
-                data.documentDefinitions = documentDefinitions;
-                return data;
+            }
+            return data;
+        }).then(function (data) {
+            return api.query('DocumentDefinition', ['Fields'], null, null);
+        }).then(function (documentDefinitions) {
+            data.documentDefinitions = documentDefinitions;
+            return data;
+        }).then(function (data) {
+            data.documentsForReview = _.flatten(_.pluck(data.organization.Tenures, 'Submissions')).filter(function (sub) {
+                return SubmissionStatus.GetStatus(sub).StatusID == SubmissionStatus.AwaitingApproval.StatusID;
             });
+            return data;
+        });
     } else {
         ret.fatalError = 'Failed to find associated organization for current user';
     }
     return ret;
 }
 
-function getValidationImage(tenure) {
-    var ok = undefined;
-    if (tenure.ApplicableDocuments.length > 0) {
-        var minID = _.min(_.map(tenure.ApplicableDocuments, 'StatusID'));
-        ok = SubmissionStatus.LookupByID(minID).IsOK;
+function getSubmissionStatus(tenure, documentDefinition) {
+    var submission = _.find(tenure.Submissions, function (sub) {
+        return sub.ApplicableTenureID == tenure.TenureID && sub.DocumentInstance.DocumentDefinitionID == documentDefinition.DocumentDefinitionID;
+    });
+    return SubmissionStatus.GetStatus(submission);
+}
+
+function getValidationImage(tenure, documentDefinitions) {
+    var minID = null;
+    var minOK = false;
+    for (var i in documentDefinitions) {
+        if (documentDefinitions[i].RenewDuringEmployment || !tenure.StartDate) {
+            var thisStatus = getSubmissionStatus(tenure, documentDefinitions[i]);
+            if (!minID || thisStatus.StatusID < minID) {
+                minID = thisID;
+                minOK = thisStatus.IsOK;
+            }
+        }
+    }
+    if (!minID || !minOK) {
+        return '/client/images/x.png';
     } else {
-        return '/client/images/question.png';
+        return '/client/images/check.png';
     }
-    return ok ? '/client/images/check.png' : '/client/images/x.png';
 }
 
-function getMinimumStatusDescription(tenure, documentDefinition) {
-    var ret = undefined;
-    var docs = _.filter(tenure.ApplicableDocuments, { "DocumentDefinitionID": documentDefinition.DocumentDefinitionID });
-    if (docs.length > 0) {
-        var minID = _.min(_.map(docs, 'StatusID'));
-        ret = _.find(docs, { StatusID: minID }).StatusDescription;
-    }
-    return ret;
-}
-
-function generateApplicantLink() {
-    return 'link';
-}
-
-function generateEmployeeLink() {
-
+function findTenure(submission, allTenures) {
+    return _.find(allTenures, function (t) {
+        return t.EducatorID == submission.EducatorID;
+    });
 }

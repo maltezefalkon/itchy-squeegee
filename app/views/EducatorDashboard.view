@@ -26,8 +26,8 @@
 			}
 		});
 	}
-	function doSubmission(documentInstanceID, tenureID) {
-		var apiUrl = '<%=createUrl('ApiCommand', [ 'SubmitDocument' ])%>?documentInstanceID=' + encodeURIComponent(documentInstanceID) + '&tenureID=' + encodeURIComponent(tenureID);
+	function doSubmission(documentInstanceID, tenureID, organizationID) {
+		var apiUrl = '<%=createUrl('ApiCommand', [ 'SubmitDocument' ])%>?documentInstanceID=' + encodeURIComponent(documentInstanceID) + '&tenureID=' + encodeURIComponent(tenureID) + '&organizationID=' + encodeURIComponent(organizationID);
 		$.ajax({
 			url: apiUrl,
 			cache: false,
@@ -111,7 +111,7 @@ for (var j in filteredDescriptors) {
 									<ul class="dropdown-menu">
 <% if (doc && !sub) { %>
 										<li>
-											<a href="#" onclick="doSubmission('<%=doc.DocumentInstanceID%>', '<%=displayTenures[i].TenureID%>')">
+											<a href="#" onclick="doSubmission('<%=doc.DocumentInstanceID%>', '<%=displayTenures[i].TenureID%>', '<%=displayTenures[i].OrganizationID%>')">
 												<span class="glyphicon glyphicon-send"></span> <%=sub ? 'Resubmit' : 'Submit'%> Document
 											</a>
 										</li>

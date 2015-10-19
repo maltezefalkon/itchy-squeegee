@@ -46,6 +46,16 @@
 		$(button).removeClass('btn-success');
 		$(button).text('Copy Link');
 	}
+
+	function doDocumentApproval(documentSubmissionID, approved) {
+		$.ajax({
+			url: '<%=createUrl('ApiCommand', [ 'ApproveSubmission' ])%>?documentSubmissionID=' + encodeURIComponent(documentSubmissionID),
+			data: { StatusID: approved ? <%=SubmissionStatus.Approved.StatusID%> : <%=SubmissionStatus.Rejected.StatusID%> };
+			success: function(returnedData) {
+				document.location.reload(true);
+			}
+		});
+	}
 	</script>
     <div class="container">
         <div id="employeeSuccessDialog" class="modal fade" role="dialog">
@@ -107,26 +117,82 @@
             </span>
             <div class="dropdown pull-right" id="LinksDropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" role="menu">
-                    Generate Email Link
+                    Manage Information
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a role="menuitem" id="EmployeeLinkButton" href="#" onclick="generateEmployeeInvitation()">Employee</a></li>
-                    <li><a role="menuitem" id="ApplicantLinkButton" href="#" onclick="generateApplicantInvitation()">Applicant</a></li>
+					<li><a role="menuitem" href="<%=createUrl('EditOrganizationInfo')%>">Edit Contact Information</a></li>
+					<li><a role="menuitem" href="<%=createUrl('PastEmployees')%>">View Past Employees</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a role="menuitem" id="EmployeeLinkButton" href="#" onclick="generateEmployeeInvitation()">Generate Employee Sign-Up Link</a></li>
+					<li><a role="menuitem" id="ApplicantLinkButton" href="#" onclick="generateApplicantInvitation()">Generate Applicant Sign-Up Link</a></li>
                 </ul>
             </div>
         </div>
-        <div class="row" style="margin-bottom: 15px">
-			<div class="col-xs-1"
-				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+<% if (documentsForReview && documentsForReview.length > 0) { %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span>Documents for Review</span>
 			</div>
-			<div class="col-xs-11 text-muted">
-                <%=organization.Name + ' &bull; ' + organization.Address1 + ' ' + organization.Address2 + ' &bull; ' + organization.City + ', ' + organization.State + ' ' + organization.ZipCode + '<br />Phone: ' + organization.TelephoneNumber + ' &bull; Fax: ' + organization.FaxNumber + ' &bull; Email: ' + organization.EmailAddress + '<br />Representative: ' + organization.RepresentativeFirstName + ' ' + organization.RepresentativeLastName + ', ' + organization.RepresentativeJobTitle %>
-            </div>
-        </div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							<th>Employee</th>
+							<th>Position</th>
+							<th>Document</th>
+							<th>Submit Date</th>
+						</tr>
+					</thead>
+					<tbody>
+<% 
+for (var i in documentsForReview) { 
+	var sub = documentsForReview[i];
+	var doc = sub.DocumentInstance;
+	var tenure = findTenure(documentsForReview[i], organization.Tenures);
+%>
+						<tr>
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-cog"></span>
+										<span class="caret"></span></button>
+									</button>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="#" onclick="window.open('<%=createUrl('DownloadForm', [doc.DocumentInstanceID])%>')">
+												<span class="glyphicon glyphicon-save"></span> Download Document
+											</a>
+										</li>
+										<li class="divider"></li>
+										<li>
+											<a href="#" onclick="doDocumentApproval('<%=sub.DocumentSubmissionID%>', true)">
+												<span class="glyphicon glyphicon-ok"></span> Approve Document
+											</a>
+										</li>
+										<li>
+											<a href="#" onclick="doDocumentApproval('<%=sub.DocumentSubmissionID%>', false)">
+												<span class="glyphicon glyphicon-remove"></span> Reject Document
+											</a>
+										</li>
+									</ul>
+							</td>
+							<td><%=tenure.Educator.FirstName + ' ' + tenure.Educator.LastName%></td>
+							<td><%=tenure.PositionsHeld%></td>
+							<td><%=doc.Name%></td>
+							<td><%=formatDate(sub.SubmissionDate)%></td>
+						</tr>
+<% } %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+<% } %>
 <% 
         var sections = [ applicationTenures, currentTenures ];
         for (var s in sections) {
+			if (sections[s].length > 0) {
 %>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -138,13 +204,15 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Employee</th>
+                        <th>Status</th>
+                        <th><%= (s == 0) ? 'Applicant' : 'Employee' %></th>
                         <th>Position</th>
                         <th><%= (s == 0) ? 'Application Date' : 'Hire Date' %></th>
 <% for (var i in documentDefinitions) { %>
-						<th><%=documentDefinitions[i].Name%></th>
+<% if (s == 0 || documentDefinitions[i].RenewDuringEmployment) { %>
+						<th><%=documentDefinitions[i].ShortName%></th>
 <% } %>
-                        <th>Status</th>
+<% } %>
                     </tr>
                 </thead>
                 <tbody>
@@ -152,22 +220,26 @@
 	var tenure = sections[s][i];
 %>
                     <tr>
-                        <td><%=tenure.Educator.Title + ' ' + tenure.Educator.FirstName + ' ' + tenure.Educator.LastName %></td>
-                        <td><%=tenure.PositionsHeld%></td>
-                        <td><%=formatDate((s == 0) ? tenure.ApplicationDate : tenure.StartDate)%></td>
-<%  for (var i in documentDefinitions) { %>
-						<td><%=getMinimumStatusDescription(tenure, documentDefinitions[i])%></td>
-<%  } %>
                         <td>
 							<img src="<%=getValidationImage(tenure)%>" />
                         </td>
+                        <td><%=tenure.Educator.FirstName + ' ' + tenure.Educator.LastName %></td>
+                        <td><%=tenure.PositionsHeld%></td>
+                        <td><%=formatDate((s == 0) ? tenure.ApplicationDate : tenure.StartDate)%></td>
+<%  for (var i in documentDefinitions) { %>
+<% if (s == 0 || documentDefinitions[i].RenewDuringEmployment) { %>
+						<td><%=getSubmissionStatus(tenure, documentDefinitions[i]).getMarkup()%></td>
+<% } %>
+<% } %>
                     </tr>
 <% } // tenures %>
                 </tbody>
             </table>
                     </div>
         </div>
-<% } // sections %>
+<% 
+	} // if any records
+} // sections %>
     </div>
     <%=pageFooter%>
     <script type="text/javascript">

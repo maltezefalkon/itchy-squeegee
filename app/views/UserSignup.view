@@ -24,12 +24,9 @@
 			<a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{Message}}
 		</div>
         <form name="SignupForm" action="<%=path%>" method="post" class="form-horizontal" role="form">
-		<% if (invitation.RepresentedOrganization) { %>
+		<% if (invitation) { %>
 			<div class="well">
-				The information you provide below will be the login information you use to manage
-				clearance documentation for <%=invitation.RepresentedOrganization.Name%>.  If this is not
-				what you want to do, please <a href="<%=createUrl('UserSignup')%>">click here</a>
-				to create an educator account.
+				<%=invitationNotice%>
 			</div>
 		<% } %>
             <!-- user -->
