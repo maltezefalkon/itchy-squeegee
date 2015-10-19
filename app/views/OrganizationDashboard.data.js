@@ -1,7 +1,8 @@
 ﻿var ViewData = require('./Base.data.js');
 var api = require('../../modules/api');
 var myurl = require('../../modules/myurl.js');
-var Status = require('../../biz/status.js');
+var DocumentStatus = require('../../biz/status').DocumentStatus;
+var SubmissionStatus = require('../../biz/status').SubmissionStatus;
 var _ = require('lodash');
 
 module.exports = function (req) {
@@ -45,7 +46,7 @@ function getValidationImage(tenure) {
     var ok = undefined;
     if (tenure.ApplicableDocuments.length > 0) {
         var minID = _.min(_.map(tenure.ApplicableDocuments, 'StatusID'));
-        ok = Status.LookupByID(minID).IsCompleted;
+        ok = SubmissionStatus.LookupByID(minID).IsOK;
     } else {
         return '/client/images/question.png';
     }

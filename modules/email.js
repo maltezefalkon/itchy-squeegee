@@ -1,7 +1,8 @@
 ﻿var rest = require('restling');
 var api = require('./api.js');
 var myurl = require('./myurl.js');
-var Status = require('../biz/status.js');
+var DocumentStatus = require('../biz/status.js').DocumentStatus;
+var SubmissionStatus = require('../biz/status.js').SubmissionStatus;
 var log = require('./logging.js')('email');
 var _ = require('lodash');
 
@@ -68,11 +69,12 @@ function SendForm168EmailToFormerEmployer(documentInstance) {
             if (json.response.statusCode == 200) {
                 var emailID = json.data.id;
                 documentInstance.EmailID = emailID;
-                documentInstance.StatusID = Status.EmailToFormerEmployerSent.ID;
-                documentInstance.StatusDescription = _.template(Status.EmailToFormerEmployerSent.DescriptionTemplate)(documentInstance);
+                documentInstance.StatusID = DocumentStatus.EmailToFormerEmployerSent.StatusID;
+                documentInstance.StatusDescription = _.template(DocumentStatus.EmailToFormerEmployerSent.DescriptionTemplate)(documentInstance);
                 return api.save(documentInstance);
             } else {
-                documentInstance.Status = message;
+                documentInstance.StatusID = DocumentStatus.Error.StatusID;
+                documentInstance.StatusDescription = message;
                 return api.save(documentInstance);
             }
         }
@@ -110,11 +112,11 @@ function SendForm168EmailToApplicationOrganization(documentInstance) {
             if (json.response.statusCode == 200) {
                 var emailID = json.data.id;
                 documentInstance.EmailID = emailID;
-                documentInstance.StatusID = Status.CompletedByFormerEmployer.ID;
-                documentInstance.StatusDescription = _.template(Status.CompletedByFormerEmployer.DescriptionTemplate)(documentInstance);
+                documentInstance.StatusID = DocumentStatus.CompletedByFormerEmployer.StatusID;
+                documentInstance.StatusDescription = _.template(DocumentStatus.CompletedByFormerEmployer.DescriptionTemplate)(documentInstance);
                 return api.save(documentInstance);
             } else {
-                documentInstance.StatusID = Status.EmailError.ID;
+                documentInstance.StatusID = DocumentStatus.Error.StatusID;
                 documentInstance.StatusDescription = message;
                 return api.save(documentInstance);
             }

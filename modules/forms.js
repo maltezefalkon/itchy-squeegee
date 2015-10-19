@@ -1,7 +1,6 @@
 ﻿var api = require('./api.js');
 var meta = require('./metadata.js')();
 var collections = require('./collections.js');
-var Status = require('../biz/status.js');
 var Promise = require('bluebird');
 var log = require('./logging.js')('forms');
 var fs = Promise.promisifyAll(require('fs'));
@@ -31,24 +30,31 @@ api
     });
 
 Form168.create = function (educator, applicableTenure, referenceTenure, documentData, documentDate) {
-    return createDocumentInstance(Form168.DocumentDefinitionID, educator, applicableTenure, referenceTenure, documentData, documentDate);
+    return createDocumentInstance(Form168.DocumentDefinition, educator, applicableTenure, referenceTenure, documentData, documentDate);
 };
 
-function createDocumentInstance(documentDefinitionID, educator, applicableTenure, referenceTenure, documentData, documentDate) {
+function createDocumentInstance(documentDefinition, educator, applicableTenure, referenceTenure, documentData, documentDate) {
     var ret = new meta.bo.DocumentInstance();
-    var docDef = module.exports.DocumentDefinitions[documentDefinitionID];
-    ret.DocumentDefinitionID = documentDefinitionID;
+    ret.DocumentDefinitionID = documentDefinition.DocumentDefinitionID;
+    ret.EducatorID = educator.EducatorID;
     ret.ApplicableTenureID = applicableTenure ? applicableTenure.TenureID : null;
     ret.ReferenceTenureID = referenceTenure ? referenceTenure.TenureID : null;
-    ret.EducatorID = educator.EducatorID;
     ret.DocumentDate = documentDate;
-    ret.StatusID = Status.Missing.ID;
-    ret.StatusDescription = _.template(Status.Missing.DescriptionTemplate)(ret);
-    ret.Name = docDef.Name;
-    if (referenceTenure) {
-        ret.Name += ' (' + referenceTenure.Organization.Name + ')';
+    ret.UploadDateTime = documentDefinition.IsUpload ? new Date() : null;
+    ret.RenewalDate = calculateDocumentRenewalDate(documentDefinition, documentDate);
+    ret.Name = calculateDocumentInstanceName(documentDefinition, applicableTenure, referenceTenure);
+    buildDocumentInstanceFields(documentDefinition, ret, educator, applicableTenure, referenceTenure, documentData);
+    return ret;
+}
+
+function calculateDocumentInstanceName(documentDefinition, applicableTenure, referenceTenure) {
+    var ret = documentDefinition.Name;
+    if (applicableTenure) {
+        ret += ' for ' + applicableTenure.Organization.Name;
     }
-    buildDocumentInstanceFields(module.exports.DocumentDefinitions[documentDefinitionID], ret, educator, applicableTenure, referenceTenure, documentData);
+    if (referenceTenure) {
+        ret += ' from ' + referenceTenure.Organization.Name;
+    }
     return ret;
 }
 
@@ -96,13 +102,13 @@ function createDocumentStubs(allTenures, educator, applicableTenure) {
             if (applicableTenure) {
                 for (var j = 0; j < allTenures.length; j++) {
                     if (allTenures[j].StartDate) {
-                        doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, applicableTenure, allTenures[j], null, applicableTenure.ApplicationDate);
+                        doc = createDocumentInstance(documentDefinitions[i], educator, applicableTenure, allTenures[j], null, applicableTenure.ApplicationDate);
                         ret.push(doc);
                     }
                 }
             }
         } else {
-            doc = createDocumentInstance(documentDefinitions[i].DocumentDefinitionID, educator, applicableTenure, null, null, new Date());
+            doc = createDocumentInstance(documentDefinitions[i], educator, applicableTenure, null, null, new Date());
             doc.NextRenewalDate = calculateDocumentRenewalDate(documentDefinitions[i], new Date());
             ret.push(doc);
         }
@@ -155,7 +161,7 @@ function createFDFDataObject(documentInstance) {
                 dataValue = documentDefinitionField.PDFNullValue;
             }
         }
-        ret[documentDefinitionField.FieldName] = dataValue;
+        ret[documentDefinitionField.FieldName] = (dataValue === null ? '' : dataValue);
     }
     log.debug({ fdf: ret }, 'Generated FDF data');
     return ret;
@@ -200,9 +206,51 @@ function mergeFormDataIntoPDF(sourceFile, destinationFile, fieldValues, id) {
         });
 }
 
+function constructRequiredDocumentDescriptors(displayTenures, definitions, allTenures, documents) {
+    var ret = [];
+    for (var j in definitions) {
+        if (definitions[j].HasInstancePerEmployer) {
+            for (var i in displayTenures) {
+                if (isTenureApplication(displayTenures[i]) || definitions[j].RenewDuringEmployment) {
+                    if (definitions[j].HasInstancePerPreviousTenure) {
+                        var filteredTenures = _.filter(allTenures, function (t) { return t.StartDate; });
+                        for (var k in filteredTenures) {
+                            var descriptor = { DocumentDefinition: definitions[j], ApplicableTenure: displayTenures[i], ReferenceTenure: filteredTenures[j] };
+                            descriptor.Documents = _.filter(documents, function (doc) { return doc.DocumentDefinitionID == definitions[j].DocumentDefinitionID && doc.ApplicableTenureID == displayTenures[i].ApplicableTenureID && doc.ReferenceTenureID == filteredTenures[j].TenureID; }).sort(function (a, b) { return dateSortDescending(a.DocumentDate, b.DocumentDate); });
+                            descriptor.Name = calculateDocumentInstanceName(descriptor.DocumentDefinition, descriptor.ApplicableTenure, descriptor.ReferenceTenure);
+                            ret.push(descriptor);
+                        }
+                    } else {
+                        var descriptor = { DocumentDefinition: definitions[j], ApplicableTenure: displayTenures[i], ReferenceTenure: null };
+                        descriptor.Documents = _.filter(documents, function (doc) { return doc.DocumentDefinitionID == definitions[j].DocumentDefinitionID && doc.ApplicableTenureID == displayTenures[i].ApplicableTenureID; });
+                        descriptor.Name = calculateDocumentInstanceName(descriptor.DocumentDefinition, descriptor.ApplicableTenure, descriptor.ReferenceTenure);
+                        ret.push(descriptor);
+                    }
+                }
+            }
+        } else if (definitions[j].RenewDuringEmployment) {
+            var descriptor = { DocumentDefinition: definitions[j], ApplicableTenure: null, ReferenceTenure: null };
+            descriptor.Documents = _.filter(documents, function (doc) { return doc.DocumentDefinitionID == definitions[j].DocumentDefinitionID; });
+            descriptor.Name = calculateDocumentInstanceName(descriptor.DocumentDefinition, descriptor.ApplicableTenure, descriptor.ReferenceTenure);
+            ret.push(descriptor);
+        }
+    }
+    return ret;
+}
+
+function isTenureApplication(tenure) {
+    return !tenure.StartDate;
+}
+
+function isTenureCurrent(tenure) {
+    return tenure.StartDate && !tenure.EndDate;
+}
+
 module.exports.CreateDocumentStubs = createDocumentStubs;
 module.exports.FindDocumentInstanceField = findDocumentInstanceField;
 module.exports.Form168 = Form168;
 module.exports.GeneratePDF = generatePDF;
 module.exports.CalculateRenewalDate = calculateDocumentRenewalDate;
 module.exports.CreateDocumentInstance = createDocumentInstance;
+module.exports.CalculateDocumentInstanceName = calculateDocumentInstanceName;
+module.exports.ConstructRequiredDocumentDescriptors = constructRequiredDocumentDescriptors;

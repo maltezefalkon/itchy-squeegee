@@ -5,6 +5,7 @@ var myUrl = require('../../modules/myurl.js');
 var headerTags = fs.readFileSync('app/views/Standard.HeadTags.html');
 var pageHeader = _.template(fs.readFileSync('app/views/Standard.Header.html'));
 var pageFooter = fs.readFileSync('app/views/Standard.Footer.html');
+var uploadFunctionality = _.template(fs.readFileSync('app/views/Standard.Upload.html'));
 
 module.exports = function (req, pageTitle, controllerName) {
     this.req = req;
@@ -20,7 +21,6 @@ module.exports = function (req, pageTitle, controllerName) {
     this.redirect = null;
     this.createUrl = createUrl;
     this.createDefaultUrl = function () { return createDefaultUrl(this.user); };
-    this.pageHeader = pageHeader(this);
     this.formControlGroupClasses = 'col-md-6';
     this.formControlLabelClasses = 'control-label col-sm-4 col-md-4';
     this.formControlFieldClasses = 'col-sm-8 col-md-8';
@@ -31,6 +31,8 @@ module.exports = function (req, pageTitle, controllerName) {
         this.angularTags = generateAngularIncludes(controllerName, false);
         this.advancedAngularTags = generateAngularIncludes(controllerName, true);
     }
+    this.pageHeader = pageHeader(this);
+    this.uploadFunctionality = uploadFunctionality(this);
 }
 
 function generatePageMasthead(title) {

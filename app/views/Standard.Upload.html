@@ -1,0 +1,82 @@
+<script type="text/javascript">
+    function showUploadDialog(name, documentDefinitionID, applicableTenureID, referenceTenureID) {
+        $('#uploadDialogTitle').text('Upload ' + name);
+        $('#DocumentDefinitionID').val(documentDefinitionID);
+        $('#ApplicableTenureID').val(applicableTenureID);
+        $('#ReferenceTenureID').val(referenceTenureID);
+        $('#UploadFile').val(null);
+        $('#DocumentDate').val(null);
+        $('#uploadForm').attr('action', '<%=createUrl('UploadForm')%>/' + documentDefinitionID + ';' + (applicableTenureID || '') + ';' + (referenceTenureID || ''));
+        $('#uploadDialog').modal('show');
+    }
+
+    function doUpload(button) {
+        $('#uploadText').hide();
+        $('#uploadSpinner').show();
+        var definitionID = $('#DocumentDefinitionID').val();
+        var frm = $('#uploadForm');
+        var data = new FormData(frm[0]);
+        $.ajax({
+            url: frm.attr('action'),
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function(data) {
+                document.location.reload(true);
+            },
+            error: function(jqXHR) {
+                alert('Error: ' + jqXHR);
+                $('#uploadText').show();
+                $('#uploadSpinner').hide();
+            }
+        });
+        return true;
+    }
+</script>
+<div id="uploadDialog" class="modal fade" role="dialog">
+    <form id="uploadForm" name="uploadForm" method="POST" enctype="multipart/form-data">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-title">
+                        <span id="uploadDialogTitle" class="h4"></span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Once you have completed your form and downloaded it to your
+                        computer, use this form to upload it to our system.
+                    </p>
+                    <div class="row">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="UploadFile">File to Upload</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="file" id="UploadFile" name="UploadFile" ng-model="uploadDocumentRawFile" ng-required="true" valid-file />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="DocumentDate">Document Date</label>
+                            <div class="<%=formControlFieldClasses%>">
+                                <input type="text" id="DocumentDate" name="DocumentDate" ui-date ui-date-format="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="uploadDocumentDocumentDate" parse-date-model-value ng-required="true" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" style="width: 80px" type="button" onclick="doUpload(this)" ng-disabled="!uploadForm.$valid">
+                        <span id="uploadText">Upload</span>
+                        <img src="/client/images/busy-primary.gif" id="uploadSpinner" style="display: none" />
+                    </button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="DocumentDefinitionID" name="DocumentDefinitionID" value="" />
+        <input type="hidden" id="ApplicableTenureID" name="ApplicableTenureID" value="" />
+        <input type="hidden" id="ReferenceTenureID" name="ReferenceTenureID" value="" />
+    </form>
+</div>

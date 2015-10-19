@@ -1,0 +1,41 @@
+﻿{
+    "TypeKey": "SystemEvent",
+    "TableName": "system_event",
+    "FieldDefinitions": {
+        "EventID": {
+            "type": "UUID",
+            "field": "event_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "ObjectTypeKey": {
+            "type": "STRING",
+            "field": "object_type_key"
+        },
+        "ObjectID": {
+            "type": "UUID",
+            "field": "object_id",
+            "allowNull": true
+        },
+        "Description": {
+            "type": "STRING",
+            "field": "description"
+        },
+        "Data": {
+            "type": "JSON",
+            "field": "data"
+        },
+        "EventDateTime": {
+            "type": "DATE",
+            "field": "event_date_time"
+        },
+        "ProcessDateTime": {
+            "type": "DATE",
+            "field": "process_date_time"
+        },
+        "ProcessStatus": {
+            "type": "STRING",
+            "field": "process_status"
+        }
+    }
+}

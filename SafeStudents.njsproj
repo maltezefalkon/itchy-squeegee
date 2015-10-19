@@ -5,7 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>SafeStudents</Name>
     <RootNamespace>NodejsWebApp1</RootNamespace>
-    <LaunchUrl>http://localhost:1337/app/view/UserSignup/9d785b60-353e-4818-8c58-90c7feebad66</LaunchUrl>
+    <LaunchUrl>http://localhost:1337/app/view/UserSignup/c2355405-8218-40f5-b4ed-c582c88cfaba</LaunchUrl>
     <ScriptArguments>
     </ScriptArguments>
     <Environment>
@@ -36,6 +36,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="app\images\busy-primary.gif" />
     <Content Include="app\images\check.png" />
     <Content Include="app\images\x.png" />
     <Content Include="app\images\question.png" />
@@ -71,10 +72,12 @@
     <Content Include="app\public\OrganizationSignup.html" />
     <Content Include="app\public\UserSignup.html" />
     <Content Include="app\views\EducatorDashboard.view" />
+    <Content Include="app\views\EducatorDocuments.view" />
     <Content Include="app\views\EducatorSignup.view" />
     <Content Include="app\views\EducatorTenure.view" />
     <Content Include="app\views\FatalError.view" />
     <Content Include="app\views\Home.view" />
+    <Content Include="app\views\Standard.Upload.html" />
     <Content Include="app\views\Login.view" />
     <Content Include="app\views\Standard.HeadTags.html" />
     <Content Include="app\views\FillForm.view" />
@@ -87,6 +90,7 @@
     <Content Include="docs\signup use cases.txt" />
     <Content Include="metadata\DocumentSubmission.json" />
     <Content Include="metadata\Invitation.json" />
+    <Content Include="metadata\SystemEvent.json" />
     <Content Include="metadata\UserSession.json" />
     <Content Include="pdf\Arrest_or_Conviction_form_Fillable.pdf" />
     <Content Include="Procfile" />
@@ -129,6 +133,8 @@
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.min.js" />
     <Compile Include="app\views\EducatorDashboard.controller.js" />
     <Compile Include="app\views\EducatorDashboard.data.js" />
+    <Compile Include="app\views\EducatorDocuments.controller.js" />
+    <Compile Include="app\views\EducatorDocuments.data.js" />
     <Compile Include="app\views\EducatorSignup.controller.js" />
     <Compile Include="app\views\EducatorSignup.data.js" />
     <Compile Include="app\views\EducatorTenure.data.js" />

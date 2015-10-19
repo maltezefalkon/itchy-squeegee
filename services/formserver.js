@@ -5,7 +5,6 @@ var log = require('../modules/logging')('formserver');
 var api = require('../modules/api');
 var meta = require('../modules/metadata')();
 var forms = require('../modules/forms');
-var Status = require('../biz/status');
 var Promise = require('bluebird');
 var email = require('../modules/email');
 var myUrl = require('../modules/myurl');
@@ -31,77 +30,47 @@ function postFormData(req, res, next) {
     perf.start('postFormData');
     var promise = api.querySingle('DocumentInstance', ['Fields.Definition', 'Educator', 'ReferenceTenure.Organization', 'ApplicableTenure.Organization'], null, { DocumentInstanceID: documentInstanceID })
         .then(function (documentInstance) {
-            return api.querySingle('DocumentDefinition', ['Fields'], null, { DocumentDefinitionID: documentInstance.DocumentDefinitionID })
+        return api.querySingle('DocumentDefinition', ['Fields'], null, { DocumentDefinitionID: documentInstance.DocumentDefinitionID })
                 .then(function (documentDefinition) {
-                    documentInstance.Definition = documentDefinition;
-                    return documentInstance;
-                });
-            })
-        .then(function (document) {
-        return Promise.map(_.map(document.Fields, 'Definition'), function (fieldDefinition) {
+            documentInstance.Definition = documentDefinition;
+            return documentInstance;
+        });
+    }).then(function (documentInstance) {
+        return Promise.map(_.map(documentInstance.Fields, 'Definition'), function (fieldDefinition) {
             var fieldInstance = null;
             var value = data[fieldDefinition.DocumentDefinitionFieldID];
             if (value) {
-                fieldInstance = forms.FindDocumentInstanceField(document, fieldDefinition.DocumentDefinitionFieldID);
+                fieldInstance = forms.FindDocumentInstanceField(documentInstance, fieldDefinition.DocumentDefinitionFieldID);
                 fieldInstance.FieldValue = value;
                 return api.save(fieldInstance);
             }
         }).then(function () {
-            return document;
+            return documentInstance;
         });
+    }).then(function (documentInstance) {
+        var event = new meta.bo.SystemEvent();
+        event.ObjectTypeKey = 'DocumentInstance';
+        event.ObjectID = documentInstance.DocumentInstanceID;
+        event.Description = 'Document section completed';
+        event.Data = {
+            Section: section,
+            DocumentInstanceID: documentInstance.DocumentInstanceID
+        };
+        event.EventDateTime = new Date();
+        event.ProcessDateTime = null;
+        event.ProcessStatus = null;
+        return api.save(event, false).then(function () {
+            return documentInstance;
+        })
+    }).then(function (documentInstance) {
+        perf.stop('postFormData');
+        res.redirect(myUrl.createDefaultUrl(req.user));
     });
-    
-    if (section == 'Educator') {
-        promise.then(function (document) {
-            log.debug('Saving document status');
-            perf.start("Saving document status");
-            document.StatusID = Status.CompletedByApplicant.ID;
-            document.StatusDescription = _.template(Status.CompletedByApplicant.DescriptionTemplate)(document);
-            return api.save(document, false).then(function () {
-                perf.stop("Saving document status");
-                return document;
-            });
-        }).then(function (document) {
-            log.debug('Generating email');
-            perf.start('Generating email');
-            return email.sendForm168EmailToFormerEmployer(document).then(function () {
-                perf.stop('Generating email');
-                perf.stop('postFormData');
-                return document;
-            });
-        }).then(function (document) {
-            log.debug('Redirecting to educator dashboard');
-            res.redirect(myUrl.createUrl(myUrl.createUrlType.EducatorDashboard, { EducatorID: document.EducatorID }, true));
-        });
-    } else if (section == 'FormerOrganization') {
-        promise.then(function (document) {
-            log.debug('Saving document status');
-            document.StatusID = Status.CompletedByFormerEmployer.ID;
-            document.StatusDescription = _.template(Status.CompletedByFormerEmployer.DescriptionTemplate)(document);
-            return api.save(document, false).then(function () { return document; });
-        }).then(function (document) {
-            log.debug('Generating email');
-            perf.start('Generating email');
-            return email.sendForm168EmailToApplicationOrganization(document).then(function () {
-                perf.stop('Generating email');
-                perf.stop('postFormData');
-                return document;
-            });
-        }).then(function (document) {
-            log.debug('Redirecting to organization dashboard');
-            res.redirect(myUrl.createUrl(myUrl.createUrlType.OrganizationDashboard, { OrganizationID: document.ApplicableTenure.OrganizationID }, true));
-        });
-    } else {
-        promise.then(function () {
-            perf.stop('postFormData');
-            res.redirect(myUrl.createUrl(myUrl.createUrlType.Error, { Message: 'Unrecognized form section' }, true));
-        });
-    }
 }
 
 function downloadDocument(req, res, next) {
     var documentInstanceID = req.params.documentInstanceID;
-    api.querySingle('DocumentInstance', ['Definition.Fields', 'Fields'], null, { DocumentInstanceID: documentInstanceID })
+    api.querySingle('DocumentInstance', ['Definition.Fields', 'Fields', 'Educator'], null, { DocumentInstanceID: documentInstanceID })
     .then(function (documentInstance) {
         var ret = {
             redirect: null,
@@ -129,7 +98,8 @@ function downloadDocument(req, res, next) {
         } else {
             res.setHeader('content-type', values.mimeType);
             var extension = values.mimeType.split('/')[1]; // hack!
-            res.setHeader('content-disposition', 'attachment; filename=' + documentInstanceID + '.' + extension);
+            var fileName = values.documentInstance.Name + ' for ' + values.documentInstance.Educator.FirstName + ' ' + values.documentInstance.Educator.LastName;
+            res.setHeader('content-disposition', 'attachment; filename=' + fileName + '.' + extension);
             res.write(values.fileData, 'binary');
             res.end();
         }
@@ -137,7 +107,9 @@ function downloadDocument(req, res, next) {
 }
 
 function uploadFormFile(req, res, next) {
-    var documentInstanceID = req.params.documentInstanceID;
+    var documentDefinitionID = req.params.documentDefinitionID;
+    var applicableTenureID = req.params.applicableTenureID;
+    var referenceTenureID = req.params.referenceTenureID;
     var data = {
         file: null,
         documentDate: null,
@@ -151,33 +123,47 @@ function uploadFormFile(req, res, next) {
             fileData.push(chunk);
         });
         file.on('end', function () {
+            log.debug('collected file data');
             data.file = Buffer.concat(fileData);
         });
     });
     req.busboy.on('field', function (fieldName, fieldValue, fieldNameTruncated, fieldValueTruncated) {
         if (fieldName == 'DocumentDate') {
-            data.documentDate = new Date(Number(fieldValue.substr(0, 4)), Number(fieldValue.substr(5, 2)) - 1, Number(fieldValue.substr(8, 2)));
+            data.documentDate = new Date(fieldValue);
         } else {
             log.debug('Unhandled field: ' + fieldName);
         }
     });
     req.busboy.on('finish', function () {
         log.debug(data, 'Finished parsing file upload data. Saving.');
-        Promise.settle(
-            api.querySingle('DocumentInstance', ['Definition'], null, { DocumentInstanceID: documentInstanceID })
-            .then(function (documentInstance) {
-                documentInstance.RawFileData = data.file;
-                documentInstance.DocumentDate = data.documentDate;
-                documentInstance.CompletedDateTime = new Date();
-                documentInstance.FileMimeType = data.mimeType;
-                documentInstance.NextRenewalDate = forms.CalculateRenewalDate(documentInstance.Definition, data.documentDate);
-                var status = documentInstance.NextRenewalDate > new Date() ? Status.Completed : Status.Expired;
-                documentInstance.StatusID = status.ID;
-                documentInstance.StatusDescription = _.template(status.DescriptionTemplate)(documentInstance);
-                return api.save(documentInstance);
-            }).then(function () {
-                res.redirect(myUrl.createDefaultUrl(req.user));
-            }).reflect());
+        var applicableTenure, referenceTenure;
+        var promise = Promise.resolve();
+        if (applicableTenureID) {
+            promise = promise.then(function () {
+                return api.query('Tenure', ['Organization'], null, { TenureID: applicableTenureID });
+            });
+        }
+        if (referenceTenureID) {
+            promise = promise.then(function () {
+                return api.query('Tenure', ['Organization'], null, { TenureID: referenceTenureID });
+            });
+        }
+        promise = promise.then(function () {
+            var documentInstance = forms.CreateDocumentInstance(forms.DocumentDefinitions[documentDefinitionID], req.user.LinkedEducator, applicableTenure, referenceTenure, null, data.documentDate);
+            documentInstance.RawFileData = data.file;
+            documentInstance.DocumentDate = data.documentDate;
+            documentInstance.CompletedDateTime = new Date();
+            documentInstance.FileMimeType = data.mimeType;
+            documentInstance.NextRenewalDate = forms.CalculateRenewalDate(forms.DocumentDefinitions[documentDefinitionID], data.documentDate);
+            return documentInstance;
+        });
+        promise = promise.then(function (documentInstance) {
+            return api.save(documentInstance).then(function () {
+                return documentInstance;
+            });
+        }).then(function (documentInstance) {
+            res.status(200).send(documentInstance.DocumentInstanceID);
+        });
     });
 }
 

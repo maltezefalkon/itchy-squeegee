@@ -78,12 +78,10 @@ function executeCommand(req, res, next) {
     var ret = api.executeCommand(command, commandArguments);
     if (typeof ret.then === 'function') {
         ret.then(function (value) {
-            res.send(value);
-            next();
+            res.send(200, value);
         });
     } else {
-        res.send(ret);
-        next();
+        res.send(200, ret);
     }
 }
 

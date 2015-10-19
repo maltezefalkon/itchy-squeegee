@@ -81,6 +81,7 @@ app.post('/api/:type?', dataServices.postData);
 */
 app.get('/api/:type/query/:query/:joins?', dataServices.getData);
 app.get('/api/command/:commandName', dataServices.executeCommand);
+app.post('/api/command/:commandName', dataServices.executeCommand);
 
 // user management routes
 app.post('/app/user/login', sessionManagement.createLoginHandler(loginPath));
@@ -91,7 +92,7 @@ app.post('/app/view/FillForm/:documentInstanceID', formServices.postFormData);
 app.get('/app/form/CreateForm/:documentDefinitionID;:applicableTenureID?;:referenceTenureID?', formServices.createFormData);
 app.get('/app/form/Download/:documentInstanceID', formServices.downloadDocument);
 app.use('/app/form/Upload', busboy);
-app.post('/app/form/Upload/:documentInstanceID', formServices.uploadFormFile)
+app.post('/app/form/Upload/:documentDefinitionID;:applicableTenureID?;:referenceTenureID?', formServices.uploadFormFile)
 
 // signup routes
 app.post('/app/view/UserSignup/:invitationID?', signupServices.postUserSignupData);

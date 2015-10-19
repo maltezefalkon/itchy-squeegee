@@ -23,8 +23,15 @@
 		<div ng-show="Message" class="alert alert-danger alert-dismissible">
 			<a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>&nbsp;{{Message}}
 		</div>
-        <!-- no action = post back to the URL that served this page -->
         <form name="SignupForm" action="<%=path%>" method="post" class="form-horizontal" role="form">
+		<% if (invitation.RepresentedOrganization) { %>
+			<div class="well">
+				The information you provide below will be the login information you use to manage
+				clearance documentation for <%=invitation.RepresentedOrganization.Name%>.  If this is not
+				what you want to do, please <a href="<%=createUrl('UserSignup')%>">click here</a>
+				to create an educator account.
+			</div>
+		<% } %>
             <!-- user -->
             <div class="panel panel-default">
                 <div class="panel-heading">

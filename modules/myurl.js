@@ -11,6 +11,7 @@ module.exports.createUrlType = {
     Error: 'Error',
     EducatorSignup: 'EducatorSignup',
     EducatorTenure: 'EducatorTenure',
+    EducatorDocuments: 'EducatorDocuments',
     OrganizationSignup: 'OrganizationSignup',
     Login: 'Login',
     Logout: 'Logout',
@@ -29,13 +30,14 @@ var urls = {
     Error: '/app/view/FatalError',
     EducatorTenure: '/app/view/EducatorTenure',
     EducatorSignup: '/app/view/EducatorSignup',
+    EducatorDocuments: '/app/view/EducatorDocuments',
     OrganizationSignup: '/app/view/OrganizationSignup',
     Login: '/app/view/Login',
     Logout: '/app/user/Logout',
     Home: '/app/view/Home',
     UserSignup: '/app/view/UserSignup',
     DownloadForm: '/app/form/Download',
-    UploadForm: '/app/view/UploadForm',
+    UploadForm: '/app/form/Upload',
     ApiCommand: '/api/command'
 };
 

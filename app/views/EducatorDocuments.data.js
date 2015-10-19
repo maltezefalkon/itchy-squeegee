@@ -7,14 +7,13 @@ var SubmissionStatus = require('../../biz/status').SubmissionStatus;
 var forms = require('../../modules/forms');
 
 module.exports = function (req) {
-    return api.querySingle('Educator', [ 'Tenures.Organization', 'Tenures.Submissions', 'Documents.Definition' ], null, { EducatorID: req.user.LinkedEducatorID })
+    return api.querySingle('Educator', ['Tenures.Organization', 'Tenures.Submissions', 'Documents.Definition'], null, { EducatorID: req.user.LinkedEducatorID })
         .then(function (educator) {
-        var ret = new ViewData(req, 'Educator Dashboard', 'EducatorDashboard');
+        var ret = new ViewData(req, 'My Clearance Documents', 'EducatorDocuments');
         ret.educator = educator;
         ret.isTenureApplication = isTenureApplication;
         ret.isTenureCurrent = isTenureCurrent;
         ret.getDocumentStatusMarkup = getDocumentStatusMarkup;
-        ret.getSubmissionStatusMarkup = getSubmissionStatusMarkup;
         ret.DocumentStatus = DocumentStatus;
         ret.SubmissionStatus = SubmissionStatus;
         ret.applicationTenures = _.filter(educator.Tenures, function (t) { return isTenureApplication(t); });
@@ -80,30 +79,7 @@ function isTenureCurrent(tenure) {
 }
 
 function getDocumentStatusMarkup(document) {
-    var statusID = getDocumentStatusID(document);
-    var status = DocumentStatus.LookupByID(statusID);
+    var status = DocumentStatus.GetStatus(document);
     return status.getMarkup();
-}
-
-function getSubmissionStatusMarkup(submission, document) {
-    var statusID = getSubmissionStatusID(submission, document);
-    var status = SubmissionStatus.LookupByID(statusID);
-    return status.getMarkup();
-}
-
-function getDocumentStatusID(document) {
-    return !document ? DocumentStatus.Missing.StatusID : (
-         document.RenewalDate > new Date() ? DocumentStatus.Valid.StatusID : DocumentStatus.Expired.StatusID
-);
-}
-
-function getSubmissionStatusID(submission, document) {
-    if (submission && document) {
-        return submission.StatusID;
-    } else if (!submission && document) {
-        return SubmissionStatus.Created.StatusID;
-    } else {
-        return SubmissionStatus.Missing.StatusID;
-    }
 }
 

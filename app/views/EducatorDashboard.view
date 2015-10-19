@@ -6,38 +6,39 @@
 	<link rel="stylesheet" href="/client/lib/jquery-ui-1.11.4.custom/jquery-ui.css"/>
     <style type="text/css">
 	button.doc-command {
-		width: 80px
+		width: 100px
+	}
+
+	.status {
+		white-space: nowrap;
 	}
     </style>
 	<script type="text/javascript">
-	var uploadableDocumentDefinitions = {
-	<%=uploadableDocumentDefinitions.map(function(def) { return '"' + def.DocumentDefinitionID + '": '+ JSON.stringify(def) }).join(',')%>
-	};
-
-	function showUploadDialog(documentDefinitionID) {
-		$('#uploadDialogTitle').text('Upload ' + uploadableDocumentDefinitions[documentDefinitionID].Name);
-		$('#uploadDialog').modal('show');
-	}
-
-	function doUpload(button, form, dialog) {
-		button.disabled = true;
-		var data = new FormData(form);
+	function generateEmployeeInvitation() {
 		$.ajax({
-			url: form.action,
-			data: data,
-			cache: false,
-			contentType: false,
-			processData: false,
-			type: 'POST',
+			
 			success: function(returnedData) {
-				button.disabled = false;
-				dialog.modal('hide');
-			},
-			complete: function(jqXHR) {
-				dialog.modal('hide');
+				employeeLink = returnedData.Url;
+				$('#employeeLink').attr('href', employeeLink);
+				$('#employeeCopyLinkButton').attr('data-clipboard-text', employeeLink);
+				$('#employeeLink').text(employeeLink);
+				$('#employeeSuccessDialog').modal('show');
 			}
 		});
-		return true;
+	}
+	function doSubmission(documentInstanceID, tenureID) {
+		var apiUrl = '<%=createUrl('ApiCommand', [ 'SubmitDocument' ])%>?documentInstanceID=' + encodeURIComponent(documentInstanceID) + '&tenureID=' + encodeURIComponent(tenureID);
+		$.ajax({
+			url: apiUrl,
+			cache: false,
+			type: 'POST',
+			success: function(data) {
+				document.location.reload(true);
+			},
+			error: function(jqXHR) {
+				alert('Error: ' + jqXHR);
+			}
+		});
 	}
 
 	$(function () {
@@ -54,135 +55,107 @@
     </script>
 	<script type="text/javascript" src="/client/util/angular-directives.js"></script>
     <div class="container">
-        <div id="uploadDialog" class="modal fade" role="dialog">
-			<form id="uploadForm" method="POST" enctype="multipart/form-data">
-				<div class="modal-dialog modal-lg">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 id="uploadDialogTitle" class="modal-title"></h4>
-						</div>
-						<div class="modal-body">
-							<p>
-							Once you have completed your form and downloaded it to your
-							computer, use this form to upload it to our system.
-							</p>
-							<div class="row">
-								<label class="<%=formControlLabelClasses%>" for="UploadFile">File to Upload</label>
-								<div class="<%=formControlFieldClasses%>">
-									<input type="file" name="UploadFile" ng-model="uploadDocument.RawFile" />
-								</div>
-							</div>
-							<div class="row">
-								<label class="<%=formControlLabelClasses%>" for="DocumentDate">Document Date</label>
-								<div class="<%=formControlFieldClasses%>">
-									<input type="text" name="DocumentDate" value="<%=formatDate(new Date())%>" ui-date ui-date-format="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="uploadDocument.DocumentDate" parse-date-model-value />
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-default" type="submit">Upload</button>
-						</div>
-					</div>
-				</div>
-			</form>
-        </div>
+		<%=uploadFunctionality%>
         <%=pageHeader%>
-		<%=pageMasthead%>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-				<span>My Clearance Documents</span>
-			</div>
-			<div class="panel-body">
-                <table width="100%" class="table">
-                    <thead>
-                        <tr>
-                            <th class="col-xs-3">Action</th>
-                            <th class="col-xs-6">Document</th>
-                            <th class="col-xs-1 text-center">Document Date</th>
-                            <th class="col-xs-1 text-center">Valid Through</th>
-							<th class="col-xs-1 text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<% 
-for (var i in requiredDocumentDescriptors) { 
-	var desc = requiredDocumentDescriptors[i];
-	var doc = desc.Documents.length > 0 ? desc.Documents[0] : null;
-	var def = desc.DocumentDefinition;
-	var createFormUrlParameters = [ 
-		desc.DocumentDefinition.DocumentDefinitionID,
-		desc.ApplicableTenure ? desc.ApplicableTenure.TenureID : null,
-		desc.ReferenceTenure ? desc.ReferenceTenure.TenureID : null
-	];
-%>
-						<tr>
-							<td>
-								<div class="btn-group-sm">
-<% if (!doc && !def.IsUpload) { %>
-									<button type="button" class="btn btn-success doc-command" onclick="document.location.href = '<%=createUrl('CreateForm', createFormUrlParameters)%>'">
-										<span class="glyphicon glyphicon-star"></span> Create
-									</button>
-<% } %>
-<% if (doc) { %>
-									<button type="button" class="btn btn-primary doc-command" onclick="document.location.href = '<%=createUrl('DownloadForm', [doc.DocumentInstanceID])%>'">
-										<span class="glyphicon glyphicon-download"></span> Download
-									</button>
-<% } %>
-<% if (def.ExternalUrl) { %>
-									<button type="button" class="btn btn-warning doc-command" onclick="window.open('<%=def.ExternalUrl%>', '<%=def.DocumentDefinitionID%>')">
-										<span class="glyphicon glyphicon-link"></span> Website
-									</button>
-<% } %>
-<% if (def.IsUpload) { %>
-									<button type="button" class="btn btn-success doc-command" onclick="showUploadDialog('<%=def.DocumentDefinitionID%>')">
-										<span class="glyphicon glyphicon-upload"></span> Upload
-									</button>
-<% } %>
-								</div>
-							</td>
-							<td><%=requiredDocumentDescriptors[i].Name%></td>
-							<td class="text-center"><%=doc ? formatDate(doc.DocumentDate) : null%></td>
-							<td class="text-center"><%=doc ? formatDate(doc.RenewalDate) : null%></td>
-							<td class="text-center"><%=getStatusIcon(doc)%> <%=getStatusDescription(doc)%></td>
-						</tr>
-<% } %>
-					</tbody>
-				</table>
-			</div>
-		</div>
+        <div class="page-header">
+            <span class="h2">
+                <%=pageTitle%>
+            </span>
+            <div class="pull-right">
+                <button class="btn btn-primary" type="button" onclick="document.location.href = '<%=createUrl('EducatorDocuments')%>'">
+                    Manage Documents
+                </button>
+            </div>
+        </div>
 <% for (var i in displayTenures) { %>
         <div class="panel panel-default">
             <div class="panel-heading">
-				<span><%=isTenureApplication(displayTenures[i]) ? 'Application ' : ''%>Clearances for <%=displayTenures[i].Organization.Name%></span>
+				<span><%=isTenureApplication(displayTenures[i]) ? 'Application' : 'Required'%> Clearances for <%=displayTenures[i].Organization.Name%></span>
             </div>
             <div class="panel-body">
                 <table width="100%" class="table">
                     <thead>
                         <tr>
-                            <th>Document</th>
-                            <th>Date Submitted</th>
-                            <th>Date Approved</th>
-                            <th>Next Renewal</th>
-                            <th>Status</th>
+							<th class="col-xs-1">Action</th>
+                            <th class="col-xs-7">Document</th>
+                            <th class="col-xs-1 text-center">Status</th>
+                            <th class="col-xs-1 text-center">Date Submitted</th>
+                            <th class="col-xs-1 text-center">Date Approved</th>
+                            <th class="col-xs-1 text-center">Next Renewal</th>
                         </tr>
                     </thead>
                     <tbody>
 <% 
 var filteredDescriptors = _.filter(requiredDocumentDescriptors, function(desc) { return desc.ApplicableTenureID == displayTenures[i].TenureID || !desc.ApplicableTenureID; });
 for (var j in filteredDescriptors) {
-	var def = filteredDescriptors[j].DocumentDefinition;
+	var desc = filteredDescriptors[j];
+	var def = desc.DocumentDefinition;
 	var sub = _.find(displayTenures[i].Submissions, function(submission) {
-		return submission.DocumentInstance.DocumentDefinitionID == def.DocumentDefinitionID 
-			&& submission.DocumentInstance.ReferenceTenureID == filteredDescriptors[j].ReferenceTenure.TenureID; });
-	var name = !def.HasInstancePerPreviousTenure ? def.ShortName : def.ShortName + ' (' + filteredDescriptors[j].ReferenceTenure.Organization.Name + ')';
+		var thisDoc = _.find(educator.Documents, function(edoc) {
+			return edoc.DocumentInstanceID == submission.DocumentInstanceID;
+		});
+		return thisDoc.DocumentDefinitionID == def.DocumentDefinitionID 
+			&& (!desc.ApplicableTenure || thisDoc.ApplicableTenureID == desc.ApplicableTenure.TenureID); });
+	var name = desc.Name;
+	var doc = _.find(desc.Documents, function(document) {
+		return !desc.ApplicableTenureID || desc.ApplicableTenureID == displayTenures[i].TenureID;
+	});
 %>
 						<tr>
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-cog"></span>
+										<span class="caret"></span></button>
+									</button>
+									<ul class="dropdown-menu">
+<% if (doc && !sub) { %>
+										<li>
+											<a href="#" onclick="doSubmission('<%=doc.DocumentInstanceID%>', '<%=displayTenures[i].TenureID%>')">
+												<span class="glyphicon glyphicon-send"></span> <%=sub ? 'Resubmit' : 'Submit'%> Document
+											</a>
+										</li>
+<% } %>
+<% if (!doc && !def.IsUpload) { %>
+										<li>
+											<a href="<%=createUrl('CreateForm', createFormUrlParameters)%>">
+												<span class="glyphicon glyphicon-star"></span> Create
+											</a>
+										</li>
+<% } %>
+<% if (doc) { %>
+										<li>
+											<a href="#" onclick="window.open('<%=createUrl('DownloadForm', [doc.DocumentInstanceID])%>')">
+												<span class="glyphicon glyphicon-save"></span> Download Document
+											</a>
+										</li>
+<% } %>
+<% if (def.IsUpload) { %>
+	<% if ((doc && !sub) || (!def.IsUpload)) { %>
+										<li class="divider"></li>
+    <% } %>
+										<li>
+											<a href="#" onclick="showUploadDialog('<%=def.Name%>','<%=def.DocumentDefinitionID%>',<%=desc.ApplicableTenure ? '\'' + desc.ApplicableTenure.TenureID + '\'' : 'null'%>, <%=desc.ReferenceTenure ? '\'' + desc.ReferenceTenure.TenureID + '\'' : 'null'%>)">
+												<span class="glyphicon glyphicon-cloud-upload"></span> Upload<%=(doc ? ' Updated ' : ' ')%> Document
+											</a>
+										</li>
+<% } %>
+<% if (def.ExternalUrl) { %>
+										<li class="divider"></li>
+										<li>
+											<a target="_blank" href="<%=def.ExternalUrl%>">
+												<span class="glyphicon glyphicon-link"></span> Open Website
+											</a>
+										</li>
+<% } %>
+									</ul>
+								</div>
+							</td>
 							<td><%=name%></td>
-							<td><%=sub ? formatDate(sub.SubmissionDate) : null%></td>
-							<td><%=sub ? formatDate(sub.ApprovalDate) : null%></td>
-							<td><%=sub ? formatDate(sub.RenewalDate) : null%></td>
-							<td><%=getStatusIcon(sub)%> <%=getStatusDescription(sub)%></td>
+							<td class="text-center"><%=getSubmissionStatusMarkup(sub, doc)%></td>
+							<td class="text-center"><%=sub ? formatDate(sub.SubmissionDate) : null%></td>
+							<td class="text-center"><%=sub ? formatDate(sub.ApprovalDate) : null%></td>
+							<td class="text-center"><%=sub ? formatDate(sub.RenewalDate) : null%></td>
 						</tr>
 <% 
 }

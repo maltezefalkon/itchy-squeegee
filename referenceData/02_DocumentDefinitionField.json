@@ -646,8 +646,8 @@
         "FieldDescription": "By checking this box, I report that I <b>have</b> been arrested for or convicted of an offense or offenses enumerated under 24 P.S. &sect;&sect;1-111(e) or (f.1) (\"Reportable Offense(s)\"). See Instructions on Page 3 of this Form for a list of Reportable Offenses.",
         "LogicalFieldType": "Boolean",
         "FieldRegex": null,
-        "PDFTrueValue": null,
-        "PDFFalseValue": null,
+        "PDFTrueValue": "Checked",
+        "PDFFalseValue": "Off",
         "PDFNullValue": null,
         "FormFieldType": "Checkbox",
         "LogicalFieldOrdinal": 1
@@ -669,8 +669,8 @@
         "FieldDescription": "By checking this box, I state that I <b>have not</b> been arrested for or convicted of any Reportable Offense.",
         "LogicalFieldType": "Boolean",
         "FieldRegex": null,
-        "PDFTrueValue": null,
-        "PDFFalseValue": null,
+        "PDFTrueValue": "Checked",
+        "PDFFalseValue": "Off",
         "PDFNullValue": null,
         "FormFieldType": "Checkbox",
         "LogicalFieldOrdinal": 0

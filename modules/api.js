@@ -6,6 +6,7 @@ var Promise = require('bluebird');
 var meta = require('./metadata.js')();
 var perf = require('./performance-timing.js')();
 var myUrl = require('./myurl.js');
+var SubmissionStatus = require('../biz/status.js').SubmissionStatus;
 
 module.exports.save = saveData;
 module.exports.query = queryData;
@@ -319,6 +320,9 @@ function executeCommand(command, commandArguments) {
         case 'GenerateInvitation':
             ret = GenerateInvitation(commandArguments);
             break;
+        case 'SubmitDocument':
+            ret = SubmitDocument(commandArguments);
+            break;
     }
     return ret;
 }
@@ -348,5 +352,53 @@ function GenerateInvitation(commandArguments) {
     }
     return saveData(o, false).then(function () {
         return { Url: myUrl.createUrl(myUrl.createUrlType.UserSignup, [o.InvitationID]) };
+    });
+}
+
+function SubmitDocument(commandArguments) {
+    var documentInstanceID = commandArguments.documentInstanceID;
+    var tenureID = commandArguments.tenureID;
+    if (!tenureID || !documentInstanceID) {
+        throw new Error('Invalid parameters specified for SubmitDocument command');
+    }
+    return querySingle('Tenure', [], null, { TenureID: tenureID }).then(function (tenure) {
+        if (!tenure) {
+            throw new Error('Invalid TenureID ' + tenureID);
+        } else if (tenure.EducatorID != commandArguments.user.LinkedEducatorID) {
+            throw new Error('Invalid tenure specified');
+        } else {
+            return tenure;
+        }
+    }).then(function (tenure) {
+        var submission = {
+            _TypeKey: 'DocumentSubmission',
+            DocumentInstanceID: documentInstanceID,
+            ApplicableTenureID: tenureID,
+            StatusID: SubmissionStatus.AwaitingApproval.StatusID,
+            StatusDescription: SubmissionStatus.AwaitingApproval.Description,
+            EducatorID: commandArguments.user.LinkedEducatorID,
+            SubmissionDate: new Date()
+        };
+        return saveData(submission).then(function () {
+            return {
+                tenure: tenure,
+                submission: submission
+            };
+        });
+    }).then(function (o) {
+        var event = new meta.bo.SystemEvent();
+        event.ObjectTypeKey = 'DocumentSubmission';
+        event.ObjectID = o.submission.DocumentSubmissionID;
+        event.Description = 'Document submitted to organization';
+        event.Data = {
+            DocumentInstanceID: documentInstanceID,
+            DocumentSubmissionID: o.submission.DocumentSubmissionID,
+            EducatorID: o.submission.EducatorID,
+            OrganizationID: o.tenure.OrganizationID
+        };
+        event.EventDateTime = new Date();
+        event.ProcessDateTime = null;
+        event.ProcessStatus = null;
+        return saveData(event);
     });
 }
