@@ -5,6 +5,20 @@
 	<%=headerTags%>
 	<link rel="stylesheet" href="/client/lib/jquery-ui-1.11.4.custom/jquery-ui.css"/>
     <style type="text/css">
+	.debug {
+		font-family: monospace;
+		white-space: pre;
+		padding: 0em;
+		margin: 0em;
+	}
+
+	.debug-label {
+		font-family: monospace;
+		white-space: normal;
+		font-weight: bold;
+		font-size: 24pt;
+	}
+
 	button.doc-command {
 		width: 100px
 	}
@@ -86,7 +100,7 @@
                     </thead>
                     <tbody>
 <% 
-var filteredDescriptors = _.filter(requiredDocumentDescriptors, function(desc) { return desc.ApplicableTenureID == displayTenures[i].TenureID || !desc.ApplicableTenureID; });
+var filteredDescriptors = _.filter(requiredDocumentDescriptors, function(desc) { return !desc.ApplicableTenure || desc.ApplicableTenure.TenureID == displayTenures[i].TenureID; });
 for (var j in filteredDescriptors) {
 	var desc = filteredDescriptors[j];
 	var def = desc.DocumentDefinition;
@@ -98,7 +112,7 @@ for (var j in filteredDescriptors) {
 			&& (!desc.ApplicableTenure || thisDoc.ApplicableTenureID == desc.ApplicableTenure.TenureID); });
 	var name = desc.Name;
 	var doc = _.find(desc.Documents, function(document) {
-		return !desc.ApplicableTenureID || desc.ApplicableTenureID == displayTenures[i].TenureID;
+		return !desc.ApplicableTenure || desc.ApplicableTenure.TenureID == displayTenures[i].TenureID;
 	});
 %>
 						<tr>
@@ -116,7 +130,10 @@ for (var j in filteredDescriptors) {
 											</a>
 										</li>
 <% } %>
-<% if (!doc && !def.IsUpload) { %>
+<% 
+if (!doc && !def.IsUpload) { 
+	var createFormUrlParameters = [def.DocumentDefinitionID, desc.ApplicableTenure ? desc.ApplicableTenure.TenureID : null, desc.ReferenceTenure ? desc.ReferenceTenure.TenureID : null ];
+%>
 										<li>
 											<a href="<%=createUrl('CreateForm', createFormUrlParameters)%>">
 												<span class="glyphicon glyphicon-star"></span> Create
@@ -148,6 +165,9 @@ for (var j in filteredDescriptors) {
 											</a>
 										</li>
 <% } %>
+										<li>
+											<a href="#" data-toggle="collapse" data-target="#debug-<%=i%>-<%=j%>"><span class="glyphicon glyphicon-eye-open"></span> Show/Hide Debug Info</a>
+										</li>
 									</ul>
 								</div>
 							</td>
@@ -157,6 +177,21 @@ for (var j in filteredDescriptors) {
 							<td class="text-center"><%=sub ? formatDate(sub.ApprovalDate) : null%></td>
 							<td class="text-center"><%=sub ? formatDate(sub.RenewalDate) : null%></td>
 						</tr>
+						<tr id="debug-<%=i%>-<%=j%>" class="collapse">
+							<td colspan="6">
+								<div class="debug">
+									<div class="debug-label">desc</div>
+<%=JSON.stringify(desc, null, 4)%>
+								</div>
+								<div class="debug">
+									<div class="debug-label">doc</div>
+<%=JSON.stringify(doc, null, 4)%>
+								</div>
+								<div class="debug">
+									<div class="debug-label">sub</div>
+<%=JSON.stringify(sub, null, 4)%>
+								</div>
+							</td>
 <% 
 }
 %>

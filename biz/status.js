@@ -73,7 +73,7 @@ var SubmissionStatus = {
     AwaitingApproval: new SubmissionStatusEnum(1000, 'Awaiting Approval', 'Awaiting Approval', 'glyphicon-hourglass', 'primary', false, true, true),
     Approved: new SubmissionStatusEnum(5000, 'Approved', 'Approved', 'glyphicon-ok', 'success', true, true, true),
     Rejected: new SubmissionStatusEnum(6000, 'Rejected', 'Rejected', 'glyphicon-ban-circle', 'danger', false, true, false),
-    Expired: new SubmissionStatusEnum(50000, 'Expired', 'Expired', 'glyphicon-warning-sign', 'warning', false, true, true),
+    Expired: new SubmissionStatusEnum(50000, 'Expired', 'Expired', 'glyphicon-time', 'warning', false, true, true),
     Error: new SubmissionStatusEnum(100000, 'Error', 'Error', 'glyphicon-remove-circle', 'danger', false, true, false),
     LookupByID: function (id) {
         for (var s in SubmissionStatus) {

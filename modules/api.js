@@ -323,8 +323,8 @@ function executeCommand(command, commandArguments) {
         case 'SubmitDocument':
             ret = SubmitDocument(commandArguments);
             break;
-        case 'ApproveSubmission':
-            ret = ApproveSubmission(commandArguments);
+        case 'ReviewSubmission':
+            ret = ReviewSubmission(commandArguments);
             break;
     }
     return ret;
@@ -408,10 +408,10 @@ function SubmitDocument(commandArguments) {
     });
 }
 
-function ApproveSubmission(commandArguments) {
+function ReviewSubmission(commandArguments) {
     var documentSubmissionID = commandArguments.documentSubmissionID;
     if (!documentSubmissionID) {
-        throw new Error('Invalid parameters passed to ApproveSubmission');
+        throw new Error('Invalid parameters passed to ReviewSubmission');
     }
     return querySingle('DocumentSubmission', ['DocumentInstance.Definition'], null, { DocumentSubmissionID: documentSubmissionID })
     .then(function (submission) {

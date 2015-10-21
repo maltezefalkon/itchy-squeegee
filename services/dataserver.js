@@ -75,6 +75,7 @@ function executeCommand(req, res, next) {
     var command = req.params.commandName;
     var commandArguments = req.query;
     commandArguments.user = req.user;
+    commandArguments.body = req.body;
     var ret = api.executeCommand(command, commandArguments);
     if (typeof ret.then === 'function') {
         ret.then(function (value) {

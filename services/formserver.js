@@ -191,7 +191,7 @@ function createFormData(req, res, next) {
         }
     }
     promise = promise.then(function () {
-        return forms.CreateDocumentInstance(documentDefinitionID, req.user.LinkedEducator, applicableTenure, referenceTenure, null, new Date());
+        return forms.CreateDocumentInstance(forms.DocumentDefinitions[documentDefinitionID], req.user.LinkedEducator, applicableTenure, referenceTenure, null, new Date());
     }).then(function (documentInstance) {
         return api.save(documentInstance, true).then(function () {
             return documentInstance;

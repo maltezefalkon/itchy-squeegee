@@ -53,7 +53,7 @@ function calculateDocumentInstanceName(documentDefinition, applicableTenure, ref
         ret += ' for ' + applicableTenure.Organization.Name;
     }
     if (referenceTenure) {
-        ret += ' from ' + referenceTenure.Organization.Name;
+        ret += ' regarding ' + referenceTenure.Organization.Name;
     }
     return ret;
 }
@@ -215,14 +215,14 @@ function constructRequiredDocumentDescriptors(displayTenures, definitions, allTe
                     if (definitions[j].HasInstancePerPreviousTenure) {
                         var filteredTenures = _.filter(allTenures, function (t) { return t.StartDate; });
                         for (var k in filteredTenures) {
-                            var descriptor = { DocumentDefinition: definitions[j], ApplicableTenure: displayTenures[i], ReferenceTenure: filteredTenures[j] };
-                            descriptor.Documents = _.filter(documents, function (doc) { return doc.DocumentDefinitionID == definitions[j].DocumentDefinitionID && doc.ApplicableTenureID == displayTenures[i].ApplicableTenureID && doc.ReferenceTenureID == filteredTenures[j].TenureID; }).sort(function (a, b) { return dateSortDescending(a.DocumentDate, b.DocumentDate); });
+                            var descriptor = { DocumentDefinition: definitions[j], ApplicableTenure: displayTenures[i], ReferenceTenure: filteredTenures[k] };
+                            descriptor.Documents = _.filter(documents, function (doc) { return doc.DocumentDefinitionID == definitions[j].DocumentDefinitionID && doc.ApplicableTenureID == displayTenures[i].TenureID; }).sort(function (a, b) { return dateSortDescending(a.DocumentDate, b.DocumentDate); });
                             descriptor.Name = calculateDocumentInstanceName(descriptor.DocumentDefinition, descriptor.ApplicableTenure, descriptor.ReferenceTenure);
                             ret.push(descriptor);
                         }
                     } else {
                         var descriptor = { DocumentDefinition: definitions[j], ApplicableTenure: displayTenures[i], ReferenceTenure: null };
-                        descriptor.Documents = _.filter(documents, function (doc) { return doc.DocumentDefinitionID == definitions[j].DocumentDefinitionID && doc.ApplicableTenureID == displayTenures[i].ApplicableTenureID; });
+                        descriptor.Documents = _.filter(documents, function (doc) { return doc.DocumentDefinitionID == definitions[j].DocumentDefinitionID && doc.ApplicableTenureID == displayTenures[i].TenureID; });
                         descriptor.Name = calculateDocumentInstanceName(descriptor.DocumentDefinition, descriptor.ApplicableTenure, descriptor.ReferenceTenure);
                         ret.push(descriptor);
                     }

@@ -50,12 +50,16 @@
 	function doDocumentApproval(documentSubmissionID, approved) {
 		$.ajax({
 			url: '<%=createUrl('ApiCommand', [ 'ApproveSubmission' ])%>?documentSubmissionID=' + encodeURIComponent(documentSubmissionID),
-			data: { StatusID: approved ? <%=SubmissionStatus.Approved.StatusID%> : <%=SubmissionStatus.Rejected.StatusID%> };
+			data: { StatusID: approved ? <%=SubmissionStatus.Approved.StatusID%> : <%=SubmissionStatus.Rejected.StatusID%> },
 			success: function(returnedData) {
 				document.location.reload(true);
 			}
 		});
 	}
+
+	$(function () {
+		$('[data-toggle="popover"]').popover({ trigger: 'hover' });
+	})
 	</script>
     <div class="container">
         <div id="employeeSuccessDialog" class="modal fade" role="dialog">
@@ -177,6 +181,7 @@ for (var i in documentsForReview) {
 											</a>
 										</li>
 									</ul>
+								</div>
 							</td>
 							<td><%=tenure.Educator.FirstName + ' ' + tenure.Educator.LastName%></td>
 							<td><%=tenure.PositionsHeld%></td>
@@ -210,7 +215,7 @@ for (var i in documentsForReview) {
                         <th><%= (s == 0) ? 'Application Date' : 'Hire Date' %></th>
 <% for (var i in documentDefinitions) { %>
 <% if (s == 0 || documentDefinitions[i].RenewDuringEmployment) { %>
-						<th><%=documentDefinitions[i].ShortName%></th>
+						<th><span data-toggle="popover" data-content="<%=documentDefinitions[i].Name%>"><%=documentDefinitions[i].ShortName%></span></th>
 <% } %>
 <% } %>
                     </tr>
@@ -221,14 +226,43 @@ for (var i in documentsForReview) {
 %>
                     <tr>
                         <td>
-							<img src="<%=getValidationImage(tenure)%>" />
-                        </td>
+							<span class="glyphicon <%=getMinimumStatus(tenure, documentDefinitions).Glyphicon%> text-<%=getMinimumStatus(tenure, documentDefinitions).ColorClass%>"></span>
+						</td>
                         <td><%=tenure.Educator.FirstName + ' ' + tenure.Educator.LastName %></td>
                         <td><%=tenure.PositionsHeld%></td>
                         <td><%=formatDate((s == 0) ? tenure.ApplicationDate : tenure.StartDate)%></td>
-<%  for (var i in documentDefinitions) { %>
-<% if (s == 0 || documentDefinitions[i].RenewDuringEmployment) { %>
-						<td><%=getSubmissionStatus(tenure, documentDefinitions[i]).getMarkup()%></td>
+<%  
+for (var j in documentDefinitions) {
+	var sub = findSubmission(tenure, documentDefinitions[j]);
+%>
+<% if (s == 0 || documentDefinitions[j].RenewDuringEmployment) { %>
+						<td>
+<% if (sub && sub.DocumentInstance) { %>
+							<div class="dropdown">
+								<button class="btn dropdown-toggle btn-xs btn-<%=SubmissionStatus.GetStatus(sub).ColorClass%>" type="button" data-toggle="dropdown" role="menu">
+									<span class="glyphicon <%=SubmissionStatus.GetStatus(sub).Glyphicon%>"></span> <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a role="menuitem" href="<%=createUrl('DownloadForm', [sub.DocumentInstanceID])%>"><span class="glyphicon glyphicon-save"></span> Download Document</a></li>
+<% if (SubmissionStatus.GetStatus(sub) == SubmissionStatus.AwaitingApproval) { %>
+									<li class="divider"></li>
+									<li>
+										<a href="#" onclick="doDocumentApproval('<%=sub.DocumentSubmissionID%>', this, true)">
+											<span class="glyphicon glyphicon-ok"></span> Approve Document
+										</a>
+									</li>
+									<li>
+										<a href="#" onclick="doDocumentApproval('<%=sub.DocumentSubmissionID%>', this, false)">
+											<span class="glyphicon glyphicon-remove"></span> Reject Document
+										</a>
+									</li>
+<% } %>
+								</ul>
+							</div>
+<% } else { %>
+							<span class="glyphicon <%=SubmissionStatus.GetStatus(sub).Glyphicon%> text-<%=SubmissionStatus.GetStatus(sub).ColorClass%>"></span>
+<% } %>
+						</td>
 <% } %>
 <% } %>
                     </tr>
