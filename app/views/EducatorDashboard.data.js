@@ -20,6 +20,7 @@ module.exports = function (req) {
         ret.applicationTenures = _.filter(educator.Tenures, function (t) { return isTenureApplication(t); });
         ret.currentTenures = _.filter(educator.Tenures, function (t) { return isTenureCurrent(t); });
         ret.displayTenures = ret.applicationTenures.concat(ret.currentTenures);
+        ret.Form168 = forms.Form168;
         return ret;
     }).then(function (ret) {
         return api.query('DocumentDefinition', [], null, null).then(function (definitions) {
@@ -59,16 +60,6 @@ function getOrganizationsToDisplay(tenures) {
         ret[id].tenures.push(tenures[i]);
     }
     return ret;
-}
-
-function dateSortDescending(date1, date2) {
-    if (date1 > date2) {
-        return -1;
-    } else if (date1 < date2) {
-        return 1;
-    } else {
-        return 0;
-    }
 }
 
 function isTenureApplication(tenure) {

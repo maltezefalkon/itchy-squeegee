@@ -60,16 +60,6 @@ function getOrganizationsToDisplay(tenures) {
     return ret;
 }
 
-function dateSortDescending(date1, date2) {
-    if (date1 > date2) {
-        return -1;
-    } else if (date1 < date2) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
 function isTenureApplication(tenure) {
     return !tenure.StartDate;
 }

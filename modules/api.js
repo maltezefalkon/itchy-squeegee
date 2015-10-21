@@ -410,7 +410,9 @@ function SubmitDocument(commandArguments) {
 
 function ReviewSubmission(commandArguments) {
     var documentSubmissionID = commandArguments.documentSubmissionID;
-    if (!documentSubmissionID) {
+    var statusID = commandArguments.StatusID;
+    var statusDescription = SubmissionStatus.LookupByID(statusID).Description;
+    if (!documentSubmissionID || !statusID) {
         throw new Error('Invalid parameters passed to ReviewSubmission');
     }
     return querySingle('DocumentSubmission', ['DocumentInstance.Definition'], null, { DocumentSubmissionID: documentSubmissionID })
@@ -420,8 +422,8 @@ function ReviewSubmission(commandArguments) {
         }
         submission.ApprovalDate = new Date();
         submission.RenewalDate = require('./forms.js').CalculateRenewalDate(submission.DocumentInstance.Definition, submission.DocumentInstance.DocumentDate);
-        submission.StatusID = SubmissionStatus.Approved.StatusID;
-        submission.StatusDescription = SubmissionStatus.Approved.Description;
+        submission.StatusID = statusID;
+        submission.StatusDescription = statusDescription;
         return saveData(submission).then(function () { return submission; });
     }).then(function (submission) {
         var event = new meta.bo.SystemEvent();

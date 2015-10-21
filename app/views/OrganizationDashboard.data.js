@@ -1,5 +1,6 @@
 ﻿var ViewData = require('./Base.data.js');
 var api = require('../../modules/api');
+var forms = require('../../modules/forms');
 var myurl = require('../../modules/myurl.js');
 var DocumentStatus = require('../../biz/status').DocumentStatus;
 var SubmissionStatus = require('../../biz/status').SubmissionStatus;
@@ -8,7 +9,8 @@ var _ = require('lodash');
 module.exports = function (req) {
     var data = new ViewData(req, 'Organization Dashboard', 'OrganizationDashboard');
     data.getMinimumStatus = getMinimumStatus;
-    data.findSubmission = findSubmission;
+    data.getSubscriptionDocumentName = getSubscriptionDocumentName;
+    data.findSubmissions = findSubmissions;
     data.findTenure = findTenure;
     data.SubmissionStatus = SubmissionStatus;
     var ret = data;
@@ -45,8 +47,8 @@ module.exports = function (req) {
     return ret;
 }
 
-function findSubmission(tenure, documentDefinition) {
-    var ret = _.find(tenure.Submissions, function (sub) {
+function findSubmissions(tenure, documentDefinition) {
+    var ret = _.filter(tenure.Submissions, function (sub) {
         return sub.ApplicableTenureID == tenure.TenureID && sub.DocumentInstance.DocumentDefinitionID == documentDefinition.DocumentDefinitionID;
     });
     return ret;
@@ -56,7 +58,7 @@ function getMinimumStatus(tenure, documentDefinitions) {
     var min = SubmissionStatus.Error;
     for (var i in documentDefinitions) {
         if (documentDefinitions[i].RenewDuringEmployment || !tenure.StartDate) {
-            var thisStatus = SubmissionStatus.GetStatus(findSubmission(tenure, documentDefinitions[i]));
+            var thisStatus = SubmissionStatus.GetMinimum(findSubmissions(tenure, documentDefinitions[i]));
             if (thisStatus.StatusID < min.StatusID) {
                 min = thisStatus;
             }
@@ -69,4 +71,13 @@ function findTenure(submission, allTenures) {
     return _.find(allTenures, function (t) {
         return t.EducatorID == submission.EducatorID;
     });
+}
+
+function getSubscriptionDocumentName(sub, allTenures) {
+    if (sub.DocumentInstance.DocumentDefinitionID == forms.Form168.DocumentDefinitionID) {
+        var orgName = sub.DocumentInstance.Name.substring(sub.DocumentInstance.Name.lastIndexOf('regarding ') + 'regarding '.length);
+        return 'Document regarding ' + orgName;
+    } else {
+        return 'Document';
+    }
 }

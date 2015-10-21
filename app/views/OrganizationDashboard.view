@@ -49,7 +49,7 @@
 
 	function doDocumentApproval(documentSubmissionID, approved) {
 		$.ajax({
-			url: '<%=createUrl('ApiCommand', [ 'ApproveSubmission' ])%>?documentSubmissionID=' + encodeURIComponent(documentSubmissionID),
+			url: '<%=createUrl('ApiCommand', [ 'ReviewSubmission' ])%>?documentSubmissionID=' + encodeURIComponent(documentSubmissionID),
 			data: { StatusID: approved ? <%=SubmissionStatus.Approved.StatusID%> : <%=SubmissionStatus.Rejected.StatusID%> },
 			success: function(returnedData) {
 				document.location.reload(true);
@@ -233,17 +233,34 @@ for (var i in documentsForReview) {
                         <td><%=formatDate((s == 0) ? tenure.ApplicationDate : tenure.StartDate)%></td>
 <%  
 for (var j in documentDefinitions) {
-	var sub = findSubmission(tenure, documentDefinitions[j]);
+	var subs = findSubmissions(tenure, documentDefinitions[j]);
+	var sub = subs && subs.length == 1 ? subs[0] : null;
 %>
 <% if (s == 0 || documentDefinitions[j].RenewDuringEmployment) { %>
 						<td>
-<% if (sub && sub.DocumentInstance) { %>
+<% if (subs.length > 0) { %>
 							<div class="dropdown">
-								<button class="btn dropdown-toggle btn-xs btn-<%=SubmissionStatus.GetStatus(sub).ColorClass%>" type="button" data-toggle="dropdown" role="menu">
-									<span class="glyphicon <%=SubmissionStatus.GetStatus(sub).Glyphicon%>"></span> <span class="caret"></span>
+								<button class="btn dropdown-toggle btn-xs btn-<%=SubmissionStatus.GetMinimum(_.pluck(subs, 'StatusID')).ColorClass%>" type="button" data-toggle="dropdown" role="menu">
+<% 
+var statusIDs = _.uniq(_.pluck(subs, 'StatusID')).sort(function(a,b) { return a - b; });
+for (var k in statusIDs) {
+%>
+									<span class="glyphicon <%=SubmissionStatus.LookupByID(statusIDs[k]).Glyphicon%>"></span>
+<%
+	var count = _.filter(subs, function(s) { return s.StatusID == statusIDs[k]; }).length;
+	if (statusIDs.length > 1 || count > 1) {
+%>
+									<span class="badge"><%=count%></span>
+<%
+	}
+} 
+%>
+									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li><a role="menuitem" href="<%=createUrl('DownloadForm', [sub.DocumentInstanceID])%>"><span class="glyphicon glyphicon-save"></span> Download Document</a></li>
+<% for (var k in subs) { %>
+									<li><a role="menuitem" href="<%=createUrl('DownloadForm', [subs[k].DocumentInstanceID])%>"><span class="glyphicon glyphicon-save"></span> Download <%=getSubscriptionDocumentName(subs[k], organization.Tenures)%></a></li>
+<% } %>
 <% if (SubmissionStatus.GetStatus(sub) == SubmissionStatus.AwaitingApproval) { %>
 									<li class="divider"></li>
 									<li>

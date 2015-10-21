@@ -104,16 +104,14 @@ var filteredDescriptors = _.filter(requiredDocumentDescriptors, function(desc) {
 for (var j in filteredDescriptors) {
 	var desc = filteredDescriptors[j];
 	var def = desc.DocumentDefinition;
-	var sub = _.find(displayTenures[i].Submissions, function(submission) {
-		var thisDoc = _.find(educator.Documents, function(edoc) {
-			return edoc.DocumentInstanceID == submission.DocumentInstanceID;
-		});
-		return thisDoc.DocumentDefinitionID == def.DocumentDefinitionID 
-			&& (!desc.ApplicableTenure || thisDoc.ApplicableTenureID == desc.ApplicableTenure.TenureID); });
-	var name = desc.Name;
 	var doc = _.find(desc.Documents, function(document) {
-		return !desc.ApplicableTenure || desc.ApplicableTenure.TenureID == displayTenures[i].TenureID;
+		return (!desc.ApplicableTenure || desc.ApplicableTenure.TenureID == displayTenures[i].TenureID)
+			&& (!desc.ReferenceTenure || desc.ReferenceTenure.TenureID == document.ReferenceTenureID);
 	});
+	var sub = _.find(displayTenures[i].Submissions, function(submission) {
+		return doc && submission.DocumentInstanceID == doc.DocumentInstanceID;
+	});
+	var name = desc.Name;
 %>
 						<tr>
 							<td>
@@ -123,9 +121,17 @@ for (var j in filteredDescriptors) {
 										<span class="caret"></span></button>
 									</button>
 									<ul class="dropdown-menu">
-<% if (doc && !sub) { %>
+<% 
+if (doc && !sub) { 
+	var submissionTenureID = displayTenures[i].TenureID;
+	var submissionOrganizationID = displayTenures[i].OrganizationID;
+	if (doc.DocumentDefinitionID == Form168.DocumentDefinitionID) {
+		submissionTenureID = doc.ReferenceTenureID;
+		submissionOrganizationID = _.find(educator.Tenures, function(t) { return t.TenureID == submissionTenureID; }).OrganizationID;
+	}
+%>
 										<li>
-											<a href="#" onclick="doSubmission('<%=doc.DocumentInstanceID%>', '<%=displayTenures[i].TenureID%>', '<%=displayTenures[i].OrganizationID%>')">
+											<a href="#" onclick="doSubmission('<%=doc.DocumentInstanceID%>', '<%=submissionTenureID%>', '<%=submissionOrganizationID%>')">
 												<span class="glyphicon glyphicon-send"></span> <%=sub ? 'Resubmit' : 'Submit'%> Document
 											</a>
 										</li>

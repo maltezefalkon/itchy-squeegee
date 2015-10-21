@@ -246,6 +246,16 @@ function isTenureCurrent(tenure) {
     return tenure.StartDate && !tenure.EndDate;
 }
 
+function dateSortDescending(date1, date2) {
+    if (date1 > date2) {
+        return -1;
+    } else if (date1 < date2) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 module.exports.CreateDocumentStubs = createDocumentStubs;
 module.exports.FindDocumentInstanceField = findDocumentInstanceField;
 module.exports.Form168 = Form168;

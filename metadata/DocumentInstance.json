@@ -43,13 +43,9 @@
             "type": "STRING",
             "field": "name"
         },
-        "RawFileData": {
-            "type": "BLOB",
-            "field": "raw_file_data"
-        },
-        "FileMimeType": {
-            "type": "STRING",
-            "field": "file_mime_type"
+        "BinaryFileID": {
+            "type": "UUID",
+            "field": "binary_file_id"
         }
     },
     "Relationships": {
@@ -82,6 +78,11 @@
             "RelationshipType": "hasMany",
             "ForeignKey": "document_instance_id",
             "RelatedTypeKey": "DocumentSubmission"
+        },
+        "BinaryFile": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "binary_file_id",
+            "RelatedTypeKey": "BinaryFile"
         }
     }
 }

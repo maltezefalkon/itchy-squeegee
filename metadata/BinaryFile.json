@@ -1,0 +1,20 @@
+﻿{
+    "TypeKey": "BinaryFile",
+    "TableName": "binary_file",
+    "FieldDefinitions": {
+        "BinaryFileID": {
+            "type": "UUID",
+            "field": "binary_file_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "RawFileData": {
+            "type": "BLOB",
+            "field": "raw_file_data"
+        },
+        "FileMimeType": {
+            "type": "STRING",
+            "field": "file_mime_type"
+        }
+    }
+}

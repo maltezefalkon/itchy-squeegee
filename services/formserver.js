@@ -70,7 +70,7 @@ function postFormData(req, res, next) {
 
 function downloadDocument(req, res, next) {
     var documentInstanceID = req.params.documentInstanceID;
-    api.querySingle('DocumentInstance', ['Definition.Fields', 'Fields', 'Educator'], null, { DocumentInstanceID: documentInstanceID })
+    api.querySingle('DocumentInstance', ['Definition.Fields', 'Fields', 'Educator', 'BinaryFile'], null, { DocumentInstanceID: documentInstanceID })
     .then(function (documentInstance) {
         var ret = {
             redirect: null,
@@ -88,8 +88,8 @@ function downloadDocument(req, res, next) {
                 return ret;
             });
         } else {
-            ret.mimeType = documentInstance.FileMimeType;
-            ret.fileData = documentInstance.RawFileData;
+            ret.mimeType = documentInstance.BinaryFile.FileMimeType;
+            ret.fileData = documentInstance.BinaryFile.RawFileData;
             return Promise.resolve(ret);
         }
     }).then(function (values) {
@@ -149,15 +149,18 @@ function uploadFormFile(req, res, next) {
             });
         }
         promise = promise.then(function () {
+            var binaryFile = new meta.bo.BinaryFile();
+            binaryFile.RawFileData = data.file;
+            binaryFile.FileMimeType = data.mimeType;
+            return api.save(binaryFile).then(function () { 
+                return binaryFile;
+            });
+        }).then(function (binaryFile) {
             var documentInstance = forms.CreateDocumentInstance(forms.DocumentDefinitions[documentDefinitionID], req.user.LinkedEducator, applicableTenure, referenceTenure, null, data.documentDate);
-            documentInstance.RawFileData = data.file;
             documentInstance.DocumentDate = data.documentDate;
             documentInstance.CompletedDateTime = new Date();
-            documentInstance.FileMimeType = data.mimeType;
             documentInstance.NextRenewalDate = forms.CalculateRenewalDate(forms.DocumentDefinitions[documentDefinitionID], data.documentDate);
-            return documentInstance;
-        });
-        promise = promise.then(function (documentInstance) {
+            documentInstance.BinaryFileID = binaryFile.BinaryFileID;
             return api.save(documentInstance).then(function () {
                 return documentInstance;
             });

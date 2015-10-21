@@ -72,7 +72,7 @@ function postData(req, res) {
 }
 
 function executeCommand(req, res, next) {
-    var command = req.params.commandName;
+    var command = req   .params.commandName;
     var commandArguments = req.query;
     commandArguments.user = req.user;
     commandArguments.body = req.body;

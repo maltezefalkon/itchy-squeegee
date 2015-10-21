@@ -88,6 +88,7 @@
     <Content Include="app\views\UserSignup.view" />
     <Content Include="docs\form168 workflow.txt" />
     <Content Include="docs\signup use cases.txt" />
+    <Content Include="metadata\BinaryFile.json" />
     <Content Include="metadata\DocumentSubmission.json" />
     <Content Include="metadata\Invitation.json" />
     <Content Include="metadata\SystemEvent.json" />

@@ -245,7 +245,7 @@
                         <div class="form-group required">
                             <label class="<%=formControlLabelClasses%>" for="StartDate">Start Date</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="date" name="StartDate" class="form-control" ng-model="tenure.StartDate" ng-required="true" parse-date />
+                                <input type="text" name="StartDate" class="form-control" ng-model="tenure.StartDate" ng-required="true" ui-date ui-date-format="MM/dd/yyyy" placeholder="mm/dd/yyyy" parse-date-model-value />
                             </div>
                         </div>
                     </div>

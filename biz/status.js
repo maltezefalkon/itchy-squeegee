@@ -71,10 +71,10 @@ var SubmissionStatus = {
     Missing: new SubmissionStatusEnum(10, 'Missing', 'Missing', 'glyphicon-remove', 'danger', false, false, false),
     Created: new SubmissionStatusEnum(100, 'Ready to Submit', 'Ready to Submit', 'glyphicon-star', 'warning', false, true, false),
     AwaitingApproval: new SubmissionStatusEnum(1000, 'Awaiting Approval', 'Awaiting Approval', 'glyphicon-hourglass', 'primary', false, true, true),
+    Error: new SubmissionStatusEnum(2000, 'Error', 'Error', 'glyphicon-remove-circle', 'danger', false, true, false),
+    Rejected: new SubmissionStatusEnum(3000, 'Rejected', 'Rejected', 'glyphicon-ban-circle', 'danger', false, true, false),
+    Expired: new SubmissionStatusEnum(4000, 'Expired', 'Expired', 'glyphicon-time', 'warning', false, true, true),
     Approved: new SubmissionStatusEnum(5000, 'Approved', 'Approved', 'glyphicon-ok', 'success', true, true, true),
-    Rejected: new SubmissionStatusEnum(6000, 'Rejected', 'Rejected', 'glyphicon-ban-circle', 'danger', false, true, false),
-    Expired: new SubmissionStatusEnum(50000, 'Expired', 'Expired', 'glyphicon-time', 'warning', false, true, true),
-    Error: new SubmissionStatusEnum(100000, 'Error', 'Error', 'glyphicon-remove-circle', 'danger', false, true, false),
     LookupByID: function (id) {
         for (var s in SubmissionStatus) {
             if (SubmissionStatus[s].StatusID == id) {
@@ -93,12 +93,12 @@ var SubmissionStatus = {
                     ret = e;
                     minID = e.StatusID;
                 }
-            } else if (typeof e === 'Number' && Number(e) < minID) {
+            } else if (typeof e === 'number' && Number(e) < minID) {
                 ret = SubmissionStatus.LookupByID(Number(e));
                 minID = Number(e);
             }
         }
-        return ret;
+        return ret || SubmissionStatus.Missing;
     },
     GetStatus: function (submission) {
         return !submission ? SubmissionStatus.Missing : SubmissionStatus.LookupByID(submission.StatusID);
