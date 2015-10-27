@@ -151,6 +151,7 @@
     <Compile Include="app\views\OrganizationSignup.data.js" />
     <Compile Include="app\views\UserSignup.controller.js" />
     <Compile Include="app\views\UserSignup.data.js" />
+    <Compile Include="biz\document.js" />
     <Compile Include="biz\status.js" />
     <Compile Include="modules\collections.js" />
     <Compile Include="modules\email.js" />

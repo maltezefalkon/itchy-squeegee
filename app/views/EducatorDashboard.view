@@ -84,13 +84,13 @@
 <% for (var i in displayTenures) { %>
         <div class="panel panel-default">
             <div class="panel-heading">
-				<span><%=isTenureApplication(displayTenures[i]) ? 'Application' : 'Required'%> Clearances for <%=displayTenures[i].Organization.Name%></span>
+				<span><%=isTenureApplication(displayTenures[i]) ? 'Applicant' : 'Employee'%> Clearances for <%=displayTenures[i].Organization.Name%></span>
             </div>
             <div class="panel-body">
                 <table width="100%" class="table">
                     <thead>
                         <tr>
-							<th class="col-xs-1">Action</th>
+							<th class="col-xs-1">&nbsp;</th>
                             <th class="col-xs-7">Document</th>
                             <th class="col-xs-1 text-center">Status</th>
                             <th class="col-xs-1 text-center">Date Submitted</th>
@@ -100,7 +100,7 @@
                     </thead>
                     <tbody>
 <% 
-var filteredDescriptors = _.filter(requiredDocumentDescriptors, function(desc) { return !desc.ApplicableTenure || desc.ApplicableTenure.TenureID == displayTenures[i].TenureID; });
+var filteredDescriptors = _.filter(requiredDocumentDescriptors, function(desc) { return (!desc.ApplicableTenure || desc.ApplicableTenure.TenureID == displayTenures[i].TenureID) && (isTenureApplication(displayTenures[i]) || desc.DocumentDefinition.RenewDuringEmployment); });
 for (var j in filteredDescriptors) {
 	var desc = filteredDescriptors[j];
 	var def = desc.DocumentDefinition;
@@ -132,9 +132,10 @@ if (doc && !sub) {
 %>
 										<li>
 											<a href="#" onclick="doSubmission('<%=doc.DocumentInstanceID%>', '<%=submissionTenureID%>', '<%=submissionOrganizationID%>')">
-												<span class="glyphicon glyphicon-send"></span> <%=sub ? 'Resubmit' : 'Submit'%> Document
+												<span class="glyphicon glyphicon-send"></span> <%=sub ? 'Resubmit' : 'Submit'%> Document to <%=displayTenures[i].Organization.Name%>
 											</a>
 										</li>
+										<li class="divider"></li>
 <% } %>
 <% 
 if (!doc && !def.IsUpload) { 
@@ -154,11 +155,8 @@ if (!doc && !def.IsUpload) {
 										</li>
 <% } %>
 <% if (def.IsUpload) { %>
-	<% if ((doc && !sub) || (!def.IsUpload)) { %>
-										<li class="divider"></li>
-    <% } %>
 										<li>
-											<a href="#" onclick="showUploadDialog('<%=def.Name%>','<%=def.DocumentDefinitionID%>',<%=desc.ApplicableTenure ? '\'' + desc.ApplicableTenure.TenureID + '\'' : 'null'%>, <%=desc.ReferenceTenure ? '\'' + desc.ReferenceTenure.TenureID + '\'' : 'null'%>)">
+											<a href="#" onclick="showUploadDialog('<%=def.Name%>','<%=def.DocumentDefinitionID%>',<%=desc.ApplicableTenure ? '\'' + desc.ApplicableTenure.TenureID + '\'' : 'null'%>, <%=desc.ReferenceTenure ? '\'' + desc.ReferenceTenure.TenureID + '\'' : 'null'%>, '<%=def.NewHireValidityPeriod%>', '<%=def.RenewalPeriod%>', <%=isTenureApplication(displayTenures[i])%>)">
 												<span class="glyphicon glyphicon-cloud-upload"></span> Upload<%=(doc ? ' Updated ' : ' ')%> Document
 											</a>
 										</li>
@@ -171,8 +169,9 @@ if (!doc && !def.IsUpload) {
 											</a>
 										</li>
 <% } %>
+										<li class="divider"></li>
 										<li>
-											<a href="#" data-toggle="collapse" data-target="#debug-<%=i%>-<%=j%>"><span class="glyphicon glyphicon-eye-open"></span> Show/Hide Debug Info</a>
+											<a href="#" data-toggle="collapse" data-target="#debug-<%=i%>-<%=j%>"><span class="glyphicon glyphicon-eye-open"></span> Debugging Info</a>
 										</li>
 									</ul>
 								</div>

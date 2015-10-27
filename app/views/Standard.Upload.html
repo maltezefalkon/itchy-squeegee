@@ -1,9 +1,13 @@
+<script type="text/javascript" src="/app/biz/document.js"></script>
 <script type="text/javascript">
-    function showUploadDialog(name, documentDefinitionID, applicableTenureID, referenceTenureID) {
+    function showUploadDialog(name, documentDefinitionID, applicableTenureID, referenceTenureID, newHireValidityPeriod, submissionRenewalPeriod, checkNewHireValidity) {
         $('#uploadDialogTitle').text('Upload ' + name);
         $('#DocumentDefinitionID').val(documentDefinitionID);
         $('#ApplicableTenureID').val(applicableTenureID);
         $('#ReferenceTenureID').val(referenceTenureID);
+        $('#NewHireValidityPeriod').val(newHireValidityPeriod);
+        $('#SubmissionRenewalPeriod').val(submissionRenewalPeriod);
+        $('#CheckNewHireValidity').val(checkNewHireValidity);
         $('#UploadFile').val(null);
         $('#DocumentDate').val(null);
         $('#uploadForm').attr('action', '<%=createUrl('UploadForm')%>/' + documentDefinitionID + ';' + (applicableTenureID || '') + ';' + (referenceTenureID || ''));
@@ -11,6 +15,27 @@
     }
 
     function doUpload(button) {
+        var doSubmissionCheck = true;
+        var documentDate = new Date($('#DocumentDate').val());
+        if ($('#CheckNewHireValidity').val() == 'true') {
+            var newHireValidityPeriod = $('#NewHireValidityPeriod').val();
+            var validityEndDate = calculateDocumentRenewalDate(newHireValidityPeriod, documentDate);
+            if (validityEndDate < new Date()) {
+                doSubmissionCheck = false;
+                if (!confirm('The document you are uploading is no longer valid for applicants because it is more than ' + newHireValidityPeriod + ' old.\n\nDo you want to upload it to your account anyway?')) {
+                    return;
+                }
+            }
+        }
+        if (doSubmissionCheck) {
+            var submissionRenewalPeriod = $('#SubmissionRenewalPeriod').val();
+            var submissionRenewalDate = calculateDocumentRenewalDate(submissionRenewalPeriod, documentDate);
+            if (submissionRenewalDate < new Date()) {
+                if (!confirm('The document you are uploading is no longer valid because it is more than ' + submissionRenewalPeriod + ' old.\n\nDo you want to upload it to your account anyway?')) {
+                    return;
+                }
+            }
+        }
         $('#uploadText').hide();
         $('#uploadSpinner').show();
         var definitionID = $('#DocumentDefinitionID').val();
@@ -75,6 +100,9 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="CheckNewHireValidity" name="CheckNewHireValidity" value="" />
+        <input type="hidden" id="SubmissionRenewalPeriod" name="SubmissionRenewalPeriod" value="" />
+        <input type="hidden" id="NewHireValidityPeriod" name="NewHireValidityPeriod" value="" />
         <input type="hidden" id="DocumentDefinitionID" name="DocumentDefinitionID" value="" />
         <input type="hidden" id="ApplicableTenureID" name="ApplicableTenureID" value="" />
         <input type="hidden" id="ReferenceTenureID" name="ReferenceTenureID" value="" />

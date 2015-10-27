@@ -83,6 +83,9 @@ app.get('/api/:type/query/:query/:joins?', dataServices.getData);
 app.get('/api/command/:commandName', dataServices.executeCommand);
 app.post('/api/command/:commandName', dataServices.executeCommand);
 
+// business logic
+app.use('/app/biz', express.static('biz'));
+
 // user management routes
 app.post('/app/user/login', sessionManagement.createLoginHandler(loginPath));
 app.get('/app/user/logout', sessionManagement.createLogoutHandler(loginPath));

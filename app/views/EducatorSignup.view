@@ -227,7 +227,7 @@
                     </span>
 				<% } else { %>
                     <span>
-                        Tenure at <%=organization.Name%>
+                        Position at <%=organization.Name%>
                     </span>
 				<% } %>
                 </div>

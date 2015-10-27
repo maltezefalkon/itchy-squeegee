@@ -202,7 +202,7 @@ for (var i in documentsForReview) {
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>
-                        <%= (s == 0) ? 'Applications' : 'Current Employees' %>
+                        <%= (s == 0) ? 'Applicants' : 'Current Employees' %>
                     </span>
                 </div>
                 <div class="panel-body">
@@ -264,12 +264,12 @@ for (var k in statusIDs) {
 <% if (SubmissionStatus.GetStatus(sub) == SubmissionStatus.AwaitingApproval) { %>
 									<li class="divider"></li>
 									<li>
-										<a href="#" onclick="doDocumentApproval('<%=sub.DocumentSubmissionID%>', this, true)">
+										<a href="#" onclick="doDocumentApproval('<%=sub.DocumentSubmissionID%>', true)">
 											<span class="glyphicon glyphicon-ok"></span> Approve Document
 										</a>
 									</li>
 									<li>
-										<a href="#" onclick="doDocumentApproval('<%=sub.DocumentSubmissionID%>', this, false)">
+										<a href="#" onclick="doDocumentApproval('<%=sub.DocumentSubmissionID%>', false)">
 											<span class="glyphicon glyphicon-remove"></span> Reject Document
 										</a>
 									</li>

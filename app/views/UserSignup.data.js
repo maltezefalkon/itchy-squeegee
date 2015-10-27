@@ -30,9 +30,10 @@ module.exports = function (req, invitationID) {
                     }
                     ret.pageTitle = 'Sign-Up for ' + ret.invitationDescriptor;
                     ret.pageMasthead = ret.generatePageMasthead(ret.pageTitle);
+                    var article = invitation.RepresentedOrganization ? 'a' : 'an';
                     ret.invitationNotice = 'You have reached this page through an invitation ' +
-                        'to create a new user account as <b>' + ret.invitationDescriptor + '</b>. ' +
-                        'If this is incorrect, please <a href="' + ret.createUrl('UserSignup') + '">click here</a> ' +
+                        'intended for ' + article + ' <b>' + ret.invitationDescriptor + '</b>. ' +
+                        'If you have reached this page in error, please <a href="' + ret.createUrl('UserSignup') + '">click here</a> ' +
                         'to create an individual account instead.';
                     ret.emailAddress = invitation.EmailAddress;
                 }

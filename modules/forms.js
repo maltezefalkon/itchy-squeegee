@@ -7,6 +7,7 @@ var fs = Promise.promisifyAll(require('fs'));
 var path = require('path');
 var fdf = require('fdf');
 var exec = require('child_process').exec;
+var docfn = require('../biz/document.js');
 
 var _ = require('lodash');
 
@@ -126,21 +127,8 @@ function findDocumentInstanceField(documentInstance, documentDefinitionFieldID) 
 }
 
 function calculateDocumentRenewalDate(documentDefinition, documentDate) {
-    if (documentDefinition.RenewalPeriod) {
-        var pieces = documentDefinition.RenewalPeriod.split(" ");
-        if (pieces.length == 2 && pieces[1] == 'years') {
-            return new Date(documentDate.getFullYear() + Number(pieces[0]), documentDate.getMonth(), documentDate.getDate());
-        } else if (pieces.length == 2 && pieces[1] == 'months') {
-            var newYear = documentDate.getFullYear();
-            var newMonth = documentDate.getMonth() + Number(pieces[0]);
-            if (newMonth > 11) {
-                newMonth -= 12;
-                newYear += 1;
-            }
-            return new Date(newYear, newMonth, documentDate.getDate());
-        } else {
-            throw new Error('Unsupported time span descriptor: "' + documentDefinition.RenewalPeriod + '"');
-        }
+    if (documentDefinition.NewHireValidityPeriod) {
+        return docfn.calculateDocumentRenewalDate(documentDefinition.NewHireValidityPeriod, documentDate);
     } else {
         return null;
     }
@@ -228,7 +216,7 @@ function constructRequiredDocumentDescriptors(displayTenures, definitions, allTe
                     }
                 }
             }
-        } else if (definitions[j].RenewDuringEmployment) {
+        } else {
             var descriptor = { DocumentDefinition: definitions[j], ApplicableTenure: null, ReferenceTenure: null };
             descriptor.Documents = _.filter(documents, function (doc) { return doc.DocumentDefinitionID == definitions[j].DocumentDefinitionID; });
             descriptor.Name = calculateDocumentInstanceName(descriptor.DocumentDefinition, descriptor.ApplicableTenure, descriptor.ReferenceTenure);

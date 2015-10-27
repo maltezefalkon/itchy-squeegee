@@ -32,7 +32,7 @@ SubmissionStatusEnum.prototype.constructor = SubmissionStatusEnum;
 var DocumentStatus = {
     Missing: new DocumentStatusEnum(10, 'Missing', 'Missing', 'glyphicon-remove', 'danger', false, false),
     Valid: new DocumentStatusEnum(100, 'Valid', 'Valid', 'glyphicon-star', 'primary', false, true, false),
-    Expired: new DocumentStatusEnum(50000, 'Expired', 'Expired', 'glyphicon-time', 'warning', false, true),
+    Expired: new DocumentStatusEnum(50000, 'Expired', 'Expired', 'glyphicon-time', 'danger', false, true),
     Error: new DocumentStatusEnum(100000, 'Error', 'Error', 'glyphicon-remove-circle', 'danger', false, true),
     LookupByID: function (id) {
         for (var s in DocumentStatus) {
@@ -69,7 +69,7 @@ var DocumentStatus = {
 
 var SubmissionStatus = {
     Missing: new SubmissionStatusEnum(10, 'Missing', 'Missing', 'glyphicon-remove', 'danger', false, false, false),
-    Created: new SubmissionStatusEnum(100, 'Ready to Submit', 'Ready to Submit', 'glyphicon-star', 'warning', false, true, false),
+    Created: new SubmissionStatusEnum(100, 'Not Submitted', 'Not Submitted', 'glyphicon-exclamation-sign', 'danger', false, true, false),
     AwaitingApproval: new SubmissionStatusEnum(1000, 'Awaiting Approval', 'Awaiting Approval', 'glyphicon-hourglass', 'primary', false, true, true),
     Error: new SubmissionStatusEnum(2000, 'Error', 'Error', 'glyphicon-remove-circle', 'danger', false, true, false),
     Rejected: new SubmissionStatusEnum(3000, 'Rejected', 'Rejected', 'glyphicon-ban-circle', 'danger', false, true, false),

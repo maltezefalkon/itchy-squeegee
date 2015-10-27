@@ -55,10 +55,10 @@ function findSubmissions(tenure, documentDefinition) {
 }
 
 function getMinimumStatus(tenure, documentDefinitions) {
-    var min = SubmissionStatus.Error;
+    var min = SubmissionStatus.Approved;
     for (var i in documentDefinitions) {
         if (documentDefinitions[i].RenewDuringEmployment || !tenure.StartDate) {
-            var thisStatus = SubmissionStatus.GetMinimum(findSubmissions(tenure, documentDefinitions[i]));
+            var thisStatus = SubmissionStatus.GetMinimum(_.pluck(findSubmissions(tenure, documentDefinitions[i]), 'StatusID'));
             if (thisStatus.StatusID < min.StatusID) {
                 min = thisStatus;
             }

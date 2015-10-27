@@ -420,10 +420,12 @@ function ReviewSubmission(commandArguments) {
         if (submission.OrganizationID != commandArguments.user.LinkedOrganizationID) {
             throw new Error('Not authorized to approve submission');
         }
-        submission.ApprovalDate = new Date();
-        submission.RenewalDate = require('./forms.js').CalculateRenewalDate(submission.DocumentInstance.Definition, submission.DocumentInstance.DocumentDate);
         submission.StatusID = statusID;
         submission.StatusDescription = statusDescription;
+        if (statusID == SubmissionStatus.Approved.StatusID) {
+            submission.ApprovalDate = new Date();
+            submission.RenewalDate = require('./forms.js').CalculateRenewalDate(submission.DocumentInstance.Definition, submission.DocumentInstance.DocumentDate);
+        }
         return saveData(submission).then(function () { return submission; });
     }).then(function (submission) {
         var event = new meta.bo.SystemEvent();
