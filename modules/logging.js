@@ -5,10 +5,6 @@ module.exports = function (logSubject, logFileName) {
         name: logSubject || 'app',
         streams: [
             {
-                level: 'debug',
-                path: './log/' + (logFileName || 'app' ) + '.log'
-            },
-            {
                 level: 'info',
                 stream: process.stdout
             }
