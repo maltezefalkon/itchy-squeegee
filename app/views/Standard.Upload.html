@@ -8,8 +8,8 @@
         $('#NewHireValidityPeriod').val(newHireValidityPeriod);
         $('#SubmissionRenewalPeriod').val(submissionRenewalPeriod);
         $('#CheckNewHireValidity').val(checkNewHireValidity);
-        $('#UploadFile').val(null);
-        $('#DocumentDate').val(null);
+        $('#UploadFile').val(null).trigger('input');
+        $('#DocumentDate').val(null).trigger('input');
         $('#uploadForm').attr('action', '<%=createUrl('UploadForm')%>/' + documentDefinitionID + ';' + (applicableTenureID || '') + ';' + (referenceTenureID || ''));
         $('#uploadDialog').modal('show');
     }
@@ -52,7 +52,7 @@
                 document.location.reload(true);
             },
             error: function(jqXHR) {
-                alert('Error: ' + jqXHR);
+                alert('Error' + jqXHR.status + ': ' + jqXHR.statusText);
                 $('#uploadText').show();
                 $('#uploadSpinner').hide();
             }
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" style="width: 80px" type="button" onclick="doUpload(this)" ng-disabled="!uploadForm.$valid">
+                    <button class="btn btn-primary" style="width: 80px" type="button" onclick="doUpload(this)" ng-disabled="!uploadForm.$valid" id="uploadButton">
                         <span id="uploadText">Upload</span>
                         <img src="/client/images/busy-primary.gif" id="uploadSpinner" style="display: none" />
                     </button>
