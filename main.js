@@ -33,6 +33,8 @@ var publicPaths = [
     /^\/controllers\//i, 
     /^\/app\/view\/Login$/i, 
     /^\/app\/view\/Home$/i, 
+    /^\/app\/view\/Contact$/i, 
+    /^\/app\/view\/About$/i, 
     /^\/app\/view\/UserSignup\/?/i,
     /^\/app\/user\/Signup\/?/i,
     /^\/favicon.ico$/i,
