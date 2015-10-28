@@ -226,7 +226,7 @@ for (var i in documentsForReview) {
 %>
                     <tr>
                         <td>
-							<span class="glyphicon <%=getMinimumStatus(tenure, documentDefinitions).Glyphicon%> text-<%=getMinimumStatus(tenure, documentDefinitions).ColorClass%>"></span>
+							<span class="glyphicon <%=getMinimumStatus(tenure, documentDefinitions).Glyphicon%> text-<%=getMinimumStatus(tenure, documentDefinitions).ColorClass%>" data-toggle="popover" title="<%=getMinimumStatus(tenure, documentDefinitions).Description%>" data-content="<%=getMinimumStatus(tenure, documentDefinitions).Explanation%>"></span>
 						</td>
                         <td><%=tenure.Educator.FirstName + ' ' + tenure.Educator.LastName %></td>
                         <td><%=tenure.PositionsHeld%></td>

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%=headerTags%>
+    <title><%=pageTitle%></title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <div class="container">
+        <%=pageHeader%>
+		<%=pageMasthead%>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+				<span>Who We Are</span>
+            </div>
+            <div class="panel-body">
+				Founded by a school superintendant and a technologist from
+				the Philadelphia area, ClearanceManagement.com was designed
+				to help keep kids safe by helping schools manage all of the 
+				vital information surrounding their employees.
+			</div>
+		</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                <div class="btn-toolbar">
+                    <button type="button" class="btn btn-lg btn-primary btn-block btn-default" onclick="window.location = '/'">
+                        Return to Home Page
+                    </button>
+                </div>
+            </div>
+        </div>
+        <%=pageFooter%>
+    </div>
+</body>
+</html>

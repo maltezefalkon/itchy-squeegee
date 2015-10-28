@@ -6,10 +6,13 @@
     </button>
     <div class="container collapse navbar-collapse">
         <div class="brand">
-            <a class="navbar-brand" href="/">ClearanceManagement.com</a>
+            <a class="navbar-brand" style="letter-spacing: -50%" href="/">ClearanceManagement.com</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class=""><a href="/app/public/Contact.html">Contact</a></li>
+            <li class=""><a href="<%=createUrl('About')%>">About</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li class=""><a href="<%=createUrl('Contact')%>">Contact</a></li>
         </ul>
         <% if (user && (user.LinkedEducatorID || user.LinkedOrganizationID)) { %>
         <ul class="nav navbar-nav">

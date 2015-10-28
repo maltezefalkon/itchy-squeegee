@@ -71,6 +71,8 @@
     <Content Include="app\public\index.html" />
     <Content Include="app\public\OrganizationSignup.html" />
     <Content Include="app\public\UserSignup.html" />
+    <Content Include="app\views\About.view" />
+    <Content Include="app\views\Contact.view" />
     <Content Include="app\views\EducatorDashboard.view" />
     <Content Include="app\views\EducatorDocuments.view" />
     <Content Include="app\views\EducatorSignup.view" />
@@ -132,6 +134,8 @@
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.js" />
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.min.js" />
+    <Compile Include="app\views\About.data.js" />
+    <Compile Include="app\views\Contact.data.js" />
     <Compile Include="app\views\EducatorDashboard.controller.js" />
     <Compile Include="app\views\EducatorDashboard.data.js" />
     <Compile Include="app\views\EducatorDocuments.controller.js" />

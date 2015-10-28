@@ -33,7 +33,7 @@
                             This is some more text, too!
                         </p>
                         <div>
-                            <button type="button" onclick="window.location = '/user/signup/Organization/';" class="btn btn-sm btn-info">
+                            <button type="button" onclick="window.location = '<%=createUrl('UserSignup')%>';" class="btn btn-sm btn-info">
                                 Click Here to Sign Up
                             </button>
                         </div>
@@ -69,7 +69,7 @@
                             This is some more text, too!
                         </p>
                         <div>
-                            <button type="button" onclick="window.location = '/app/public/About.html';" class="btn btn-sm btn-warning">
+                            <button type="button" onclick="window.location = '<%=createUrl('About')%>';" class="btn btn-sm btn-warning">
                                 Click Here to Learn More
                             </button>
                         </div>

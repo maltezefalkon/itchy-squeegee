@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%=headerTags%>
+    <title><%=pageTitle%></title>
+    <style type="text/css">
+    </style>
+</head>
+<body ng-app="safeApp" ng-controller="controller">
+    <div class="container">
+        <%=pageHeader%>
+		<%=pageMasthead%>
+        <div class="row">
+            <div class="col-xs-12">
+				We want to hear from you!
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-sm-6">
+				<strong>Email:</strong>
+			</div>
+			<div class="col-sm-6">
+				support@clearancemanagement.com
+			</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+				<strong>Telephone:</strong>
+			</div>
+			<div class="col-sm-6">
+				215-555-1212
+			</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                <div class="btn-toolbar">
+                    <button type="button" class="btn btn-lg btn-primary btn-block btn-default" onclick="window.location = '/'">
+                        Return to Home Page
+                    </button>
+                </div>
+            </div>
+        </div>
+        <%=pageFooter%>
+    </div>
+</body>
+</html>
