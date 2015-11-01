@@ -20,6 +20,9 @@
 		<%=pageMasthead%>
         <form action="<%=path%>" name="TenureForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
             <!-- tenure -->
+			<div style="margin-bottom: 20px">
+				<%=pageInstructions%>
+			</div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>
