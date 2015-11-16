@@ -8,6 +8,7 @@
 // requires
 var log = require('../modules/logging')('signupserver');
 var api = require('../modules/api');
+var email = require('../modules/email');
 var bcrypt = require('bcryptjs');
 var meta = require('../modules/metadata')();
 var uuid = require('uuid');
@@ -25,6 +26,8 @@ module.exports.postUserSignupData = postUserSignupData;
 module.exports.postEducatorSignupData = postEducatorSignupData;
 module.exports.postEducatorTenureData = postEducatorTenureData;
 module.exports.postOrganizationSignupData = postOrganizationSignupData;
+module.exports.confirmUserAccount = confirmUserAccount;
+module.exports.testSendEmail = testSendEmail;
 
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -337,6 +340,7 @@ function postUserSignupData(req, res, next) {
         _TypeKey: 'User',
         EmailAddress: req.body.EmailAddress,
         UserName: req.body.EmailAddress,
+        ConfirmationID: uuid(),
         Hash: hash
     };
     
@@ -360,6 +364,8 @@ function postUserSignupData(req, res, next) {
         }
     });
     
+    // invitation validation ------------------------
+
     if (req.params.invitationID) {
         promise = promise.then(function (data) {
             if (data.isValid) {
@@ -382,11 +388,7 @@ function postUserSignupData(req, res, next) {
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Login);
                         data.invitation = null;
                         data.isValid = false;
-                    } else if (data.invitation.ApplicantOrganizationID || data.invitation.EducatorID || data.invitation.EmployeeOrganizationID) {
-                        data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [data.invitation.InvitationID], null, true);
-                    } else if (data.invitation.RepresentedOrganizationID) {
-                        data.nextUrl = myUrl.createUrl(myUrl.createUrlType.OrganizationSignup, [data.invitation.InvitationID], null, true);
-                    } else {
+                    } else if (!data.invitation.ApplicantOrganizationID && !data.invitation.EducatorID && !data.invitation.EmployeeOrganizationID && data.invitation.RepresentedOrganizationID) {
                         data.isValid = false;
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'Invalid invitation' }, true);
                     }
@@ -402,10 +404,10 @@ function postUserSignupData(req, res, next) {
     
     promise = promise.then(function (data) {
         if (data.isValid) {
-            if (!data.invitation) {
-                data.nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [], null, true);
-            } else {
+            if (data.invitation) {
                 user.InvitationID = data.invitation.InvitationID;
+                data.invitation.FulfillmentUserID = user.UserID;
+                data.invitation.FulfillmentDateTime = new Date();
             }
             return api.save(user).then(function () {
                 return data;
@@ -416,12 +418,11 @@ function postUserSignupData(req, res, next) {
     });
     
     promise = promise.then(function (data) {
-        if (data.isValid && data.invitation) {
-            data.invitation.FulfillmentUserID = user.UserID;
-            data.invitation.FulfillmentDateTime = new Date();
-            return api.save(data.invitation).then(function () { return data; });
-        } else {
-            return data;
+        if (data.isValid) {
+            data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Hold, [], null);
+            return email.sendUserConfirmationEmail(user).then(function () {
+                return data;
+            });
         }
     });
 
@@ -436,6 +437,49 @@ function postUserSignupData(req, res, next) {
         }).then(function (data) {
             res.redirect(data.nextUrl);
         });
+}
+
+function confirmUserAccount(req, res, next) {
+    var userID = req.params.userID;
+    var confirmationID = req.params.confirmationID;
+    
+    var ret = Promise.resolve(req.user);
+    if (!req.user) {
+        ret = ret.then(function () {
+            return api.querySingle('User', ['Invitation'], null, { UserID: userID });
+        });
+    }
+    ret = ret.then(function (user) {
+        if (!user) {
+            res.redirect(myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'User confirmation failed.' }));
+        } else {
+            user.confirmed = true;
+            var nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [], null, true);
+            if (user.InvitationID) {
+                if (user.Invitation.RepresentedOrganizationID) {
+                    nextUrl = myUrl.createUrl(myUrl.createUrlType.OrganizationSignup, [user.InvitationID], null, true);
+                } else {
+                    nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [user.InvitationID], null, true);
+                }
+            }
+            return api.save(user).then(function () {
+                log.info({ userID: userID, confirmationID: confirmationID }, 'User email confirmed');
+                res.redirect(nextUrl);
+            });
+        }
+    });
+    return ret;
+}
+
+function testSendEmail(req, res, next) {
+    var email = require('../modules/email');
+    var fromAddress = req.body.FromAddress;
+    var toAddress = req.body.ToAddress;
+    var subject = req.body.Subject;
+    var body = req.body.Body;
+    return email.sendEmail('test', fromAddress, toAddress, subject, body).then(function () {
+        res.redirect(myUrl.createUrl(myUrl.createUrlType.TestEmail, [], null));
+    });
 }
 
 /*

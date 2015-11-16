@@ -78,6 +78,7 @@
     <Content Include="app\views\EducatorSignup.view" />
     <Content Include="app\views\EducatorTenure.view" />
     <Content Include="app\views\FatalError.view" />
+    <Content Include="app\views\Hold.view" />
     <Content Include="app\views\Home.view" />
     <Content Include="app\views\Standard.Upload.html" />
     <Content Include="app\views\Login.view" />
@@ -87,6 +88,7 @@
     <Content Include="app\views\OrganizationSignup.view" />
     <Content Include="app\views\Standard.Footer.html" />
     <Content Include="app\views\Standard.Header.html" />
+    <Content Include="app\views\TestEmail.view" />
     <Content Include="app\views\UserSignup.view" />
     <Content Include="docs\form168 workflow.txt" />
     <Content Include="docs\signup use cases.txt" />
@@ -147,12 +149,14 @@
     <Compile Include="app\views\FatalError.data.js" />
     <Compile Include="app\views\FillForm.data.js" />
     <Compile Include="app\views\Base.data.js" />
+    <Compile Include="app\views\Hold.data.js" />
     <Compile Include="app\views\Home.data.js" />
     <Compile Include="app\views\Login.controller.js" />
     <Compile Include="app\views\Login.data.js" />
     <Compile Include="app\views\OrganizationDashboard.data.js" />
     <Compile Include="app\views\OrganizationSignup.controller.js" />
     <Compile Include="app\views\OrganizationSignup.data.js" />
+    <Compile Include="app\views\TestEmail.data.js" />
     <Compile Include="app\views\UserSignup.controller.js" />
     <Compile Include="app\views\UserSignup.data.js" />
     <Compile Include="biz\document.js" />

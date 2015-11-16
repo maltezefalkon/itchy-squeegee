@@ -42,22 +42,24 @@ module.exports.createLoginHandler = function (loginPagePath) {
         var data = req.body; // assumes body-parser is in place
         api.querySingle('User', ['LinkedOrganization', 'LinkedEducator'], null, { UserName: data.username })
             .then(function (user) {
-                if (user) {
-                    if (user.Deactivated) {
-                        nextUrl = loginPagePath + '?Message=' + encodeURIComponent('This user account is no longer active.');
-                    } else if (!bcrypt.compareSync(data.password, user.Hash)) {
-                        nextUrl = loginPagePath + '?Message=' + encodeURIComponent('Incorrect password.');
-                    } else {
-                        return CreateSession(user, req, res, next).then(function () {
-                            var url = myUrl.createDefaultUrl(user);
-                            res.redirect(url);
-                        });
-                    }
+            if (user) {
+                if (user.Disabled) {
+                    nextUrl = loginPagePath + '?Message=' + encodeURIComponent('This user account is no longer active.');
+                } else if (!user.Confirmed) {
+                    nextUrl = loginPagePath + '?Message=' + encodeURIComponent('This user account has not yet been activated.');
+                } else if (!bcrypt.compareSync(data.password, user.Hash)) {
+                    nextUrl = loginPagePath + '?Message=' + encodeURIComponent('Incorrect password.');
                 } else {
-                    res.redirect(loginPagePath + '?Message=' + encodeURIComponent('User not found.'));
+                    return CreateSession(user, req, res, next).then(function () {
+                        var url = myUrl.createDefaultUrl(user);
+                        res.redirect(url);
+                    });
                 }
-            });
-        };
+            } else {
+                res.redirect(loginPagePath + '?Message=' + encodeURIComponent('User not found.'));
+            }
+        });
+    };
 }
 
 module.exports.createLogoutHandler = function (afterLogoutPath) {
@@ -85,11 +87,11 @@ module.exports.createUserAccountCreationHandler = function () {
         };
         api.save(user)
             .then(function () {
-                return CreateSession(user, req, res, next).then(function () {
-                    next();
-                });
+            return CreateSession(user, req, res, next).then(function () {
+                next();
             });
-        };
+        });
+    };
 }
 
 function CreateSession(user, req, res, next) {

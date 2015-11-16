@@ -9,6 +9,7 @@ module.exports.createUrlType = {
     OrganizationDashboard: 'OrganizationDashboard',
     EducatorDashboard: 'EducatorDashboard',
     Error: 'Error',
+    Hold: 'Hold',
     EducatorSignup: 'EducatorSignup',
     EducatorTenure: 'EducatorTenure',
     EducatorDocuments: 'EducatorDocuments',
@@ -21,7 +22,9 @@ module.exports.createUrlType = {
     UserSignup: 'UserSignup',
     DownloadForm: 'DownloadForm',
     UploadForm: 'UploadForm',
-    ApiCommand: 'ApiCommand'
+    ApiCommand: 'ApiCommand',
+    TestEmail: 'TestEmail',
+    ConfirmUser: 'ConfirmUser'
 };
 
 var urls = {
@@ -30,6 +33,7 @@ var urls = {
     EducatorDashboard: '/app/view/EducatorDashboard',
     OrganizationDashboard: '/app/view/OrganizationDashboard',
     Error: '/app/view/FatalError',
+    Hold: '/app/view/Hold',
     EducatorTenure: '/app/view/EducatorTenure',
     EducatorSignup: '/app/view/EducatorSignup',
     EducatorDocuments: '/app/view/EducatorDocuments',
@@ -42,7 +46,9 @@ var urls = {
     UserSignup: '/app/view/UserSignup',
     DownloadForm: '/app/form/Download',
     UploadForm: '/app/form/Upload',
-    ApiCommand: '/api/command'
+    ApiCommand: '/api/command',
+    TestEmail: '/app/view/TestEmail',
+    ConfirmUser: '/app/user/Confirm'
 };
 
 

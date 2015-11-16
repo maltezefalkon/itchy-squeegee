@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%=headerTags%>
+    <title>Send Email</title>
+    <style type="text/css">
+	.form-field-row {
+		padding-bottom: 25px;
+	}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <%=pageHeader%>
+        <%=pageMasthead%>
+        <form action="<%=path%>" method="post" role="form" class="form-horizontal">
+			<div class="row">
+				<div class="form-group col-xs-12 col-md-6">
+					<label for="FromAddress" class="control-label col-xs-2 col-md-4">From</label>
+					<div class="col-xs-10 col-md-8">
+						<input type="email" name="FromAddress" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+					<label for="FromAddress" class="control-label col-xs-2 col-md-4">To</label>
+					<div class="col-xs-10 col-md-8">
+						<input type="email" name="ToAddress" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="Subject" class="control-label col-xs-2">Subject</label>
+					<div class="col-xs-10">
+						<input type="text" name="Subject" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group col-xs-12">
+					<label for="Body" class="control-label col-xs-2">Body</label>
+					<div class="col-xs-10">
+						<textarea name="Body" rows="5" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-offset-2 col-sm-8 col-xs-12">
+					<button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit">
+						Send Email <span class="glyphicon glyphicon-envelope"></span>
+					</button>
+				</div>
+			</div>
+		</form>
+    </div>
+</body>
+</html>

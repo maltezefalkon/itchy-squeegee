@@ -28,6 +28,10 @@
             "type": "UUID",
             "field": "invitation_id"
         },
+        "ConfirmationID": {
+            "type": "UUID",
+            "field": "confirmation_id"
+        },
         "LinkedOrganizationID": {
             "type": "UUID",
             "field": "linked_organization_id"
@@ -36,9 +40,15 @@
             "type": "UUID",
             "field": "linked_educator_id"
         },
-        "Deactivated": {
+        "Disabled": {
             "type": "BOOLEAN",
-            "field": "deactivated",
+            "field": "disabled",
+            "allowNull": false,
+            "defaultValue": false
+        },
+        "Confirmed": {
+            "type": "BOOLEAN",
+            "field": "confirmed",
             "allowNull": false,
             "defaultValue": false
         }

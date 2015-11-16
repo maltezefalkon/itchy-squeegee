@@ -37,33 +37,49 @@ var compiledApplicationOrganizationTemplate = _.template(applicationOrganization
 
 module.exports.sendForm168EmailToFormerEmployer = SendForm168EmailToFormerEmployer;
 module.exports.sendForm168EmailToApplicationOrganization = SendForm168EmailToApplicationOrganization;
+module.exports.sendUserConfirmationEmail = SendUserConfirmationEmail;
+module.exports.sendEmail = SendEmail;
 
-function SendForm168EmailToFormerEmployer(documentInstance) {
-    var fromAddress = documentInstance.Educator.EmailAddress;
-    var toAddress = overrideEmailRecipient || documentInstance.ReferenceTenure.Organization.EmailAddress;
-    var educatorName = documentInstance.Educator.FirstName + ' ' + documentInstance.Educator.LastName;
-    var subject = documentInstance.Definition.Name + ' for ' + educatorName;
-    
+function SendEmail(purpose, fromAddress, toAddress, subject, body) {
     var restOptions = {
         method: 'POST',
         data: {
             from: fromAddress,
             subject: subject,
             to: toAddress,
-            text: compiledFormerEmployerTemplate(
-                {
-                    url: myurl.createUrl(myurl.createUrlType.FillForm, { DocumentInstanceID: documentInstance.DocumentInstanceID, Section: 'FormerOrganization' }),
-                    doc: documentInstance
-                }),
+            text: body
         },
         username: mailgunUsername,
         password: mailgunPassword,
         multipart: true
     };
     
-    log.debug({ emailPostInformation: restOptions }, 'generating POST for MailGun to send form 168');
+    log.debug({ purpose: purpose, emailPostInformation: restOptions }, 'generating POST for MailGun to send email for ' + purpose);
+    
+    return rest.post(mailgunAPIPostUrl, restOptions);
+}
 
-    return rest.post(mailgunAPIPostUrl, restOptions).then(
+function SendUserConfirmationEmail(user) {
+    var body = 'Thank you for creating an account at ' + myurl.domainName + '.\n\nPlease click the following link to complete your registration process:\n\n';
+    body += myurl.createUrl(myurl.createUrlType.ConfirmUser, [user.UserID, user.ConfirmationID], null, false);
+    return SendEmail('User confirmation', 'noreply@' + myurl.domainName, overrideEmailRecipient || user.EmailAddress, 
+        'Activate your account at ' + myurl.domainName, body);
+}
+
+function SendForm168EmailToFormerEmployer(documentInstance) {
+    var fromAddress = documentInstance.Educator.EmailAddress;
+    var toAddress = overrideEmailRecipient || documentInstance.ReferenceTenure.Organization.EmailAddress;
+    var educatorName = documentInstance.Educator.FirstName + ' ' + documentInstance.Educator.LastName;
+    var subject = documentInstance.Definition.Name + ' for ' + educatorName;
+    var body = compiledFormerEmployerTemplate(
+        {
+            url: myurl.createUrl(myurl.createUrlType.FillForm, { DocumentInstanceID: documentInstance.DocumentInstanceID, Section: 'FormerOrganization' }),
+            doc: documentInstance
+        });
+
+    var promise = SendEmail('Form168 to Former Employer for DocumentInstanceID ' + documentInstance.DocumentInstanceID, fromAddress, toAddress, subject, body);
+
+    return promise.then(
         function (json) {
             var message = json.data.message;
             if (json.response.statusCode == 200) {
@@ -86,27 +102,15 @@ function SendForm168EmailToApplicationOrganization(documentInstance) {
     var toAddress = overrideEmailRecipient || documentInstance.ReferenceTenure.Organization.EmailAddress;
     var educatorName = documentInstance.Educator.FirstName + ' ' + documentInstance.Educator.LastName;
     var subject = documentInstance.Definition.Name + ' for ' + educatorName;
+    var body = compiledApplicationOrganizationTemplate(
+        {
+            url: myurl.createUrl(myurl.createUrlType.OrganizationDashboard, { OrganizationID: documentInstance.ApplicableTenure.OrganizationID }),
+            doc: documentInstance
+        });
     
-    var restOptions = {
-        method: 'POST',
-        data: {
-            from: fromAddress,
-            subject: subject,
-            to: toAddress,
-            text: compiledApplicationOrganizationTemplate(
-                {
-                    url: myurl.createUrl(myurl.createUrlType.OrganizationDashboard, { OrganizationID: documentInstance.ApplicableTenure.OrganizationID }),
-                    doc: documentInstance
-                }),
-        },
-        username: mailgunUsername,
-        password: mailgunPassword,
-        multipart: true
-    };
-    
-    log.debug({ emailPostInformation: restOptions }, 'generating POST for MailGun to send form 168');
-    
-    return rest.post(mailgunAPIPostUrl, restOptions).then(
+    var promise = sendEmail('Form168 to Application Organization for DocumentInstanceID ' + documentInstance.DocumentInstanceID, fromAddress, toAddress, subject, body);
+
+    return promise.then(
         function (json) {
             var message = json.data.message;
             if (json.response.statusCode == 200) {

@@ -39,6 +39,8 @@ var publicPaths = [
     /^\/app\/user\/Signup\/?/i,
     /^\/favicon.ico$/i,
     /^\/app\/view\/FatalError\/?$/i,
+    /^\/app\/view\/TestEmail\/?$/i,
+    /^\/app\/view\/Hold\/?$/i,
     /^\/app\/user\/Login\/?$/i,
     /^\/app\/public\/(\w+).html/i
 ];
@@ -91,6 +93,7 @@ app.use('/app/biz', express.static('biz'));
 // user management routes
 app.post('/app/user/login', sessionManagement.createLoginHandler(loginPath));
 app.get('/app/user/logout', sessionManagement.createLogoutHandler(loginPath));
+app.get('/app/user/Confirm/:userID/:confirmationID', signupServices.confirmUserAccount);
 
 // form routes
 app.post('/app/view/FillForm/:documentInstanceID', formServices.postFormData);
@@ -104,6 +107,9 @@ app.post('/app/view/UserSignup/:invitationID?', signupServices.postUserSignupDat
 app.post('/app/view/OrganizationSignup/:invitationID', signupServices.postOrganizationSignupData);
 app.post('/app/view/EducatorSignup/:invitationID?', signupServices.postEducatorSignupData);
 app.post('/app/view/EducatorTenure/:invitationID?', signupServices.postEducatorTenureData);
+
+// test
+app.post('/app/view/TestEmail', signupServices.testSendEmail);
 
 // =============
 
