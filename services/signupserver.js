@@ -423,6 +423,8 @@ function postUserSignupData(req, res, next) {
             return email.sendUserConfirmationEmail(user).then(function () {
                 return data;
             });
+        } else {
+            return data;
         }
     });
 
