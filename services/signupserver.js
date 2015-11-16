@@ -446,9 +446,13 @@ function confirmUserAccount(req, res, next) {
     }
     ret = ret.then(function (user) {
         if (!user) {
-            res.redirect(myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'User confirmation failed.' }));
+            log.info({ userConfirmationError: 'User confirmation failed due to bad user information.' })
+            res.redirect(myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'User confirmation failed due to bad user information.' }));
+        } else if (!user.ConfirmationID == confirmationID) {
+            log.info({ userConfirmationError: 'User confirmation failed due to a confirmation ID mismatch.' })
+            res.redirect(myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'User confirmation failed due to a confirmation ID mismatch.' }));
         } else {
-            user.confirmed = true;
+            user.Confirmed = true;
             var nextUrl = myUrl.createUrl(myUrl.createUrlType.EducatorSignup, [], null, true);
             if (user.InvitationID) {
                 if (user.Invitation.RepresentedOrganizationID) {
