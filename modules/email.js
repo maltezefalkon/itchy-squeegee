@@ -35,6 +35,12 @@ var applicationOrganizationTemplate =
  '\n\nThank you.';
 var compiledApplicationOrganizationTemplate = _.template(applicationOrganizationTemplate);
 
+var userActivationTemplate =
+ 'Thank you for creating an account at ClearanceManagement.com.\n\nPlease click ' + 
+ 'the following link to complete the registration process:\n\n' +
+ '<%=url%>';
+var compiledUserActivationTemplate = _.template(userActivationTemplate);
+
 module.exports.sendForm168EmailToFormerEmployer = SendForm168EmailToFormerEmployer;
 module.exports.sendForm168EmailToApplicationOrganization = SendForm168EmailToApplicationOrganization;
 module.exports.sendUserConfirmationEmail = SendUserConfirmationEmail;
@@ -54,7 +60,7 @@ function SendEmail(purpose, fromAddress, toAddress, subject, body) {
         multipart: true
     };
     
-    log.debug({ purpose: purpose, emailPostInformation: restOptions }, 'generating POST for MailGun to send email for ' + purpose);
+    log.info({ purpose: purpose, emailPostInformation: restOptions }, 'generating POST for MailGun to send email for ' + purpose);
     
     return rest.post(mailgunAPIPostUrl, restOptions);
 }
@@ -66,10 +72,15 @@ function SendUserConfirmationEmail(user) {
             return SendUserConfirmationEmail(u);
         });
     } else {
-        var body = 'Thank you for creating an account at ' + myurl.domainName + '.\n\nPlease click the following link to complete your registration process:\n\n';
-        body += myurl.createUrl(myurl.createUrlType.ConfirmUser, [user.UserID, user.ConfirmationID], null, false);
-        return SendEmail('User confirmation', 'noreply@' + myurl.domainName, overrideEmailRecipient || user.EmailAddress, 
-            'Activate your account at ' + myurl.domainName, body);
+        var body = compiledUserActivationTemplate({
+            url: myurl.createUrl(myurl.createUrlType.ConfirmUser, [user.UserID, user.ConfirmationID], null, false)
+        });
+        return SendEmail(
+            'User confirmation', 
+            'noreply@' + myurl.domainName, 
+            overrideEmailRecipient || user.EmailAddress,
+            'Activate your account at ' + myurl.domainName, 
+            body);
     }
 }
 
