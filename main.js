@@ -94,7 +94,7 @@ app.use('/app/biz', express.static('biz'));
 // user management routes
 app.post('/app/user/login', sessionManagement.createLoginHandler(loginPath));
 app.get('/app/user/logout', sessionManagement.createLogoutHandler(loginPath));
-app.get('/app/user/Confirm/:userID/:confirmationID', signupServices.confirmUserAccount);
+app.get('/app/user/Confirm/:userID;:confirmationID', signupServices.confirmUserAccount);
 
 // form routes
 app.post('/app/view/FillForm/:documentInstanceID', formServices.postFormData);
