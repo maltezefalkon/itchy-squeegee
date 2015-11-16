@@ -60,10 +60,17 @@ function SendEmail(purpose, fromAddress, toAddress, subject, body) {
 }
 
 function SendUserConfirmationEmail(user) {
-    var body = 'Thank you for creating an account at ' + myurl.domainName + '.\n\nPlease click the following link to complete your registration process:\n\n';
-    body += myurl.createUrl(myurl.createUrlType.ConfirmUser, [user.UserID, user.ConfirmationID], null, false);
-    return SendEmail('User confirmation', 'noreply@' + myurl.domainName, overrideEmailRecipient || user.EmailAddress, 
-        'Activate your account at ' + myurl.domainName, body);
+    // if passed an ID, query the object
+    if (typeof user === 'string') {
+        api.querySingle('User', ['Invitation'], null, { UserID: user }).then(function (u) {
+            return SendUserConfirmationEmail(u);
+        });
+    } else {
+        var body = 'Thank you for creating an account at ' + myurl.domainName + '.\n\nPlease click the following link to complete your registration process:\n\n';
+        body += myurl.createUrl(myurl.createUrlType.ConfirmUser, [user.UserID, user.ConfirmationID], null, false);
+        return SendEmail('User confirmation', 'noreply@' + myurl.domainName, overrideEmailRecipient || user.EmailAddress, 
+            'Activate your account at ' + myurl.domainName, body);
+    }
 }
 
 function SendForm168EmailToFormerEmployer(documentInstance) {

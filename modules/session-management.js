@@ -46,7 +46,7 @@ module.exports.createLoginHandler = function (loginPagePath) {
                 if (user.Disabled) {
                     nextUrl = loginPagePath + '?Message=' + encodeURIComponent('This user account is no longer active.');
                 } else if (!user.Confirmed) {
-                    nextUrl = loginPagePath + '?Message=' + encodeURIComponent('This user account has not yet been activated.');
+                    nextUrl = loginPagePath + '?Message=' + encodeURIComponent('This user account has not yet been activated.  Please check your email.');
                 } else if (!bcrypt.compareSync(data.password, user.Hash)) {
                     nextUrl = loginPagePath + '?Message=' + encodeURIComponent('Incorrect password.');
                 } else {
@@ -58,6 +58,7 @@ module.exports.createLoginHandler = function (loginPagePath) {
             } else {
                 res.redirect(loginPagePath + '?Message=' + encodeURIComponent('User not found.'));
             }
+            res.redirect(nextUrl);
         });
     };
 }
