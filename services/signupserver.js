@@ -436,7 +436,7 @@ function postUserSignupData(req, res, next) {
 
 function confirmUserAccount(req, res, next) {
     var userID = req.params.userID;
-    var confirmationID = req.params.confirmationID;
+    var confirmationID = req.query.conf;
     
     var ret = Promise.resolve(req.user);
     if (!req.user) {

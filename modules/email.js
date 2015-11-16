@@ -73,7 +73,7 @@ function SendUserConfirmationEmail(user) {
         });
     } else {
         var body = compiledUserActivationTemplate({
-            url: myurl.createUrl(myurl.createUrlType.ConfirmUser, [user.UserID, user.ConfirmationID], null, false)
+            url: myurl.createUrl(myurl.createUrlType.ConfirmUser, [user.UserID], { conf: user.ConfirmationID }, false)
         });
         return SendEmail(
             'User confirmation', 
