@@ -37,6 +37,7 @@ var publicPaths = [
     /^\/app\/view\/About$/i, 
     /^\/app\/view\/UserSignup\/?/i,
     /^\/app\/user\/Signup\/?/i,
+    /^\/app\/user\/Confirm\/?/i,
     /^\/favicon.ico$/i,
     /^\/app\/view\/FatalError\/?$/i,
     /^\/app\/view\/TestEmail\/?$/i,
