@@ -428,13 +428,6 @@ function postUserSignupData(req, res, next) {
 
     return promise
         .then(function (data) {
-            if (data.isValid) {
-                return sessionManagement.createSession(user, req, res, next)
-                    .then(function () { return data; });
-            } else {
-                return data;
-            }
-        }).then(function (data) {
             res.redirect(data.nextUrl);
         });
 }
@@ -464,6 +457,8 @@ function confirmUserAccount(req, res, next) {
             }
             return api.save(user).then(function () {
                 log.info({ userID: userID, confirmationID: confirmationID }, 'User email confirmed');
+                return sessionManagement.createSession(user, req, res, next);
+            }).then(function () {
                 res.redirect(nextUrl);
             });
         }
