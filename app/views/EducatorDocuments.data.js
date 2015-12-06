@@ -33,7 +33,7 @@ function extractUniqueUploadableDefinitions(requiredDocumentDescriptors) {
     var ret = [];
     var uniqueIDs = [];
     for (var i in requiredDocumentDescriptors) {
-        if (requiredDocumentDescriptors[i].DocumentDefinition.IsUpload) {
+        if (requiredDocumentDescriptors[i].DocumentDefinition.HasUpload) {
             var thisID = requiredDocumentDescriptors[i].DocumentDefinition.DocumentDefinitionID;
             if (uniqueIDs.indexOf(thisID) < 0) {
                 ret.push(requiredDocumentDescriptors[i].DocumentDefinition);

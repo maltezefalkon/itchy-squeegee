@@ -19,14 +19,26 @@
     }
 }
 
+function isDocumentReadyToSubmit(doc, def, sub) {
+    if (!doc || sub) {
+        return false;
+    } else if (def.HasUpload && !doc.BinaryFileID) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         exports = module.exports = {
-            calculateDocumentRenewalDate: calculateDocumentRenewalDate
+            calculateDocumentRenewalDate: calculateDocumentRenewalDate,
+            isDocumentReadyToSubmit: isDocumentReadyToSubmit
         };
     }
     exports = {
-        calculateDocumentRenewalDate: calculateDocumentRenewalDate
+        calculateDocumentRenewalDate: calculateDocumentRenewalDate,
+        isDocumentReadyToSubmit: isDocumentReadyToSubmit
     };
 }
 

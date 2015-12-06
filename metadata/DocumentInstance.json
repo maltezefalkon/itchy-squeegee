@@ -83,6 +83,11 @@
             "RelationshipType": "belongsTo",
             "ForeignKey": "binary_file_id",
             "RelatedTypeKey": "BinaryFile"
+        },
+        "Signatures": {
+            "RelationshipType": "hasMany",
+            "ForeignKey": "document_instance_id",
+            "RelatedTypeKey": "Signature"
         }
     }
 }

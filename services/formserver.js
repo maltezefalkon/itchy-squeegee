@@ -37,14 +37,38 @@ function postFormData(req, res, next) {
         });
     }).then(function (documentInstance) {
         return Promise.map(_.map(documentInstance.Fields, 'Definition'), function (fieldDefinition) {
-            var fieldInstance = null;
-            var value = data[fieldDefinition.DocumentDefinitionFieldID];
-            if (value) {
-                fieldInstance = forms.FindDocumentInstanceField(documentInstance, fieldDefinition.DocumentDefinitionFieldID);
-                fieldInstance.FieldValue = value;
-                return api.save(fieldInstance);
+            if (fieldDefinition.FieldSection == section) {
+                var fieldInstance = null;
+                var value = data[fieldDefinition.DocumentDefinitionFieldID];
+                if (fieldDefinition.LogicalFieldType == 'Signature') {
+                    fieldInstance = forms.FindDocumentInstanceField(documentInstance, fieldDefinition.DocumentDefinitionFieldID);
+                    var signature = new meta.bo.Signature();
+                    signature.DocumentInstanceID = documentInstance.DocumentInstanceID;
+                    signature.SignatureData = value;
+                    signature.DocumentDefinitionFieldID = fieldDefinition.DocumentDefinitionFieldID;
+                    if (req.user.LinkedOrganizationID == documentInstance.ReferenceTenure.OrganizationID) {
+                        signature.OrganizationID = documentInstance.ReferenceTenure.OrganizationID;
+                    } else if (req.user.LinkedOrganizationID == documentInstance.ApplicableTenure.OrganizationID) {
+                        signature.OrganizationID = documentInstance.ReferenceTenure.OrganizationID;
+                    } else if (req.user.LinkedEducatorID == documentInstance.EducatorID) {
+                        signature.EducatorID = documentInstance.EducatorID;
+                    } else {
+                        throw new Error('Failed to link signature to educator or organization');
+                    }
+                    return api.save(signature).then(function () {
+                        fieldInstance.FieldValue = signature.SignatureID;
+                        return api.save(fieldInstance);
+                    });
+                } else if (value) {
+                    fieldInstance = forms.FindDocumentInstanceField(documentInstance, fieldDefinition.DocumentDefinitionFieldID);
+                    fieldInstance.FieldValue = value;
+                    return api.save(fieldInstance);
+                }
             }
         }).then(function () {
+            return api.querySingle('DocumentInstance', ['Signatures', 'Fields.Definition.SignatureRegion'], null, { DocumentInstanceID: documentInstance.DocumentInstanceID });
+        }).then(function (di) {
+            forms.GenerateSignaturePDF(di);
             return documentInstance;
         });
     }).then(function (documentInstance) {
@@ -70,7 +94,7 @@ function postFormData(req, res, next) {
 
 function downloadDocument(req, res, next) {
     var documentInstanceID = req.params.documentInstanceID;
-    api.querySingle('DocumentInstance', ['Definition.Fields', 'Fields', 'Educator', 'BinaryFile'], null, { DocumentInstanceID: documentInstanceID })
+    api.querySingle('DocumentInstance', ['Definition.Fields.SignatureRegion', 'Fields', 'Educator', 'BinaryFile', 'Signatures' ], null, { DocumentInstanceID: documentInstanceID })
     .then(function (documentInstance) {
         var ret = {
             redirect: null,
@@ -81,7 +105,7 @@ function downloadDocument(req, res, next) {
         if (!documentInstance) {
             ret.redirect = myUrl.createUrl(myUrl.createUrlType.Error, { message: 'Invalid Document UUID' });
             return Promise.resolve(ret);
-        } else if (!documentInstance.Definition.IsUpload) {
+        } else if (documentInstance.Definition.GeneratePDF) {
             return forms.GeneratePDF(documentInstance).then(function (fileData) {
                 ret.mimeType = 'application/pdf';
                 ret.fileData = fileData;

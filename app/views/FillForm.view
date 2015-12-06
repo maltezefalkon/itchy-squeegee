@@ -7,7 +7,32 @@
 	.form-field-row {
 		padding-bottom: 25px;
 	}
+	.kbw-signature {
+		width: 500px;
+		height: 200px;
+		border: solid black 1px;
+	}
     </style>
+	<link type="text/css" href="/client/lib/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="/client/lib/jquery-signature-1.1.2/jquery.signature.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.4/jquery.min.js"></script>
+	<script type="text/javascript" src="/client/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+	<!--[if IE]> 
+	<script type="text/javascript" src="/client/lib/jquery-signature-1.1.2/excanvas.js"></script> 
+	<![endif]-->
+	<script type="text/javascript" src="/client/lib/jquery-signature-1.1.2/jquery.signature.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		$('.sig').signature({ 
+			guideline: true,
+			change: function(event, ui) {
+				var correspondingInputID = $(this).attr('inputID');
+				var json = $(this).signature('toJSON');
+				$('#' + correspondingInputID).val(json);
+			}
+		});
+	});
+	</script>
 </head>
 <body>
     <div class="container">
@@ -20,7 +45,7 @@
             });
             for (var i in documentDefinition.Fields) {
                 var fld = documentDefinition.Fields[i];
-                if (!fld.FieldExpression && (!section || fld.FieldSection == section)) {
+                if (!fld.FieldExpression && (!fld.FieldSection || fld.FieldSection == section)) {
             %>
             <div class="row">
                 <div class="col-sm-12">

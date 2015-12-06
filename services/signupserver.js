@@ -26,6 +26,7 @@ module.exports.postUserSignupData = postUserSignupData;
 module.exports.postEducatorSignupData = postEducatorSignupData;
 module.exports.postEducatorTenureData = postEducatorTenureData;
 module.exports.postOrganizationSignupData = postOrganizationSignupData;
+module.exports.postOrganizationInfo = postOrganizationInfo;
 module.exports.confirmUserAccount = confirmUserAccount;
 module.exports.testSendEmail = testSendEmail;
 
@@ -298,6 +299,44 @@ function postOrganizationSignupData(req, res, next) {
     
 }
 
+function postOrganizationInfo(req, res, next) {
+    
+    if (req.method != "POST") {
+        throw new Error("Invalid verb routed to postOrganizationSignupData");
+    }
+    
+    if (!req.body.OrganizationID) {
+        throw new Error('No OrganizationID supplied');
+    }
+    
+    if (req.user.LinkedOrganizationID != req.body.OrganizationID) {
+        throw new Error('User does not have permission to edit this Organization\'s information');
+    }
+    
+    var organization = {
+            _TypeKey: 'Organization',
+            OrganizationID: req.body.OrganizationID,
+            Name: req.body.OrganizationName,
+            Address1: req.body.OrganizationAddress1,
+            Address2: req.body.OrganizationAddress2,
+            City: req.body.OrganizationCity,
+            State: req.body.OrganizationState,
+            ZipCode: req.body.OrganizationZipCode,
+            EmailAddress: req.body.OrganizationEmail,
+            TelephoneNumber: req.body.OrganizationTelephoneNumber,
+            FaxNumber: req.body.OrganizationFaxNumber,
+            RepresentativeFirstName: req.body.RepresentativeFirstName,
+            RepresentativeLastName: req.body.RepresentativeLastName,
+            RepresentativeJobTitle: req.body.RepresentativeJobTitle
+    };
+    
+    api.save(organization).then(function () {
+        res.redirect(myUrl.createDefaultUrl(req.user));
+    });
+    
+}
+
+
 function createDocumentStubs(educatorID, tenurePredicate) {
     log.debug('Creating document stubs');
     var ret = api.query('Educator', ['Tenures.Organization'], null, { EducatorID: educatorID });
@@ -388,7 +427,7 @@ function postUserSignupData(req, res, next) {
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Login);
                         data.invitation = null;
                         data.isValid = false;
-                    } else if (!data.invitation.ApplicantOrganizationID && !data.invitation.EducatorID && !data.invitation.EmployeeOrganizationID && data.invitation.RepresentedOrganizationID) {
+                    } else if (!data.invitation.ApplicantOrganizationID && !data.invitation.EducatorID && !data.invitation.EmployeeOrganizationID && !data.invitation.RepresentedOrganizationID) {
                         data.isValid = false;
                         data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'Invalid invitation' }, true);
                     }
@@ -406,12 +445,14 @@ function postUserSignupData(req, res, next) {
         if (data.isValid) {
             if (data.invitation) {
                 user.InvitationID = data.invitation.InvitationID;
-                data.invitation.FulfillmentUserID = user.UserID;
-                data.invitation.FulfillmentDateTime = new Date();
             }
             return api.save(user).then(function () {
+                data.invitation.FulfillmentUserID = user.UserID;
+                data.invitation.FulfillmentDateTime = new Date();
+                return api.save(data.invitation);
+            }).then(function () {
                 return data;
-            });
+            })
         } else {
             return data;
         }
@@ -438,13 +479,7 @@ function confirmUserAccount(req, res, next) {
     var userID = req.params.userID;
     var confirmationID = req.query.conf;
     
-    var ret = Promise.resolve(req.user);
-    if (!req.user) {
-        ret = ret.then(function () {
-            return api.querySingle('User', ['Invitation'], null, { UserID: userID });
-        });
-    }
-    ret = ret.then(function (user) {
+    var ret = api.querySingle('User', ['Invitation'], null, { UserID: userID }).then(function (user) {
         if (!user) {
             log.info({ userConfirmationError: 'User confirmation failed due to bad user information.' })
             res.redirect(myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'User confirmation failed due to bad user information.' }));

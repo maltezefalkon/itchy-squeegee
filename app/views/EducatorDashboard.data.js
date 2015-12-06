@@ -4,6 +4,7 @@ var api = require('../../modules/api');
 var ViewData = require('../../app/views/Base.data.js');
 var DocumentStatus = require('../../biz/status').DocumentStatus;
 var SubmissionStatus = require('../../biz/status').SubmissionStatus;
+var DocumentFunctions = require('../../biz/document');
 var forms = require('../../modules/forms');
 
 module.exports = function (req) {
@@ -15,6 +16,7 @@ module.exports = function (req) {
         ret.isTenureCurrent = isTenureCurrent;
         ret.getDocumentStatusMarkup = getDocumentStatusMarkup;
         ret.getSubmissionStatusMarkup = getSubmissionStatusMarkup;
+        ret.isDocumentReadyToSubmit = DocumentFunctions.isDocumentReadyToSubmit;
         ret.DocumentStatus = DocumentStatus;
         ret.SubmissionStatus = SubmissionStatus;
         ret.applicationTenures = _.filter(educator.Tenures, function (t) { return isTenureApplication(t); });
@@ -35,7 +37,7 @@ function extractUniqueUploadableDefinitions(requiredDocumentDescriptors) {
     var ret = [];
     var uniqueIDs = [];
     for (var i in requiredDocumentDescriptors) {
-        if (requiredDocumentDescriptors[i].DocumentDefinition.IsUpload) {
+        if (requiredDocumentDescriptors[i].DocumentDefinition.HasUpload) {
             var thisID = requiredDocumentDescriptors[i].DocumentDefinition.DocumentDefinitionID;
             if (uniqueIDs.indexOf(thisID) < 0) {
                 ret.push(requiredDocumentDescriptors[i].DocumentDefinition);
@@ -97,4 +99,3 @@ function getSubmissionStatusID(submission, document) {
         return SubmissionStatus.Missing.StatusID;
     }
 }
-

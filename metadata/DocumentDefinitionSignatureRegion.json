@@ -1,0 +1,32 @@
+﻿{
+    "TypeKey": "DocumentDefinitionSignatureRegion",
+    "TableName": "document_definition_signature_region",
+    "FieldDefinitions": {
+        "DocumentDefinitionFieldID": {
+            "type": "UUID",
+            "field": "document_definition_field_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "PageNumber": {
+            "type": "INTEGER",
+            "field": "page_number"
+        },
+        "Top": {
+            "type": "INTEGER",
+            "field": "top"
+        },
+        "Left": {
+            "type": "INTEGER",
+            "field": "left"
+        },
+        "Width": {
+            "type": "INTEGER",
+            "field": "width"
+        },
+        "Height": {
+            "type": "INTEGER",
+            "field": "height"
+        }
+    }
+}

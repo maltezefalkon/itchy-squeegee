@@ -109,6 +109,9 @@ app.post('/app/view/OrganizationSignup/:invitationID', signupServices.postOrgani
 app.post('/app/view/EducatorSignup/:invitationID?', signupServices.postEducatorSignupData);
 app.post('/app/view/EducatorTenure/:invitationID?', signupServices.postEducatorTenureData);
 
+// this isn't a signup route, but the implementation is in signupServices
+app.post('/app/view/EditOrganizationInfo', signupServices.postOrganizationInfo);
+
 // test
 app.post('/app/view/TestEmail', signupServices.testSendEmail);
 

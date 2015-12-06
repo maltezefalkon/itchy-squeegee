@@ -33,7 +33,9 @@
         ],
         "PDFFieldOrdinal": 1,
         "DocumentDefinitionFieldID": "2b980c90-acef-4c0c-984b-52c54ab6e744",
+        "FieldSection": "Educator",
         "FieldDescription": "No applicable employment",
+        "FieldExpression": "null",
         "LogicalFieldType": "Boolean",
         "FieldRegex": null,
         "PDFTrueValue": null,
@@ -848,5 +850,27 @@
         "PDFNullValue": null,
         "FormFieldType": "Textarea",
         "LogicalFieldOrdinal": 7
+    },
+    {
+        "FieldType": "String",
+        "FieldName": "PAENumber",
+        "FieldFlags": 0,
+        "FieldJustification": "Left",
+        "FieldMaxLength": 10,
+        "DocumentDefinitionID": "40291979-5420-4078-8c55-1ca0e535958d",
+        "PDFFieldType": null,
+        "FieldNameAlt": "PAE Registration Number",
+        "PDFFieldOrdinal": 0,
+        "DocumentDefinitionFieldID": "56ae5890-f4bd-4b23-8e45-ed4905114287",
+        "FieldSection": null,
+        "FieldExpression": null,
+        "FieldDescription": "Please enter the PAE registration number associated with your application for the Act 114 Criminal History Record Information search.",
+        "LogicalFieldType": "String",
+        "FieldRegex": null,
+        "PDFTrueValue": null,
+        "PDFFalseValue": null,
+        "PDFNullValue": null,
+        "FormFieldType": "Textbox",
+        "LogicalFieldOrdinal": 0
     }
 ]

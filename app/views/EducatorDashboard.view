@@ -122,7 +122,7 @@ for (var j in filteredDescriptors) {
 									</button>
 									<ul class="dropdown-menu">
 <% 
-if (doc && !sub) { 
+if (isDocumentReadyToSubmit(doc, def, sub)) { 
 	var submissionTenureID = displayTenures[i].TenureID;
 	var submissionOrganizationID = displayTenures[i].OrganizationID;
 	if (doc.DocumentDefinitionID == Form168.DocumentDefinitionID) {
@@ -138,26 +138,31 @@ if (doc && !sub) {
 										<li class="divider"></li>
 <% } %>
 <% 
-if (!doc && !def.IsUpload) { 
+if (def.HasFillableFields) { 
 	var createFormUrlParameters = [def.DocumentDefinitionID, desc.ApplicableTenure ? desc.ApplicableTenure.TenureID : null, desc.ReferenceTenure ? desc.ReferenceTenure.TenureID : null ];
 %>
 										<li>
-											<a href="<%=createUrl('CreateForm', createFormUrlParameters)%>">
-												<span class="glyphicon glyphicon-star"></span> Create
+											<a href="<%=!doc ? createUrl('CreateForm', createFormUrlParameters) : createUrl('FillForm', [doc.DocumentInstanceID])%>">
+												<span class="glyphicon glyphicon-star"></span> <%=def.FieldFillDescription%>
 											</a>
 										</li>
 <% } %>
-<% if (doc) { %>
+<% if (doc && (
+		(def.HasUpload && doc.BinaryFileID) 
+		|| 
+		(def.HasFillableFields)
+  )
+) { %>
 										<li>
 											<a href="#" onclick="window.open('<%=createUrl('DownloadForm', [doc.DocumentInstanceID])%>')">
 												<span class="glyphicon glyphicon-save"></span> Download Document
 											</a>
 										</li>
 <% } %>
-<% if (def.IsUpload) { %>
+<% if (def.HasUpload) { %>
 										<li>
 											<a href="#" onclick="showUploadDialog('<%=def.Name%>','<%=def.DocumentDefinitionID%>',<%=desc.ApplicableTenure ? '\'' + desc.ApplicableTenure.TenureID + '\'' : 'null'%>, <%=desc.ReferenceTenure ? '\'' + desc.ReferenceTenure.TenureID + '\'' : 'null'%>, '<%=def.NewHireValidityPeriod%>', '<%=def.RenewalPeriod%>', <%=isTenureApplication(displayTenures[i])%>)">
-												<span class="glyphicon glyphicon-cloud-upload"></span> Upload<%=(doc ? ' Updated ' : ' ')%> Document
+												<span class="glyphicon glyphicon-cloud-upload"></span> Upload<%=(doc && doc.BinaryFileID ? ' Updated ' : ' ')%> Document
 											</a>
 										</li>
 <% } %>

@@ -61,10 +61,10 @@
                         <tbody>
                             <tr ng-repeat="document in tenure.ApplicableDocuments | orderBy: 'Name'">
                                 <td>
-                                    <button type="button" class="btn btn-block btn-success" ng-show="document.StatusID == Status.Missing.ID && !document.Definition.IsUpload" ng-click="navigateToFormFill(document)">
+                                    <button type="button" class="btn btn-block btn-success" ng-show="document.StatusID == Status.Missing.ID && document.Definition.HasFillableFields" ng-click="navigateToFormFill(document)">
                                         <span class="glyphicon glyphicon-star"></span> Create
                                     </button>
-                                    <button type="button" class="btn btn-block btn-success" ng-show="document.StatusID == Status.Missing.ID && document.Definition.IsUpload" ng-click="navigateToFormUpload(document)">
+                                    <button type="button" class="btn btn-block btn-success" ng-show="document.StatusID == Status.Missing.ID && document.Definition.HasUpload" ng-click="navigateToFormUpload(document)">
                                         <span class="glyphicon glyphicon-paperclip"></span> Upload
                                     </button>
                                     <button type="button" class="btn btn-block btn-primary" ng-show="document.StatusID != Status.Missing.ID" ng-click="navigateToFormDownload(document)">

@@ -15,6 +15,13 @@ var Form168 = {
     DocumentDefinitionID: '093076b1-3348-11e5-9a89-180373ea70a8'
 };
 
+var Form114 = {
+    DocumentDefinitionID: '40291979-5420-4078-8c55-1ca0e535958d'
+}
+
+var pdfFillerClientID = process.env.PDF_FILLER_CLIENT_ID || 'f34ab42d7488e7be';
+var pdfFillerClientSecret = process.env.PDF_FILLER_CLIENT_SECRET || '3hfBdm757re3PlSuHA0wnKAaxp6Ru7UZ';
+
 var documentDefinitions = null;
 
 api
@@ -41,7 +48,7 @@ function createDocumentInstance(documentDefinition, educator, applicableTenure, 
     ret.ApplicableTenureID = applicableTenure ? applicableTenure.TenureID : null;
     ret.ReferenceTenureID = referenceTenure ? referenceTenure.TenureID : null;
     ret.DocumentDate = documentDate;
-    ret.UploadDateTime = documentDefinition.IsUpload ? new Date() : null;
+    ret.UploadDateTime = documentDefinition.HasUpload ? new Date() : null;
     ret.RenewalDate = calculateDocumentRenewalDate(documentDefinition, documentDate);
     ret.Name = calculateDocumentInstanceName(documentDefinition, applicableTenure, referenceTenure);
     buildDocumentInstanceFields(documentDefinition, ret, educator, applicableTenure, referenceTenure, documentData);
@@ -159,15 +166,20 @@ function createFDFDataObject(documentInstance) {
 function generatePDF(documentInstance) {
     
     var data = createFDFDataObject(documentInstance);
-    var inputFileName = path.resolve(__dirname, '../pdf/' + documentInstance.Definition.PDFFileName);
-    var outputFileName = path.resolve(__dirname, '../pdf/' + documentInstance.DocumentInstanceID + '.pdf');
-    log.info({ inputFile: inputFileName, outputFile: outputFileName }, 'ready to generate pdf');
-
-    var ret = mergeFormDataIntoPDF(inputFileName, outputFileName, data, documentInstance.DocumentInstanceID)
-        .then(function () {
-            log.debug('reading back filled pdf');
-            return fs.readFileAsync(outputFileName);
-        });
+    var baseFileName = path.resolve(__dirname, '../pdf/' + documentInstance.Definition.PDFFileName);
+    var signatureFileName = path.resolve(__dirname, '../pdf/signature-' + documentInstance.DocumentInstanceID + '.pdf');
+    var filledFileName = path.resolve(__dirname, '../pdf/filled-' + documentInstance.DocumentInstanceID + '.pdf');
+    var finalFileName = path.resolve(__dirname, '../pdf/' + documentInstance.DocumentInstanceID + '.pdf');
+    log.info({ baseFileName: baseFileName, signatureFileName: signatureFileName, filledFileName: filledFileName, finalFileName: finalFileName }, 'ready to generate pdf');
+    
+    generateSignaturePDF(documentInstance, signatureFileName);
+    var ret = mergeFormDataIntoPDF(baseFileName, filledFileName, data, documentInstance.DocumentInstanceID);
+    ret = ret.then(function () {
+        return mergeSignaturesIntoPDF(filledFileName, signatureFileName, finalFileName);
+    }).then(function () {
+        log.debug('reading back merged pdf');
+        return fs.readFileAsync(finalFileName);
+    });
     return ret;
 }
 
@@ -186,12 +198,31 @@ function mergeFormDataIntoPDF(sourceFile, destinationFile, fieldValues, id) {
         .then(function () {
             return new Promise(function (resolve, reject) {
                 var commandLine = "pdftk " + prefix + sourceFile + suffix + " fill_form " + prefix + tempFDF + suffix + " output " + prefix + destinationFile + suffix + " flatten";
-                log.info({ commandLine: commandLine }, 'calling pdftk');
+                log.info({ commandLine: commandLine }, 'calling pdftk to do form fill');
                 var childProcess = exec(commandLine);
                 childProcess.addListener('error', reject);
                 childProcess.addListener('exit', resolve);
             });
         });
+}
+
+function mergeSignaturesIntoPDF(baseFile, signatureFile, destinationFile) {
+    
+    log.info('merging signature PDF');
+
+    // determine if we're on Windows
+    var isWin = /^win/.test(process.platform);
+    var prefix = suffix = (isWin ? '"' : '');
+    
+    //Call PDFtk to do the merge
+    return new Promise(function (resolve, reject) {
+        var commandLine = "pdftk " + prefix + baseFile + suffix + " multistamp " + prefix + signatureFile + suffix + " output " + prefix + destinationFile + suffix;
+        log.info({ commandLine: commandLine }, 'calling pdftk to do multistamp');
+        var childProcess = exec(commandLine);
+        childProcess.addListener('error', reject);
+        childProcess.addListener('exit', resolve);
+    });
+
 }
 
 function constructRequiredDocumentDescriptors(displayTenures, definitions, allTenures, documents) {
@@ -226,6 +257,66 @@ function constructRequiredDocumentDescriptors(displayTenures, definitions, allTe
     return ret;
 }
 
+// expects the documentInstance object to have these joins populated:
+// ['Signatures', 'Fields.Definition.SignatureRegion']
+function generateSignaturePDF(documentInstance, fileName) {
+    log.info('generating signature PDF');
+    var signatureDataWidth = 500, signatureDataHeight = 200;
+    var PDFDocument = require('pdfkit');
+
+    var signatureFields = _(documentInstance.Fields).filter(function (f) {
+        var fieldDef = getFieldDefinition(f, documentInstance);
+        return fieldDef.LogicalFieldType == 'Signature';
+    }).sortBy('Definition.SignatureRegion.PageNumber').value();
+    var doc = new PDFDocument();
+    var currentPage = 1;
+    for (var i in signatureFields) {
+        var fld = signatureFields[i];
+        var signature = _.find(documentInstance.Signatures, function (sig) {
+            return sig.DocumentDefinitionFieldID == fld.DocumentDefinitionFieldID;
+        });
+        if (signature) {
+            var fieldDef = getFieldDefinition(fld, documentInstance);
+            for (var j = currentPage; j < fieldDef.SignatureRegion.PageNumber; j++) {
+                doc.addPage();
+            }
+            currentPage = fieldDef.SignatureRegion.PageNumber;
+            var xfactor = fieldDef.SignatureRegion.Width / signatureDataWidth;
+            var yfactor = fieldDef.SignatureRegion.Height / signatureDataHeight;
+            var data = JSON.parse(signature.SignatureData);
+            var lines = data.lines;
+            var paths = [];
+            for (var i = 0; i < lines.length; i++) {
+                var path = 'M';
+                for (var j = 0; j < lines[i].length; j++) {
+                    var x = (lines[i][j][0] * xfactor) + fieldDef.SignatureRegion.Left;
+                    var y = (lines[i][j][1] * yfactor) + fieldDef.SignatureRegion.Top;
+                    path += ' ' + x + ',' + y;
+                }
+                paths.push(path);
+            }
+            for (var i in paths) {
+                doc.path(paths[i]).stroke();
+            }
+        }
+    }
+    var writeStream = fs.createWriteStream(fileName);
+    doc.pipe(writeStream);
+    doc.end();
+}
+
+function getFieldDefinition(documentInstanceField, documentInstance) {
+    if (documentInstanceField.Definition) {
+        return documentInstanceField.Definition;
+    } else if (documentInstance.Definition && documentInstance.Definition.Fields) {
+        return _.find(documentInstance.Definition.Fields, function (documentDefinitionField) {
+            return documentDefinitionField.DocumentDefinitionFieldID == documentInstanceField.DocumentDefinitionFieldID;
+        });
+    } else {
+        throw new Error('Failed to find a field definition for DocumentDefinitionFieldID ' + documentInstanceField.DocumentDefinitionFieldID);
+    }
+}
+
 function isTenureApplication(tenure) {
     return !tenure.StartDate;
 }
@@ -252,3 +343,4 @@ module.exports.CalculateRenewalDate = calculateDocumentRenewalDate;
 module.exports.CreateDocumentInstance = createDocumentInstance;
 module.exports.CalculateDocumentInstanceName = calculateDocumentInstanceName;
 module.exports.ConstructRequiredDocumentDescriptors = constructRequiredDocumentDescriptors;
+module.exports.GenerateSignaturePDF = generateSignaturePDF;

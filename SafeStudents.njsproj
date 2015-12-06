@@ -40,6 +40,9 @@
     <Content Include="app\images\check.png" />
     <Content Include="app\images\x.png" />
     <Content Include="app\images\question.png" />
+    <Content Include="app\lib\jquery-signature-1.1.2\jquery.signature.css">
+      <Publish>True</Publish>
+    </Content>
     <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="app\lib\jquery-ui-1.11.4.custom\images\ui-bg_flat_10_000000_40x100.png" />
@@ -73,6 +76,7 @@
     <Content Include="app\public\UserSignup.html" />
     <Content Include="app\views\About.view" />
     <Content Include="app\views\Contact.view" />
+    <Content Include="app\views\EditOrganizationInfo.view" />
     <Content Include="app\views\EducatorDashboard.view" />
     <Content Include="app\views\EducatorDocuments.view" />
     <Content Include="app\views\EducatorSignup.view" />
@@ -93,8 +97,10 @@
     <Content Include="docs\form168 workflow.txt" />
     <Content Include="docs\signup use cases.txt" />
     <Content Include="metadata\BinaryFile.json" />
+    <Content Include="metadata\DocumentDefinitionSignatureRegion.json" />
     <Content Include="metadata\DocumentSubmission.json" />
     <Content Include="metadata\Invitation.json" />
+    <Content Include="metadata\Signature.json" />
     <Content Include="metadata\SystemEvent.json" />
     <Content Include="metadata\UserSession.json" />
     <Content Include="pdf\Arrest_or_Conviction_form_Fillable.pdf" />
@@ -133,11 +139,23 @@
     <Compile Include="app\lib\angular-ui-ui-date-0.0.8\date.js" />
     <Compile Include="app\lib\angular-ui-ui-mask-1.4.7\mask.min.js" />
     <Compile Include="app\lib\angular-ui-ui-validate-1.2.0\validate.min.js" />
+    <Compile Include="app\lib\jquery-serialize-object-2.5.0\jquery.serialize-object.min.js" />
+    <Content Include="app\lib\jquery-signature-1.1.2\excanvas.js">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="app\lib\jquery-signature-1.1.2\jquery.signature.js">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="app\lib\jquery-signature-1.1.2\jquery.signature.min.js">
+      <Publish>True</Publish>
+    </Content>
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.js" />
     <Compile Include="app\lib\jquery-ui-1.11.4.custom\jquery-ui.min.js" />
     <Compile Include="app\views\About.data.js" />
     <Compile Include="app\views\Contact.data.js" />
+    <Compile Include="app\views\EditOrganizationInfo.controller.js" />
+    <Compile Include="app\views\EditOrganizationInfo.data.js" />
     <Compile Include="app\views\EducatorDashboard.controller.js" />
     <Compile Include="app\views\EducatorDashboard.data.js" />
     <Compile Include="app\views\EducatorDocuments.controller.js" />
@@ -234,6 +252,7 @@
     <Content Include="README.md" />
     <Content Include="metadata\User.json" />
     <Content Include="app\protected\ReviewEmployees.html" />
+    <Content Include="referenceData\05_DocumentDefinitionSignatureRegion.json" />
     <Content Include="utils\sql\CleanDatabase.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +272,8 @@
     <Folder Include="app\lib\jquery-ui-1.11.4.custom\external\jquery\" />
     <Folder Include="app\lib\jquery-ui-1.11.4.custom\images\" />
     <Folder Include="app\lib\angular-ui-ui-validate-1.2.0\" />
+    <Folder Include="app\lib\jquery-serialize-object-2.5.0\" />
+    <Folder Include="app\lib\jquery-signature-1.1.2\" />
     <Folder Include="app\lib\validatr-0.5.1\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\dist\" />

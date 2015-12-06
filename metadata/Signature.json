@@ -1,0 +1,39 @@
+﻿{
+    "TypeKey": "Signature",
+    "TableName": "signature",
+    "FieldDefinitions": {
+        "SignatureID": {
+            "type": "UUID",
+            "field": "signature_id",
+            "primaryKey": true,
+            "allowNull": false
+        },
+        "EducatorID": {
+            "type": "UUID",
+            "field": "educator_id"
+        },
+        "OrganizationID": {
+            "type": "UUID",
+            "field": "organization_id"
+        },
+        "DocumentInstanceID": {
+            "type": "UUID",
+            "field": "document_instance_id"
+        },
+        "DocumentDefinitionFieldID": {
+            "type": "UUID",
+            "field": "document_definition_field_id"
+        },
+        "SignatureData": {
+            "type": "TEXT",
+            "field": "signature_data"
+        }
+    },
+    "Relationships": {
+        "DocumentDefinitionField": {
+            "RelationshipType": "belongsTo",
+            "RelatedTypeKey": "DocumentDefinitionField",
+            "ForeignKey": "document_definition_field_id"
+        }
+    }
+}

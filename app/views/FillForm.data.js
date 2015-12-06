@@ -47,9 +47,13 @@ function generateFormField(field) {
             '<div class="row form-field-row">' +
                 '<div class="">' +
                     '<div class="form-group">' +
-                        '<label class="control-label col-sm-3" for="' + controlName + '">' + field.FieldDescription + '</label>' +
+                        '<div>' +
+                            '<label class="control-label col-sm-3" for="' + controlName + '">' + field.FieldDescription + '</label>' +
+                        '</div>' +
                         '<div class="col-sm-9">' +
-                            '<input type="text" name="' + controlName + '" ng-model="ngModel" required="required" class="form-control" />' +
+                            '<div id="div-' + controlName + '" class="sig" inputID="' + controlName + '"></div>' +
+                            '<input type="hidden" id="' + controlName + '" name="' + controlName + '" />' +
+                            '<div><button class="btn btn-warning btn-md" type="button" onclick="$(\'#div-' + controlName + '\').signature(\'clear\')">Clear</button></div>' +
                         '</div>' +
                     '</div>' +
                     '<div class="col-sm-offset-3 col-sm-9">' +
@@ -65,9 +69,19 @@ function generateFormField(field) {
             '<div class="row form-field-row">' +
                 '<div class="col-xs-12">' + field.FieldDescription + '</div>' +
                 '<div class="col-xs-12">' +
-                    '<textarea name="' + controlName + '" ng-model="ngModel" rows="5" class="form-control">' +
+                    '<textarea name="' + controlName + '" ng-model="ngModel" rows="5" class="form-control"' +
+                    (field.FieldMaxLength ? ' maxlength="' + field.FieldMaxLength + '"' : '') + '>' +
                     '</textarea>' +
                 '</div>' +
+            '</div>';
+    } else if (field.FormFieldType == 'Textbox') {
+        html =
+            '<div class="row form-field-row">' +
+                '<div class="col-xs-12">' + field.FieldDescription + '</div>' +
+                '<div class="col-xs-12">' +
+                    '<input name="' + controlName + '" ng-model="ngModel" class="form-control"' +
+                    (field.FieldMaxLength ? ' maxlength="' + field.FieldMaxLength + '"' : '') + ' />' +
+                //'</div>' +
             '</div>';
     } else if (field.FormFieldType == 'Checkbox') {
         html =

@@ -10,7 +10,7 @@
         $('#CheckNewHireValidity').val(checkNewHireValidity);
         $('#UploadFile').val(null).trigger('input');
         $('#DocumentDate').val(null).trigger('input');
-        $('#uploadForm').attr('action', '<%=createUrl('UploadForm')%>/' + documentDefinitionID + ';' + (applicableTenureID || '') + ';' + (referenceTenureID || ''));
+        $('#uploadForm').attr('action', '<%=createUrl("UploadForm")%>/' + documentDefinitionID + ';' + (applicableTenureID || '') + ';' + (referenceTenureID || ''));
         $('#uploadDialog').modal('show');
     }
 

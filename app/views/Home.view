@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <%=headerTags%>
-    <title>Safe PA Students</title>
+    <title>ClearanceManagement.com</title>
     <style type="text/css">
     </style>
 </head>
@@ -10,7 +10,7 @@
     <div class="container">
         <div class="panel panel-primary" style="height: auto; margin-top: 35px">
             <div class="panel-heading">
-                <h1>Welcome to Safe PA Students</h1>
+                <h1>Welcome to ClearanceManagement.com</h1>
             </div>
             <div class="panel-body">
                 <h3>
@@ -25,16 +25,18 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <span>Organizations</span>
+                        <span>Volunteers</span>
                     </div>
                     <div class="panel-body">
                         <p>
-                            Manage your employee clearance documentation quickly and easily.
-                            This is some more text, too!
-                        </p>
+Under PA Code Volunteers are required to have their clearances completed every five years.  
+Using ClearanceManagement.com, you can store, submit and recover your clearances electronically 
+as well as file them with the appropriate school, district, or institution so that you can
+concentrate on volunterring!
+						</p>
                         <div>
                             <button type="button" onclick="window.location = '<%=createUrl('UserSignup')%>';" class="btn btn-sm btn-info">
-                                Click Here to Sign Up
+                                Click Here to Get Started
                             </button>
                         </div>
                     </div>
@@ -47,8 +49,12 @@
                     </div>
                     <div class="panel-body">
                         <p>
-                            Manage your employee clearance documentation quickly and easily.
-                            This is some more text, too!
+Under PA Code employees are required to have their clearances
+completed every five years.  This program will let you store, submit (and recover) 
+your clearances electronically as well as file them with the appropriate school, 
+district  or institution so that you can concentrate on working.  Additionally, this 
+program will notify you and your employer when you are coming up on renewal for 
+your clearances across the life time of your career.
                         </p>
                         <div>
                             <button type="button" onclick="window.location = '<%=createUrl('UserSignup')%>';" class="btn btn-sm btn-info">
@@ -65,12 +71,13 @@
                     </div>
                     <div class="panel-body">
                         <p>
-                            Manage your employee clearance documentation quickly and easily.
-                            This is some more text, too!
+ClearanceManagement.com is your one-stop solution for managing your clearances.
+Still have questions?  Click below to find out more about how we can help you stay
+up-to-date.
                         </p>
                         <div>
                             <button type="button" onclick="window.location = '<%=createUrl('About')%>';" class="btn btn-sm btn-warning">
-                                Click Here to Learn More
+                                Learn More About Us
                             </button>
                         </div>
                     </div>
@@ -83,7 +90,8 @@
                     </div>
                     <div class="panel-body">
                         <p>
-                            If you're already a user, click below to log in.
+                            If you're already a user, welcome back!  Use the button below
+							to enter your login credentials and sign in.
                         </p>
                         <div>
                             <button type="button" onclick="window.location = '<%=createUrl('Login')%>';" class="btn btn-sm btn-success">

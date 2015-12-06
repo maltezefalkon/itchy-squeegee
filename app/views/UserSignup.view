@@ -15,7 +15,9 @@
     <script type="text/javascript">
         var app = angular.module('safeApp', [ 'ngMessages', 'ui.validate' ]);
         var ctl = app.controller('controller', UserSignupController);
-        ctl.$inject = ['$scope', '$http', '$location' ];
+		var emailAddress = <%=emailAddress ? "'" + emailAddress + "'" : 'undefined'%>;
+		app.value('emailAddress', emailAddress);
+        ctl.$inject = ['$scope', '$http', '$location', 'emailAddress' ];
     </script>
     <div class="container">
         <%=pageHeader%>

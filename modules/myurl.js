@@ -24,7 +24,8 @@ module.exports.createUrlType = {
     UploadForm: 'UploadForm',
     ApiCommand: 'ApiCommand',
     TestEmail: 'TestEmail',
-    ConfirmUser: 'ConfirmUser'
+    ConfirmUser: 'ConfirmUser',
+    EditOrganizationInfo: 'EditOrganizationInfo'
 };
 
 var urls = {
@@ -48,7 +49,8 @@ var urls = {
     UploadForm: '/app/form/Upload',
     ApiCommand: '/api/command',
     TestEmail: '/app/view/TestEmail',
-    ConfirmUser: '/app/user/Confirm'
+    ConfirmUser: '/app/user/Confirm',
+    EditOrganizationInfo: '/app/view/EditOrganizationInfo'
 };
 
 

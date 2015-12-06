@@ -32,7 +32,7 @@ SubmissionStatusEnum.prototype.constructor = SubmissionStatusEnum;
 // ------------------------------------------------------------------------------------ v
 var DocumentStatus = {
     Missing: new DocumentStatusEnum(10, 'Missing', 'Missing', 'This document has not yet been completed.', 'glyphicon-remove', 'danger', false, false),
-    Valid: new DocumentStatusEnum(100, 'Valid', 'Valid', 'This document has been saved to your account and is still valid.', 'glyphicon-star', 'primary', false, true, false),
+    Valid: new DocumentStatusEnum(100, 'On File', 'On File', 'This document has been saved to your account and is still valid.', 'glyphicon-star', 'primary', false, true, false),
     Expired: new DocumentStatusEnum(50000, 'Expired', 'Expired', 'This document has been saved to your account, but is no longer valid.', 'glyphicon-time', 'danger', false, true),
     Error: new DocumentStatusEnum(100000, 'Error', 'Error', 'There has been an error processing this document.', 'glyphicon-remove-circle', 'danger', false, true),
     LookupByID: function (id) {

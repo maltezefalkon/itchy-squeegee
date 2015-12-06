@@ -22,7 +22,7 @@
         "PDFFieldType": {
             "type": "STRING",
             "field": "pdf_field_type",
-            "allowNull": false
+            "allowNull": true
         },
         "FieldNameAlt": {
             "type": "STRING",
@@ -36,6 +36,10 @@
             "type": "STRING",
             "field": "field_justification",
             "maximumStringLength": 16
+        },
+        "FieldMaxLength": {
+            "type": "INTEGER",
+            "field": "field_max_length"
         },
         "PDFFieldOrdinal": {
             "type": "INTEGER",
@@ -95,6 +99,11 @@
             "RelationshipType": "belongsTo",
             "ForeignKey": "document_definition_id",
             "RelatedTypeKey": "DocumentDefinition"
+        },
+        "SignatureRegion": {
+            "RelationshipType": "belongsTo",
+            "ForeignKey": "document_definition_field_id",
+            "RelatedTypeKey": "DocumentDefinitionSignatureRegion"
         }
     }
 }

@@ -76,10 +76,10 @@ for (var i in requiredDocumentDescriptors) {
 										<span class="caret"></span></button>
 									</button>
 									<ul class="dropdown-menu">
-<% if (!doc && !def.IsUpload) { %>
+<% if (!doc && def.HasFillableFields) { %>
 										<li>
 											<a href="<%=createUrl('CreateForm', createFormUrlParameters)%>">
-												<span class="glyphicon glyphicon-star"></span> Create
+												<span class="glyphicon glyphicon-star"></span> <%=def.FieldFillDescription%>
 											</a>
 										</li>
 <% } %>
@@ -90,7 +90,7 @@ for (var i in requiredDocumentDescriptors) {
 											</a>
 										</li>
 <% } %>
-<% if (def.IsUpload) { %>
+<% if (def.HasUpload) { %>
 										<li>
 											<a href="#" onclick="showUploadDialog('<%=def.Name%>','<%=def.DocumentDefinitionID%>',<%=desc.ApplicableTenure ? '\'' + desc.ApplicableTenure.TenureID + '\'' : 'null'%>, <%=desc.ReferenceTenure ? '\'' + desc.ReferenceTenure.TenureID + '\'' : 'null'%>, '<%=def.NewHireValidityPeriod%>', '<%=def.RenewalPeriod%>', false)">
 												<span class="glyphicon glyphicon-cloud-upload"></span> Upload<%= doc ? ' Updated Document' : ''%>

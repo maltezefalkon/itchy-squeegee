@@ -47,9 +47,19 @@
             "field": "renewal_period",
             "allowNull": true
         },
-        "IsUpload": {
+        "HasUpload": {
             "type": "BOOLEAN",
-            "field": "is_upload",
+            "field": "has_upload",
+            "allowNull": false
+        },
+        "HasFillableFields": {
+            "type": "BOOLEAN",
+            "field": "has_fillable_fields",
+            "allowNull": false
+        },
+        "GeneratePDF": {
+            "type": "BOOLEAN",
+            "field": "generate_pdf",
             "allowNull": false
         },
         "ExternalUrl": {
@@ -66,6 +76,11 @@
             "type": "STRING",
             "field": "brief_instructions",
             "maximumStringLength": 4096
+        },
+        "FieldFillDescription": {
+            "type": "STRING",
+            "field": "field_fill_description",
+            "allowNull": true
         }
     },
     "Relationships": {
