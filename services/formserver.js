@@ -12,6 +12,7 @@ var _ = require('lodash');
 var exec = require('child_process').exec;
 var perf = require('../modules/performance-timing.js')();
 var DocumentStatus = require('../biz/status.js').DocumentStatus;
+var SubmissionStatus = require('../biz/status.js').SubmissionStatus;
 var DocumentFunctions = require('../biz/document.js');
 
 // expose public methods
@@ -88,6 +89,22 @@ function postFormData(req, res, next) {
         return api.save(documentInstance).then(function () {
             return documentInstance;
         });
+    }).then(function (documentInstance) {
+        if (section == 'FormerOrganization') {
+            var submission = new meta.bo.DocumentSubmission();
+            submission.DocumentInstanceID = documentInstance.DocumentInstanceID;
+            submission.ApplicableTenureID = documentInstance.ApplicableTenureID;
+            submission.OrganizationID = documentInstance.ApplicableTenure.OrganizationID;
+            submission.StatusID = SubmissionStatus.AwaitingApproval.StatusID;
+            submission.StatusDescription = SubmissionStatus.AwaitingApproval.Description;
+            submission.EducatorID = documentInstance.EducatorID;
+            submission.SubmissionDate = new Date();
+            return api.save(submission).then(function () {
+                return documentInstance;
+            });
+        } else {
+            return documentInstance;
+        }
     }).then(function (documentInstance) {
         var event = new meta.bo.SystemEvent();
         event.ObjectTypeKey = 'DocumentInstance';
