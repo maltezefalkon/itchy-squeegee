@@ -18,7 +18,6 @@
     "express-session": "^1.11.3",
     "fdf": "0.0.0",
     "lodash": "^3.10.1",
-    "moment": "^2.10.6",
     "mysql": "^2.9.0",
     "node-mysql": "^0.4.2",
     "node-static": "^0.7.7",
@@ -29,7 +28,7 @@
     "pg": "^4.4.3",
     "pg-hstore": "^2.3.2",
     "restling": "^0.9.1",
-    "sequelize": "^3.12.0",
+    "sequelize": "^3.14.2",
     "uuid": "^2.0.1"
   }
 }

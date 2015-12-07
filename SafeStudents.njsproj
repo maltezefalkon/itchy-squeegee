@@ -139,7 +139,6 @@
     <Compile Include="app\lib\angular-ui-ui-date-0.0.8\date.js" />
     <Compile Include="app\lib\angular-ui-ui-mask-1.4.7\mask.min.js" />
     <Compile Include="app\lib\angular-ui-ui-validate-1.2.0\validate.min.js" />
-    <Compile Include="app\lib\jquery-serialize-object-2.5.0\jquery.serialize-object.min.js" />
     <Content Include="app\lib\jquery-signature-1.1.2\excanvas.js">
       <Publish>True</Publish>
     </Content>
@@ -272,7 +271,6 @@
     <Folder Include="app\lib\jquery-ui-1.11.4.custom\external\jquery\" />
     <Folder Include="app\lib\jquery-ui-1.11.4.custom\images\" />
     <Folder Include="app\lib\angular-ui-ui-validate-1.2.0\" />
-    <Folder Include="app\lib\jquery-serialize-object-2.5.0\" />
     <Folder Include="app\lib\jquery-signature-1.1.2\" />
     <Folder Include="app\lib\validatr-0.5.1\" />
     <Folder Include="app\lib\zeroclipboard-2.2.0\" />
