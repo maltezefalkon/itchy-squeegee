@@ -40,6 +40,11 @@ module.exports = function (req) {
                 return SubmissionStatus.GetStatus(sub).StatusID == SubmissionStatus.AwaitingApproval.StatusID;
             });
             return data;
+        }).then(function (data) {
+            return api.query('DocumentInstance', ['Definition', 'Fields', 'ReferenceTenure.Educator'], null, { '$ReferenceTenure.organization_id$': organizationID, StatusID: 30 }).then(function (documentsAwaitingAction) {
+                data.documentsAwaitingAction = documentsAwaitingAction;
+                return data;
+            });
         });
     } else {
         ret.fatalError = 'Failed to find associated organization for current user';

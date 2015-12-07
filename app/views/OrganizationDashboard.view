@@ -154,7 +154,7 @@
 for (var i in documentsForReview) { 
 	var sub = documentsForReview[i];
 	var doc = sub.DocumentInstance;
-	var tenure = findTenure(documentsForReview[i], organization.Tenures);
+	var tenure = findTenure(sub, organization.Tenures);
 %>
 						<tr>
 							<td>
@@ -187,6 +187,61 @@ for (var i in documentsForReview) {
 							<td><%=tenure.PositionsHeld%></td>
 							<td><%=doc.Name%></td>
 							<td><%=formatDate(sub.SubmissionDate)%></td>
+						</tr>
+<% } %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+<% } %>
+<% if (documentsAwaitingAction && documentsAwaitingAction.length > 0) { %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span>Documents Awaiting Completion</span>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							<th>Employee</th>
+							<th>Position</th>
+							<th>Document</th>
+							<th>Submit Date</th>
+						</tr>
+					</thead>
+					<tbody>
+<% 
+for (var i in documentsAwaitingAction) { 
+	var doc = documentsAwaitingAction[i];
+	var tenure = doc.ReferenceTenure;
+%>
+						<tr>
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-cog"></span>
+										<span class="caret"></span></button>
+									</button>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="#" onclick="window.open('<%=createUrl('DownloadForm', [doc.DocumentInstanceID])%>')">
+												<span class="glyphicon glyphicon-save"></span> Download Document
+											</a>
+										</li>
+										<li class="divider"></li>
+										<li>
+											<a href="<%=createUrl('FillForm', [doc.DocumentInstanceID], { section: 'FormerOrganization' })%>">
+												<span class="glyphicon glyphicon-ok"></span> Complete Document
+											</a>
+										</li>
+									</ul>
+								</div>
+							</td>
+							<td><%=tenure.Educator.FirstName + ' ' + tenure.Educator.LastName%></td>
+							<td><%=tenure.PositionsHeld%></td>
+							<td><%=doc.Name%></td>
+							<td><%=formatDate(doc.DocumentDate)%></td>
 						</tr>
 <% } %>
 					</tbody>

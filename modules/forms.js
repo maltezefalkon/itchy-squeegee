@@ -8,6 +8,7 @@ var path = require('path');
 var fdf = require('fdf');
 var exec = require('child_process').exec;
 var docfn = require('../biz/document.js');
+var DocumentStatus = require('../biz/status.js').DocumentStatus;
 
 var _ = require('lodash');
 
@@ -51,7 +52,10 @@ function createDocumentInstance(documentDefinition, educator, applicableTenure, 
     ret.UploadDateTime = documentDefinition.HasUpload ? new Date() : null;
     ret.RenewalDate = calculateDocumentRenewalDate(documentDefinition, documentDate);
     ret.Name = calculateDocumentInstanceName(documentDefinition, applicableTenure, referenceTenure);
-    buildDocumentInstanceFields(documentDefinition, ret, educator, applicableTenure, referenceTenure, documentData);
+    var status = ret.DocumentDefinitionID == Form168.DocumentDefinitionID ? DocumentStatus.AwaitingCompletionByEducator : DocumentStatus.Valid;
+    ret.StatusID = status.StatusID;
+    ret.StatusDescription = _.template(status.DescriptionTemplate)({ educator: educator, applicableTenure: applicableTenure, referenceTenure: referenceTenure, documentDate: documentDate });
+    // buildDocumentInstanceFields(documentDefinition, ret, educator, applicableTenure, referenceTenure, documentData);
     return ret;
 }
 
@@ -146,14 +150,17 @@ function createFDFDataObject(documentInstance) {
     for (var i = 0; i < documentInstance.Definition.Fields.length; i++) {
         var documentDefinitionField = documentInstance.Definition.Fields[i];
         documentInstanceField = findDocumentInstanceField(documentInstance, documentDefinitionField.DocumentDefinitionFieldID);
-        var dataValue = documentInstanceField.FieldValue;
-        if (documentDefinitionField.PDFFieldType == 'Button') {
-            if (documentInstanceField.FieldValue === 'true') {
-                dataValue = documentDefinitionField.PDFTrueValue;
-            } else if (documentInstanceField.FieldValue === 'false') {
-                dataValue = documentDefinitionField.PDFFalseValue;
-            } else {
-                dataValue = documentDefinitionField.PDFNullValue;
+        var dataValue = null;
+        if (documentInstanceField) {
+            dataValue = documentInstanceField.FieldValue;
+            if (documentDefinitionField.PDFFieldType == 'Button') {
+                if (documentInstanceField.FieldValue === 'true') {
+                    dataValue = documentDefinitionField.PDFTrueValue;
+                } else if (documentInstanceField.FieldValue === 'false') {
+                    dataValue = documentDefinitionField.PDFFalseValue;
+                } else {
+                    dataValue = documentDefinitionField.PDFNullValue;
+                }
             }
         }
         ret[documentDefinitionField.FieldName] = (dataValue === null ? '' : dataValue);
@@ -262,8 +269,10 @@ function constructRequiredDocumentDescriptors(displayTenures, definitions, allTe
 function generateSignaturePDF(documentInstance, fileName) {
     log.info('generating signature PDF');
     var signatureDataWidth = 500, signatureDataHeight = 200;
+    log.debug('creating PDF');
     var PDFDocument = require('pdfkit');
 
+    log.debug('filtering signature fields');
     var signatureFields = _(documentInstance.Fields).filter(function (f) {
         var fieldDef = getFieldDefinition(f, documentInstance);
         return fieldDef.LogicalFieldType == 'Signature';
@@ -277,6 +286,10 @@ function generateSignaturePDF(documentInstance, fileName) {
         });
         if (signature) {
             var fieldDef = getFieldDefinition(fld, documentInstance);
+            if (!fieldDef.SignatureRegion) {
+                log.error('No signature region defined for document definition field ID ' + fieldDef.DocumentDefinitionFieldID);
+                throw new Error('No signature region defined for document definition field ID ' + fieldDef.DocumentDefinitionFieldID);
+            }
             for (var j = currentPage; j < fieldDef.SignatureRegion.PageNumber; j++) {
                 doc.addPage();
             }
@@ -300,8 +313,12 @@ function generateSignaturePDF(documentInstance, fileName) {
             }
         }
     }
+    for (var k = currentPage; k < documentInstance.Definition.TotalPDFPages; k++) {
+        doc.addPage();
+    }
     var writeStream = fs.createWriteStream(fileName);
     doc.pipe(writeStream);
+    log.debug('writing PDF');
     doc.end();
 }
 
@@ -344,3 +361,4 @@ module.exports.CreateDocumentInstance = createDocumentInstance;
 module.exports.CalculateDocumentInstanceName = calculateDocumentInstanceName;
 module.exports.ConstructRequiredDocumentDescriptors = constructRequiredDocumentDescriptors;
 module.exports.GenerateSignaturePDF = generateSignaturePDF;
+module.exports.GetDocumentFieldValue = getDocumentFieldValue;

@@ -32,7 +32,9 @@ SubmissionStatusEnum.prototype.constructor = SubmissionStatusEnum;
 // ------------------------------------------------------------------------------------ v
 var DocumentStatus = {
     Missing: new DocumentStatusEnum(10, 'Missing', 'Missing', 'This document has not yet been completed.', 'glyphicon-remove', 'danger', false, false),
-    Valid: new DocumentStatusEnum(100, 'On File', 'On File', 'This document has been saved to your account and is still valid.', 'glyphicon-star', 'primary', false, true, false),
+    AwaitingCompletionByEducator: new DocumentStatusEnum(20, 'Awaiting Completion', 'Awaiting Completion by Educator', 'This document needs further action by the educator before it is complete.', 'glyphicon-hourglass', false, true),
+    AwaitingCompletionByReferenceOrganization: new DocumentStatusEnum(30, 'Awaiting Completion', 'Awaiting Completion by <%=referenceTenure.Organization.Name%>', 'This document needs to be completed by an outside organization before it is considered complete.', 'glyphicon-hourglass', false, true),
+    Valid: new DocumentStatusEnum(100, 'On File', 'On File', 'This document has been saved to your account and is still valid.', 'glyphicon-star', 'primary', false, true),
     Expired: new DocumentStatusEnum(50000, 'Expired', 'Expired', 'This document has been saved to your account, but is no longer valid.', 'glyphicon-time', 'danger', false, true),
     Error: new DocumentStatusEnum(100000, 'Error', 'Error', 'There has been an error processing this document.', 'glyphicon-remove-circle', 'danger', false, true),
     LookupByID: function (id) {
@@ -61,9 +63,11 @@ var DocumentStatus = {
         return ret;
     },
     GetStatus: function (document) {
-        return !document ? DocumentStatus.Missing : (
-            document.RenewalDate > new Date() ? DocumentStatus.Valid : DocumentStatus.Expired
-        );
+        if (!document) {
+            return DocumentStatus.Missing;
+        } else {
+            return DocumentStatus.LookupByID(document.StatusID);
+        }
     }
 
 };

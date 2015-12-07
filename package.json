@@ -29,7 +29,7 @@
     "pg": "^4.4.3",
     "pg-hstore": "^2.3.2",
     "restling": "^0.9.1",
-    "sequelize": "^3.6.0",
+    "sequelize": "^3.12.0",
     "uuid": "^2.0.1"
   }
 }

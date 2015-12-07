@@ -15,7 +15,7 @@ module.exports = function (req) {
         ret.isTenureApplication = isTenureApplication;
         ret.isTenureCurrent = isTenureCurrent;
         ret.getDocumentStatusMarkup = getDocumentStatusMarkup;
-        ret.getSubmissionStatusMarkup = getSubmissionStatusMarkup;
+        ret.getStatusMarkup = getStatusMarkup;
         ret.isDocumentReadyToSubmit = DocumentFunctions.isDocumentReadyToSubmit;
         ret.DocumentStatus = DocumentStatus;
         ret.SubmissionStatus = SubmissionStatus;
@@ -78,16 +78,22 @@ function getDocumentStatusMarkup(document) {
     return status.getMarkup();
 }
 
-function getSubmissionStatusMarkup(submission, document) {
-    var statusID = getSubmissionStatusID(submission, document);
-    var status = SubmissionStatus.LookupByID(statusID);
+function getStatusMarkup(submission, document) {
+    var documentStatusID = getDocumentStatusID(document);
+    var status = null;
+    if (documentStatusID == DocumentStatus.Valid.StatusID) {
+        var submissionStatusID = getSubmissionStatusID(submission, document);
+        status = SubmissionStatus.LookupByID(submissionStatusID);
+    } else {
+        status = DocumentStatus.LookupByID(documentStatusID);
+    }
     return status.getMarkup();
 }
 
 function getDocumentStatusID(document) {
     return !document ? DocumentStatus.Missing.StatusID : (
-         document.RenewalDate > new Date() ? DocumentStatus.Valid.StatusID : DocumentStatus.Expired.StatusID
-);
+         document.RenewalDate > new Date() ? document.StatusID : DocumentStatus.Expired.StatusID
+    );
 }
 
 function getSubmissionStatusID(submission, document) {

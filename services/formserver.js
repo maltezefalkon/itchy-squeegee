@@ -11,6 +11,8 @@ var myUrl = require('../modules/myurl');
 var _ = require('lodash');
 var exec = require('child_process').exec;
 var perf = require('../modules/performance-timing.js')();
+var DocumentStatus = require('../biz/status.js').DocumentStatus;
+var DocumentFunctions = require('../biz/document.js');
 
 // expose public methods
 module.exports.postFormData = postFormData;
@@ -36,12 +38,16 @@ function postFormData(req, res, next) {
             return documentInstance;
         });
     }).then(function (documentInstance) {
-        return Promise.map(_.map(documentInstance.Fields, 'Definition'), function (fieldDefinition) {
-            if (fieldDefinition.FieldSection == section) {
-                var fieldInstance = null;
+        return Promise.map(documentInstance.Definition.Fields, function (fieldDefinition) {
+            if (!section || fieldDefinition.FieldSection == section) {
+                var fieldInstance = forms.FindDocumentInstanceField(documentInstance, fieldDefinition.DocumentDefinitionFieldID);
+                if (!fieldInstance) {
+                    fieldInstance = new meta.bo.DocumentInstanceField();
+                    fieldInstance.DocumentInstanceID = documentInstance.DocumentInstanceID;
+                    fieldInstance.DocumentDefinitionFieldID = fieldDefinition.DocumentDefinitionFieldID;
+                }
                 var value = data[fieldDefinition.DocumentDefinitionFieldID];
                 if (fieldDefinition.LogicalFieldType == 'Signature') {
-                    fieldInstance = forms.FindDocumentInstanceField(documentInstance, fieldDefinition.DocumentDefinitionFieldID);
                     var signature = new meta.bo.Signature();
                     signature.DocumentInstanceID = documentInstance.DocumentInstanceID;
                     signature.SignatureData = value;
@@ -59,16 +65,27 @@ function postFormData(req, res, next) {
                         fieldInstance.FieldValue = signature.SignatureID;
                         return api.save(fieldInstance);
                     });
-                } else if (value) {
-                    fieldInstance = forms.FindDocumentInstanceField(documentInstance, fieldDefinition.DocumentDefinitionFieldID);
-                    fieldInstance.FieldValue = value;
+                } else {
+                    fieldInstance.FieldValue = forms.GetDocumentFieldValue(fieldDefinition, documentInstance.Educator, documentInstance.ApplicableTenure, documentInstance.ReferenceTenure, data);
                     return api.save(fieldInstance);
                 }
             }
         }).then(function () {
-            return api.querySingle('DocumentInstance', ['Signatures', 'Fields.Definition.SignatureRegion'], null, { DocumentInstanceID: documentInstance.DocumentInstanceID });
-        }).then(function (di) {
-            forms.GenerateSignaturePDF(di);
+            return documentInstance;
+        });
+    }).then(function (documentInstance) {
+        if (!section) {
+            documentInstance.StatusID = DocumentStatus.Valid.StatusID;
+        } else if (section == 'Educator') {
+            documentInstance.StatusID = DocumentStatus.AwaitingCompletionByReferenceOrganization.StatusID;
+        } else if (section == 'FormerOrganization') {
+            documentInstance.StatusID = DocumentStatus.Valid.StatusID;
+        } else {
+            log.error('Don\'t know how to proceed to the next document status for section ' + section);
+            throw new Error('Don\'t know how to proceed to the next document status for section ' + section);
+        }
+        documentInstance.StatusDescription = _.template(DocumentStatus.LookupByID(documentInstance.StatusID).DescriptionTemplate)(DocumentFunctions.getStatusDescriptionTemplateRenderingData(documentInstance));
+        return api.save(documentInstance).then(function () {
             return documentInstance;
         });
     }).then(function (documentInstance) {

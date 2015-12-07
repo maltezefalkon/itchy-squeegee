@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "DocumentDefinitionFieldID": "a754e412-1b0b-43fb-9a8b-8e8b1873816d",
         "PageNumber": 2,
@@ -6,5 +6,13 @@
         "Left": 47,
         "Height": 72,
         "Width": 180
+    },
+    {
+        "DocumentDefinitionFieldID": "b11a1a21-b069-4b66-b5ee-1695bacdbadd",
+        "PageNumber": 2,
+        "Top": 400,
+        "Left": 47,
+        "Height": 72,
+        "Width": 180
     }
-]
+] 

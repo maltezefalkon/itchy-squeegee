@@ -17,6 +17,17 @@
             "field": "educator_id",
             "allowNull": false
         },
+        "StatusID": {
+            "type": "INTEGER",
+            "field": "status_id",
+            "allowNull": false
+        },
+        "StatusDescription": {
+            "type": "STRING",
+            "field": "status_description",
+            "allowNull": false,
+            "maximumStringLength": 255
+        },
         "DocumentDate": {
             "type": "DATE",
             "field": "document_date",

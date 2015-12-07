@@ -101,7 +101,7 @@
             "RelatedTypeKey": "DocumentDefinition"
         },
         "SignatureRegion": {
-            "RelationshipType": "belongsTo",
+            "RelationshipType": "hasOne",
             "ForeignKey": "document_definition_field_id",
             "RelatedTypeKey": "DocumentDefinitionSignatureRegion"
         }

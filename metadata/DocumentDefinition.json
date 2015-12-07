@@ -62,6 +62,10 @@
             "field": "generate_pdf",
             "allowNull": false
         },
+        "TotalPDFPages": {
+            "type": "INTEGER",
+            "field": "total_pdf_pages"
+        },
         "ExternalUrl": {
             "type": "STRING",
             "field": "external_url",

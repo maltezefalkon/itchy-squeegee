@@ -182,7 +182,7 @@ if (def.HasFillableFields) {
 								</div>
 							</td>
 							<td><%=name%></td>
-							<td class="text-center"><%=getSubmissionStatusMarkup(sub, doc)%></td>
+							<td class="text-center"><%=getStatusMarkup(sub, doc)%></td>
 							<td class="text-center"><%=sub ? formatDate(sub.SubmissionDate) : null%></td>
 							<td class="text-center"><%=sub ? formatDate(sub.ApprovalDate) : null%></td>
 							<td class="text-center"><%=sub ? formatDate(sub.RenewalDate) : null%></td>
