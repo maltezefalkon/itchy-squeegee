@@ -7,10 +7,6 @@ module.exports = function (logSubject, logFileName) {
             {
                 level: 'info',
                 stream: process.stdout
-            },
-            {
-                level: 'debug',
-                path: './log/' + (logFileName || 'app') + '.log'
             }
         ]
     });
