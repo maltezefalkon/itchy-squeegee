@@ -25,7 +25,10 @@ module.exports.createUrlType = {
     ApiCommand: 'ApiCommand',
     TestEmail: 'TestEmail',
     ConfirmUser: 'ConfirmUser',
-    EditOrganizationInfo: 'EditOrganizationInfo'
+    ForgotPassword: 'ForgotPassword',
+    EditOrganizationInfo: 'EditOrganizationInfo',
+    ResetPassword: 'ResetPassword',
+    SetNewPassword: 'SetNewPassword'
 };
 
 var urls = {
@@ -50,7 +53,10 @@ var urls = {
     ApiCommand: '/api/command',
     TestEmail: '/app/view/TestEmail',
     ConfirmUser: '/app/user/Confirm',
-    EditOrganizationInfo: '/app/view/EditOrganizationInfo'
+    ForgotPassword: '/app/view/ForgotPassword',
+    EditOrganizationInfo: '/app/view/EditOrganizationInfo',
+    ResetPassword: '/app/view/ResetPassword',
+    SetNewPassword: '/app/user/SetNewPassword'
 };
 
 

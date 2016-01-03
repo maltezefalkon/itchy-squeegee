@@ -46,5 +46,37 @@
     "RepresentativeFirstName": "Wolfgang",
     "RepresentativeLastName": "Wolverino",
     "RepresentativeJobTitle": "HR Director"
+  },
+  {
+    "OrganizationID": "f1ad5fa6-56a8-4034-a004-6872185fb561",
+    "Name": "Aardvark Charter School",
+    "OrganizationTypeID": "248306cf-f840-462c-851d-76048e907a1a",
+    "EmailAddress": "aardvark@aardvark.edu",
+    "TelephoneNumber": "215-555-1212",
+    "FaxNumber": "215-555-1313",
+    "Address1": "5 Aard Blvd.",
+    "Address2": null,
+    "City": "Varkton",
+    "State": "PA",
+    "ZipCode": "55555",
+    "RepresentativeFirstName": "Aaron",
+    "RepresentativeLastName": "Aardvark",
+    "RepresentativeJobTitle": "Vark"
+  },
+  {
+    "OrganizationID": "5564cc9c-db6b-470c-9566-484698f42289",
+    "Name": "Bear Charter School",
+    "OrganizationTypeID": "248306cf-f840-462c-851d-76048e907a1a",
+    "EmailAddress": "yogi@bear.edu",
+    "TelephoneNumber": "215-555-1212",
+    "FaxNumber": "215-555-1313",
+    "Address1": "133 Forest Lane",
+    "Address2": null,
+    "City": "Bear City",
+    "State": "PA",
+    "ZipCode": "23232",
+    "RepresentativeFirstName": "Yogi",
+    "RepresentativeLastName": "Bear",
+    "RepresentativeJobTitle": "Picnic Basket Thief"
   }
 ]

@@ -1,73 +1,77 @@
 ﻿{
-    "TypeKey": "User",
-    "TableName": "user",
-    "FieldDefinitions": {
-        "UserID": {
-            "type": "UUID",
-            "field": "user_id",
-            "primaryKey": true,
-            "allowNull": false
-        },
-        "UserName": {
-            "type": "STRING",
-            "field": "user_name",
-            "unique": true,
-            "allowNull": false
-        },
-        "EmailAddress": {
-            "type": "STRING",
-            "field": "email_address",
-            "allowNull": false
-        },
-        "Hash": {
-            "type": "STRING",
-            "field": "hash",
-            "allowNull": false
-        },
-        "InvitationID": {
-            "type": "UUID",
-            "field": "invitation_id"
-        },
-        "ConfirmationID": {
-            "type": "UUID",
-            "field": "confirmation_id"
-        },
-        "LinkedOrganizationID": {
-            "type": "UUID",
-            "field": "linked_organization_id"
-        },
-        "LinkedEducatorID": {
-            "type": "UUID",
-            "field": "linked_educator_id"
-        },
-        "Disabled": {
-            "type": "BOOLEAN",
-            "field": "disabled",
-            "allowNull": false,
-            "defaultValue": false
-        },
-        "Confirmed": {
-            "type": "BOOLEAN",
-            "field": "confirmed",
-            "allowNull": false,
-            "defaultValue": false
-        }
+  "TypeKey": "User",
+  "TableName": "user",
+  "FieldDefinitions": {
+    "UserID": {
+      "type": "UUID",
+      "field": "user_id",
+      "primaryKey": true,
+      "allowNull": false
     },
-    "Relationships": {
-        "LinkedOrganization": {
-            "RelationshipType": "belongsTo",
-            "ForeignKey": "linked_organization_id",
-            "RelatedTypeKey": "Organization"
-        },
-        "LinkedEducator": {
-            "RelationshipType": "belongsTo",
-            "ForeignKey": "linked_educator_id",
-            "RelatedTypeKey": "Educator"
-        },
-        "Invitation": {
-            "RelationshipType": "belongsTo",
-            "ForeignKey": "invitation_id",
-            "RelatedTypeKey": "Invitation"
-        }
+    "UserName": {
+      "type": "STRING",
+      "field": "user_name",
+      "unique": true,
+      "allowNull": false
+    },
+    "EmailAddress": {
+      "type": "STRING",
+      "field": "email_address",
+      "allowNull": false
+    },
+    "Hash": {
+      "type": "STRING",
+      "field": "hash",
+      "allowNull": false
+    },
+    "InvitationID": {
+      "type": "UUID",
+      "field": "invitation_id"
+    },
+    "ConfirmationID": {
+      "type": "UUID",
+      "field": "confirmation_id"
+    },
+    "PasswordResetID": {
+      "type": "UUID",
+      "field": "password_reset_id"
+    },
+    "LinkedOrganizationID": {
+      "type": "UUID",
+      "field": "linked_organization_id"
+    },
+    "LinkedEducatorID": {
+      "type": "UUID",
+      "field": "linked_educator_id"
+    },
+    "Disabled": {
+      "type": "BOOLEAN",
+      "field": "disabled",
+      "allowNull": false,
+      "defaultValue": false
+    },
+    "Confirmed": {
+      "type": "BOOLEAN",
+      "field": "confirmed",
+      "allowNull": false,
+      "defaultValue": false
     }
+  },
+  "Relationships": {
+    "LinkedOrganization": {
+      "RelationshipType": "belongsTo",
+      "ForeignKey": "linked_organization_id",
+      "RelatedTypeKey": "Organization"
+    },
+    "LinkedEducator": {
+      "RelationshipType": "belongsTo",
+      "ForeignKey": "linked_educator_id",
+      "RelatedTypeKey": "Educator"
+    },
+    "Invitation": {
+      "RelationshipType": "belongsTo",
+      "ForeignKey": "invitation_id",
+      "RelatedTypeKey": "Invitation"
+    }
+  }
 }

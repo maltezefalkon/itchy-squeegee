@@ -29,6 +29,8 @@ module.exports.postOrganizationSignupData = postOrganizationSignupData;
 module.exports.postOrganizationInfo = postOrganizationInfo;
 module.exports.confirmUserAccount = confirmUserAccount;
 module.exports.testSendEmail = testSendEmail;
+module.exports.requestPasswordReset = requestPasswordReset;
+module.exports.setNewPassword = setNewPassword;
 
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -442,25 +444,25 @@ function postUserSignupData(req, res, next) {
     }
     
     promise = promise.then(function (data) {
-        if (data.isValid) {
-            if (data.invitation) {
-                user.InvitationID = data.invitation.InvitationID;
-            }
+        if (data.isValid && data.invitation) {
+            user.InvitationID = data.invitation.InvitationID;
             return api.save(user).then(function () {
                 data.invitation.FulfillmentUserID = user.UserID;
                 data.invitation.FulfillmentDateTime = new Date();
                 return api.save(data.invitation);
             }).then(function () {
                 return data;
-            })
+            });
         } else {
-            return data;
+            return api.save(user).then(function () {
+                return data;
+            });
         }
     });
     
     promise = promise.then(function (data) {
         if (data.isValid) {
-            data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Hold, [], null);
+            data.nextUrl = myUrl.createUrl(myUrl.createUrlType.Hold, [], { title: 'Confirmation Email Sent', message: 'Please check your email and click on the link provided to complete the sign-up process.' });
             return email.sendUserConfirmationEmail(user).then(function () {
                 return data;
             });
@@ -500,7 +502,8 @@ function confirmUserAccount(req, res, next) {
                 log.info({ userID: userID, confirmationID: confirmationID }, 'User email confirmed');
                 return sessionManagement.createSession(user, req, res, next);
             }).then(function () {
-                res.redirect(nextUrl);
+                var holdPageUrl = myUrl.createUrl(myUrl.createUrlType.Hold, [], { title: 'Thank You', message: 'Thank you for confirming your email address. Click the button below to complete the sign-up process.', button: 'Complete Account Information', nextUrl: nextUrl });
+                res.redirect(holdPageUrl);
             });
         }
     });
@@ -516,6 +519,61 @@ function testSendEmail(req, res, next) {
     return email.sendEmail('test', fromAddress, toAddress, subject, body).then(function () {
         res.redirect(myUrl.createUrl(myUrl.createUrlType.TestEmail, [], null));
     });
+}
+
+function requestPasswordReset(req, res, next) {
+    var user = null;
+    var username = req.body.username;
+    var ret = api.querySingle('User', ['LinkedOrganization', 'LinkedEducator'], null, { UserName: username });
+    ret = ret.then(function (dbUser) {
+        if (!dbUser) {
+            return myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'Unrecognized user name: ' + username });
+        } else {
+            user = dbUser;
+            user.PasswordResetID = uuid();
+            return api.save(user, false).then(function () {
+                return myUrl.createUrl(myUrl.createUrlType.Hold, [], { title: 'Email Sent', message: 'Please check your email and click on the link to complete the password reset process.' });
+            });
+        }
+    });
+    ret = ret.then(function (nextUrl) {
+        if (user && user.PasswordResetID) {
+            return email.sendPasswordResetEmail(user).then(function () {
+                return nextUrl;
+            })
+        } else {
+            return nextUrl;
+        }
+    });
+    ret = ret.then(function (nextUrl) {
+        res.redirect(nextUrl);
+    });
+}
+
+function setNewPassword(req, res, next) {
+    var user = null;
+    var username = req.body.Username;
+    var ret = api.querySingle('User', ['LinkedOrganization', 'LinkedEducator'], null, { UserName: username });
+    ret = ret.then(function (dbUser) {
+        if (!dbUser) {
+            return myUrl.createUrl(myUrl.createUrlType.Error, [], { message: 'Unrecognized user name: ' + username });
+        } else {
+            user = dbUser;
+            var hash = bcrypt.hashSync(req.body.Password);
+            user.Hash = hash;
+            user.PasswordResetID = null;
+            return api.save(user, false).then(function () {
+                log.info({ user: user }, 'User password reset');
+                return sessionManagement.createSession(user, req, res, next);
+            }).then(function () {
+                return myUrl.createUrl(myUrl.createUrlType.Hold, [], { title: 'Password Reset Complete', message: 'Your password has been successfully changed.', button: 'Proceed to Dashboard', nextUrl: myUrl.createDefaultUrl(user) });
+            });
+        }
+    });
+    ret = ret.then(function (nextUrl) {
+        res.redirect(nextUrl);
+    });
+    return ret;
 }
 
 /*

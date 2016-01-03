@@ -32,12 +32,16 @@ var publicPaths = [
     /^\/client\//i, 
     /^\/controllers\//i, 
     /^\/app\/view\/Login$/i, 
+    /^\/app\/view\/ForgotPassword$/i,
     /^\/app\/view\/Home$/i, 
     /^\/app\/view\/Contact$/i, 
     /^\/app\/view\/About$/i, 
     /^\/app\/view\/UserSignup\/?/i,
     /^\/app\/user\/Signup\/?/i,
     /^\/app\/user\/Confirm\/?/i,
+    /^\/app\/user\/PasswordResetRequest\/?/i,
+    /^\/app\/view\/ResetPassword\/[0-9a-z\-]{36}\/?/i,
+    /^\/app\/user\/SetNewPassword\/[0-9a-z\-]{36};[0-9a-z\-]{36}\/?/i,
     /^\/favicon.ico$/i,
     /^\/app\/view\/FatalError\/?$/i,
     /^\/app\/view\/TestEmail\/?$/i,
@@ -95,6 +99,8 @@ app.use('/app/biz', express.static('biz'));
 app.post('/app/user/login', sessionManagement.createLoginHandler(loginPath));
 app.get('/app/user/logout', sessionManagement.createLogoutHandler(loginPath));
 app.get('/app/user/Confirm/:userID', signupServices.confirmUserAccount);
+app.post('/app/user/PasswordResetRequest', signupServices.requestPasswordReset);
+app.post('/app/user/SetNewPassword/:userID;:resetID', signupServices.setNewPassword);
 
 // form routes
 app.post('/app/view/FillForm/:documentInstanceID', formServices.postFormData);

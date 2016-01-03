@@ -41,10 +41,18 @@ var userActivationTemplate =
  '<%=url%>';
 var compiledUserActivationTemplate = _.template(userActivationTemplate);
 
+var passwordResetTemplate =
+ 'We have received a request to reset the password for the user with the email address ' +
+ '<%=email%>. If you would like to complete this process, please use the link below ' +
+ 'to create a new password for your account.\n\n' + 
+ '<%=url%>';
+var compiledPasswordResetTemplate = _.template(passwordResetTemplate);
+
 module.exports.sendForm168EmailToFormerEmployer = SendForm168EmailToFormerEmployer;
 module.exports.sendForm168EmailToApplicationOrganization = SendForm168EmailToApplicationOrganization;
 module.exports.sendUserConfirmationEmail = SendUserConfirmationEmail;
 module.exports.sendEmail = SendEmail;
+module.exports.sendPasswordResetEmail = SendPasswordResetEmail;
 
 function SendEmail(purpose, fromAddress, toAddress, subject, body) {
     var restOptions = {
@@ -82,6 +90,19 @@ function SendUserConfirmationEmail(user) {
             'Activate your account at ' + myurl.domainName, 
             body);
     }
+}
+
+function SendPasswordResetEmail(user) {
+    var body = compiledPasswordResetTemplate({
+        url: myurl.createUrl(myurl.createUrlType.ResetPassword, [user.UserID], { reset: user.PasswordResetID }, false),
+        email: user.EmailAddress
+    });
+    return SendEmail(
+        'Password reset',
+        'noreply@' + myurl.domainName,
+        overrideEmailRecipient || user.EmailAddress,
+        'Password reset for your account at ' + myurl.domainName,
+        body);
 }
 
 function SendForm168EmailToFormerEmployer(documentInstance) {

@@ -36,7 +36,8 @@ module.exports = function (req, pageTitle, controllerName) {
 }
 
 function generatePageMasthead(title) {
-    return '<div class="page-header"><span class="h2">' + title + '</span></div>';
+    return '<div class="page-header"><span class="h2">' + title + '</span></div>' +
+        '<noscript><div class="alert alert-danger">Our website doesn\'t function properly with JavaScript disabled.</div></noscript>';
 }
 
 function formatDate(d) {
