@@ -32,23 +32,15 @@
 			</div>
             <div class="row form-group">
                 <div class="col-sm-offset-2 col-sm-8 col-xs-12">
-                    <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block btn-default" />
+                    <input type="submit" value="Login" class="btn btn-lg btn-success btn-block btn-default" />
                 </div>
             </div>
 			<div class="row form-group">
 				<div class="col-sm-offset-2 col-sm-4 col-xs-12">
-					Not a member yet?  Sign up for a free user account.  It's simple!
+					<input type="submit" value="Sign Up for your FREE Account" class="btn btn-md btn-primary btn-block" onclick="document.location = '<%=createUrl('UserSignup')%>'; return false;" />
 				</div>
 				<div class="col-sm-4 col-xs-12">
-					<input type="submit" value="Sign Up" class="btn btn-lg btn-success btn-block" onclick="document.location = '<%=createUrl('UserSignup')%>'; return false;" />
-				</div>
-			</div>
-			<div class="row form-group">
-				<div class="col-sm-offset-2 col-sm-4 col-xs-12">
-					Are you an existing user and have forgotten your password?
-				</div>
-				<div class="col-sm-4 col-xs-12">
-					<input type="submit" value="Password Reset" class="btn btn-lg btn-warning btn-block" onclick="document.location = '<%=createUrl('ForgotPassword')%>'; return false;" />
+					<input type="submit" value="Forgot your Password? Reset It" class="btn btn-md btn-info btn-block" onclick="document.location = '<%=createUrl('ForgotPassword')%>'; return false;" />
 				</div>
 			</div>
         </form>
