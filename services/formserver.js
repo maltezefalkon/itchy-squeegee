@@ -53,9 +53,9 @@ function postFormData(req, res, next) {
                     signature.DocumentInstanceID = documentInstance.DocumentInstanceID;
                     signature.SignatureData = value;
                     signature.DocumentDefinitionFieldID = fieldDefinition.DocumentDefinitionFieldID;
-                    if (req.user.LinkedOrganizationID == documentInstance.ReferenceTenure.OrganizationID) {
+                    if (documentInstance.ReferenceTenure && req.user.LinkedOrganizationID == documentInstance.ReferenceTenure.OrganizationID) {
                         signature.OrganizationID = documentInstance.ReferenceTenure.OrganizationID;
-                    } else if (req.user.LinkedOrganizationID == documentInstance.ApplicableTenure.OrganizationID) {
+                    } else if (documentInstance.ApplicableTenure && req.user.LinkedOrganizationID == documentInstance.ApplicableTenure.OrganizationID) {
                         signature.OrganizationID = documentInstance.ReferenceTenure.OrganizationID;
                     } else if (req.user.LinkedEducatorID == documentInstance.EducatorID) {
                         signature.EducatorID = documentInstance.EducatorID;
@@ -75,15 +75,19 @@ function postFormData(req, res, next) {
             return documentInstance;
         });
     }).then(function (documentInstance) {
-        if (!section) {
-            documentInstance.StatusID = DocumentStatus.Valid.StatusID;
-        } else if (section == 'Educator') {
-            documentInstance.StatusID = DocumentStatus.AwaitingCompletionByReferenceOrganization.StatusID;
-        } else if (section == 'FormerOrganization') {
-            documentInstance.StatusID = DocumentStatus.Valid.StatusID;
+        if (documentInstance.Definition.HasInstancePerPreviousTenure) {
+            // assume the new status based on what we know the workflow to be
+            if (section == 'Educator') {
+                documentInstance.StatusID = DocumentStatus.AwaitingCompletionByReferenceOrganization.StatusID;
+            } else if (section == 'FormerOrganization') {
+                documentInstance.StatusID = DocumentStatus.Valid.StatusID;
+            } else {
+                log.error('Don\'t know how to proceed to the next document status for section ' + section);
+                throw new Error('Don\'t know how to proceed to the next document status for section ' + section);
+            }
         } else {
-            log.error('Don\'t know how to proceed to the next document status for section ' + section);
-            throw new Error('Don\'t know how to proceed to the next document status for section ' + section);
+            // assume that we have all the info we need now
+            documentInstance.StatusID = DocumentStatus.Valid.StatusID;
         }
         documentInstance.StatusDescription = _.template(DocumentStatus.LookupByID(documentInstance.StatusID).DescriptionTemplate)(DocumentFunctions.getStatusDescriptionTemplateRenderingData(documentInstance));
         return api.save(documentInstance).then(function () {

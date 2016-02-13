@@ -11,7 +11,7 @@
     <%=advancedAngularTags%>
     <script type="text/javascript">
         var app = angular.module('safeApp', [ 'ngMessages', 'ui.mask', 'ui.date', 'ui.validate' ]);
-        var organization = <%=typeof organization !== 'undefined' ? JSON.stringify(organization) : 'undefined'%>;
+        var organization = <%=typeof organization !== 'undefined' ? JSON.stringify(organization) : '{}'%>;
         var user = <%=typeof user !== 'undefined' ? JSON.stringify(user) : 'undefined' %>;
         app.value('organization', organization);
         app.value('user', user);
@@ -23,6 +23,34 @@
         <%=pageHeader%>
 		<%=pageMasthead%>
         <form action="<%=path%>" name="EditOrganizationInfoForm" method="post" class="form-horizontal" role="form" ng-submit="submitForm($event)">
+			<div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>
+                        Organization Type
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="<%=formControlGroupClasses%>">
+                        <div class="form-group required">
+                            <label class="<%=formControlLabelClasses%>" for="OrganizationTypeID">Organization Type</label>
+                            <div class="<%=formControlFieldClasses%>">
+								<div class="btn-group" data-toggle="buttons">
+<%
+for (var t in organizationTypes) {
+	var ty = organizationTypes[t];
+%>
+									<label class="btn btn-default">
+										<input type="radio" name="OrganizationTypeID" value="<%=ty.OrganizationTypeID%>" ng-model="organization.OrganizationTypeID" /><%=ty.Name%>
+									</label>
+<%
+}
+%>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>
@@ -162,7 +190,7 @@
                         <div class="form-group">
                             <label class="<%=formControlLabelClasses%>" for="OrganizationFaxNumber">Fax Number</label>
                             <div class="<%=formControlFieldClasses%>">
-                                <input type="text" name="OrganizationFaxNumber" class="form-control" ng-model="organization.FaxNumber" ng-required="true" ui-mask="(999) 999-9999" />
+                                <input type="text" name="OrganizationFaxNumber" class="form-control" ng-model="organization.FaxNumber" ui-mask="(999) 999-9999" />
                             </div>
                         </div>
                     </div>
@@ -205,13 +233,13 @@
 			<!-- submit button -->
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-8 col-xs-12">
-                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-disabled="!SignupForm.$valid">
+                    <button class="btn btn-primary btn-block btn-lg shrink-sm" type="submit" ng-disabled="!EditOrganizationInfoForm.$valid">
                         Save Information <span class="glyphicon glyphicon-ok"></span>
                     </button>
                 </div>
             </div>
             <input type="hidden" name="UserID" ng-value="user.UserID" />
-            <input type="hidden" name="OrganizationID" ng-value="organization.OrganizationID" />
+            <input type="hidden" name="OrganizationID" value="<%=organizationID%>" />
         </form>
         <%=pageFooter%>
     </div>

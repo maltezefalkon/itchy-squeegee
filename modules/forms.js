@@ -161,6 +161,8 @@ function createFDFDataObject(documentInstance) {
                 } else {
                     dataValue = documentDefinitionField.PDFNullValue;
                 }
+            } else if (documentDefinitionField.LogicalFieldType == 'Signature') {
+                dataValue = null;
             }
         }
         ret[documentDefinitionField.FieldName] = (dataValue === null ? '' : dataValue);
@@ -173,14 +175,15 @@ function createFDFDataObject(documentInstance) {
 function generatePDF(documentInstance) {
     
     var data = createFDFDataObject(documentInstance);
+    var fdfFileName = path.resolve(__dirname, '../pdf/data-' + documentInstance.DocumentInstanceID + '.fdf');
     var baseFileName = path.resolve(__dirname, '../pdf/' + documentInstance.Definition.PDFFileName);
     var signatureFileName = path.resolve(__dirname, '../pdf/signature-' + documentInstance.DocumentInstanceID + '.pdf');
     var filledFileName = path.resolve(__dirname, '../pdf/filled-' + documentInstance.DocumentInstanceID + '.pdf');
     var finalFileName = path.resolve(__dirname, '../pdf/' + documentInstance.DocumentInstanceID + '.pdf');
-    log.info({ baseFileName: baseFileName, signatureFileName: signatureFileName, filledFileName: filledFileName, finalFileName: finalFileName }, 'ready to generate pdf');
+    log.info({ baseFileName: baseFileName, fdfFileName: fdfFileName, signatureFileName: signatureFileName, filledFileName: filledFileName, finalFileName: finalFileName }, 'ready to generate pdf');
     
     generateSignaturePDF(documentInstance, signatureFileName);
-    var ret = mergeFormDataIntoPDF(baseFileName, filledFileName, data, documentInstance.DocumentInstanceID);
+    var ret = mergeFormDataIntoPDF(baseFileName, filledFileName, data, fdfFileName, documentInstance.DocumentInstanceID);
     ret = ret.then(function () {
         return mergeSignaturesIntoPDF(filledFileName, signatureFileName, finalFileName);
     }).then(function () {
@@ -190,26 +193,21 @@ function generatePDF(documentInstance) {
     return ret;
 }
 
-function mergeFormDataIntoPDF(sourceFile, destinationFile, fieldValues, id) {
+function mergeFormDataIntoPDF(sourceFile, destinationFile, fieldValues, fdfFileName, id) {
     
     // determine if we're on Windows
     var isWin = /^win/.test(process.platform);
     var prefix = suffix = (isWin ? '"' : '');
 
     //Generate the data from the field values.
-    var formData = fdf.generate(fieldValues),
-        tempFDF = "data-" + id + ".fdf";
+    var formData = fdf.generate(fieldValues);
     
     //Write the temp fdf file.
-    return fs.writeFileAsync(tempFDF, formData)
+    return fs.writeFileAsync(fdfFileName, formData)
         .then(function () {
-            return new Promise(function (resolve, reject) {
-                var commandLine = "pdftk " + prefix + sourceFile + suffix + " fill_form " + prefix + tempFDF + suffix + " output " + prefix + destinationFile + suffix + " flatten";
-                log.info({ commandLine: commandLine }, 'calling pdftk to do form fill');
-                var childProcess = exec(commandLine);
-                childProcess.addListener('error', reject);
-                childProcess.addListener('exit', resolve);
-            });
+            var commandLine = "pdftk " + prefix + sourceFile + suffix + " fill_form " + prefix + fdfFileName + suffix + " output " + prefix + destinationFile + suffix + " flatten verbose";
+            log.info({ commandLine: commandLine }, 'calling pdftk to do form fill');
+            return execPromise(commandLine);
         });
 }
 
@@ -222,13 +220,9 @@ function mergeSignaturesIntoPDF(baseFile, signatureFile, destinationFile) {
     var prefix = suffix = (isWin ? '"' : '');
     
     //Call PDFtk to do the merge
-    return new Promise(function (resolve, reject) {
-        var commandLine = "pdftk " + prefix + baseFile + suffix + " multistamp " + prefix + signatureFile + suffix + " output " + prefix + destinationFile + suffix;
-        log.info({ commandLine: commandLine }, 'calling pdftk to do multistamp');
-        var childProcess = exec(commandLine);
-        childProcess.addListener('error', reject);
-        childProcess.addListener('exit', resolve);
-    });
+    var commandLine = "pdftk " + prefix + baseFile + suffix + " multistamp " + prefix + signatureFile + suffix + " output " + prefix + destinationFile + suffix + " verbose";
+    log.info({ commandLine: commandLine }, 'calling pdftk to do multistamp');
+    return execPromise(commandLine);
 
 }
 
@@ -316,10 +310,23 @@ function generateSignaturePDF(documentInstance, fileName) {
     for (var k = currentPage; k < documentInstance.Definition.TotalPDFPages; k++) {
         doc.addPage();
     }
+    log.debug('writing PDF ' + fileName);
     var writeStream = fs.createWriteStream(fileName);
     doc.pipe(writeStream);
-    log.debug('writing PDF');
     doc.end();
+}
+
+function execPromise(commandLine) {
+    return new Promise(function (resolve, reject) {
+        var childProcess = exec(commandLine, function (error, stdout, stderr) {
+            log.info({ error: error, commandLine: commandLine, stdout: stdout, stderr: stderr }, "Process completed " + (error ? 'with errors' : 'successfully'));
+            if (error) {
+                reject();
+            } else {
+                resolve();
+            }
+        });
+    });
 }
 
 function getFieldDefinition(documentInstanceField, documentInstance) {

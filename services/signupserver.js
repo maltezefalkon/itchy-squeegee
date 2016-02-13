@@ -307,11 +307,7 @@ function postOrganizationInfo(req, res, next) {
         throw new Error("Invalid verb routed to postOrganizationSignupData");
     }
     
-    if (!req.body.OrganizationID) {
-        throw new Error('No OrganizationID supplied');
-    }
-    
-    if (req.user.LinkedOrganizationID != req.body.OrganizationID) {
+    if (req.user.LinkedOrganizationID != req.body.OrganizationID && !req.user.Admin) {
         throw new Error('User does not have permission to edit this Organization\'s information');
     }
     
@@ -329,12 +325,29 @@ function postOrganizationInfo(req, res, next) {
             FaxNumber: req.body.OrganizationFaxNumber,
             RepresentativeFirstName: req.body.RepresentativeFirstName,
             RepresentativeLastName: req.body.RepresentativeLastName,
-            RepresentativeJobTitle: req.body.RepresentativeJobTitle
+            RepresentativeJobTitle: req.body.RepresentativeJobTitle,
+            OrganizationTypeID: req.body.OrganizationTypeID
     };
     
-    api.save(organization).then(function () {
-        res.redirect(myUrl.createDefaultUrl(req.user));
-    });
+    var promise = api.save(organization);
+    
+    if (!req.body.OrganizationID) {
+        promise = promise.then(function () {
+            var invitation = new meta.bo.Invitation();
+            invitation.EmailAddress = req.body.OrganizationEmail;
+            invitation.RepresentedOrganizationID = organization.OrganizationID;
+            var expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 14);
+            invitation.ExpirationDate = expirationDate;
+            return api.save(invitation).then(function() { return invitation; })
+        }).then(function (invitation) {
+            res.redirect(myUrl.createUrl(myUrl.createUrlType.Hold, [], { title: 'New Organization Created', message: 'InvitationID: ' + invitation.InvitationID }));
+        });
+    } else {
+        promise = promise.then(function () {
+            res.redirect(myUrl.createDefaultUrl(req.user));
+        });
+    }
     
 }
 

@@ -55,6 +55,12 @@
       "field": "confirmed",
       "allowNull": false,
       "defaultValue": false
+    },
+    "Admin": {
+      "type": "BOOLEAN",
+      "field": "admin",
+      "allowNull": false,
+      "defaultValue": false
     }
   },
   "Relationships": {

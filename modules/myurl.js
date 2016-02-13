@@ -98,6 +98,8 @@ function createDefaultUrl(user) {
         return createUrl(module.exports.createUrlType.OrganizationDashboard);
     } else if (user.LinkedEducatorID) {
         return createUrl(module.exports.createUrlType.EducatorDashboard);
+    } else if (user.Admin) {
+        return createUrl(module.exports.createUrlType.EditOrganizationInfo);
     } else {
         return createUrl(module.exports.createUrlType.Error, [], { message: 'This account has not been set up correctly.  Please contact support for assistance.' });
     }

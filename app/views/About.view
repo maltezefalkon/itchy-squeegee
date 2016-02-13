@@ -15,10 +15,11 @@
 				<span>Who We Are</span>
             </div>
             <div class="panel-body">
-				Founded by a school superintendant and a technologist from
-				the Philadelphia area, ClearanceManagement.com was designed
-				to help keep kids safe by helping schools manage all of the 
-				vital information surrounding their employees.
+				<p>ClearanceManagement.com is designed to help schools electronically manage the 
+				documents and information required by Pennsylvania state law to keep kids safe. It is your 
+				one-stop solution to fully comply with PA Law.</p>
+				<p>It was founded in 2015 by Dave Baugh, an experienced school superintendant, and Dan 
+				Cassar, a technologist from the Philadelphia area.</p>
 			</div>
 		</div>
         <div class="row">&nbsp;</div>
